@@ -5,6 +5,7 @@
          version="3.1">
   <display-name>pharmacy</display-name>
   <welcome-file-list>
+      <welcome-file>/index.html</welcome-file>
     <welcome-file>/index.jsp</welcome-file>
   </welcome-file-list>
   <security-constraint>
@@ -15,5 +16,13 @@
     </web-resource-collection>
     <auth-constraint />
   </security-constraint>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/pages/common/error.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/pages/common/error.jsp</location>
+    </error-page>
 
 </web-app>
