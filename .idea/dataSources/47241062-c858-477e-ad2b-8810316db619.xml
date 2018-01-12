@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="Epam-cafe@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="4.4">
+    <root id="1"/>
+    <schema id="2" parent="1" name="epam-cafe">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <schema id="3" parent="1" name="information_schema"/>
+    <schema id="4" parent="1" name="mydb"/>
+    <schema id="5" parent="1" name="mysql"/>
+    <schema id="6" parent="1" name="performance_schema"/>
+    <schema id="7" parent="1" name="sys"/>
+    <table id="8" parent="2" name="account">
+      <Comment>Данная таблица используется для хранения счетов Клиентов. Таблица может использоваться Администраторами для перевода средств на счет клиента, который по тем или иным причинам не смог забрать заказ или же отменил его. В этом случае,  при небольшом колисчестве аккаунов и большом количетве клиентов операция будет выполняться быстрее.</Comment>
+    </table>
+    <table id="9" parent="2" name="admin">
+      <Comment>Таблица для хренении информации об Администраторах.</Comment>
+    </table>
+    <table id="10" parent="2" name="client">
+      <Comment>Данная таблица используется для хранения информации о Клиентах, зарегестрированных в системе.</Comment>
+    </table>
+    <table id="11" parent="2" name="clientorder">
+      <Comment>Таблица, использующаяся для хранения данных о заказе(кроме заказанных Продуктов).</Comment>
+    </table>
+    <table id="12" parent="2" name="menu">
+      <Comment>Таблица Меню содержит информацию о доступных продектах, блюдах  для заказа Пользователем.</Comment>
+    </table>
+    <table id="13" parent="2" name="orderproducts">
+      <Comment>Таблица, содержащая информацию о всех заказаных Продуктах, и использующаяся для связи Перечня продуктов(таблица Menu) и всеми совершенными заказами Пользователями(таблица Order). Данная таблица явлется списком, для получения заказаных Продуктов по индификатору заказа.</Comment>
+    </table>
+    <table id="14" parent="2" name="review">
+      <Comment>Таблица, обеспечиваюшая механизм комментирования и оценки Заказа Клиентом.</Comment>
+    </table>
+    <column id="15" parent="8" name="accountNumber">
+      <Position>1</Position>
+      <Comment>Номер счета Клиента.</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="16" parent="8" name="credit">
+      <Position>2</Position>
+      <Comment>Количество денег на счете.</Comment>
+      <DataType>double|0</DataType>
+    </column>
+    <column id="17" parent="8" name="clientId">
+      <Position>3</Position>
+      <Comment>Уникальный индификатор Клиента, по которому номер счета связывается с Клиентом.</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="18" parent="8" name="accountNamber_UNIQUE">
+      <ColNames>accountNumber</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="19" parent="8" name="Client_clientId_UNIQUE">
+      <ColNames>clientId</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="20" parent="8" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>clientId</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="21" parent="8" name="accountNamber_UNIQUE">
+      <ColNames>accountNumber</ColNames>
+      <UnderlyingIndexName>accountNamber_UNIQUE</UnderlyingIndexName>
+    </key>
+    <key id="22" parent="8" name="Client_clientId_UNIQUE">
+      <ColNames>clientId</ColNames>
+      <UnderlyingIndexName>Client_clientId_UNIQUE</UnderlyingIndexName>
+    </key>
+    <foreign-key id="23" parent="8" name="fk_Account_Client1">
+      <ColNames>clientId</ColNames>
+      <RefSchemaName>epam-cafe</RefSchemaName>
+      <RefTableName>client</RefTableName>
+      <RefColNames>clientId</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="24" parent="9" name="adminLogin">
+      <Position>1</Position>
+      <Comment>Данный столбец хранит уникальные логины администраторов, для авторизации администраторов в системе.</Comment>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="25" parent="9" name="adminPassword">
+      <Position>2</Position>
+      <Comment>Пароль, использующийся для опеспечения безопасности доступа в систему.</Comment>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="26" parent="9" name="adminLogin_UNIQUE">
+      <ColNames>adminLogin</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="27" parent="9" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>adminLogin</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="28" parent="9" name="adminLogin_UNIQUE">
+      <ColNames>adminLogin</ColNames>
+      <UnderlyingIndexName>adminLogin_UNIQUE</UnderlyingIndexName>
+    </key>
+    <column id="29" parent="10" name="clientId">
+      <Position>1</Position>
+      <Comment>Уникальный номер(Синтетический ключ) Клиента, по которому он связывается с другими таблицами данной БД.</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="30" parent="10" name="clientName">
+      <Position>2</Position>
+      <Comment>Имя  Клиента.</Comment>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="31" parent="10" name="clientSurname">
+      <Position>3</Position>
+      <Comment>Фамилия  Клиента.</Comment>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="32" parent="10" name="clientLogin">
+      <Position>4</Position>
+      <Comment>Уникальный индификатор  Клиента, используемый для авторизации в системе.</Comment>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="33" parent="10" name="clientPassword">
+      <Position>5</Position>
+      <Comment>Пароль Клиента, используемый для обеспечения безопасного доступа в систему.</Comment>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="34" parent="10" name="clientEmail">
+      <Position>6</Position>
+      <Comment>Email адресс, использующийся для регистрации клиента в системе, оповещения о каких-либо событиях, а так же для востановления пароля.</Comment>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="35" parent="10" name="clientStatus">
+      <Position>7</Position>
+      <Comment>Статус клиента в системе. Возможные статусы: Забанен, незабанен. Если на клиента наклыдавается бан, он не имеет возможности взаибодействовать с системой.</Comment>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="36" parent="10" name="clientPoint">
+      <Position>8</Position>
+      <Comment>Баллы Клиента, которые начисляются при заказе, используя данную систему. В случае если Клиент не забрал(оплатил) закаказ баллы снимаются, а клиент может быть заблокирован. Баллы могут использоваться в качестве бонусов(скидки).</Comment>
+      <DataType>int(11)|0</DataType>
+    </column>
+    <index id="37" parent="10" name="ClientLogin_UNIQUE">
+      <ColNames>clientLogin</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="38" parent="10" name="E-mail_UNIQUE">
+      <ColNames>clientEmail</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="39" parent="10" name="IdClient_UNIQUE">
+      <ColNames>clientId</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="40" parent="10" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>clientId</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="41" parent="10" name="IdClient_UNIQUE">
+      <ColNames>clientId</ColNames>
+      <UnderlyingIndexName>IdClient_UNIQUE</UnderlyingIndexName>
+    </key>
+    <key id="42" parent="10" name="ClientLogin_UNIQUE">
+      <ColNames>clientLogin</ColNames>
+      <UnderlyingIndexName>ClientLogin_UNIQUE</UnderlyingIndexName>
+    </key>
+    <key id="43" parent="10" name="E-mail_UNIQUE">
+      <ColNames>clientEmail</ColNames>
+      <UnderlyingIndexName>E-mail_UNIQUE</UnderlyingIndexName>
+    </key>
+    <column id="44" parent="11" name="orderId">
+      <Position>1</Position>
+      <Comment>Уникальный номер заказа, использующийся для связи данной таблицы с другими.</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="45" parent="11" name="orderData">
+      <Position>2</Position>
+      <Comment>Время в которое заказ был доставлен.</Comment>
+      <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="46" parent="11" name="status">
+      <Position>3</Position>
+      <Comment>Статус заказа, используется для отслеживания прогресса доставки заказа в сиситеме.</Comment>
+      <DataType>varchar(15)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="47" parent="11" name="clientId">
+      <Position>4</Position>
+      <Comment>Внешний ключ, по которому Клиент связывается с совершенными им заказами. Клиент может сделать несколько заказов, по этому ключу имеется возможность все заказы клиента.</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="48" parent="11" name="orderCost">
+      <Position>5</Position>
+      <Comment>Общая стоимость заказа.</Comment>
+      <DataType>double|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="49" parent="11" name="fk_Order_Client1_idx">
+      <ColNames>clientId</ColNames>
+    </index>
+    <index id="50" parent="11" name="orderId_UNIQUE">
+      <ColNames>orderId</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="51" parent="11" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>orderId</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="52" parent="11" name="orderId_UNIQUE">
+      <ColNames>orderId</ColNames>
+      <UnderlyingIndexName>orderId_UNIQUE</UnderlyingIndexName>
+    </key>
+    <foreign-key id="53" parent="11" name="fk_Order_Client1">
+      <ColNames>clientId</ColNames>
+      <RefSchemaName>epam-cafe</RefSchemaName>
+      <RefTableName>client</RefTableName>
+      <RefColNames>clientId</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="54" parent="12" name="productId">
+      <Position>1</Position>
+      <Comment>Уникальный индификационный номер(Синтетический ключ) Продукта, использующийся для связи таблицы Меню с другими таблицами.</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+    </column>
+    <column id="55" parent="12" name="typeProduct">
+      <Position>2</Position>
+      <Comment>Тип продука. Например, напиток, пицца...</Comment>
+      <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="56" parent="12" name="dishName">
+      <Position>3</Position>
+      <Comment>Название блюда.</Comment>
+      <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="57" parent="12" name="weight">
+      <Position>4</Position>
+      <Comment>Вес продукта.</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="58" parent="12" name="cost">
+      <Position>5</Position>
+      <Comment>Стоимость Продукта.</Comment>
+      <DataType>double|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="59" parent="12" name="status">
+      <Position>6</Position>
+      <Comment>Наличие данного продукта в данный момент.</Comment>
+      <DataType>varchar(45)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="60" parent="12" name="decription">
+      <Position>7</Position>
+      <Comment>Описание продукта. Состав.</Comment>
+      <DataType>text|0</DataType>
+    </column>
+    <column id="61" parent="12" name="picturePath">
+      <Position>8</Position>
+      <Comment>Путь для подгрузки изображения продукта.</Comment>
+      <DataType>tinytext|0</DataType>
+    </column>
+    <index id="62" parent="12" name="dishName_UNIQUE">
+      <ColNames>dishName</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="63" parent="12" name="menuId_UNIQUE">
+      <ColNames>productId</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="64" parent="12" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>productId</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="65" parent="12" name="menuId_UNIQUE">
+      <ColNames>productId</ColNames>
+      <UnderlyingIndexName>menuId_UNIQUE</UnderlyingIndexName>
+    </key>
+    <key id="66" parent="12" name="dishName_UNIQUE">
+      <ColNames>dishName</ColNames>
+      <UnderlyingIndexName>dishName_UNIQUE</UnderlyingIndexName>
+    </key>
+    <column id="67" parent="13" name="orderId">
+      <Position>1</Position>
+      <Comment>id Закакза с которым связан заказываемый продукт.</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="68" parent="13" name="dishId">
+      <Position>2</Position>
+      <Comment>id продукта, для поиска информации о нем в таблице Menu.</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="69" parent="13" name="fk_OrderList_Menu1_idx">
+      <ColNames>dishId</ColNames>
+    </index>
+    <index id="70" parent="13" name="fk_OrderList_Order1_idx">
+      <ColNames>orderId</ColNames>
+    </index>
+    <key id="71" parent="13" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>orderId
+dishId</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="72" parent="13" name="fk_OrderList_Order1">
+      <ColNames>orderId</ColNames>
+      <RefSchemaName>epam-cafe</RefSchemaName>
+      <RefTableName>clientorder</RefTableName>
+      <RefColNames>orderId</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <foreign-key id="73" parent="13" name="fk_OrderList_Menu1">
+      <ColNames>dishId</ColNames>
+      <RefSchemaName>epam-cafe</RefSchemaName>
+      <RefTableName>menu</RefTableName>
+      <RefColNames>productId</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+    <column id="74" parent="14" name="textReview">
+      <Position>1</Position>
+      <Comment>Отзыв клиента о заказе.</Comment>
+      <DataType>text|0</DataType>
+    </column>
+    <column id="75" parent="14" name="mark">
+      <Position>2</Position>
+      <Comment>Оценка Закакза Клиентом.</Comment>
+      <DataType>double|0</DataType>
+    </column>
+    <column id="76" parent="14" name="orderId">
+      <Position>3</Position>
+      <Comment>Номер заказа, к которому относится комментарий.</Comment>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="77" parent="14" name="fk_Review_Order1_idx">
+      <ColNames>orderId</ColNames>
+    </index>
+    <key id="78" parent="14" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>orderId</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="79" parent="14" name="fk_Review_Order1">
+      <ColNames>orderId</ColNames>
+      <RefSchemaName>epam-cafe</RefSchemaName>
+      <RefTableName>clientorder</RefTableName>
+      <RefColNames>orderId</RefColNames>
+      <OnUpdate>cascade</OnUpdate>
+      <OnDelete>cascade</OnDelete>
+    </foreign-key>
+  </database-model>
+</dataSource>
