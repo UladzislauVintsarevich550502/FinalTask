@@ -117,4 +117,18 @@ public class Client {
         result = 31 * result + point;
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", status='" + status + '\'' +
+                ", point=" + point +
+                '}';
+    }
 }

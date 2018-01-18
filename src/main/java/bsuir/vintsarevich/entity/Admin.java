@@ -45,4 +45,12 @@ public class Admin {
         result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

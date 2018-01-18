@@ -16,7 +16,7 @@ import java.util.List;
 
 public class AdminService implements IAdminService {
 
-    private static Logger logger = Logger.getLogger(AdminService.class);
+    private static final Logger LOGGER = Logger.getLogger(AdminService.class);
 
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
@@ -33,7 +33,7 @@ public class AdminService implements IAdminService {
 
     @Override
     public Admin signIn(String adminLogin, String adminPassword) {
-        logger.log(Level.DEBUG, "AdminService.signIn()");
+        LOGGER.log(Level.DEBUG, "Admin service: start SignIn");
         Admin admin = null;
         IAdminDao adminDao = daoFactory.getAdminDao();
         try {
@@ -44,7 +44,7 @@ public class AdminService implements IAdminService {
         } catch (DaoException | ValidatorException e) {
             return null;
         }
-        logger.debug("adminService.signIn() - success. ");
+        LOGGER.log(Level.DEBUG, "Admin service: finish SignIn");
         return admin;
     }
 

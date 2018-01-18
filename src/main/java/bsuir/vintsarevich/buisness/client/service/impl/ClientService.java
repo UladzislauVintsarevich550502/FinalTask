@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ClientService implements IClientService {
 
-    private static Logger logger = Logger.getLogger(ClientService.class);
+    private static final Logger LOGGER = Logger.getLogger(ClientService.class);
 
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
@@ -39,7 +39,7 @@ public class ClientService implements IClientService {
 
     @Override
     public Client signIn(String clientLogin, String clientPassword) {
-        logger.log(Level.DEBUG, "UserService.signIn()");
+        LOGGER.log(Level.DEBUG, "User Service: start SignIn");
         Client client = null;
         IClientDao clientDao = daoFactory.getClientDao();
         try {
@@ -50,7 +50,7 @@ public class ClientService implements IClientService {
         } catch (DaoException | ValidatorException e) {
             return null;
         }
-        logger.debug("UserService.signIn() - success. ");
+        LOGGER.log(Level.DEBUG, "User Service: finish SignIn");
         return client;
     }
 

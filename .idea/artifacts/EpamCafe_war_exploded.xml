@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="EpamCafe:war exploded">
-    <output-path>$PROJECT_DIR$/target/EpamCafe</output-path>
+    <output-path>C:/apache-tomcat-8.5.24/webapps/ROOT</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">

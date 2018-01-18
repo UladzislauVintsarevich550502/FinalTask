@@ -17,13 +17,13 @@ import java.util.List;
 
 public class AdminDAO implements IAdminDao {
     public static String GET_ADMIN_BY_LOGIN_AND_PASSWORD = "SELECT * FROM epam-cafe.admin WHERE login=? AND password=?;";
-    private static Logger logger = Logger.getLogger(AdminDAO.class);
-    ConnectionPool connectionPool;
-    Connection connection;
-    ResultSet resultSet;
-    PreparedStatement statement;
-    Admin adminEnyity;
-    List<Admin> admins;
+    private static final Logger LOGGER = Logger.getLogger(AdminDAO.class);
+    private ConnectionPool connectionPool;
+    private Connection connection;
+    private ResultSet resultSet;
+    private PreparedStatement statement;
+    private Admin adminEnyity;
+    private List<Admin> admins;
 
 
     @Override
@@ -43,7 +43,7 @@ public class AdminDAO implements IAdminDao {
 
     @Override
     public Admin signIn(String login, String password) throws DaoException {
-        logger.log(Level.DEBUG, "adminDao.signIn()");
+        LOGGER.log(Level.DEBUG, "Admin DAO: start SignIn");
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.retrieve();
@@ -65,7 +65,7 @@ public class AdminDAO implements IAdminDao {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
         }
-        logger.log(Level.DEBUG, "adminDao.signIn() - success");
+        LOGGER.log(Level.DEBUG, "Admin DAO: finish SignIn");
         return adminEnyity;
     }
 

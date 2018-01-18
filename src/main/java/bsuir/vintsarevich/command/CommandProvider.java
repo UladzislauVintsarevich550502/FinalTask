@@ -1,8 +1,8 @@
 package bsuir.vintsarevich.command;
 
 
+import bsuir.vintsarevich.command.impl.Entry;
 import bsuir.vintsarevich.command.impl.Index;
-import bsuir.vintsarevich.command.impl.SignIn;
 import bsuir.vintsarevich.command.impl.SignOut;
 import bsuir.vintsarevich.command.impl.SignUp;
 import bsuir.vintsarevich.enumeration.CommandName;
@@ -19,6 +19,7 @@ public final class CommandProvider {
 
     private CommandProvider() {
         repository.put(CommandName.INDEX, new Index());
+        repository.put(CommandName.ENTRY, new Entry());
         repository.put(CommandName.SIGN_IN, new SignIn());
         repository.put(CommandName.SIGN_UP, new SignUp());
         repository.put(CommandName.SIGN_OUT, new SignOut());

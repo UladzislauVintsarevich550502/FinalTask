@@ -5,13 +5,14 @@ import bsuir.vintsarevich.connectionpool.ConnectionPool;
 import bsuir.vintsarevich.connectionpool.ICloseConnectionPool;
 import bsuir.vintsarevich.exception.dao.ConnectionException;
 import bsuir.vintsarevich.exception.service.ServiceException;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 public class CloseDB implements ICloseDB {
-    private static Logger logger = Logger.getLogger(CloseDB.class);
+    private static Logger LOGGER = Logger.getLogger(CloseDB.class);
 
     public void closeConnections() throws ServiceException {
-        logger.debug("Service.closeConnection()");
+        LOGGER.log(Level.DEBUG, "Service: Close Connection");
 
         try {
             ICloseConnectionPool pool = ConnectionPool.getInstance();
@@ -20,6 +21,6 @@ public class CloseDB implements ICloseDB {
             throw new ServiceException(e);
         }
 
-        logger.debug("Service.closeConnection() - success");
+        LOGGER.log(Level.DEBUG, "Service: Close Connection - success");
     }
 }

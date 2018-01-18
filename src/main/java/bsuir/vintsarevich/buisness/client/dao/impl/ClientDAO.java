@@ -19,13 +19,13 @@ public class ClientDAO implements IClientDao {
     public static String GET_CLIENT_BY_ID = "SELECT * FROM pharmacy.account WHERE id=?;";
     public static String SIGN_UP_CLIENT = "INSERT INTO account (idRole,login,password,name,surname,address) VALUES(?,?,?,?,?,?);";
     public static String GET_ALL_CLIENTS = "SELECT * FROM pharmacy.account WHERE idRole=1;";
-    private static Logger logger = Logger.getLogger(ClientDAO.class);
-    ConnectionPool connectionPool;
-    Connection connection;
-    ResultSet resultSet;
-    PreparedStatement statement;
-    Client clientEntity;
-    List<Client> clients;
+    private static final Logger LOGGER = Logger.getLogger(ClientDAO.class);
+    private ConnectionPool connectionPool;
+    private Connection connection;
+    private ResultSet resultSet;
+    private PreparedStatement statement;
+    private Client clientEntity;
+    private List<Client> clients;
 
 
     @Override
@@ -50,7 +50,7 @@ public class ClientDAO implements IClientDao {
 
     @Override
     public Client signIn(String login, String password) throws DaoException {
-        logger.log(Level.DEBUG, "ClientDao.signIn()");
+        LOGGER.log(Level.DEBUG, "Client DAO: start SignIn");
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.retrieve();
@@ -72,7 +72,7 @@ public class ClientDAO implements IClientDao {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
         }
-        logger.log(Level.DEBUG, "ClientDao.signIn() - success");
+        LOGGER.log(Level.DEBUG, "Client DAO: finish SignIn");
         return clientEntity;
     }
 

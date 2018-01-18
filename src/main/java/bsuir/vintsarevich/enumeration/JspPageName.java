@@ -1,14 +1,10 @@
 package bsuir.vintsarevich.enumeration;
 
 public enum JspPageName {
-    INDEX("pages/user/index.html"),
-    MEDICAMENTS("/pages/pharmacist/index.html"),
-    MEDICAMENT("/pages/common/medicament.jsp"),
+    INDEX("/front/jsp/index.jsp"),
+    ENTRY("/front/jsp/entry.jsp"),
     INFORMATION("/pages/common/information.jsp"),
-    NEW_MEDICAMENT("/pages/pharmacist/addMedicament.jsp"),
-    ADD_PRESCRIPTION("/pages/doctor/addPrescription.jsp"),
-    BASKET("/pages/user/basket.jsp"),
-    USERS("/pages/admin/users.jsp");
+    TEST("/front/jsp/test.jsp");
 
 
     private String path;

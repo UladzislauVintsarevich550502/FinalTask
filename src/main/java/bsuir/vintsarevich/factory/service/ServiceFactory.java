@@ -4,13 +4,13 @@ import bsuir.vintsarevich.buisness.admin.service.IAdminService;
 import bsuir.vintsarevich.buisness.admin.service.impl.AdminService;
 import bsuir.vintsarevich.buisness.client.service.IClientService;
 import bsuir.vintsarevich.buisness.client.service.impl.ClientService;
-import bsuir.vintsarevich.buisness.product.service.IProducteService;
-import bsuir.vintsarevich.buisness.product.service.impl.ProducteService;
+import bsuir.vintsarevich.buisness.product.service.IProductService;
+import bsuir.vintsarevich.buisness.product.service.impl.ProductService;
 
 public class ServiceFactory {
     private static final ServiceFactory instance = new ServiceFactory();
     private final IAdminService adminService = new AdminService();
-    private final IProducteService producteService = new ProducteService();
+    private final IProductService producteService = new ProductService();
     private final IClientService clientService = new ClientService();
 
 
@@ -25,7 +25,7 @@ public class ServiceFactory {
         return adminService;
     }
 
-    public IProducteService getProducteService() {
+    public IProductService getProducteService() {
         return producteService;
     }
 
