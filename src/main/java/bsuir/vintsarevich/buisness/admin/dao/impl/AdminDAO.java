@@ -82,6 +82,7 @@ public class AdminDAO implements IAdminDao {
     private Admin createAdminByResultSet(ResultSet resultSet) throws DaoException {
         Admin admin = new Admin();
         try {
+            admin.setId(resultSet.getInt("adminId"));
             admin.setLogin(resultSet.getString("adminLogin"));
             admin.setPassword(resultSet.getString("adminPassword"));
         } catch (SQLException e) {

@@ -43,10 +43,10 @@ public class SignIn implements ICommand {
             Admin admin = adminService.signIn(login, password);
             LOGGER.log(Level.INFO, client);
             if (client != null) {
-                role = new Role(client.getId(), client.getLogin(), "Client");
+                role = new Role(client.getId(), client.getLogin(), "client");
             } else {
                 if (admin != null) {
-                    role = new Role(admi)
+                    role = new Role(admin.getId(), admin.getLogin(), "admin")
                     HttpSession session = request.getSession();
                     session.setAttribute("login", admin.getLogin());
                     session.setAttribute("role", "2");
