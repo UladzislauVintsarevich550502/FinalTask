@@ -1,15 +1,25 @@
 package bsuir.vintsarevich.entity;
 
 public class Admin {
+    private int id;
     private String login;
     private String password;
 
     public Admin() {
     }
 
-    public Admin(String login, String password) {
+    public Admin(int id, String login, String password) {
+        this.id = id;
         this.login = login;
         this.password = password;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getLogin() {
@@ -35,13 +45,15 @@ public class Admin {
 
         Admin admin = (Admin) o;
 
+        if (id != admin.id) return false;
         if (login != null ? !login.equals(admin.login) : admin.login != null) return false;
         return password != null ? password.equals(admin.password) : admin.password == null;
     }
 
     @Override
     public int hashCode() {
-        int result = login != null ? login.hashCode() : 0;
+        int result = id;
+        result = 31 * result + (login != null ? login.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
     }
@@ -49,7 +61,8 @@ public class Admin {
     @Override
     public String toString() {
         return "Admin{" +
-                "login='" + login + '\'' +
+                "id=" + id +
+                ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

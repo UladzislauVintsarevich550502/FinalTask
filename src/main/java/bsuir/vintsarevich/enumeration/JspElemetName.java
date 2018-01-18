@@ -1,8 +1,8 @@
 package bsuir.vintsarevich.enumeration;
 
 public enum JspElemetName {
-    LOGLOGIN("loglogin"),
-    LOGPASSWORD("logpassword"),
+    SIGNINLOGIN("signin-login"),
+    SIGNINPASSWORD("signin-password"),
     LOGIN("login"),
     PASSWORD("password"),
     SURNAME("surname"),
