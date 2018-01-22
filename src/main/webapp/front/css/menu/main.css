@@ -29,7 +29,6 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     padding: 0;
     border: 0;
     font-size: 100%;
-    ц font: inherit;
     vertical-align: baseline;
 }
 
@@ -136,10 +135,6 @@ a {
     -ms-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
     transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
     text-decoration: none;
-}
-
-a:hover {
-    color: #f56a6a !important;
 }
 
 a:hover strong {

@@ -56,11 +56,11 @@ public class ServletController extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println(request.getRequestURI());
-        ICommand iCommand = commandProvider.getCommand(request);
-        String page = iCommand.execute(request, response);
+        System.out.println("Servlet: " + request.getRequestURI());
+        ICommand command = commandProvider.getCommand(request);
+        String page = command.execute(request, response);
         RequestDispatcher dispatcher = request.getRequestDispatcher(page);
-        if (dispatcher != null) {
+        if (dispatcher != null && !response.isCommitted()) {
             dispatcher.forward(request, response);
         } else {
             errorMessageDirectlyFromResponse(request, response);

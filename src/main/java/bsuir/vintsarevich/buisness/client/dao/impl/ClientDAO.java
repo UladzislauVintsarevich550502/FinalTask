@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ClientDAO implements IClientDao {
-    public static String GET_CLIENT_BY_LOGIN_AND_PASSWORD = "SELECT * FROM epam-cafe.client WHERE login=? AND password=?;";
+    public static String GET_CLIENT_BY_LOGIN_AND_PASSWORD = "SELECT * FROM epamcafe.client WHERE clientLogin=? AND clientPassword=?;";
     public static String GET_CLIENT_BY_ID = "SELECT * FROM pharmacy.account WHERE id=?;";
     public static String SIGN_UP_CLIENT = "INSERT INTO account (idRole,login,password,name,surname,address) VALUES(?,?,?,?,?,?);";
     public static String GET_ALL_CLIENTS = "SELECT * FROM pharmacy.account WHERE idRole=1;";
@@ -56,6 +56,8 @@ public class ClientDAO implements IClientDao {
             connection = connectionPool.retrieve();
             statement = null;
             statement = connection.prepareStatement(GET_CLIENT_BY_LOGIN_AND_PASSWORD);
+            System.out.println(login);
+            System.out.println(password);
             statement.setString(1, login);
             statement.setString(2, password);
             resultSet = null;
@@ -64,7 +66,12 @@ public class ClientDAO implements IClientDao {
                 clientEntity = createClientByResultSet(resultSet);
             }
         } catch (SQLException e) {
-            throw new DaoException("Error with adding in database" + e);
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                throw new DaoException(e);
+            }
+            throw new DaoException("Error of query to database(signIn)", e);
         } catch (ConnectionException e) {
             throw new DaoException("Error with connection with database" + e);
         } finally {
@@ -100,6 +107,8 @@ public class ClientDAO implements IClientDao {
         } catch (SQLException e) {
             throw new DaoException(e);
         }
+
+        System.out.println(client);
         return client;
     }
 }

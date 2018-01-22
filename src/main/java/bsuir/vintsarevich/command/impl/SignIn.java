@@ -5,14 +5,13 @@ import bsuir.vintsarevich.buisness.client.service.IClientService;
 import bsuir.vintsarevich.command.ICommand;
 import bsuir.vintsarevich.entity.Admin;
 import bsuir.vintsarevich.entity.Client;
-import bsuir.vintsarevich.entity.Role;
+import bsuir.vintsarevich.entity.User;
 import bsuir.vintsarevich.enumeration.JspElemetName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.factory.service.ServiceFactory;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -22,13 +21,16 @@ public class SignIn implements ICommand {
     private static final Logger LOGGER = Logger.getLogger(SignIn.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private JspPageName jspPageName = JspPageName.TEST;
-    private Role role;
+    private JspElemetName jspElemetName = JspElemetName.INFORMATION;
+    private User user;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.log(Level.INFO, "Sign In");
-        String login = request.getParameter(JspElemetName.SIGNINLOGIN.getValue());
-        String password = request.getParameter(JspElemetName.SIGNINPASSWORD.getValue());
+        LOGGER.log(Level.INFO, "Command: Start Sign In");
+        String login = request.getParameter("signin_login");
+        String password = request.getParameter("signin_password");
+        System.out.println(login);
+        System.out.println(password);
 
         if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
             request.setAttribute("errorData", "введите логин или пароль");
@@ -36,31 +38,34 @@ public class SignIn implements ICommand {
             return jspPageName.getPath();
         }
 
+        IClientService clientService = serviceFactory.getClientService();
+        Client client = clientService.signIn(login, password);
+        IAdminService adminService = serviceFactory.getAdminService();
+        Admin admin = adminService.signIn(login, password);
+        LOGGER.log(Level.INFO, client);
         try {
-            IClientService clientService = serviceFactory.getClientService();
-            Client client = clientService.signIn(login, password);
-            IAdminService adminService = serviceFactory.getAdminService();
-            Admin admin = adminService.signIn(login, password);
-            LOGGER.log(Level.INFO, client);
             if (client != null) {
-                role = new Role(client.getId(), client.getLogin(), "client");
+                user = new User(client.getId(), client.getLogin(), "client");
+                HttpSession session = request.getSession();
+                session.setAttribute(JspElemetName.USER.getValue(), user);
+                LOGGER.log(Level.INFO, "Successfull sign in account as " + login);
+                response.sendRedirect("/index.do");
             } else {
                 if (admin != null) {
-                    role = new Role(admin.getId(), admin.getLogin(), "admin")
+                    user = new User(admin.getId(), admin.getLogin(), "admin");
                     HttpSession session = request.getSession();
-                    session.setAttribute("login", admin.getLogin());
-                    session.setAttribute("role", "2");
-                    logger.info("Successfull sign in account as " + login);
-                    request.getRequestDispatcher("/index.do").forward(request, response);
+                    session.setAttribute(JspElemetName.USER.getValue(), user);
+                    LOGGER.log(Level.INFO, "Successfull sign in account as " + login);
+                    response.sendRedirect("/index.do");
                 }
-                logger.info(request.getHeader("User-Agent") + " unsuccessfully sign in account.");
-                request.setAttribute(JspElemetName.INFORMATION.getValue(), "such user is not exist");
+                LOGGER.log(Level.INFO, "Unsuccessfully sign in account.");
+                request.setAttribute(jspElemetName.getValue(), "such user is not exist");
             }
-        } catch (ServletException | IOException e) {
-            logger.info(e.getMessage());
-            request.setAttribute(JspElemetName.INFORMATION.getValue(), e.getCause().getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
+        LOGGER.log(Level.INFO, "Command: Finish Sign In");
         return jspPageName.getPath();
     }
 }

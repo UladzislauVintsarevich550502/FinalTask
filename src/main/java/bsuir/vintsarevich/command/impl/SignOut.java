@@ -2,33 +2,40 @@ package bsuir.vintsarevich.command.impl;
 
 import bsuir.vintsarevich.enumeration.JspElemetName;
 import bsuir.vintsarevich.enumeration.JspPageName;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 public class SignOut implements bsuir.vintsarevich.command.ICommand {
 
-    private static Logger logger = Logger.getLogger(SignOut.class);
+    private static final Logger LOGGER = Logger.getLogger(SignOut.class);
     private JspPageName jspPageName = JspPageName.INFORMATION;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        Cookie[] cookies = request.getCookies();
-        String login = request.getSession().getAttribute(JspElemetName.USER_LOGIN.getValue()).toString();
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals(JspElemetName.J_SESSION_ID.getValue())) {
-                cookie.setMaxAge(0);
-                response.addCookie(cookie);
-
+        LOGGER.log(Level.DEBUG, "Start sign_out");
+        try {
+            Cookie[] cookies = request.getCookies();
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(JspElemetName.J_SESSION_ID.getValue())) {
+                    cookie.setMaxAge(0);
+                    response.addCookie(cookie);
+                }
             }
+            request.getSession().removeAttribute(JspElemetName.USER.toString());
+            request.getSession().invalidate();
+            request.getRequestDispatcher("/index.do").forward(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        request.getSession().removeAttribute(JspElemetName.USER_LOGIN.toString());
-        request.getSession().removeAttribute(JspElemetName.USER_ROLE.toString());
-        request.getSession().removeAttribute(JspElemetName.USER_ID.toString());
-        request.getSession().invalidate();
-        logger.debug(login + " came out");
+        LOGGER.log(Level.DEBUG, "Finish sign_out");
         return jspPageName.getPath();
     }
 }

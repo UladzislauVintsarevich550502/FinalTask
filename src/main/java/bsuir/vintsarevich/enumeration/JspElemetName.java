@@ -1,8 +1,8 @@
 package bsuir.vintsarevich.enumeration;
 
 public enum JspElemetName {
-    SIGNINLOGIN("signin-login"),
-    SIGNINPASSWORD("signin-password"),
+    SIGNINLOGIN("signin_login"),
+    SIGNINPASSWORD("signin_password"),
     LOGIN("login"),
     PASSWORD("password"),
     SURNAME("surname"),
@@ -10,14 +10,12 @@ public enum JspElemetName {
     ADDRESS("address"),
     EMAIL("email"),
     J_SESSION_ID("jsessionid"),
-    USER_LOGIN("user_login"),
-    USER_ROLE("user_role"),
-    USER_ID("user_id"),
+    USER("user"),
     INFORMATION("information");
 
     private String value;
 
-    JspElemetName(String path) {
+    JspElemetName(String value) {
         this.value = value;
     }
 

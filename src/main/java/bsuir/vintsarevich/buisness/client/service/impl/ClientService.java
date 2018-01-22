@@ -8,7 +8,6 @@ import bsuir.vintsarevich.exception.service.ServiceException;
 import bsuir.vintsarevich.exception.service.ServiceLogicException;
 import bsuir.vintsarevich.exception.validation.ValidatorException;
 import bsuir.vintsarevich.factory.dao.DaoFactory;
-import bsuir.vintsarevich.utils.Hasher;
 import bsuir.vintsarevich.utils.Validator;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -39,18 +38,19 @@ public class ClientService implements IClientService {
 
     @Override
     public Client signIn(String clientLogin, String clientPassword) {
-        LOGGER.log(Level.DEBUG, "User Service: start SignIn");
-        Client client = null;
+        LOGGER.log(Level.DEBUG, "Client Service: start SignIn");
+        Client client;
         IClientDao clientDao = daoFactory.getClientDao();
         try {
             Validator.isNull(clientLogin, clientPassword);
             Validator.isEmptyString(clientLogin, clientPassword);
-            clientPassword = Hasher.hashBySha1(clientPassword);
+            //откоментить после того как из проги подобавляю
+            // clientPassword = Hasher.hashBySha1(clientPassword);
             client = clientDao.signIn(clientLogin, clientPassword);
         } catch (DaoException | ValidatorException e) {
             return null;
         }
-        LOGGER.log(Level.DEBUG, "User Service: finish SignIn");
+        LOGGER.log(Level.DEBUG, "Client Service: finish SignIn");
         return client;
     }
 

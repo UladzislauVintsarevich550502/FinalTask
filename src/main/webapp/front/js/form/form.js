@@ -1,6 +1,6 @@
 jQuery(document).ready(function ($) {
     var $form_modal = $('.cd-user-modal'),
-        $form_login = $form_modal.find('#cd-login'),
+        $form_login = $form_modal.find('#login'),
         $form_signup = $form_modal.find('#cd-signup'),
         $form_forgot_password = $form_modal.find('#cd-reset-password'),
         $form_modal_tab = $('.cd-switcher'),
@@ -8,7 +8,7 @@ jQuery(document).ready(function ($) {
         $tab_signup = $form_modal_tab.children('li').eq(1).children('a'),
         $forgot_password_link = $form_login.find('.cd-form-bottom-message a'),
         $back_to_login_link = $form_forgot_password.find('.cd-form-bottom-message a'),
-        $main_nav = $('.main-nav');
+        $main_nav = $('.main-nav'), $i = 1;
 
     //открыть модальное окно
     $main_nav.on('click', function (event) {
@@ -43,7 +43,8 @@ jQuery(document).ready(function ($) {
             $password_field = $this.prev('input');
 
         ( 'password' == $password_field.attr('type') ) ? $password_field.attr('type', 'text') : $password_field.attr('type', 'password');
-        ( 'Скрыть' == $this.text() ) ? $this.text('Показать') : $this.text('Скрыть');
+        ( $i == 1) ? $i = 2 : $i = 1;
+        ( 1 == $i) ? $(this).css('backgroundImage', 'url(/front/css/img/visible.png)') : $(this).css('backgroundImage', 'url(/front/css/img/not_visible.png)');
         //фокус и перемещение курсора в конец поля ввода
         $password_field.putCursorAtEnd();
     });

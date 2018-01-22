@@ -157,16 +157,20 @@ xsigin/signup popup
 }
 
 /* Иконки полей ввода */
-.cd-form label.cd-username {
-    background-image: url("/front/css/img/cd-icon-username.svg");
+.cd-form label.cd-login {
+    background-image: url("/front/css/img/cd-icon-username.png");
 }
 
 .cd-form label.cd-email {
-    background-image: url("/front/css/img/cd-icon-email.svg");
+    background-image: url("/front/css/img/cd-icon-email.png");
 }
 
 .cd-form label.cd-password {
-    background-image: url("/front/css/img/cd-icon-password.svg");
+    background-image: url("/front/css/img/cd-icon-password.png");
+}
+
+.cd-form label.cd-hide {
+    background-image: url("/front/css/img/visible.png");
 }
 
 .cd-form input {
@@ -205,6 +209,9 @@ xsigin/signup popup
 .cd-form .hide-password {
     display: inline-block;
     position: absolute;
+    color: rgba(255, 0, 107, 0);
+    background-image: url("/front/css/img/visible.png");
+    background-size: cover;
     right: 0;
     top: 0;
     padding: 6px 15px;
@@ -216,9 +223,7 @@ xsigin/signup popup
     -ms-transform: translateY(-50%);
     -o-transform: translateY(-50%);
     transform: translateY(-50%);
-    font-size: 14px;
     font-size: 0.875rem;
-    color: #343642;
 }
 
 .cd-form .cd-error-message {
@@ -289,6 +294,14 @@ xsigin/signup popup
     }
 }
 
+nav.main-nav {
+    float: right;
+}
+
+ul.list li {
+    display: inline;
+}
+
 .cd-form-bottom-message {
     position: absolute;
     width: 100%;
@@ -324,10 +337,56 @@ xsigin/signup popup
     }
 }
 
-#cd-login, #cd-signup, #cd-reset-password {
+#login, #cd-signup, #cd-reset-password {
     display: none;
 }
 
-#cd-login.is-selected, #cd-signup.is-selected, #cd-reset-password.is-selected {
+#login.is-selected, #cd-signup.is-selected, #cd-reset-password.is-selected {
     display: block;
+}
+
+a.cd-signin, a.cd-signup {
+    background-color: #ea2a2a;
+    border-radius: 20px;
+    float: right;
+    border: 2px solid #00000042;
+    box-shadow: #6e784900 0px 0px 10px;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 90%;
+    margin-left: 5px;
+    padding: 10px;
+    text-decoration: none;
+    text-shadow: #000000a8 5px 5px 15px;
+    transition: all 0.5s cubic-bezier(1, 1.51, 0.25, 1);
+}
+
+a.cd-signin:hover, a.cd-signup:hover {
+    background-color: #1fcdd6;
+    padding: 12px;
+}
+
+input[type="submit"].cd-exit {
+    background-color: #ea2a2a;
+    border-radius: 20px;
+    float: right;
+    border: 2px solid #00000042;
+    box-shadow: #6e784900 0px 0px 10px;
+    color: #ffffff !important;
+    display: inline-block;
+    font-size: 90%;
+    margin-left: 5px;
+    padding: 10px;
+    text-decoration: none;
+    text-shadow: #000000a8 5px 5px 15px;
+    transition: all 0.5s cubic-bezier(1, 1.51, 0.25, 1);
+
+    cursor: pointer;
+    font-family: "Roboto Slab", serif;
+    font-weight: normal;
+    height: auto;
+    line-height: inherit;
+    text-align: inherit;
+    text-transform: none;
+    white-space: normal;
 }

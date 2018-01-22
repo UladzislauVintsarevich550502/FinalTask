@@ -5,8 +5,8 @@
 </head>
 <body>
 <h1>
-    <li>${login}</li>
-    <li>${role}</li>
+    <li>${user}</li>
+    <li>${information}</li>
 </h1>
 </body>
 </html>

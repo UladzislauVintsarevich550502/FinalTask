@@ -1,15 +1,15 @@
 package bsuir.vintsarevich.entity;
 
-public class Role {
+public class User {
     private int id;
     private String login;
     private String role;
 
-    public Role() {
+    public User() {
         role = "no";
     }
 
-    public Role(int id, String login, String role) {
+    public User(int id, String login, String role) {
         this.id = id;
         this.login = login;
         this.role = role;
@@ -44,11 +44,11 @@ public class Role {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Role role1 = (Role) o;
+        User user = (User) o;
 
-        if (id != role1.id) return false;
-        if (login != null ? !login.equals(role1.login) : role1.login != null) return false;
-        return role != null ? role.equals(role1.role) : role1.role == null;
+        if (id != user.id) return false;
+        if (login != null ? !login.equals(user.login) : user.login != null) return false;
+        return role != null ? role.equals(user.role) : user.role == null;
     }
 
     @Override
@@ -61,7 +61,7 @@ public class Role {
 
     @Override
     public String toString() {
-        return "Role{" +
+        return "User{" +
                 "id=" + id +
                 ", login='" + login + '\'' +
                 ", role='" + role + '\'' +
