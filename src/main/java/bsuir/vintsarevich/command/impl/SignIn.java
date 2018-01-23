@@ -27,8 +27,8 @@ public class SignIn implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.INFO, "Command: Start Sign In");
-        String login = request.getParameter("signin_login");
-        String password = request.getParameter("signin_password");
+        String login = request.getParameter(JspElemetName.SIGNIN_LOGIN.getValue());
+        String password = request.getParameter(JspElemetName.SIGNIN_PASSWORD.getValue());
         System.out.println(login);
         System.out.println(password);
 

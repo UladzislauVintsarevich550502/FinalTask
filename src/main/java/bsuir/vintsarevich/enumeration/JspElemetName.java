@@ -1,17 +1,18 @@
 package bsuir.vintsarevich.enumeration;
 
 public enum JspElemetName {
-    SIGNINLOGIN("signin_login"),
-    SIGNINPASSWORD("signin_password"),
-    LOGIN("login"),
-    PASSWORD("password"),
-    SURNAME("surname"),
-    NAME("name"),
-    ADDRESS("address"),
-    EMAIL("email"),
-    J_SESSION_ID("jsessionid"),
+    SIGNIN_LOGIN("signin_login"),
+    SIGNIN_PASSWORD("signin_password"),
+    SIGNUP_NAME("signup_name"),
+    SIGNUP_SURNAME("signup_surname"),
+    SIGNUP_EMAIL("signup_email"),
+    SIGNUP_LOGIN("signup_login"),
+    SIGNUP_PASSWORD("signup_password"),
     USER("user"),
-    INFORMATION("information");
+    J_SESSION_ID("jsessionid"),
+    INFORMATION("information"),
+    LOCALE("locale"),
+    MAIN_LOCALE("main_locale");
 
     private String value;
 

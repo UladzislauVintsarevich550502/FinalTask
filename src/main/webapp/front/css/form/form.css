@@ -158,19 +158,27 @@ xsigin/signup popup
 
 /* Иконки полей ввода */
 .cd-form label.cd-login {
-    background-image: url("/front/css/img/cd-icon-username.png");
+    background-image: url("/images/icon/cd-icon-username.png");
+}
+
+.cd-form label.cd-name {
+    background-image: url("/images/icon/cd-icon-username-red.png");
+}
+
+.cd-form label.cd-surname {
+    background-image: url("/images/icon/cd-icon-username-purepure.png");
 }
 
 .cd-form label.cd-email {
-    background-image: url("/front/css/img/cd-icon-email.png");
+    background-image: url("/images/icon/cd-icon-email.png");
 }
 
 .cd-form label.cd-password {
-    background-image: url("/front/css/img/cd-icon-password.png");
+    background-image: url("/images/icon/cd-icon-password.png");
 }
 
 .cd-form label.cd-hide {
-    background-image: url("/front/css/img/visible.png");
+    background-image: url("/images/icon/visible.png");
 }
 
 .cd-form input {
@@ -210,7 +218,7 @@ xsigin/signup popup
     display: inline-block;
     position: absolute;
     color: rgba(255, 0, 107, 0);
-    background-image: url("/front/css/img/visible.png");
+    background-image: url("/images/icon/visible.png");
     background-size: cover;
     right: 0;
     top: 0;
@@ -325,7 +333,7 @@ ul.list li {
     height: 40px;
     right: 0;
     top: -40px;
-    background: url("/front/css/img/cd-icon-close.svg") no-repeat center center;
+    background: url("/images/icon/cd-icon-close.png") no-repeat center center;
     text-indent: 100%;
     white-space: nowrap;
     overflow: hidden;

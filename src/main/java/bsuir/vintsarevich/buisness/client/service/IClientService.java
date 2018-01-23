@@ -12,8 +12,8 @@ public interface IClientService {
 
     Client getClientByLogin(String clientLogin) throws ServiceException;
 
-    boolean signUp(String name, String surname,
-                   String login, String password, String email) throws ServiceException, ServiceLogicException;
+    Client signUp(String name, String surname,
+                  String login, String password, String email) throws ServiceException, ServiceLogicException;
 
     Client signIn(String clientLogin, String clientPassword);
 

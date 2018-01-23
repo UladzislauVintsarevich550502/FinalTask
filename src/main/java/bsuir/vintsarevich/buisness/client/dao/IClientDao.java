@@ -6,11 +6,9 @@ import bsuir.vintsarevich.exception.dao.DaoException;
 import java.util.List;
 
 public interface IClientDao {
-    boolean addClient() throws DaoException;
+    Client addClient(Client client) throws DaoException;
 
-    boolean deleteClient();
-
-    boolean createClient();
+    Client findClientByLogin(String login) throws DaoException;
 
     boolean signUp(Client client) throws DaoException;
 

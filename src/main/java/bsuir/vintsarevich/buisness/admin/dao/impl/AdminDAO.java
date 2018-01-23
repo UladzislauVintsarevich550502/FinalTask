@@ -16,7 +16,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class AdminDAO implements IAdminDao {
-    public static String GET_ADMIN_BY_LOGIN_AND_PASSWORD = "SELECT * FROM epam-cafe.admin WHERE login=? AND password=?;";
+    public static String GET_ADMIN_BY_LOGIN_AND_PASSWORD = "SELECT * FROM epamcafe.admin WHERE adminLogin=? AND adminPassword=?;";
+    public static String GET_ADMIN_BY_LOGIN = "SELECT * FROM epamcafe.admin WHERE adminLogin=?";
     private static final Logger LOGGER = Logger.getLogger(AdminDAO.class);
     private ConnectionPool connectionPool;
     private Connection connection;
@@ -77,6 +78,33 @@ public class AdminDAO implements IAdminDao {
     @Override
     public List<Admin> getAllAdmins() throws DaoException {
         return null;
+    }
+
+    @Override
+    public boolean findAdminByLogin(String login) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Admin DAO: start Find");
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.retrieve();
+            statement = null;
+            statement = connection.prepareStatement(GET_ADMIN_BY_LOGIN);
+            statement.setString(1, login);
+            resultSet = null;
+            resultSet = statement.executeQuery();
+            if (resultSet.first()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Error with adding in database" + e);
+        } catch (ConnectionException e) {
+            throw new DaoException("Error with connection with database" + e);
+        } finally {
+            if (connectionPool != null) {
+                connectionPool.putBackConnection(connection, statement, resultSet);
+            }
+        }
+        LOGGER.log(Level.DEBUG, "Admin DAO: finish Find");
+        return false;
     }
 
     private Admin createAdminByResultSet(ResultSet resultSet) throws DaoException {

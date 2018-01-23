@@ -18,6 +18,21 @@
     <script>
         <%@include file="/front/js/lib/skel.min.js" %>
     </script>
+
+    <fmt:setLocale scope="session" value="ru"/>
+    <fmt:setBundle basename="localization.pageInformation" scope="session" var="loc"/>
+    <fmt:message bundle="${loc}" key="local.word.login" var="login_word"/>
+    <fmt:message bundle="${loc}" key="local.word.password" var="password_word"/>
+    <fmt:message bundle="${loc}" key="local.word.name" var="name_word"/>
+    <fmt:message bundle="${loc}" key="local.word.lastname" var="lastname_word"/>
+    <fmt:message bundle="${loc}" key="local.word.rating" var="raiting_word"/>
+    <fmt:message bundle="${loc}" key="local.button.make_as_admin" var="make_admin_but"/>
+    <fmt:message bundle="${loc}" key="local.button.make_as_user" var="make_user_but"/>
+    <fmt:message bundle="${loc}" key="local.button.block" var="block_but"/>
+    <fmt:message bundle="${loc}" key="local.button.unblock" var="unblock_but"/>
+    <fmt:message bundle="${loc}" key="local.question.deleted" var="question_deleted"/>
+    <fmt:message bundle="${loc}" key="local.word.change_user_rating" var="change_user_rating"/>
+
     <title>Epam Cafe</title>
 </head>
 <body>
@@ -38,7 +53,7 @@
             <!-- Section -->
             <section>
                 <header class="major">
-                    <h2>Ipsum sed dolor</h2>
+                    <h2>${name_word}</h2>
                 </header>
                 <div class="posts">
                     <c:choose>

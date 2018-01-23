@@ -13,7 +13,7 @@ public class Client {
     public Client() {
     }
 
-    public Client(Integer id, String login, String password, String name, String surname, String email, String status, Integer point) {
+    public Client(String name, String surname, String login, String password, String email, String status, Integer point) {
         this.id = id;
         this.login = login;
         this.password = password;

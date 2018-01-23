@@ -17,4 +17,6 @@ public interface IAdminDao {
     Admin getAdminById(int id) throws DaoException;
 
     List<Admin> getAllAdmins() throws DaoException;
+
+    boolean findAdminByLogin(String login) throws DaoException;
 }

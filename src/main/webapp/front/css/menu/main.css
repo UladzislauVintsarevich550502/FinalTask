@@ -476,7 +476,7 @@ input[type="radio"] + label:before {
 
 input[type="checkbox"]:checked + label:before,
 input[type="radio"]:checked + label:before {
-    background-image: url("../../../images/download.png");
+    background-image: url("../../../images/icon/download.png");
     background-size: cover;
     border-color: #2afff7;
     color: rgba(255, 255, 255, 0);
@@ -1564,7 +1564,7 @@ button:disabled,
 }
 
 #search form:before {
-    background-image: url("../../../images/search.png");
+    background-image: url("../../../images/icon/search.png");
     background-size: cover;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
@@ -1722,7 +1722,7 @@ button:disabled,
     }
 
     #sidebar .toggle:before {
-        background-image: url("../../../images/menu.png");
+        background-image: url("../../../images/icon/menu.png");
         background-size: cover;
         font-size: 1.5rem;
         color: #7f888f00;
@@ -1774,7 +1774,7 @@ button:disabled,
     }
 
     #sidebar .toggle:before {
-        background-image: url("../../../images/menu.png");
+        background-image: url("../../../images/icon/menu.png");
         background-size: cover;
         color: #7f888f00;
         font-size: 1.5rem;
@@ -1803,7 +1803,7 @@ button:disabled,
     }
 
     #sidebar .toggle:after {
-        background-image: url("../../../images/menu.png");
+        background-image: url("../../../images/icon/menu.png");
         background-size: cover;
         border-radius: 0.375em;
         content: '';
@@ -2031,7 +2031,7 @@ button:disabled,
 }
 
 #menu ul span.opener:before {
-    background-image: url("../../../images/download.png");
+    background-image: url("../../../images/icon/download.png");
     background-size: cover;
     color: #7f888f00;
     width: 0.9em;
@@ -2082,7 +2082,7 @@ button:disabled,
 }
 
 #menu ul a.opener:before {
-    background-image: url("../../../images/download.png");
+    background-image: url("../../../images/icon/download.png");
     background-size: cover;
     color: #7f888f00;
     width: 0.9em;

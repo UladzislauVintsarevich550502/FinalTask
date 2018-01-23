@@ -18,7 +18,7 @@ public class SignOut implements bsuir.vintsarevich.command.ICommand {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.log(Level.DEBUG, "Start sign_out");
+        LOGGER.log(Level.INFO, "Command: Start Sign Out");
         try {
             Cookie[] cookies = request.getCookies();
             for (Cookie cookie : cookies) {
@@ -35,7 +35,7 @@ public class SignOut implements bsuir.vintsarevich.command.ICommand {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        LOGGER.log(Level.DEBUG, "Finish sign_out");
+        LOGGER.log(Level.INFO, "Command: Finish Sign Out");
         return jspPageName.getPath();
     }
 }

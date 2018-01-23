@@ -4,10 +4,11 @@ import bsuir.vintsarevich.buisness.database.ICloseDB;
 import bsuir.vintsarevich.buisness.database.impl.CloseDB;
 import bsuir.vintsarevich.command.ICloseDBCommand;
 import bsuir.vintsarevich.exception.service.ServiceException;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 public class CloseDBCommand implements ICloseDBCommand {
-    private static Logger logger = Logger.getLogger(CloseDBCommand.class);
+    private static final Logger LOGGER = Logger.getLogger(CloseDBCommand.class);
 
     @Override
     public void closeDB() {
@@ -15,7 +16,7 @@ public class CloseDBCommand implements ICloseDBCommand {
             ICloseDB closeDB = new CloseDB();
             closeDB.closeConnections();
         } catch (ServiceException e) {
-            logger.error(e);
+            LOGGER.log(Level.DEBUG, "Problem with closing Data Base");
         }
     }
 }

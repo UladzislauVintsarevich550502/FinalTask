@@ -44,7 +44,7 @@ jQuery(document).ready(function ($) {
 
         ( 'password' == $password_field.attr('type') ) ? $password_field.attr('type', 'text') : $password_field.attr('type', 'password');
         ( $i == 1) ? $i = 2 : $i = 1;
-        ( 1 == $i) ? $(this).css('backgroundImage', 'url(/front/css/img/visible.png)') : $(this).css('backgroundImage', 'url(/front/css/img/not_visible.png)');
+        ( 1 == $i) ? $(this).css('backgroundImage', 'url(/images/icon/visible.png)') : $(this).css('backgroundImage', 'url(/images/icon/not_visible.png)');
         //фокус и перемещение курсора в конец поля ввода
         $password_field.putCursorAtEnd();
     });
@@ -83,14 +83,14 @@ jQuery(document).ready(function ($) {
         $form_forgot_password.addClass('is-selected');
     }
 
-    //при желании можно отключить - это просто, сообщения об ошибках при заполнении
-    $form_login.find('input[type="button"]').on('click', function (event) {
-        event.preventDefault();
-        $form_login.find('input[type="button"]').toggleClass('has-error').next('span').toggleClass('is-visible');
-    });
-    $form_signup.find('input[type="button"]').on('click', function (event) {
-        event.preventDefault();
-        $form_signup.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
-    });
+    // //при желании можно отключить - это просто, сообщения об ошибках при заполнении
+    // $form_login.find('input[type="button"]').on('click', function (event) {
+    //     event.preventDefault();
+    //     $form_login.find('input[type="button"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+    // });
+    // $form_signup.find('input[type="button"]').on('click', function (event) {
+    //     event.preventDefault();
+    //     $form_signup.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+    // });
 
 });

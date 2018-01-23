@@ -13,7 +13,7 @@ import java.io.IOException;
                 @WebInitParam(name = "characterEncoding", value = "utf-8")})
 
 public class EncodingFilter implements Filter {
-    private static Logger logger = Logger.getLogger(EncodingFilter.class);
+    private static final Logger LOGGER = Logger.getLogger(EncodingFilter.class);
     private String encoding;
     private ServletContext servletContext;
 

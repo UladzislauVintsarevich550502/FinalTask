@@ -40,7 +40,7 @@
         <div id="cd-signup"> <!-- форма регистрации -->
             <form class="cd-form" method="POST" action="/sign_up.do">
                 <p class="fieldset">
-                    <label class="image-replace cd-login" for="signup-surname">Фамилия</label>
+                    <label class="image-replace cd-surname" for="signup-surname">Фамилия</label>
                     <input class="full-width has-padding has-border" name="signup_surname" id="signup-surname"
                            type="text"
                            placeholder="Фамилия">
@@ -63,23 +63,23 @@
 
                 <p class="fieldset">
                     <label class="image-replace cd-email" for="signup-email">E-mail</label>
-                    <input class="full-width has-padding has-border" name="signup_password" id="signup-email"
-                           type="email"
-                           placeholder="E-mail">
+                    <input class="full-width has-padding has-border" name="signup_email" id="signup-email"
+                           type="email" placeholder="E-mail">
                     <span class="cd-error-message">Здесь сообщение об ошибке!</span>
                 </p>
 
                 <p class="fieldset">
-                    <label class="image-replace cd-password" for="signup-rePassword">Пароль</label>
-                    <input class="full-width has-padding has-border" id="signup-rePassword" type="text"
+                    <label class="image-replace cd-password" for="signup-password">Пароль</label>
+                    <input class="full-width has-padding has-border" name="signup_password" id="signup-password"
+                           type="text"
                            placeholder="Пароль">
                     <a href="#0" class="hide-password">""</a>
                     <span class="cd-error-message">Здесь сообщение об ошибке!</span>
                 </p>
 
                 <p class="fieldset">
-                    <label class="image-replace cd-password" for="signup-password">Пароль</label>
-                    <input class="full-width has-padding has-border" id="signup-password" type="text"
+                    <label class="image-replace cd-password" for="signup-rePassword">Повторите пароль</label>
+                    <input class="full-width has-padding has-border" id="signup-rePassword" type="text"
                            placeholder="Пароль">
                     <a href="#0" class="hide-password">""</a>
                     <span class="cd-error-message">Здесь сообщение об ошибке!</span>
@@ -91,7 +91,7 @@
                 </p>
 
                 <p class="fieldset">
-                    <input class="full-width" type="button" value="Создать аккаунт">
+                    <input class="full-width" type="submit" value="Создать аккаунт">
                 </p>
             </form>
 
