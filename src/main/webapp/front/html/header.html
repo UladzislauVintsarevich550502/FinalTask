@@ -1,19 +1,27 @@
 ﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- Header -->
 <header id="header">
-    <a href="index.do" class="logo"><strong>Editorial</strong> by HTML5 UP</a>
+    <form method="post" id="c-locale" action="/change_locale.do">
+        <c:choose>
+            <c:when test="${locale eq 'ru'}">
+                <input type="submit" id="lang_ru">
+            </c:when>
+            <c:when test="${locale eq 'en'}">
+                <input type="submit" id="lang_en">
+            </c:when>
+        </c:choose>
+    </form>
+    <a href="index.do" class="logo"><strong>Home</strong></a>
     <div class="reg-conteiner">
         <c:choose>
             <c:when test="${user == null}">
                 <nav class="main-nav">
                     <ul class="list">
-                        <!-- ссылки на вызов форм -->
                         <li><a type="button" class="cd-signin" href="#0">Вход</a></li>
                         <li><a type="button" class="cd-signup" href="#0">Регистрация</a></li>
                     </ul>
                 </nav>
             </c:when>
-
             <c:when test="${user.role eq 'admin'}">
                 <form method="POST" action="/sign_out.do">
                     <input type="submit" class="cd-exit" href="#0" value="Выход">

@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Locale;
 
 public class Index implements ICommand {
 
@@ -26,6 +27,10 @@ public class Index implements ICommand {
             IProductService producteService = serviceFactory.getProducteService();
             List<Product> products = producteService.getAllProducts();
             request.setAttribute("products", products);
+            String locale = (String) request.getSession().getAttribute("locale");
+            if (locale == null || locale.isEmpty()) {
+                request.getSession().setAttribute("locale", Locale.getDefault().getLanguage());
+            }
         } catch (ServiceException e) {
             LOGGER.log(Level.ERROR, this.getClass() + e.getMessage());
         }

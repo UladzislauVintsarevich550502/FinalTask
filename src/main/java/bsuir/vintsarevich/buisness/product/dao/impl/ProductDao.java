@@ -18,6 +18,8 @@ import java.util.List;
 public class ProductDao implements IProductDao {
     private static final Logger LOGGER = Logger.getLogger(ProductDao.class);
     public static String GET_ALL_PRODUCTS = "SELECT * FROM epamcafe.menu;";
+    public static String ADD_PRODUCT = "INSERT INTO menu (typeProduct,dishName,weight,cost,status,description," +
+            "picturePath) VALUES(?,?,?,?,?,?,?);";
     private ConnectionPool connectionPool;
     private Connection connection;
     private ResultSet resultSet;
@@ -31,7 +33,42 @@ public class ProductDao implements IProductDao {
 
     @Override
     public boolean addProduct(Product product) throws DaoException {
-        return false;
+        LOGGER.log(Level.DEBUG, "Product DAO: Add product start");
+        try {
+            System.out.println(product);
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.retrieve();
+            statement = null;
+            statement = connection.prepareStatement(ADD_PRODUCT);
+            statement.setString(1, product.getType());
+            statement.setString(2, product.getName());
+            statement.setInt(3, product.getWeight());
+            statement.setDouble(4, product.getCost());
+            statement.setString(5, product.getStatus());
+            statement.setString(6, product.getDescription());
+            statement.setString(7, product.getImagePath());
+            if (statement.executeUpdate() != 0) {
+                LOGGER.log(Level.DEBUG, "Add medicament success");
+                return true;
+            } else {
+                LOGGER.log(Level.DEBUG, "Add medicament finish");
+                return false;
+            }
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                throw new DaoException(e);
+            }
+            throw new DaoException("Error of query to database(addMedicament)", e);
+        } catch (ConnectionException e) {
+            throw new DaoException("Error with connection with database" + e);
+        } finally {
+            if (connectionPool != null) {
+                connectionPool.putBackConnection(connection, statement, resultSet);
+            }
+            LOGGER.log(Level.DEBUG, "Product DAO: Add product finish");
+        }
     }
 
     @Override

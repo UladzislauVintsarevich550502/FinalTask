@@ -19,7 +19,7 @@
         <%@include file="/front/js/lib/skel.min.js" %>
     </script>
 
-    <fmt:setLocale scope="session" value="ru"/>
+    <fmt:setLocale scope="session" value="${locale}"/>
     <fmt:setBundle basename="localization.pageInformation" scope="session" var="loc"/>
     <fmt:message bundle="${loc}" key="local.word.login" var="login_word"/>
     <fmt:message bundle="${loc}" key="local.word.password" var="password_word"/>
@@ -36,10 +36,8 @@
     <title>Epam Cafe</title>
 </head>
 <body>
-
 <!-- Wrapper -->
 <div id="wrapper">
-
     <!-- Main -->
     <div id="main">
         <div class="inner">
@@ -74,6 +72,27 @@
                             <h2>Ничего не найдено</h2>
                         </c:otherwise>
                     </c:choose>
+                    <article>
+                        <form method="post" id="add-product" action="/add_product.do" enctype="multipart/form-data">
+                            <h2>Добавление продукта</h2>
+                            <select name="product_type">
+                                <option value="" disabled selected>Тип продукта</option>
+                                <option value="drink">Напиток</option>
+                                <option value="food">Еда</option>
+                            </select>
+                            <input type="text" name="name" id="name" placeholder="Название">
+                            <input type="text" name="value" id="value" placeholder="Объем">
+                            <input type="text" name="cost" id="cost" placeholder="Цена">
+                            <select name="status">
+                                <option value="" disabled selected>Наличие</option>
+                                <option value="false">Нет в наличии</option>
+                                <option value="true">Есть в наличии</option>
+                            </select>
+                            <input type="text" name="descrirtion" id="descrirtion" placeholder="Описание">
+                            <input type="file" name="image" id="image">
+                            <input type="submit" value="Добавить">
+                        </form>
+                    </article>
                 </div>
             </section>
 

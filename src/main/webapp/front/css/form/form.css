@@ -158,27 +158,27 @@ xsigin/signup popup
 
 /* Иконки полей ввода */
 .cd-form label.cd-login {
-    background-image: url("/images/icon/cd-icon-username.png");
+    background-image: url(/images/icon/cd-icon-username.png);
 }
 
 .cd-form label.cd-name {
-    background-image: url("/images/icon/cd-icon-username-red.png");
+    background-image: url(/images/icon/cd-icon-username-red.png);
 }
 
 .cd-form label.cd-surname {
-    background-image: url("/images/icon/cd-icon-username-purepure.png");
+    background-image: url(/images/icon/cd-icon-username-purepure.png);
 }
 
 .cd-form label.cd-email {
-    background-image: url("/images/icon/cd-icon-email.png");
+    background-image: url(/images/icon/cd-icon-email.png);
 }
 
 .cd-form label.cd-password {
-    background-image: url("/images/icon/cd-icon-password.png");
+    background-image: url(/images/icon/cd-icon-password.png);
 }
 
 .cd-form label.cd-hide {
-    background-image: url("/images/icon/visible.png");
+    background-image: url(/images/icon/visible.png);
 }
 
 .cd-form input {
@@ -218,7 +218,7 @@ xsigin/signup popup
     display: inline-block;
     position: absolute;
     color: rgba(255, 0, 107, 0);
-    background-image: url("/images/icon/visible.png");
+    background-image: url(/images/icon/visible.png);
     background-size: cover;
     right: 0;
     top: 0;
@@ -250,6 +250,10 @@ xsigin/signup popup
     pointer-events: none;
     visibility: hidden;
     opacity: 0;
+}
+
+.add {
+    margin-bottom: 10px;
 }
 
 .cd-form .cd-error-message::after {
@@ -333,7 +337,7 @@ ul.list li {
     height: 40px;
     right: 0;
     top: -40px;
-    background: url("/images/icon/cd-icon-close.png") no-repeat center center;
+    background: url(/images/icon/cd-icon-close.png) no-repeat center center;
     text-indent: 100%;
     white-space: nowrap;
     overflow: hidden;
@@ -372,6 +376,36 @@ a.cd-signin, a.cd-signup {
 a.cd-signin:hover, a.cd-signup:hover {
     background-color: #1fcdd6;
     padding: 12px;
+}
+
+input#lang_en {
+    background-image: url(/images/flags/english.png);
+}
+
+input#lang_ru {
+    background-image: url(/images/flags/russia.png);
+}
+
+input#lang_ru, input#lang_en {
+    background-size: cover;
+    padding-right: 0;
+    border: none;
+    box-shadow: none;
+    height: 20px;
+    width: 30px;
+    max-width: 30px;
+    float: right;
+    color: rgba(0, 0, 0, 0);
+}
+
+input[type="text"]#descrirtion, input[type="text"]#name, input[type="text"]#descrirtion {
+
+}
+
+form#c-locale {
+    /* width: 30px; */
+    height: 30px;
+    max-width: 30px;
 }
 
 input[type="submit"].cd-exit {

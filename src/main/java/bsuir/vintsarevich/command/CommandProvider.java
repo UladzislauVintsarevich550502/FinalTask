@@ -21,6 +21,8 @@ public final class CommandProvider {
         repository.put(CommandName.SIGN_IN, new SignIn());
         repository.put(CommandName.SIGN_UP, new SignUp());
         repository.put(CommandName.SIGN_OUT, new SignOut());
+        repository.put(CommandName.CHANGE_LOCALE, new ChangeLocale());
+        repository.put(CommandName.ADD_PRODUCT, new AddProduct());
     }
 
     public static CommandProvider getInstance() {

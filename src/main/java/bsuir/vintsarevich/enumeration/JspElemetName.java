@@ -12,7 +12,13 @@ public enum JspElemetName {
     J_SESSION_ID("jsessionid"),
     INFORMATION("information"),
     LOCALE("locale"),
-    MAIN_LOCALE("main_locale");
+    PRODUCT_TYPE("product_type"),
+    NAME("name"),
+    VALUE("value"),
+    COST("cost"),
+    STATUS("status"),
+    DESCRIPTION("description"),
+    IMAGE("image");
 
     private String value;
 

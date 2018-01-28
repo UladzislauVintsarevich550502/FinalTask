@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class SignUp implements ICommand {
-    private static final String CLIENT_ROLE = "1";
     private static final Logger LOGGER = Logger.getLogger(SignUp.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private JspPageName jspPageName = JspPageName.INFORMATION;

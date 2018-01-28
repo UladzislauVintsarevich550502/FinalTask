@@ -20,14 +20,13 @@ public interface IProductService {
 
     List<Product> getProductsByProducer(String producer) throws ServiceException;
 
-    void addProduct(String name, String producer, String price,
-                       String prescroption, Part part,
-                       String image, String availability) throws ServiceException, ServiceLogicException;
+    void addProduct(String type, String name, Integer weight,
+                    Double cost, String status, String description, Part image, String webPath) throws ServiceException, ServiceLogicException;
 
     List<Product> getProductByName(String name) throws ServiceException;
 
     void editProduct(String idProduct, String name, String producer, String price,
-                        String prescroption, Part part,
-                        String image, String availability) throws ServiceException, ServiceLogicException;
+                     String prescroption, Part part,
+                     String image, String availability) throws ServiceException, ServiceLogicException;
 
 }
