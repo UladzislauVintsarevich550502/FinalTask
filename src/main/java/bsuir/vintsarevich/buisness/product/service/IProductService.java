@@ -10,23 +10,12 @@ import java.util.List;
 public interface IProductService {
     List<Product> getAllProducts() throws ServiceException;
 
-    List<Product> getProductsWithPrescription() throws ServiceException;
+    void addProduct(String type, String nameRu, String nameEn, Integer weight, Double cost, String status, String descriptionRu,
+                    String descriptionEn, Part image, String webPath) throws ServiceException, ServiceLogicException;
 
-    List<Product> getAscSortedByPriceProducts() throws ServiceException;
+    List<Product> getProductByType(String type) throws ServiceException;
 
-    List<Product> getDescSortedByPriceProducts() throws ServiceException;
+    boolean deleteProduct(Integer id) throws ServiceException;
 
-    Product getProductById(String id) throws ServiceException;
-
-    List<Product> getProductsByProducer(String producer) throws ServiceException;
-
-    void addProduct(String type, String name, Integer weight,
-                    Double cost, String status, String description, Part image, String webPath) throws ServiceException, ServiceLogicException;
-
-    List<Product> getProductByName(String name) throws ServiceException;
-
-    void editProduct(String idProduct, String name, String producer, String price,
-                     String prescroption, Part part,
-                     String image, String availability) throws ServiceException, ServiceLogicException;
-
+    Product getProductById(Integer id) throws ServiceException;
 }

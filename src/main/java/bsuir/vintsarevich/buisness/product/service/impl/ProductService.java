@@ -43,45 +43,22 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<Product> getProductsWithPrescription() throws ServiceException {
-        return null;
-    }
-
-    @Override
-    public List<Product> getAscSortedByPriceProducts() throws ServiceException {
-        return null;
-    }
-
-    @Override
-    public List<Product> getDescSortedByPriceProducts() throws ServiceException {
-        return null;
-    }
-
-    @Override
-    public Product getProductById(String id) throws ServiceException {
-        return null;
-    }
-
-    @Override
-    public List<Product> getProductsByProducer(String producer) throws ServiceException {
-        return null;
-    }
-
-    @Override
-    public void addProduct(String type, String name, Integer weight, Double cost, String status, String description,
-                           Part image, String webPath) throws ServiceException, ServiceLogicException {
+    public void addProduct(String type, String nameRu, String nameEn, Integer weight, Double cost, String status,
+                           String descriptionRu, String descriptionEn, Part image, String webPath) throws ServiceException, ServiceLogicException {
         LOGGER.log(Level.DEBUG, "ProductService: addProduct start");
         Product product = new Product();
         IProductDao productDao = daoFactory.getProductDao();
         try {
-            Validator.isNull(name, type, status);
-            Validator.isEmptyString(name, type, status);
+            Validator.isNull(nameEn, nameRu, type, status);
+            Validator.isEmptyString(nameEn, nameRu, type, status);
             product.setType(type);
-            product.setName(name);
+            product.setNameRu(nameRu);
+            product.setNameEn(nameEn);
             product.setWeight(weight);
             product.setCost(cost);
             product.setStatus(status);
-            product.setDescription(description);
+            product.setDescriptionRu(descriptionRu);
+            product.setDescriptionEn(descriptionEn);
             String imageName = getImageName(image);
             System.out.println(imageName);
             if (!imageName.isEmpty()) {
@@ -107,13 +84,48 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<Product> getProductByName(String name) throws ServiceException {
-        return null;
+    public List<Product> getProductByType(String type) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "ProductService: start get product by type");
+        List<Product> products;
+        try {
+            IProductDao productDao = daoFactory.getProductDao();
+            products = productDao.getProductByType(type);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        LOGGER.log(Level.DEBUG, "Product Service: Finish get products by type");
+        return products;
     }
 
     @Override
-    public void editProduct(String idProduct, String name, String producer, String price, String prescroption, Part part, String image, String availability) throws ServiceException, ServiceLogicException {
+    public boolean deleteProduct(Integer id) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "Product DAO: Delete product start");
+        IProductDao productDao = daoFactory.getProductDao();
+        try {
+            productDao.deleteProduct(id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        LOGGER.log(Level.DEBUG, "ProductService: finish delete products");
+        return true;
+    }
 
+    @Override
+    public Product getProductById(Integer id) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "ProductService: start get product by ID");
+        Product product;
+        IProductDao productDao = daoFactory.getProductDao();
+        try {
+            product = productDao.getProductById(id);
+        } catch (NumberFormatException e) {
+            LOGGER.log(Level.DEBUG, e.getMessage());
+            throw new ServiceException("number format exception", e);
+        } catch (DaoException e) {
+            LOGGER.log(Level.DEBUG, e.getMessage());
+            throw new ServiceException(e);
+        }
+        LOGGER.log(Level.DEBUG, "ProductService: finish get product by ID");
+        return product;
     }
 
     private void uploadImage(Part filePart, String fileName, String webInfPath) throws ServiceException, ServiceLogicException {

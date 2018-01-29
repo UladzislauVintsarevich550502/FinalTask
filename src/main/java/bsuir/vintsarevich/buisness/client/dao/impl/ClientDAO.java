@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClientDAO implements IClientDao {
@@ -19,7 +20,8 @@ public class ClientDAO implements IClientDao {
     public static String GET_CLIENT_BY_LOGIN = "SELECT * FROM epamcafe.client WHERE clientLogin=?;";
     public static String ADD_CLIENT = "INSERT INTO client (clientName,clientSurname,clientLogin,clientPassword,clientEmail," +
             "clientStatus,clientPoint) VALUES(?,?,?,?,?,?,?);";
-    public static String GET_ALL_CLIENTS = "SELECT * FROM pharmacy.account WHERE idRole=1;";
+    public static String DELETE_CLIENT = "DELETE FROM epamcafe.client WHERE clientId=?";
+    public static String GET_ALL_CLIENTS = "SELECT * FROM epamcafe.account WHERE idRole=1;";
     private static final Logger LOGGER = Logger.getLogger(ClientDAO.class);
 
     private ConnectionPool connectionPool;
@@ -28,7 +30,6 @@ public class ClientDAO implements IClientDao {
     private PreparedStatement statement;
     private Client clientEntity;
     private List<Client> clients;
-
 
     @Override
     public Client addClient(Client client) throws DaoException {
@@ -48,7 +49,7 @@ public class ClientDAO implements IClientDao {
             statement.setInt(7, client.getPoint());
             if (statement.executeUpdate() != 0) {
                 LOGGER.log(Level.INFO, "Client DAO: Client adds successful");
-                return findClientByLogin(client.getLogin());
+                return getClientByLogin(client.getLogin());
             }
         } catch (SQLException e) {
             try {
@@ -69,35 +70,35 @@ public class ClientDAO implements IClientDao {
     }
 
     @Override
-    public Client findClientByLogin(String login) throws DaoException {
-        LOGGER.log(Level.DEBUG, "Client DAO: start Find");
+    public boolean deleteClient(Integer id) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Client DAO: Delete product start");
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.retrieve();
-            statement = null;
-            statement = connection.prepareStatement(GET_CLIENT_BY_LOGIN);
-            statement.setString(1, login);
-            resultSet = null;
-            resultSet = statement.executeQuery();
-            if (resultSet.first()) {
-                return createClientByResultSet(resultSet);
+            statement = connection.prepareStatement(DELETE_CLIENT);
+            statement.setInt(1, id);
+            if (statement.executeUpdate() != 0) {
+                LOGGER.log(Level.DEBUG, "Delete client success");
+                return true;
+            } else {
+                LOGGER.log(Level.DEBUG, "Delete client finish");
+                return false;
             }
         } catch (SQLException e) {
-            throw new DaoException("Error with adding in database" + e);
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                throw new DaoException(e);
+            }
+            throw new DaoException("Error of query to database(deleteClient)", e);
         } catch (ConnectionException e) {
             throw new DaoException("Error with connection with database" + e);
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
+            LOGGER.log(Level.DEBUG, "Client DAO: Delete client finish");
         }
-        LOGGER.log(Level.DEBUG, "Admin DAO: finish SignIn");
-        return null;
-    }
-
-    @Override
-    public boolean signUp(Client client) throws DaoException {
-        return false;
     }
 
     @Override
@@ -136,13 +137,66 @@ public class ClientDAO implements IClientDao {
     }
 
     @Override
-    public Client getClientById(int id) throws DaoException {
-        return null;
+    public Client getClientByLogin(String clientLogin) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Client DAO: start get Client bu login");
+        clientEntity = null;
+        statement = null;
+        resultSet = null;
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.retrieve();
+            statement = connection.prepareStatement(GET_CLIENT_BY_LOGIN);
+            statement.setString(1, clientLogin);
+            resultSet = statement.executeQuery();
+            if (resultSet.first()) {
+                clientEntity = createClientByResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Error with adding in database" + e);
+        } catch (ConnectionException e) {
+            throw new DaoException("Error with connection with database" + e);
+        } finally {
+            if (connectionPool != null) {
+                connectionPool.putBackConnection(connection, statement, resultSet);
+            }
+        }
+        LOGGER.log(Level.DEBUG, "Client DAO: finish get Client by login");
+        return clientEntity;
     }
 
     @Override
     public List<Client> getAllClients() throws DaoException {
-        return null;
+        LOGGER.log(Level.DEBUG, "Client DAO: Start get all clients");
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.retrieve();
+            statement = null;
+            statement = connection.prepareStatement(GET_ALL_CLIENTS);
+            resultSet = null;
+            resultSet = statement.executeQuery();
+            clientEntity = null;
+            clients = new ArrayList<>();
+            while (resultSet.next()) {
+                clientEntity = createClientByResultSet(resultSet);
+                clients.add(clientEntity);
+            }
+            LOGGER.log(Level.INFO, clients);
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                throw new DaoException(e);
+            }
+            throw new DaoException("Error of query to database(getAllclients)", e);
+        } catch (ConnectionException e) {
+            throw new DaoException("Error with connection with database" + e);
+        } finally {
+            if (connectionPool != null) {
+                connectionPool.putBackConnection(connection, statement, resultSet);
+            }
+        }
+        LOGGER.log(Level.DEBUG, "Client DAO: Finish get all clients");
+        return clients;
     }
 
     private Client createClientByResultSet(ResultSet resultSet) throws DaoException {

@@ -7,22 +7,12 @@ import java.util.List;
 
 public interface IProductDao {
     boolean addProduct(Product product) throws DaoException;
-
-    boolean deleteProduct();
-
-    Product getProductById(int id) throws DaoException;
-
     List<Product> getAllProducts() throws DaoException;
-
-    List<Product> getAscSortedByPriceProducts() throws DaoException;
-
-    List<Product> getDescSortedByPriceProducts() throws DaoException;
-
-    List<Product> getProductsByProducer(String producer) throws DaoException;
-
-    List<Product> getProductsByName(String name) throws DaoException;
-
     boolean editProduct(Product product) throws DaoException;
 
-    List<Product> getProductsByPrescription(int prescriptionStatus) throws DaoException;
+    boolean deleteProduct(Integer id) throws DaoException;
+
+    Product getProductById(Integer id) throws DaoException;
+
+    List<Product> getProductByType(String type) throws DaoException;
 }

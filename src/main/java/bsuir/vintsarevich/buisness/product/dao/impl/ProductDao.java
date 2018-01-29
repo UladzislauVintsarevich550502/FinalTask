@@ -17,19 +17,20 @@ import java.util.List;
 
 public class ProductDao implements IProductDao {
     private static final Logger LOGGER = Logger.getLogger(ProductDao.class);
-    public static String GET_ALL_PRODUCTS = "SELECT * FROM epamcafe.menu;";
-    public static String ADD_PRODUCT = "INSERT INTO menu (typeProduct,dishName,weight,cost,status,description," +
-            "picturePath) VALUES(?,?,?,?,?,?,?);";
+    public static String GET_ALL_PRODUCTS = "SELECT * FROM epamcafe.product;";
+    public static String ADD_PRODUCT = "INSERT INTO product (productType,productNameRu,productNameEn,productWeight,productCost,productStatus," +
+            "productDescriptionRu,productDescriptionEn,productImage) VALUES(?,?,?,?,?,?,?,?,?);";
+    public static String EDIT_PRODUCT = "UPDATE product SET productType=?,productNameRu=?,productNameEn=?,productWeight=?,productCost=?,productStatus=?," +
+            "productDescriptionRu=?,productDescriptionEn=?,productImage=? WHERE productId=?;";
+    public static String GET_PRODUCT_BY_ID = "SELECT * FROM epamcafe.product WHERE productId=?";
+    public static String GET_PRODUCT_BY_TYPE = "SELECT *FROM epamcafe.product WHERE productType=?";
+    public static String DELETE_PRODUCT = "DELETE FROM epamcafe.product WHERE productId=?";
     private ConnectionPool connectionPool;
     private Connection connection;
     private ResultSet resultSet;
     private PreparedStatement statement;
     private Product productEntity;
     private List<Product> products;
-
-    public ProductDao() {
-    }
-
 
     @Override
     public boolean addProduct(Product product) throws DaoException {
@@ -41,17 +42,19 @@ public class ProductDao implements IProductDao {
             statement = null;
             statement = connection.prepareStatement(ADD_PRODUCT);
             statement.setString(1, product.getType());
-            statement.setString(2, product.getName());
-            statement.setInt(3, product.getWeight());
-            statement.setDouble(4, product.getCost());
-            statement.setString(5, product.getStatus());
-            statement.setString(6, product.getDescription());
-            statement.setString(7, product.getImagePath());
+            statement.setString(2, product.getNameRu());
+            statement.setString(3, product.getNameEn());
+            statement.setInt(4, product.getWeight());
+            statement.setDouble(5, product.getCost());
+            statement.setString(6, product.getStatus());
+            statement.setString(7, product.getDescriptionRu());
+            statement.setString(8, product.getDescriptionEn());
+            statement.setString(9, product.getImagePath());
             if (statement.executeUpdate() != 0) {
-                LOGGER.log(Level.DEBUG, "Add medicament success");
+                LOGGER.log(Level.DEBUG, "Add product success");
                 return true;
             } else {
-                LOGGER.log(Level.DEBUG, "Add medicament finish");
+                LOGGER.log(Level.DEBUG, "Add product finish");
                 return false;
             }
         } catch (SQLException e) {
@@ -60,7 +63,7 @@ public class ProductDao implements IProductDao {
             } catch (SQLException e1) {
                 throw new DaoException(e);
             }
-            throw new DaoException("Error of query to database(addMedicament)", e);
+            throw new DaoException("Error of query to database(addProduct)", e);
         } catch (ConnectionException e) {
             throw new DaoException("Error with connection with database" + e);
         } finally {
@@ -72,18 +75,8 @@ public class ProductDao implements IProductDao {
     }
 
     @Override
-    public boolean deleteProduct() {
-        return false;
-    }
-
-    @Override
-    public Product getProductById(int id) throws DaoException {
-        return null;
-    }
-
-    @Override
     public List<Product> getAllProducts() throws DaoException {
-        LOGGER.log(Level.DEBUG, "product DAO: Start get all products");
+        LOGGER.log(Level.DEBUG, "Product DAO: Start get all products");
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.retrieve();
@@ -112,51 +105,169 @@ public class ProductDao implements IProductDao {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
         }
-        LOGGER.log(Level.DEBUG, "product DAO: Finish get all products");
+        LOGGER.log(Level.DEBUG, "Product DAO: Finish get all products");
         return products;
     }
 
     @Override
-    public List<Product> getAscSortedByPriceProducts() throws DaoException {
-        return null;
-    }
-
-    @Override
-    public List<Product> getDescSortedByPriceProducts() throws DaoException {
-        return null;
-    }
-
-    @Override
-    public List<Product> getProductsByProducer(String producer) throws DaoException {
-        return null;
-    }
-
-    @Override
-    public List<Product> getProductsByName(String name) throws DaoException {
-        return null;
-    }
-
-    @Override
     public boolean editProduct(Product product) throws DaoException {
-        return false;
+        LOGGER.log(Level.DEBUG, "Product DAO: Add product start");
+        try {
+            System.out.println(product);
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.retrieve();
+            statement = null;
+            statement = connection.prepareStatement(EDIT_PRODUCT);
+            statement.setString(1, product.getType());
+            statement.setString(2, product.getNameRu());
+            statement.setString(3, product.getNameEn());
+            statement.setInt(4, product.getWeight());
+            statement.setDouble(5, product.getCost());
+            statement.setString(6, product.getStatus());
+            statement.setString(7, product.getDescriptionRu());
+            statement.setString(8, product.getDescriptionEn());
+            statement.setString(9, product.getImagePath());
+            statement.setInt(10, product.getId());
+            if (statement.executeUpdate() != 0) {
+                LOGGER.log(Level.DEBUG, "Edit Product success");
+                return true;
+            } else {
+                LOGGER.log(Level.DEBUG, "Edit Product not success");
+                return false;
+            }
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                throw new DaoException(e);
+            }
+            throw new DaoException("Error of query to database(editProduct)", e);
+        } catch (ConnectionException e) {
+            throw new DaoException("Error with connection with database" + e);
+        } finally {
+            if (connectionPool != null) {
+                connectionPool.putBackConnection(connection, statement, resultSet);
+            }
+            LOGGER.log(Level.DEBUG, "Product DAO: Edit product finish");
+        }
     }
 
     @Override
-    public List<Product> getProductsByPrescription(int prescriptionStatus) throws DaoException {
-        return null;
+    public boolean deleteProduct(Integer id) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Product DAO: Delete product start");
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.retrieve();
+            statement = connection.prepareStatement(DELETE_PRODUCT);
+            statement.setInt(1, id);
+            if (statement.executeUpdate() != 0) {
+                LOGGER.log(Level.DEBUG, "Delete product success");
+                return true;
+            } else {
+                LOGGER.log(Level.DEBUG, "Delete product finish");
+                return false;
+            }
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                throw new DaoException(e);
+            }
+            throw new DaoException("Error of query to database(deleteProduct)", e);
+        } catch (ConnectionException e) {
+            throw new DaoException("Error with connection with database" + e);
+        } finally {
+            if (connectionPool != null) {
+                connectionPool.putBackConnection(connection, statement, resultSet);
+            }
+            LOGGER.log(Level.DEBUG, "Product DAO: Delete product finish");
+        }
+    }
+
+    @Override
+    public Product getProductById(Integer id) throws DaoException {
+        LOGGER.log(Level.DEBUG, "product DAO: Start get product by ID");
+        productEntity = null;
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.retrieve();
+            statement = null;
+            statement = connection.prepareStatement(GET_PRODUCT_BY_ID);
+            statement.setInt(1, id);
+            resultSet = null;
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                productEntity = createProductByResultSet(resultSet);
+            }
+            LOGGER.log(Level.INFO, products);
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                throw new DaoException(e);
+            }
+            throw new DaoException("Error of query to database(getAllproducts)", e);
+        } catch (ConnectionException e) {
+            throw new DaoException("Error with connection with database" + e);
+        } finally {
+            if (connectionPool != null) {
+                connectionPool.putBackConnection(connection, statement, resultSet);
+            }
+        }
+        LOGGER.log(Level.DEBUG, "product DAO: get product by ID");
+        return productEntity;
+    }
+
+    @Override
+    public List<Product> getProductByType(String type) throws DaoException {
+        LOGGER.log(Level.DEBUG, "product DAO: Start get product by type");
+        productEntity = null;
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.retrieve();
+            statement = null;
+            statement = connection.prepareStatement(GET_PRODUCT_BY_TYPE);
+            statement.setString(1, type);
+            resultSet = null;
+            resultSet = statement.executeQuery();
+            products = new ArrayList<>();
+            while (resultSet.next()) {
+                products.add(createProductByResultSet(resultSet));
+            }
+            LOGGER.log(Level.INFO, products);
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                throw new DaoException(e);
+            }
+            throw new DaoException("Error of query to database(getAllproducts)", e);
+        } catch (ConnectionException e) {
+            throw new DaoException("Error with connection with database" + e);
+        } catch (DaoException e) {
+            e.printStackTrace();
+        } finally {
+            if (connectionPool != null) {
+                connectionPool.putBackConnection(connection, statement, resultSet);
+            }
+        }
+        LOGGER.log(Level.DEBUG, "product DAO: finish get product by Type");
+        return products;
     }
 
     private Product createProductByResultSet(ResultSet resultSet) throws DaoException {
         Product product = new Product();
         try {
             product.setId(resultSet.getInt("productId"));
-            product.setType(resultSet.getString("typeProduct"));
-            product.setName(resultSet.getString("dishName"));
-            product.setWeight(resultSet.getInt("weight"));
-            product.setCost(resultSet.getDouble("cost"));
-            product.setStatus(resultSet.getString("status"));
-            product.setDescription(resultSet.getString("description"));
-            product.setImagePath(resultSet.getString("picturePath"));
+            product.setType(resultSet.getString("productType"));
+            product.setNameRu(resultSet.getString("productNameRu"));
+            product.setNameEn(resultSet.getString("productNameEn"));
+            product.setWeight(resultSet.getInt("productWeight"));
+            product.setCost(resultSet.getDouble("productCost"));
+            product.setStatus(resultSet.getString("productStatus"));
+            product.setDescriptionRu(resultSet.getString("productDescriptionRu"));
+            product.setDescriptionEn(resultSet.getString("productDescriptionEn"));
+            product.setImagePath(resultSet.getString("productImage"));
         } catch (SQLException e) {
             throw new DaoException(e);
         }

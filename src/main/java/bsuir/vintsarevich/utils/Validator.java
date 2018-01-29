@@ -12,7 +12,6 @@ public class Validator {
     private static final String REGEX_FOR_PASSWORD = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{6,}";
     private static final String REGEX_FOR_EMAIL = "[0-9a-z_-]+@[0-9a-z_-]+\\.[a-z]{2,5}";
     private static final String REGEX_FOR_DATE = "(19|20)\\d\\d-((0[1-9]|1[012])-(0[1-9]|[12]\\d)|(0[13-9]|1[012])-30|(0[13578]|1[02])-31)";
-    private static final String REGEX_FOR_NUMBER = "\\d+";
 
     private static Pattern pattern;
     private static Matcher matcher;
@@ -32,7 +31,6 @@ public class Validator {
             }
         }
     }
-
 
     public final static void matchDate(String... strings) throws ValidatorException {
         pattern = Pattern.compile(REGEX_FOR_DATE);
@@ -89,14 +87,4 @@ public class Validator {
         }
     }
 
-    public final static void matchNumber(String... strings) throws ValidatorException {
-        pattern = Pattern.compile(REGEX_FOR_NUMBER);
-        for (String s : strings) {
-            matcher = pattern.matcher(s);
-            if (!matcher.matches() || Integer.parseInt(s) < 0) {
-                throw new ValidatorException("number format error");
-            }
-        }
-
-    }
 }

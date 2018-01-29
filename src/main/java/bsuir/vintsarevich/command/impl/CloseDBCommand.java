@@ -16,7 +16,7 @@ public class CloseDBCommand implements ICloseDBCommand {
             ICloseDB closeDB = new CloseDB();
             closeDB.closeConnections();
         } catch (ServiceException e) {
-            LOGGER.log(Level.DEBUG, "Problem with closing Data Base");
+            LOGGER.log(Level.DEBUG, "Problem with closing Data Base:" + e.getMessage());
         }
     }
 }

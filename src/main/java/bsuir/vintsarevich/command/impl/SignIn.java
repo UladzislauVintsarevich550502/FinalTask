@@ -26,7 +26,7 @@ public class SignIn implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.log(Level.INFO, "Command: Start Sign In");
+        LOGGER.log(Level.INFO, "Sign in command start");
         String login = request.getParameter(JspElemetName.SIGNIN_LOGIN.getValue());
         String password = request.getParameter(JspElemetName.SIGNIN_PASSWORD.getValue());
         System.out.println(login);
@@ -45,27 +45,27 @@ public class SignIn implements ICommand {
         LOGGER.log(Level.INFO, client);
         try {
             if (client != null) {
-                user = new User(client.getId(), client.getLogin(), "client");
+                user = new User(client.getId(), client.getLogin(), "client", client.getName(), client.getSurname());
                 HttpSession session = request.getSession();
                 session.setAttribute(JspElemetName.USER.getValue(), user);
                 LOGGER.log(Level.INFO, "Successfull sign in account as " + login);
                 response.sendRedirect("/index.do");
             } else {
                 if (admin != null) {
-                    user = new User(admin.getId(), admin.getLogin(), "admin");
+                    user = new User(admin.getId(), admin.getLogin(), "admin", null, null);
                     HttpSession session = request.getSession();
                     session.setAttribute(JspElemetName.USER.getValue(), user);
                     LOGGER.log(Level.INFO, "Successfull sign in account as " + login);
                     response.sendRedirect("/index.do");
                 }
                 LOGGER.log(Level.INFO, "Unsuccessfully sign in account.");
-                request.setAttribute(jspElemetName.getValue(), "such user is not exist");
+                request.setAttribute(jspElemetName.getValue(), "Such user is not exist");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        LOGGER.log(Level.INFO, "Command: Finish Sign In");
+        LOGGER.log(Level.INFO, "Sign in command finish");
         return jspPageName.getPath();
     }
 }

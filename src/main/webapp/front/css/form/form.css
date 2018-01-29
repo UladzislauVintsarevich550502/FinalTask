@@ -398,8 +398,16 @@ input#lang_ru, input#lang_en {
     color: rgba(0, 0, 0, 0);
 }
 
-input[type="text"]#descrirtion, input[type="text"]#name, input[type="text"]#descrirtion {
+input#name-ru, input#name-en, input#value, input#cost, input#image, select#status, select#product-type {
+    margin-bottom: 10px;
+    font-size: 15px;
+    font-style: inherit;
+}
 
+input#descrirtion-ru, input#descrirtion-en {
+    margin-bottom: 10px;
+    font-size: 15px;
+    font-style: inherit;
 }
 
 form#c-locale {

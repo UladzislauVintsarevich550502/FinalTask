@@ -21,18 +21,21 @@
 
     <fmt:setLocale scope="session" value="${locale}"/>
     <fmt:setBundle basename="localization.pageInformation" scope="session" var="loc"/>
+    <fmt:message bundle="${loc}" key="local.word.welcome" var="welcome_word"/>
+    <fmt:message bundle="${loc}" key="local.word.cafename_with_other_information"
+                 var="cafename_with_other_information_word"/>
+    <fmt:message bundle="${loc}" key="local.word.cafe_description" var="cafe_description_word"/>
     <fmt:message bundle="${loc}" key="local.word.login" var="login_word"/>
     <fmt:message bundle="${loc}" key="local.word.password" var="password_word"/>
     <fmt:message bundle="${loc}" key="local.word.name" var="name_word"/>
-    <fmt:message bundle="${loc}" key="local.word.lastname" var="lastname_word"/>
-    <fmt:message bundle="${loc}" key="local.word.rating" var="raiting_word"/>
-    <fmt:message bundle="${loc}" key="local.button.make_as_admin" var="make_admin_but"/>
-    <fmt:message bundle="${loc}" key="local.button.make_as_user" var="make_user_but"/>
-    <fmt:message bundle="${loc}" key="local.button.block" var="block_but"/>
-    <fmt:message bundle="${loc}" key="local.button.unblock" var="unblock_but"/>
-    <fmt:message bundle="${loc}" key="local.question.deleted" var="question_deleted"/>
-    <fmt:message bundle="${loc}" key="local.word.change_user_rating" var="change_user_rating"/>
-
+    <fmt:message bundle="${loc}" key="local.word.surname" var="surname_word"/>
+    <fmt:message bundle="${loc}" key="local.word.remember" var="remember_word"/>
+    <fmt:message bundle="${loc}" key="local.word.email" var="email_word"/>
+    <fmt:message bundle="${loc}" key="local.button.signin" var="signin_button"/>
+    <fmt:message bundle="${loc}" key="local.button.signup" var="signup_button"/>
+    <fmt:message bundle="${loc}" key="local.button.signout" var="signout_button"/>
+    <fmt:message bundle="${loc}" key="local.button.create" var="create_button"/>
+    <fmt:message bundle="${loc}" key="local.button.comein" var="comein_button"/>
     <title>Epam Cafe</title>
 </head>
 <body>
@@ -51,7 +54,7 @@
             <!-- Section -->
             <section>
                 <header class="major">
-                    <h2>${name_word}</h2>
+                    <h2>${login_word}</h2>
                 </header>
                 <div class="posts">
                     <c:choose>
@@ -60,8 +63,16 @@
                                 <article>
                                     <a href="#" class="image"><img src="images/products/${product.imagePath}"
                                                                    alt=""/></a>
-                                    <h3>${product.name}</h3>
-                                    <p>${product.description}</p>
+                                    <c:choose>
+                                        <c:when test="${locale eq 'ru'}">
+                                            <h3>${product.nameRu}</h3>
+                                            <p>${product.descriptionRu}</p>
+                                        </c:when>
+                                        <c:when test="${locale eq 'en'}">
+                                            <h3>${product.nameEn}</h3>
+                                            <p>${product.descriptionEn}</p>
+                                        </c:when>
+                                    </c:choose>
                                     <ul class="actions">
                                         <li><a href="/product.do?id=${product.id}" class="button">Просмотреть</a></li>
                                     </ul>
@@ -75,22 +86,26 @@
                     <article>
                         <form method="post" id="add-product" action="/add_product.do" enctype="multipart/form-data">
                             <h2>Добавление продукта</h2>
-                            <select name="product_type">
+                            <select id="product-type" name="product_type">
                                 <option value="" disabled selected>Тип продукта</option>
                                 <option value="drink">Напиток</option>
                                 <option value="food">Еда</option>
                             </select>
-                            <input type="text" name="name" id="name" placeholder="Название">
+                            <input type="text" name="name_ru" id="name-ru" placeholder="Название на русском">
+                            <input type="text" name="name_en" id="name-en" placeholder="Название на английском">
                             <input type="text" name="value" id="value" placeholder="Объем">
                             <input type="text" name="cost" id="cost" placeholder="Цена">
-                            <select name="status">
+                            <select id="status" name="status">
                                 <option value="" disabled selected>Наличие</option>
                                 <option value="false">Нет в наличии</option>
                                 <option value="true">Есть в наличии</option>
                             </select>
-                            <input type="text" name="descrirtion" id="descrirtion" placeholder="Описание">
+                            <input type="text" name="description_ru" id="descrirtion-ru"
+                                   placeholder="Описание на русском">
+                            <input type="text" name="description_en" id="descrirtion-en"
+                                   placeholder="Описание на русском">
                             <input type="file" name="image" id="image">
-                            <input type="submit" value="Добавить">
+                            <input type="submit" id="add" value="Добавить">
                         </form>
                     </article>
                 </div>

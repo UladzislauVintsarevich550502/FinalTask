@@ -35,7 +35,7 @@ public class SignUp implements ICommand {
             String email = request.getParameter(JspElemetName.SIGNUP_EMAIL.getValue());
             System.out.println(email);
             Client client = clientService.signUp(name, surname, login, password, email);
-            User user = new User(client.getId(), client.getLogin(), "client");
+            User user = new User(client.getId(), client.getLogin(), "client", client.getName(), client.getSurname());
             HttpSession session = request.getSession();
             session.setAttribute(JspElemetName.USER.getValue(), user);
             LOGGER.log(Level.INFO, "Successfull sign in account as " + login);

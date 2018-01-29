@@ -8,13 +8,9 @@ import java.util.List;
 public interface IClientDao {
     Client addClient(Client client) throws DaoException;
 
-    Client findClientByLogin(String login) throws DaoException;
-
-    boolean signUp(Client client) throws DaoException;
-
+    boolean deleteClient(Integer id) throws DaoException;
     Client signIn(String login, String password) throws DaoException;
 
-    Client getClientById(int id) throws DaoException;
-
+    Client getClientByLogin(String clientLogin) throws DaoException;
     List<Client> getAllClients() throws DaoException;
 }

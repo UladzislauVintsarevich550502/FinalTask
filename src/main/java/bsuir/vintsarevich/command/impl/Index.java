@@ -22,8 +22,8 @@ public class Index implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        LOGGER.log(Level.INFO, "Index command start");
         try {
-            LOGGER.log(Level.INFO, "Index command");
             IProductService producteService = serviceFactory.getProducteService();
             List<Product> products = producteService.getAllProducts();
             request.setAttribute("products", products);
@@ -34,6 +34,7 @@ public class Index implements ICommand {
         } catch (ServiceException e) {
             LOGGER.log(Level.ERROR, this.getClass() + e.getMessage());
         }
+        LOGGER.log(Level.INFO, "Index command finish");
         return jspPageName.getPath();
     }
 }

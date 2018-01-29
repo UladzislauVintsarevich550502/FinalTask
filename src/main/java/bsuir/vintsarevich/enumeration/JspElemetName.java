@@ -13,11 +13,13 @@ public enum JspElemetName {
     INFORMATION("information"),
     LOCALE("locale"),
     PRODUCT_TYPE("product_type"),
-    NAME("name"),
+    NAME_RU("name_ru"),
+    NAME_EN("name_en"),
     VALUE("value"),
     COST("cost"),
     STATUS("status"),
-    DESCRIPTION("description"),
+    DESCRIPTION_RU("description_ru"),
+    DESCRIPTION_EN("description_en"),
     IMAGE("image");
 
     private String value;

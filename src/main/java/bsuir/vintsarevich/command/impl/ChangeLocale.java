@@ -15,7 +15,7 @@ public class ChangeLocale implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.log(Level.DEBUG, "Change locale is starting");
+        LOGGER.log(Level.DEBUG, "Change locale start");
         try {
             String locale = (String) request.getSession().getAttribute("locale");
             if (locale == "ru") {
@@ -25,9 +25,9 @@ public class ChangeLocale implements ICommand {
             }
             response.sendRedirect("/index.do");
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "Change locale is finishing");
+        LOGGER.log(Level.DEBUG, "Change locale finish");
         return jspPageName.getPath();
     }
 }

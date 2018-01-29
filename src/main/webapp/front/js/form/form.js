@@ -43,9 +43,9 @@ jQuery(document).ready(function ($) {
         var $this = $(this),
             $password_field = $this.prev('input');
 
-        ( 'password' == $password_field.attr('type') ) ? $password_field.attr('type', 'text') : $password_field.attr('type', 'password');
-        ( $i == 1) ? $i = 2 : $i = 1;
-        ( 1 == $i) ? $(this).css('backgroundImage', 'url(/images/icon/visible.png)') : $(this).css('backgroundImage', 'url(/images/icon/not_visible.png)');
+        ('password' == $password_field.attr('type') ) ? $password_field.attr('type', 'text') : $password_field.attr('type', 'password');
+        ($i == 1) ? $i = 2 : $i = 1;
+        (1 == $i) ? $(this).css('backgroundImage', 'url(/images/icon/visible.png)') : $(this).css('backgroundImage', 'url(/images/icon/not_visible.png)');
         //фокус и перемещение курсора в конец поля ввода
         $password_field.putCursorAtEnd();
     });

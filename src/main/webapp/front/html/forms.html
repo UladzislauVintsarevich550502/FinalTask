@@ -2,8 +2,8 @@
 <div class="cd-user-modal"> <!-- все формы на фоне затемнения-->
     <div class="cd-user-modal-container"> <!-- основной контейнер -->
         <ul class="cd-switcher">
-            <li><a href="#0">Вход</a></li>
-            <li><a href="#0">Регистрация</a></li>
+            <li><a href="#0">${signin_button}</a></li>
+            <li><a href="#0">${signup_button}</a></li>
         </ul>
 
         <div id="login"> <!-- форма входа -->
@@ -11,25 +11,25 @@
                 <p class="fieldset">
                     <label class="image-replace cd-login" for="signin-login">Логин</label>
                     <input class="full-width has-padding has-border" name="signin_login" id="signin-login" type="text"
-                           placeholder="Login">
+                           placeholder="${login_word}">
                     <span class="cd-error-message">Здесь сообщение об ошибке!</span>
                 </p>
 
                 <p class="fieldset">
                     <label class="image-replace cd-password" for="signin-password">Пароль</label>
                     <input class="full-width has-padding has-border" name="signin_password" id="signin-password"
-                           type="text" placeholder="Пароль">
+                           type="text" placeholder="${password_word}">
                     <a href="#0" class="hide-password">""</a>
                     <span class="cd-error-message">Здесь сообщение об ошибке!</span>
                 </p>
 
                 <p class="fieldset">
                     <input type="checkbox" id="remember-me" checked>
-                    <label for="remember-me">Запомнить меня</label>
+                    <label for="remember-me">${remember_word}</label>
                 </p>
 
                 <p class="fieldset">
-                    <input class="full-width" type="submit" value="Войти">
+                    <input class="full-width" type="submit" value=${comein_button}>
                 </p>
             </form>
 
@@ -43,28 +43,28 @@
                     <label class="image-replace cd-surname" for="signup-surname">Фамилия</label>
                     <input class="full-width has-padding has-border" name="signup_surname" id="signup-surname"
                            type="text"
-                           placeholder="Фамилия">
+                           placeholder=${surname_word}>
                     <span class="cd-error-message">Здесь сообщение об ошибке!</span>
                 </p>
 
                 <p class="fieldset">
                     <label class="image-replace cd-name" for="signup-name">Имя</label>
                     <input class="full-width has-padding has-border" name="signup_name" id="signup-name" type="text"
-                           placeholder="Имя">
+                           placeholder=${name_word}>
                     <span class="cd-error-message">Здесь сообщение об ошибке!</span>
                 </p>
 
                 <p class="fieldset">
                     <label class="image-replace cd-login" for="signin-login">Login</label>
                     <input class="full-width has-padding has-border" name="signup_login" id="signup-login" type="text"
-                           placeholder="Login">
+                           placeholder=${login_word}>
                     <span class="cd-error-message">Здесь сообщение об ошибке!</span>
                 </p>
 
                 <p class="fieldset">
                     <label class="image-replace cd-email" for="signup-email">E-mail</label>
                     <input class="full-width has-padding has-border" name="signup_email" id="signup-email"
-                           type="email" placeholder="E-mail">
+                           type="email" placeholder=${email_word}>
                     <span class="cd-error-message">Здесь сообщение об ошибке!</span>
                 </p>
 
@@ -72,7 +72,7 @@
                     <label class="image-replace cd-password" for="signup-password">Пароль</label>
                     <input class="full-width has-padding has-border" name="signup_password" id="signup-password"
                            type="text"
-                           placeholder="Пароль">
+                           placeholder=${password_word}>
                     <a href="#0" class="hide-password">""</a>
                     <span class="cd-error-message">Здесь сообщение об ошибке!</span>
                 </p>
@@ -80,22 +80,16 @@
                 <p class="fieldset">
                     <label class="image-replace cd-password" for="signup-rePassword">Повторите пароль</label>
                     <input class="full-width has-padding has-border" id="signup-rePassword" type="text"
-                           placeholder="Пароль">
+                           placeholder=${password_word}>
                     <a href="#0" class="hide-password">""</a>
                     <span class="cd-error-message">Здесь сообщение об ошибке!</span>
                 </p>
 
                 <p class="fieldset">
-                    <input type="checkbox" id="accept-terms">
-                    <label for="accept-terms">Я согласен с <a href="#0">Условиями</a></label>
-                </p>
-
-                <p class="fieldset">
-                    <input class="full-width" type="submit" value="Создать аккаунт">
+                    <input class="full-width" type="submit" value=${create_button}>
                 </p>
             </form>
 
-            <!-- <a href="#0" class="cd-close-form">Close</a> -->
         </div> <!-- cd-signup -->
 
         <div id="cd-reset-password"> <!-- форма восстановления пароля -->
@@ -106,7 +100,7 @@
                 <p class="fieldset">
                     <label class="image-replace cd-email" for="reset-email">E-mail</label>
                     <input class="full-width has-padding has-border" id="reset-email" type="email"
-                           placeholder="E-mail">
+                           placeholder={email_word}>
                     <span class="cd-error-message">Здесь сообщение об ошибке!</span>
                 </p>
 

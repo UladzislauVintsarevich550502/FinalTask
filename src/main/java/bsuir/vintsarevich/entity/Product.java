@@ -3,24 +3,27 @@ package bsuir.vintsarevich.entity;
 public class Product {
     private Integer id;
     private String type;
-    private String name;
-    private int weight;
-    private double cost;
+    private String nameRu;
+    private String nameEn;
+    private Integer weight;
+    private Double cost;
     private String status;
-    private String description;
+    private String descriptionRu;
+    private String descriptionEn;
     private String imagePath;
 
     public Product() {
     }
 
-    public Product(Integer id, String type, String name, int weight, double cost, String status, String description, String imagePath) {
-        this.id = id;
+    public Product(String type, String nameRu, String nameEn, Integer weight, Double cost, String status, String descriptionRu, String descriptionEn, String imagePath) {
         this.type = type;
-        this.name = name;
+        this.nameRu = nameRu;
+        this.nameEn = nameEn;
         this.weight = weight;
         this.cost = cost;
         this.status = status;
-        this.description = description;
+        this.descriptionRu = descriptionRu;
+        this.descriptionEn = descriptionEn;
         this.imagePath = imagePath;
     }
 
@@ -40,27 +43,35 @@ public class Product {
         this.type = type;
     }
 
-    public String getName() {
-        return name;
+    public String getNameRu() {
+        return nameRu;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNameRu(String nameRu) {
+        this.nameRu = nameRu;
     }
 
-    public int getWeight() {
+    public String getNameEn() {
+        return nameEn;
+    }
+
+    public void setNameEn(String nameEn) {
+        this.nameEn = nameEn;
+    }
+
+    public Integer getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(Integer weight) {
         this.weight = weight;
     }
 
-    public double getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(double cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 
@@ -72,12 +83,20 @@ public class Product {
         this.status = status;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDescriptionRu() {
+        return descriptionRu;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescriptionRu(String descriptionRu) {
+        this.descriptionRu = descriptionRu;
+    }
+
+    public String getDescriptionEn() {
+        return descriptionEn;
+    }
+
+    public void setDescriptionEn(String descriptionEn) {
+        this.descriptionEn = descriptionEn;
     }
 
     public String getImagePath() {
@@ -86,6 +105,22 @@ public class Product {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", nameRu='" + nameRu + '\'' +
+                ", nameEn='" + nameEn + '\'' +
+                ", weight=" + weight +
+                ", cost=" + cost +
+                ", status='" + status + '\'' +
+                ", descriptionRu='" + descriptionRu + '\'' +
+                ", descriptionEn='" + descriptionEn + '\'' +
+                ", imagePath='" + imagePath + '\'' +
+                '}';
     }
 
     @Override
@@ -99,9 +134,13 @@ public class Product {
         if (Double.compare(product.cost, cost) != 0) return false;
         if (id != null ? !id.equals(product.id) : product.id != null) return false;
         if (type != null ? !type.equals(product.type) : product.type != null) return false;
-        if (name != null ? !name.equals(product.name) : product.name != null) return false;
+        if (nameRu != null ? !nameRu.equals(product.nameRu) : product.nameRu != null) return false;
+        if (nameEn != null ? !nameEn.equals(product.nameEn) : product.nameEn != null) return false;
         if (status != null ? !status.equals(product.status) : product.status != null) return false;
-        if (description != null ? !description.equals(product.description) : product.description != null) return false;
+        if (descriptionRu != null ? !descriptionRu.equals(product.descriptionRu) : product.descriptionRu != null)
+            return false;
+        if (descriptionEn != null ? !descriptionEn.equals(product.descriptionEn) : product.descriptionEn != null)
+            return false;
         return imagePath != null ? imagePath.equals(product.imagePath) : product.imagePath == null;
     }
 
@@ -111,27 +150,15 @@ public class Product {
         long temp;
         result = id != null ? id.hashCode() : 0;
         result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (nameRu != null ? nameRu.hashCode() : 0);
+        result = 31 * result + (nameEn != null ? nameEn.hashCode() : 0);
         result = 31 * result + weight;
         temp = Double.doubleToLongBits(cost);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (status != null ? status.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (descriptionRu != null ? descriptionRu.hashCode() : 0);
+        result = 31 * result + (descriptionEn != null ? descriptionEn.hashCode() : 0);
         result = 31 * result + (imagePath != null ? imagePath.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                ", name='" + name + '\'' +
-                ", weight=" + weight +
-                ", cost=" + cost +
-                ", status='" + status + '\'' +
-                ", description='" + description + '\'' +
-                ", imagePath='" + imagePath + '\'' +
-                '}';
     }
 }
