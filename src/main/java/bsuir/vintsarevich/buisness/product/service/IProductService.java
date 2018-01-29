@@ -13,6 +13,8 @@ public interface IProductService {
     void addProduct(String type, String nameRu, String nameEn, Integer weight, Double cost, String status, String descriptionRu,
                     String descriptionEn, Part image, String webPath) throws ServiceException, ServiceLogicException;
 
+    List<Product> getProductsByClientId(Integer clientId) throws ServiceException;
+
     List<Product> getProductByType(String type) throws ServiceException;
 
     boolean deleteProduct(Integer id) throws ServiceException;

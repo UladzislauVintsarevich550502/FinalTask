@@ -17,12 +17,12 @@ public final class CommandProvider {
 
     private CommandProvider() {
         repository.put(CommandName.INDEX, new Index());
-        repository.put(CommandName.ENTRY, new Entry());
         repository.put(CommandName.SIGN_IN, new SignIn());
         repository.put(CommandName.SIGN_UP, new SignUp());
         repository.put(CommandName.SIGN_OUT, new SignOut());
         repository.put(CommandName.CHANGE_LOCALE, new ChangeLocale());
         repository.put(CommandName.ADD_PRODUCT, new AddProduct());
+        repository.put(CommandName.BASKET, new Basket());
     }
 
     public static CommandProvider getInstance() {

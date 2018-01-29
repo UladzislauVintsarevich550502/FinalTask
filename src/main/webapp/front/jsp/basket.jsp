@@ -51,6 +51,41 @@
 
             <%@include file="/front/html/banner.html" %>
 
+            <!-- Section -->
+            <section>
+                <header class="major">
+                    <h2>${login_word}</h2>
+                </header>
+                <div class="posts">
+                    <c:choose>
+                        <c:when test="${products!=null}">
+                            <c:forEach var="product" items="${products}">
+                                <article>
+                                    <a href="#" class="image"><img src="images/products/${product.imagePath}"
+                                                                   alt=""/></a>
+                                    <c:choose>
+                                        <c:when test="${locale eq 'ru'}">
+                                            <h3>${product.nameRu}</h3>
+                                            <p>${product.descriptionRu}</p>
+                                        </c:when>
+                                        <c:when test="${locale eq 'en'}">
+                                            <h3>${product.nameEn}</h3>
+                                            <p>${product.descriptionEn}</p>
+                                        </c:when>
+                                    </c:choose>
+                                    <ul class="actions">
+                                        <li><a href="/product.do?id=${product.id}" class="button">Просмотреть</a></li>
+                                    </ul>
+                                </article>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <h2>Ничего не найдено</h2>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </section>
+
         </div>
     </div>
 

@@ -9,7 +9,7 @@ public class Validator {
 
     private static final String REGEX_FOR_PROPER_NAME = "([A-Z]{1}[a-z]+)|([А-Я]{1}[а-я]+)";
     private static final String REGEX_FOR_LOGIN = "^[a-zA-Z](.[a-zA-Z0-9_-]*)$";
-    private static final String REGEX_FOR_PASSWORD = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{6,}";
+    private static final String REGEX_FOR_PASSWORD = "\\w{6,}";
     private static final String REGEX_FOR_EMAIL = "[0-9a-z_-]+@[0-9a-z_-]+\\.[a-z]{2,5}";
     private static final String REGEX_FOR_DATE = "(19|20)\\d\\d-((0[1-9]|1[012])-(0[1-9]|[12]\\d)|(0[13-9]|1[012])-30|(0[13578]|1[02])-31)";
 

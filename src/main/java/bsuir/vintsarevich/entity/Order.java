@@ -4,12 +4,10 @@ public class Order {
     private Integer id;
     private String data;
     private String status;
-    private String cost;
+    private Double cost;
     private Integer clientId;
 
-    public Order(String data, String status, String cost, Integer clientId) {
-        this.id = id;
-        this.data = data;
+    public Order(String status, Double cost, Integer clientId) {
         this.status = status;
         this.cost = cost;
         this.clientId = clientId;
@@ -39,11 +37,11 @@ public class Order {
         this.status = status;
     }
 
-    public String getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(String cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 
@@ -61,7 +59,7 @@ public class Order {
                 "id=" + id +
                 ", data='" + data + '\'' +
                 ", status='" + status + '\'' +
-                ", cost='" + cost + '\'' +
+                ", cost=" + cost +
                 ", clientId=" + clientId +
                 '}';
     }

@@ -25,12 +25,55 @@ public class ProductDao implements IProductDao {
     public static String GET_PRODUCT_BY_ID = "SELECT * FROM epamcafe.product WHERE productId=?";
     public static String GET_PRODUCT_BY_TYPE = "SELECT *FROM epamcafe.product WHERE productType=?";
     public static String DELETE_PRODUCT = "DELETE FROM epamcafe.product WHERE productId=?";
+    public static String GET_PRODUCT_BY_CLIENT_ID = "SELECT product.productId, product.productType,product.productNameRu," +
+            "product.productNameEn,product.productWeight,product.productCost,product.productStatus," +
+            "product.productDescriptionRu,productDescriptionEn,product.productImage " +
+            "FROM(((client join epamcafe.order ON client.clientId = epamcafe.order.clientId) JOIN orderproducts" +
+            " ON epamcafe.order.orderId = orderproducts.orderId) JOIN product " +
+            "ON product.productId = orderproducts.productId) WHERE client.clientId = ?";
     private ConnectionPool connectionPool;
     private Connection connection;
     private ResultSet resultSet;
     private PreparedStatement statement;
     private Product productEntity;
     private List<Product> products;
+
+    @Override
+    public List<Product> getProductsByClientId(Integer clientId) throws DaoException {
+        LOGGER.log(Level.DEBUG, "product DAO: Start get products by clientId");
+        productEntity = null;
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.retrieve();
+            statement = null;
+            statement = connection.prepareStatement(GET_PRODUCT_BY_CLIENT_ID);
+            statement.setInt(1, clientId);
+            resultSet = null;
+            resultSet = statement.executeQuery();
+            products = new ArrayList<>();
+            while (resultSet.next()) {
+                products.add(createProductByResultSet(resultSet));
+            }
+            LOGGER.log(Level.INFO, products);
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                throw new DaoException(e);
+            }
+            throw new DaoException("Error of query to database(get Products by Client Id)", e);
+        } catch (ConnectionException e) {
+            throw new DaoException("Error with connection with database" + e);
+        } catch (DaoException e) {
+            e.printStackTrace();
+        } finally {
+            if (connectionPool != null) {
+                connectionPool.putBackConnection(connection, statement, resultSet);
+            }
+        }
+        LOGGER.log(Level.DEBUG, "product DAO: finish get products by clientId");
+        return products;
+    }
 
     @Override
     public boolean addProduct(Product product) throws DaoException {

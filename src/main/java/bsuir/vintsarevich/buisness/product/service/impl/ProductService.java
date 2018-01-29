@@ -84,6 +84,20 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public List<Product> getProductsByClientId(Integer clientId) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "ProductService: start get product by clientId");
+        List<Product> products;
+        try {
+            IProductDao productDao = daoFactory.getProductDao();
+            products = productDao.getProductsByClientId(clientId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        LOGGER.log(Level.DEBUG, "Product Service: Finish get products by clientId");
+        return products;
+    }
+
+    @Override
     public List<Product> getProductByType(String type) throws ServiceException {
         LOGGER.log(Level.DEBUG, "ProductService: start get product by type");
         List<Product> products;

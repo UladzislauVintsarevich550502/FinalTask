@@ -1,6 +1,7 @@
 package bsuir.vintsarevich.command.impl;
 
 import bsuir.vintsarevich.buisness.client.service.IClientService;
+import bsuir.vintsarevich.buisness.order.service.IOrderService;
 import bsuir.vintsarevich.command.ICommand;
 import bsuir.vintsarevich.entity.Client;
 import bsuir.vintsarevich.entity.User;
@@ -24,6 +25,7 @@ public class SignUp implements ICommand {
         LOGGER.log(Level.INFO, "Command: Start Sign Up");
         try {
             IClientService clientService = serviceFactory.getClientService();
+            IOrderService orderService = serviceFactory.getOrderService();
             String login = request.getParameter(JspElemetName.SIGNUP_LOGIN.getValue());
             System.out.println(login);
             String password = request.getParameter(JspElemetName.SIGNUP_PASSWORD.getValue());
@@ -35,6 +37,7 @@ public class SignUp implements ICommand {
             String email = request.getParameter(JspElemetName.SIGNUP_EMAIL.getValue());
             System.out.println(email);
             Client client = clientService.signUp(name, surname, login, password, email);
+            orderService.addOrder("Not order", 0.0, client.getId());
             User user = new User(client.getId(), client.getLogin(), "client", client.getName(), client.getSurname());
             HttpSession session = request.getSession();
             session.setAttribute(JspElemetName.USER.getValue(), user);
