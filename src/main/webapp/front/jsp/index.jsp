@@ -128,6 +128,10 @@
 <script>
     <%@include file="/front/js/form/form.js"%>
 </script>
+<script>
+    <%@include file="/front/js/validation.js" %>
+</script>
+
 
 </body>
 </html>

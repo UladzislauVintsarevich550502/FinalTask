@@ -7,7 +7,7 @@
         </ul>
 
         <div id="login"> <!-- форма входа -->
-            <form class="cd-form" method="POST" action="/sign_in.do">
+            <form id="login-form" class="cd-form" method="POST" action="/sign_in.do">
                 <p class="fieldset">
                     <label class="image-replace cd-login" for="signin-login">Логин</label>
                     <input class="full-width has-padding has-border" name="signin_login" id="signin-login" type="text"
@@ -19,7 +19,7 @@
                     <label class="image-replace cd-password" for="signin-password">Пароль</label>
                     <input class="full-width has-padding has-border" name="signin_password" id="signin-password"
                            type="text" placeholder="${password_word}">
-                    <a href="#0" class="hide-password">""</a>
+                    <a href="#0" id="a-signin-password" class="hide-password">""</a>
                     <span class="cd-error-message">Здесь сообщение об ошибке!</span>
                 </p>
 
@@ -38,7 +38,7 @@
         </div> <!-- login -->
 
         <div id="cd-signup"> <!-- форма регистрации -->
-            <form class="cd-form" method="POST" action="/sign_up.do">
+            <form id="signup-form" class="cd-form" method="POST" action="/sign_up.do">
                 <p class="fieldset">
                     <label class="image-replace cd-surname" for="signup-surname">Фамилия</label>
                     <input class="full-width has-padding has-border" name="signup_surname" id="signup-surname"
@@ -48,7 +48,7 @@
                 </p>
 
                 <p class="fieldset">
-                    <label class="image-replace cd-name" for="signup-name">Имя</label>
+                    <label class="image-replace cd-name" for="signup-name">Name</label>
                     <input class="full-width has-padding has-border" name="signup_name" id="signup-name" type="text"
                            placeholder=${name_word}>
                     <span class="cd-error-message">Здесь сообщение об ошибке!</span>
@@ -69,7 +69,7 @@
                 </p>
 
                 <p class="fieldset">
-                    <label class="image-replace cd-password" for="signup-password">Пароль</label>
+                    <label class="image-replace cd-password" for="signup-password">Password</label>
                     <input class="full-width has-padding has-border" name="signup_password" id="signup-password"
                            type="text"
                            placeholder=${password_word}>
@@ -78,7 +78,7 @@
                 </p>
 
                 <p class="fieldset">
-                    <label class="image-replace cd-password" for="signup-rePassword">Повторите пароль</label>
+                    <label class="image-replace cd-password" for="signup-rePassword">rePassword</label>
                     <input class="full-width has-padding has-border" id="signup-rePassword" type="text"
                            placeholder=${password_word}>
                     <a href="#0" class="hide-password">""</a>
