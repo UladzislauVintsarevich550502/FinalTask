@@ -171,6 +171,10 @@ xsigin/signup popup
     background-image: url(/images/icon/cd-icon-email.png);
 }
 
+input#add {
+    width: 100%;
+}
+
 .cd-form label.cd-password {
     background-image: url(/images/icon/cd-icon-password.png);
 }
@@ -213,6 +217,26 @@ xsigin/signup popup
 }
 
 .cd-form .hide-password {
+    display: inline-block;
+    position: absolute;
+    color: rgba(255, 0, 107, 0);
+    background-image: url(/images/icon/visible.png);
+    background-size: cover;
+    right: 0;
+    top: 0;
+    padding: 6px 15px;
+    border-left: 1px solid #d2d8d8;
+    top: 50%;
+    bottom: auto;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    font-size: 0.875rem;
+}
+
+.cd-form .image-load {
     display: inline-block;
     position: absolute;
     color: rgba(255, 0, 107, 0);
@@ -376,6 +400,10 @@ a.cd-signin:hover, a.cd-signup:hover {
     padding: 12px;
 }
 
+#add-form {
+    margin-bottom: 30px;
+}
+
 input#lang_en {
     background-image: url(/images/flags/english.png);
 }
@@ -392,14 +420,21 @@ input#lang_ru, input#lang_en {
     height: 20px;
     width: 30px;
     max-width: 30px;
+    max-width: 30px;
     float: right;
     color: rgba(0, 0, 0, 0);
 }
 
-input#name-ru, input#name-en, input#value, input#cost, input#image, select#status, select#product-type {
+input#image-name {
+    margin-top: -3%;
+}
+
+input#name-ru, input#name-en, input#value, input#cost, input#image, select#status, select#product-type, input#descrirtion-en, input#descrirtion-ru, input#image-name {
     margin-bottom: 10px;
     font-size: 15px;
     font-style: inherit;
+    padding-left: 10px;
+    color: #9fa3a6;
 }
 
 input#descrirtion-ru, input#descrirtion-en {

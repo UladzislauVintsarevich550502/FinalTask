@@ -25,7 +25,7 @@ public class Basket implements ICommand {
         try {
             Integer clentId = ((User) request.getSession().getAttribute("user")).getId();
             IProductService producteService = serviceFactory.getProducteService();
-            List<Product> products = producteService.getProductsByClientId(clentId);
+            List<Product> products = producteService.getProductByClientId(clentId);
             request.setAttribute("products", products);
         } catch (ServiceException e) {
             LOGGER.log(Level.ERROR, this.getClass() + ":" + e.getMessage());

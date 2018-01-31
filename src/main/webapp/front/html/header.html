@@ -4,14 +4,14 @@
     <form method="post" id="c-locale" action="/change_locale.do">
         <c:choose>
             <c:when test="${locale eq 'ru'}">
-                <input type="submit" id="lang_ru">
+                <input type="submit" id="lang_en">
             </c:when>
             <c:when test="${locale eq 'en'}">
-                <input type="submit" id="lang_en">
+                <input type="submit" id="lang_ru">
             </c:when>
         </c:choose>
     </form>
-    <a href="index.do" class="logo"><strong>Home</strong></a>
+    <a href="index.do" class="logo"><strong>${home_word}</strong></a>
     <div class="reg-conteiner">
         <c:choose>
             <c:when test="${user == null}">
@@ -24,12 +24,12 @@
             </c:when>
             <c:when test="${user.role eq 'admin'}">
                 <form method="POST" action="/sign_out.do">
-                    <input type="submit" class="cd-exit" href="#0" value="Выход">
+                    <input type="submit" class="cd-exit" href="#0" value=${exit_word}>
                 </form>
             </c:when>
             <c:when test="${user.role eq 'client'}">
                 <form method="POST" action="/sign_out.do">
-                    <input type="submit" class="cd-exit" href="#0" value="Выход">
+                    <input type="submit" class="cd-exit" href="#0" value=${exit_word}>
                 </form>
             </c:when>
         </c:choose>

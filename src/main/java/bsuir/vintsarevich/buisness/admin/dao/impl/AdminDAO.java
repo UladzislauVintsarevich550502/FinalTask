@@ -1,5 +1,6 @@
 package bsuir.vintsarevich.buisness.admin.dao.impl;
 
+
 import bsuir.vintsarevich.buisness.admin.dao.IAdminDao;
 import bsuir.vintsarevich.connectionpool.ConnectionPool;
 import bsuir.vintsarevich.entity.Admin;
@@ -17,10 +18,10 @@ import java.util.List;
 
 public class AdminDAO implements IAdminDao {
     public static String GET_ADMIN_BY_LOGIN_AND_PASSWORD = "SELECT * FROM epamcafe.admin WHERE adminLogin=? AND adminPassword=?;";
+    public static String GET_ADMIN_BY_LOGIN = "SELECT * FROM epamcafe.admin WHERE adminLogin=?";
     public static String ADD_ADMIN = "INSERT INTO admin (adminLogin, adminPassword) VALUES(?,?)";
     public static String DELETE_ADMIN = "DELETE FROM epamcafe.admin WHERE adminId=?";
     public static String GET_ALL_ADMINS = "SELECT *FROM epamcafe.admin";
-    public static String GET_ADMIN_BY_LOGIN = "SELECT * FROM epamcafe.admin WHERE adminLogin=?";
     private static final Logger LOGGER = Logger.getLogger(AdminDAO.class);
     private ConnectionPool connectionPool;
     private Connection connection;
@@ -29,9 +30,9 @@ public class AdminDAO implements IAdminDao {
     private Admin adminEnyity;
     private List<Admin> admins;
 
-    @Override
+
     public boolean addAdmin(Admin admin) throws DaoException {
-        LOGGER.log(Level.DEBUG, "Admin DAO: Add admin start");
+        LOGGER.log(Level.DEBUG, "Product DAO: Add admin start");
         try {
             System.out.println(admin);
             connectionPool = ConnectionPool.getInstance();
@@ -41,10 +42,10 @@ public class AdminDAO implements IAdminDao {
             statement.setString(1, admin.getLogin());
             statement.setString(2, admin.getPassword());
             if (statement.executeUpdate() != 0) {
-                LOGGER.log(Level.DEBUG, "Add admin success");
+                LOGGER.log(Level.DEBUG, "Add medicament success");
                 return true;
             } else {
-                LOGGER.log(Level.DEBUG, "Add admin finish");
+                LOGGER.log(Level.DEBUG, "Add medicament finish");
                 return false;
             }
         } catch (SQLException e) {
@@ -60,13 +61,13 @@ public class AdminDAO implements IAdminDao {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
-            LOGGER.log(Level.DEBUG, "Admin DAO: Add admin finish");
+            LOGGER.log(Level.DEBUG, "Product DAO: Add admin finish");
         }
     }
 
     @Override
     public boolean deleteAdmin(Integer id) throws DaoException {
-        LOGGER.log(Level.DEBUG, "Admin DAO: Delete admin start");
+        LOGGER.log(Level.DEBUG, "Product DAO: Delete product start");
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.retrieve();
@@ -92,7 +93,7 @@ public class AdminDAO implements IAdminDao {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
-            LOGGER.log(Level.DEBUG, "Admin DAO: Delete admin finish");
+            LOGGER.log(Level.DEBUG, "Product DAO: Delete admin finish");
         }
     }
 
@@ -125,6 +126,41 @@ public class AdminDAO implements IAdminDao {
     }
 
     @Override
+    public List<Admin> getAllAdmins() throws DaoException {
+        LOGGER.log(Level.DEBUG, "product DAO: Start get all admins");
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.retrieve();
+            statement = null;
+            statement = connection.prepareStatement(GET_ALL_ADMINS);
+            resultSet = null;
+            resultSet = statement.executeQuery();
+            adminEnyity = null;
+            admins = new ArrayList<>();
+            while (resultSet.next()) {
+                adminEnyity = createAdminByResultSet(resultSet);
+                admins.add(adminEnyity);
+            }
+            LOGGER.log(Level.INFO, admins);
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                throw new DaoException(e);
+            }
+            throw new DaoException("Error of query to database(getAllproducts)", e);
+        } catch (ConnectionException e) {
+            throw new DaoException("Error with connection with database" + e);
+        } finally {
+            if (connectionPool != null) {
+                connectionPool.putBackConnection(connection, statement, resultSet);
+            }
+        }
+        LOGGER.log(Level.DEBUG, "product DAO: Finish get all products");
+        return admins;
+    }
+
+    @Override
     public boolean findAdminByLogin(String login) throws DaoException {
         LOGGER.log(Level.DEBUG, "Admin DAO: start Find");
         try {
@@ -149,41 +185,6 @@ public class AdminDAO implements IAdminDao {
         }
         LOGGER.log(Level.DEBUG, "Admin DAO: finish Find");
         return false;
-    }
-
-    @Override
-    public List<Admin> getAllAdmins() throws DaoException {
-        LOGGER.log(Level.DEBUG, "Admin DAO: Start get all admins");
-        try {
-            connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.retrieve();
-            statement = null;
-            statement = connection.prepareStatement(GET_ALL_ADMINS);
-            resultSet = null;
-            resultSet = statement.executeQuery();
-            adminEnyity = null;
-            admins = new ArrayList<>();
-            while (resultSet.next()) {
-                adminEnyity = createAdminByResultSet(resultSet);
-                admins.add(adminEnyity);
-            }
-            LOGGER.log(Level.INFO, admins);
-        } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(getAdminDAO)", e);
-        } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
-        } finally {
-            if (connectionPool != null) {
-                connectionPool.putBackConnection(connection, statement, resultSet);
-            }
-        }
-        LOGGER.log(Level.DEBUG, "Admin DAO: Finish get all admins");
-        return admins;
     }
 
     private Admin createAdminByResultSet(ResultSet resultSet) throws DaoException {

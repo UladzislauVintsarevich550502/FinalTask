@@ -84,14 +84,12 @@ jQuery(document).ready(function ($) {
         $form_forgot_password.addClass('is-selected');
     }
 
-    //при желании можно отключить - это просто, сообщения об ошибках при заполнении
-    // $form_login.find('input[type="submit"]').on('click', function (event) {
-    //     event.preventDefault();
-    //     $form_login.find('a').toggleClass('has-error').next('span').toggleClass('is-visible');
-    // });
-    // $form_signup.find('input[type="submit"]').on('click', function (event) {
-    //     event.preventDefault();
-    //     $form_signup.find('input').toggleClass('has-error').next('span').toggleClass('is-visible');
-    // });
+    $('.image-load').on('click', function () {
+        document.getElementById('file').click();
+    });
 
+    $('input#file').on('change', function (e) {
+        var filename = $(this).val().replace(/.*\\/, "");
+        $("#image-name").val(filename);
+    });
 });

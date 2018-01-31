@@ -36,6 +36,52 @@
     <fmt:message bundle="${loc}" key="local.button.signout" var="signout_button"/>
     <fmt:message bundle="${loc}" key="local.button.create" var="create_button"/>
     <fmt:message bundle="${loc}" key="local.button.comein" var="comein_button"/>
+    <fmt:message bundle="${loc}" key="local.word.home" var="home_word"/>
+    <fmt:message bundle="${loc}" key="local.word.view" var="view_word"/>
+    <fmt:message bundle="${loc}" key="local.word.description_under_welcome" var="description_under_welcome_word"/>
+    <fmt:message bundle="${loc}" key="local.word.add_product" var="add_product_word"/>
+    <fmt:message bundle="${loc}" key="local.word.type_product" var="type_product_word"/>
+    <fmt:message bundle="${loc}" key="local.word.name_ru" var="name_ru_word"/>
+    <fmt:message bundle="${loc}" key="local.word.name_en" var="name_en_word"/>
+    <fmt:message bundle="${loc}" key="local.word.volume" var="volume_word"/>
+    <fmt:message bundle="${loc}" key="local.word.existence" var="existence_word"/>
+    <fmt:message bundle="${loc}" key="local.word.desc_en" var="desc_en_word"/>
+    <fmt:message bundle="${loc}" key="local.word.desc_ru" var="desc_ru_word"/>
+    <fmt:message bundle="${loc}" key="local.word.cost" var="cost_word"/>
+    <fmt:message bundle="${loc}" key="local.word.type_drink" var="type_drink_word"/>
+    <fmt:message bundle="${loc}" key="local.word.type_food" var="type_food_word"/>
+    <fmt:message bundle="${loc}" key="local.word.type_drink1" var="type_drink_word1"/>
+    <fmt:message bundle="${loc}" key="local.word.type_food1" var="type_food_word1"/>
+    <fmt:message bundle="${loc}" key="local.word.existense_no" var="existense_no_word"/>
+    <fmt:message bundle="${loc}" key="local.word.existanse_yes" var="existanse_yes_word"/>
+    <fmt:message bundle="${loc}" key="local.word.choose_file" var="choose_file_word"/>
+    <fmt:message bundle="${loc}" key="local.word.choose_not_choosen" var="choose_not_choosen_word"/>
+    <fmt:message bundle="${loc}" key="local.word.add_button" var="add_button_word"/>
+    <fmt:message bundle="${loc}" key="local.word.found_nothing" var="found_nothing_word"/>
+    <fmt:message bundle="${loc}" key="local.word.menu" var="menu_word"/>
+    <fmt:message bundle="${loc}" key="local.word.search" var="search_word"/>
+    <fmt:message bundle="${loc}" key="local.word.contacts" var="contacts_word"/>
+    <fmt:message bundle="${loc}" key="local.word.address" var="address_word"/>
+    <fmt:message bundle="${loc}" key="local.word.street" var="street_word"/>
+    <fmt:message bundle="${loc}" key="local.word.stocks" var="stocks_word"/>
+    <fmt:message bundle="${loc}" key="local.word.stock1" var="stock1_word"/>
+    <fmt:message bundle="${loc}" key="local.word.stock2" var="stock2_word"/>
+    <fmt:message bundle="${loc}" key="local.word.re_password" var="re_password_word"/>
+    <fmt:message bundle="${loc}" key="local.word.mistake" var="mistake_word"/>
+    <fmt:message bundle="${loc}" key="local.word.range" var="range_word"/>
+    <fmt:message bundle="${loc}" key="local.word.forgot_pass" var="forgot_pass_word"/>
+    <fmt:message bundle="${loc}" key="local.word.re_pass" var="re_pass_word"/>
+    <fmt:message bundle="${loc}" key="local.word.back" var="back_word"/>
+    <fmt:message bundle="${loc}" key="local.word.re_message" var="re_message_word"/>
+    <fmt:message bundle="${loc}" key="local.word.mistake_login" var="mistake_login_word"/>
+    <fmt:message bundle="${loc}" key="local.word.mistake_password" var="mistake_password_word"/>
+    <fmt:message bundle="${loc}" key="local.word.mistake_email" var="mistake_email_word"/>
+    <fmt:message bundle="${loc}" key="local.word.close" var="close_word"/>
+    <fmt:message bundle="${loc}" key="local.word.mistake_name" var="mistake_name_word"/>
+    <fmt:message bundle="${loc}" key="local.word.mistake_surname" var="mistake_surname_word"/>
+    <fmt:message bundle="${loc}" key="local.word.exit" var="exit_word"/>
+    <fmt:message bundle="${loc}" key="local.word.edit" var="edit_word"/>
+    <fmt:message bundle="${loc}" key="local.word.basket_add" var="basket_add_word"/>
     <title>Epam Cafe</title>
 </head>
 <body>
@@ -54,7 +100,7 @@
             <!-- Section -->
             <section>
                 <header class="major">
-                    <h2>${login_word}</h2>
+                    <h2>${range_word}</h2>
                 </header>
                 <div class="posts">
                     <c:choose>
@@ -73,41 +119,38 @@
                                             <p>${product.descriptionEn}</p>
                                         </c:when>
                                     </c:choose>
+
                                     <ul class="actions">
-                                        <li><a href="/product.do?id=${product.id}" class="button">Просмотреть</a></li>
+                                        <li><a href="/product.do?id=${product.id}" class="button">${view_word}</a></li>
+                                        <c:choose>
+                                            <c:when test="${user.role eq 'user'}">
+                                                <li><a href="/product.do?id=${product.id}"
+                                                       class="button">${basket_add_word}</a></li>
+                                            </c:when>
+
+                                            <c:when test="${user.role eq 'admin'}">
+                                                <li><a href="/product.do?id=${product.id}"
+                                                       class="button">${edit_word}</a>
+                                                </li>
+                                            </c:when>
+
+                                        </c:choose>
+
                                     </ul>
                                 </article>
                             </c:forEach>
                         </c:when>
                         <c:otherwise>
-                            <h2>Ничего не найдено</h2>
+                            <h2>${found_nothing_word}</h2>
                         </c:otherwise>
                     </c:choose>
-                    <article>
-                        <form method="post" id="add-product" action="/add_product.do" enctype="multipart/form-data">
-                            <h2>Добавление продукта</h2>
-                            <select id="product-type" name="product_type">
-                                <option value="" disabled selected>Тип продукта</option>
-                                <option value="drink">Напиток</option>
-                                <option value="food">Еда</option>
-                            </select>
-                            <input type="text" name="name_ru" id="name-ru" placeholder="Название на русском">
-                            <input type="text" name="name_en" id="name-en" placeholder="Название на английском">
-                            <input type="text" name="value" id="value" placeholder="Объем">
-                            <input type="text" name="cost" id="cost" placeholder="Цена">
-                            <select id="status" name="status">
-                                <option value="" disabled selected>Наличие</option>
-                                <option value="false">Нет в наличии</option>
-                                <option value="true">Есть в наличии</option>
-                            </select>
-                            <input type="text" name="description_ru" id="descrirtion-ru"
-                                   placeholder="Описание на русском">
-                            <input type="text" name="description_en" id="descrirtion-en"
-                                   placeholder="Описание на русском">
-                            <input type="file" name="image" id="image">
-                            <input type="submit" id="add" value="Добавить">
-                        </form>
-                    </article>
+                    <c:choose>
+                        <c:when test="${user.role eq 'admin'}">
+                            <article>
+                                <%@include file="/front/html/add_form.html" %>
+                            </article>
+                        </c:when>
+                    </c:choose>
                 </div>
             </section>
 
