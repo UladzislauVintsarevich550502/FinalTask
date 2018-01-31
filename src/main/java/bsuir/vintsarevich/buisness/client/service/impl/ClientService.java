@@ -17,34 +17,8 @@ import org.apache.log4j.Logger;
 import java.util.List;
 
 public class ClientService implements IClientService {
-
     private static final Logger LOGGER = Logger.getLogger(ClientService.class);
-
     private DaoFactory daoFactory = DaoFactory.getInstance();
-
-
-    @Override
-    public void updateLocale(String clientLogin, String locale) throws ServiceException {
-
-    }
-
-    @Override
-    public boolean deleteClient(Integer id) throws ServiceException {
-        LOGGER.log(Level.DEBUG, "Product DAO: Delete client start");
-        IClientDao clientDao = daoFactory.getClientDao();
-        try {
-            clientDao.deleteClient(id);
-        } catch (DaoException e) {
-            throw new ServiceException(e);
-        }
-        LOGGER.log(Level.DEBUG, "ProductService: finish delete client");
-        return true;
-    }
-
-    @Override
-    public Client getClientByLogin(String clientLogin) throws ServiceException {
-        return null;
-    }
 
     @Override
     public Client signUp(String name, String surname, String login, String password, String email) throws ServiceException, ServiceLogicException {
@@ -52,7 +26,6 @@ public class ClientService implements IClientService {
         IClientDao clientDao = daoFactory.getClientDao();
         IAdminDao adminDao = daoFactory.getAdminDao();
         Client client;
-
         try {
             Validator.isNull(name, login, password, name, surname, email);
             Validator.isEmptyString(name, login, password, name, surname, email);
@@ -62,16 +35,17 @@ public class ClientService implements IClientService {
             Validator.matchEmail(email);
             if (!adminDao.findAdminByLogin(login)) {
                 password = Hasher.hashBySha1(password);
-                client = new Client(name, surname, login, password, email, "активен", 0);
+                client = new Client(name, surname, login, password, email, "active", 0);
                 return (clientDao.addClient(client));
             }
         } catch (ValidatorException e) {
             throw new ServiceException(e);
         } catch (NumberFormatException e) {
-            throw new ServiceException("number format exception", e);
+            throw new ServiceException(e);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
+        LOGGER.log(Level.DEBUG, "Client Service: finish SignUp");
         return null;
     }
 
@@ -95,6 +69,28 @@ public class ClientService implements IClientService {
 
     @Override
     public List<Client> getAllClients() throws ServiceException {
-        return null;
+        LOGGER.log(Level.DEBUG, "Client Service: Start get all clients");
+        List<Client> clients;
+        try {
+            IClientDao clientDao = daoFactory.getClientDao();
+            clients = clientDao.getAllClients();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        LOGGER.log(Level.DEBUG, "Client Service: Finish get all clients");
+        return clients;
+    }
+
+    @Override
+    public boolean deleteClient(Integer id) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "Client Sevice: Delete client start");
+        IClientDao clientDao = daoFactory.getClientDao();
+        try {
+            clientDao.deleteClient(id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        LOGGER.log(Level.DEBUG, "Client Service: Finish delete client");
+        return true;
     }
 }

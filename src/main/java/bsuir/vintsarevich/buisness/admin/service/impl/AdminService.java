@@ -2,6 +2,7 @@ package bsuir.vintsarevich.buisness.admin.service.impl;
 
 import bsuir.vintsarevich.buisness.admin.dao.IAdminDao;
 import bsuir.vintsarevich.buisness.admin.service.IAdminService;
+import bsuir.vintsarevich.buisness.client.dao.IClientDao;
 import bsuir.vintsarevich.entity.Admin;
 import bsuir.vintsarevich.exception.dao.DaoException;
 import bsuir.vintsarevich.exception.service.ServiceException;
@@ -15,29 +16,23 @@ import org.apache.log4j.Logger;
 import java.util.List;
 
 public class AdminService implements IAdminService {
-
     private static final Logger LOGGER = Logger.getLogger(AdminService.class);
-
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
-
     @Override
-    public void updateLocale(String AdminLogin, String locale) throws ServiceException {
-
-    }
-
-    @Override
-    public boolean addAdmin(String adminLogin, String adminPassword) {
+    public boolean signUp(String adminLogin, String adminPassword) {
         LOGGER.log(Level.DEBUG, "Admin service: start addAdmin");
         IAdminDao adminDao = daoFactory.getAdminDao();
+        IClientDao clientDao = daoFactory.getClientDao();
         Admin admin;
         try {
             Validator.isEmptyString(adminLogin, adminPassword);
             Validator.isNull(adminLogin, adminPassword);
             adminPassword = Hasher.hashBySha1(adminPassword);
-            admin = new Admin(adminLogin, adminPassword);
-            if (adminDao.addAdmin(admin)) {
-                return true;
+            if (clientDao.getClientByLogin(adminLogin) == null) {
+                adminPassword = Hasher.hashBySha1(adminPassword);
+                admin = new Admin(adminLogin, adminPassword);
+                return (adminDao.addAdmin(admin));
             }
         } catch (ValidatorException e) {
             LOGGER.log(Level.DEBUG, e.getMessage());
@@ -63,14 +58,9 @@ public class AdminService implements IAdminService {
     }
 
     @Override
-    public Admin getAdminByLogin(String AdminLogin) throws ServiceException {
-        return null;
-    }
-
-    @Override
     public Admin signIn(String adminLogin, String adminPassword) {
         LOGGER.log(Level.DEBUG, "Admin service: start SignIn");
-        Admin admin = null;
+        Admin admin;
         IAdminDao adminDao = daoFactory.getAdminDao();
         try {
             Validator.isEmptyString(adminLogin, adminPassword);
