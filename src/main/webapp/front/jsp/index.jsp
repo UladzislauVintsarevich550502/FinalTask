@@ -129,7 +129,7 @@
                                             </c:when>
 
                                             <c:when test="${user.role eq 'admin'}">
-                                                <li><a href="/product.do?id=${product.id}"
+                                                <li><a href="/add_product_to_basket.do?idProduct=${product.id}"
                                                        class="button">${edit_word}</a>
                                                 </li>
                                             </c:when>

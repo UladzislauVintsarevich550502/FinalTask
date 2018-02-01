@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ProductDAO implements IProductDao {
     private static final Logger LOGGER = Logger.getLogger(ProductDAO.class);
-    public static String GET_ALL_PRODUCTS = "SELECT * FROM epamcafe.menu;";
+    public static String GET_ALL_PRODUCTS = "SELECT * FROM epamcafe.product;";
     public static String ADD_PRODUCT = "INSERT INTO product (productType,productNameRu,productNameEn,productWeight,productCost,productStatus," +
             "productDescriptionRu,productDescriptionEn,productImage) VALUES(?,?,?,?,?,?,?,?,?);";
     public static String EDIT_PRODUCT = "UPDATE product SET productType=?,productNameRu=?,productNameEn=?,productWeight=?,productCost=?,productStatus=?," +

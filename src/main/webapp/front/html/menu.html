@@ -30,14 +30,10 @@
                     </ul>
                 </li>
                 <c:choose>
-                    <c:when test="${user.role eq 'user'}">
+                    <c:when test="${user.role eq 'client'}">
                         <li><a href="basket.do">Basket</a></li>
-
-
                     </c:when>
                     <c:when test="${user.role eq 'admin'}">
-
-
                     </c:when>
                 </c:choose>
             </ul>

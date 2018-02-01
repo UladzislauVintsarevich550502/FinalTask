@@ -7,6 +7,14 @@
     border-radius: 4px;
 }
 
+a.podmenu {
+    margin-left: 14px;
+}
+
+span#type_food, span#type_drink {
+    margin-left: 14px;
+}
+
 .footer-content-social-links ul li a img:hover {
     border-bottom: none;
     opacity: 0.8;

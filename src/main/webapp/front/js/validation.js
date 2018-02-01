@@ -38,7 +38,7 @@ jQuery(document).ready(function ($) {
 
     $('form#signup-form').on('click', function (e) {
 
-        var name_surnameReg = /[A-ZА-Я]{1}[a-zа-я]+/;
+        var name_surnameReg = /([A-Z][a-z]+)|([А-Я][а-я]+)$/i;
         var loginReg = /[a-zA-Zа-яА-Я]+\w+/;
         var passwordReg = /\w{6,}/;
         var emailReg = /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$/;
