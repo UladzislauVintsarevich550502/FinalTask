@@ -17,15 +17,14 @@ public class OrderProductService implements IOrderProductService {
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
     @Override
-    public boolean addOrderProduct(Integer clientId, Integer productId) throws ServiceException {
+    public boolean addOrderProduct(Integer clientId, Integer productId, Integer productCount) throws ServiceException {
         IOrderDao orderDao = daoFactory.getOrderDao();
         LOGGER.log(Level.DEBUG, "Order Product service: start addOrderProducts");
         IOrderProductDao orderProductDao = daoFactory.getOrderProductDao();
         OrderProducts orderProducts;
         try {
             Integer orderId = orderDao.getOrderIdByClientId(clientId);
-            System.out.println(orderId);
-            orderProducts = new OrderProducts(orderId, productId);
+            orderProducts = new OrderProducts(orderId, productId, productCount);
             if (orderProductDao.addOrderProduct(orderProducts)) {
                 return true;
             }
@@ -37,10 +36,13 @@ public class OrderProductService implements IOrderProductService {
     }
 
     @Override
-    public boolean deleteOrderProduct(Integer orderId, Integer productId) throws ServiceException {
+    public boolean deleteOrderProduct(Integer clientId, Integer productId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Product DAO: Delete orderProduct start");
         IOrderProductDao orderProductDao = daoFactory.getOrderProductDao();
+        IOrderDao orderDao = daoFactory.getOrderDao();
+        OrderProducts orderProducts;
         try {
+            Integer orderId = orderDao.getOrderIdByClientId(clientId);
             orderProductDao.deleteOrderProduct(orderId, productId);
         } catch (DaoException e) {
             throw new ServiceException(e);
@@ -48,4 +50,6 @@ public class OrderProductService implements IOrderProductService {
         LOGGER.log(Level.DEBUG, "ProductService: finish orderProduct client");
         return true;
     }
+
 }
+

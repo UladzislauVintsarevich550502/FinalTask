@@ -9,6 +9,7 @@ public interface IOrderDao {
 
     Integer getOrderIdByClientId(Integer clientId) throws DaoException;
 
-    boolean editOrder(Integer clientId, Double orderCost) throws DaoException;
+    boolean editOrder(Integer clientId, Double orderCost,Integer productCount) throws DaoException;
 
+    Order getOrderByClientId(Integer clientId) throws DaoException;
 }

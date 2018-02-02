@@ -13,6 +13,10 @@ public class Order {
         this.clientId = clientId;
     }
 
+    public Order() {
+
+    }
+
     public Integer getId() {
         return id;
     }

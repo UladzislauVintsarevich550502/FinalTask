@@ -25,9 +25,9 @@ public class ProductDAO implements IProductDao {
     public static String GET_PRODUCT_BY_ID = "SELECT * FROM epamcafe.product WHERE productId=?";
     public static String GET_PRODUCT_BY_TYPE = "SELECT *FROM epamcafe.product WHERE productType=?";
     public static String DELETE_PRODUCT = "DELETE FROM epamcafe.product WHERE productId=?";
-    public static String GET_PRODUCT_BY_ClientId = "SELECT product.productId, product.productType,product.productNameRu," +
+    public static String GET_PRODUCT_BY_CLIENTID = "SELECT product.productId, product.productType,product.productNameRu," +
             "product.productNameEn,product.productWeight,product.productCost,product.productStatus," +
-            "product.productDescriptionRu,productDescriptionEn,product.productImage " +
+            "product.productDescriptionRu,productDescriptionEn,product.productImage,orderproducts.productCount " +
             "FROM(((client join epamcafe.order ON client.clientId = epamcafe.order.clientId) JOIN orderproducts" +
             " ON epamcafe.order.orderId = orderproducts.orderId) JOIN product " +
             "ON product.productId = orderproducts.productId) WHERE client.clientId = ?";
@@ -226,14 +226,18 @@ public class ProductDAO implements IProductDao {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.retrieve();
             statement = null;
-            statement = connection.prepareStatement(GET_PRODUCT_BY_ClientId);
+            statement = connection.prepareStatement(GET_PRODUCT_BY_CLIENTID);
             statement.setInt(1, clientId);
             resultSet = null;
             resultSet = statement.executeQuery();
             products = new ArrayList<>();
-            while (resultSet.next()) {
-                products.add(createProductByResultSet(resultSet));
+            if (!resultSet.next()) {
+                return null;
             }
+            do {
+                products.add(createProductByResultSet(resultSet));
+                products.get(products.size()-1).setNumber(resultSet.getInt("orderproducts.productCount"));
+            } while (resultSet.next());
             LOGGER.log(Level.INFO, products);
         } catch (SQLException e) {
             try {

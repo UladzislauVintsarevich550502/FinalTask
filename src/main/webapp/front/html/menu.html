@@ -31,7 +31,7 @@
                 </li>
                 <c:choose>
                     <c:when test="${user.role eq 'client'}">
-                        <li><a href="basket.do">Basket</a></li>
+                        <li><a href="basket.do">${basket_word}</a></li>
                     </c:when>
                     <c:when test="${user.role eq 'admin'}">
                     </c:when>

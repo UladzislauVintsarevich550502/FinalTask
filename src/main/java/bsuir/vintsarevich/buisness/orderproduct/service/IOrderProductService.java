@@ -4,8 +4,11 @@ import bsuir.vintsarevich.exception.service.ServiceException;
 
 public interface IOrderProductService {
 
-    boolean addOrderProduct(Integer clientId, Integer productId) throws ServiceException;
+    boolean addOrderProduct(Integer clientId, Integer productId, Integer productCount) throws ServiceException;
 
-    boolean deleteOrderProduct(Integer orderId, Integer productId) throws ServiceException;
+    boolean deleteOrderProduct(Integer clientId, Integer productId) throws ServiceException;
+
+
+
 
 }

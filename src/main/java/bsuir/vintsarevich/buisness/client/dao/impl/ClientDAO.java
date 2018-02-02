@@ -21,7 +21,7 @@ public class ClientDAO implements IClientDao {
     public static String ADD_CLIENT = "INSERT INTO client (clientName,clientSurname,clientLogin,clientPassword,clientEmail," +
             "clientStatus,clientPoint) VALUES(?,?,?,?,?,?,?);";
     public static String DELETE_CLIENT = "DELETE FROM epamcafe.client WHERE clientId=?";
-    public static String GET_ALL_CLIENTS = "SELECT * FROM epamcafe.account WHERE idRole=1;";
+    public static String GET_ALL_CLIENTS = "SELECT * FROM epamcafe.account WHERE idRole=1";
     private static final Logger LOGGER = Logger.getLogger(ClientDAO.class);
 
     private ConnectionPool connectionPool;

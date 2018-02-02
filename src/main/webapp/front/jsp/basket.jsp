@@ -82,6 +82,9 @@
     <fmt:message bundle="${loc}" key="local.word.exit" var="exit_word"/>
     <fmt:message bundle="${loc}" key="local.word.edit" var="edit_word"/>
     <fmt:message bundle="${loc}" key="local.word.basket_add" var="basket_add_word"/>
+    <fmt:message bundle="${loc}" key="local.word.basket" var="basket_word"/>
+    <fmt:message bundle="${loc}" key="local.word.basket_delete" var="basket_delete_word"/>
+    <fmt:message bundle="${loc}" key="local.word.found_nothing" var="found_nothing_word"/>
     <title>Epam Cafe</title>
 </head>
 <body>
@@ -95,42 +98,52 @@
 
             <%@include file="/front/html/forms.html" %>
 
-            <%@include file="/front/html/banner.html" %>
 
             <!-- Section -->
             <section>
                 <header class="major">
-                    <h2>${login_word}</h2>
+                    <h2>${basket_word}</h2>
                 </header>
-                <div class="posts">
+
+                <ul class="leaders">
                     <c:choose>
                         <c:when test="${products!=null}">
                             <c:forEach var="product" items="${products}">
-                                <article>
-                                    <a href="#" class="image"><img src="images/products/${product.imagePath}"
-                                                                   alt=""/></a>
+                                <li>
                                     <c:choose>
                                         <c:when test="${locale eq 'ru'}">
-                                            <h3>${product.nameRu}</h3>
-                                            <p>${product.descriptionRu}</p>
+                                            <span>${product.nameRu}(x${product.number})</span>
                                         </c:when>
                                         <c:when test="${locale eq 'en'}">
-                                            <h3>${product.nameEn}</h3>
-                                            <p>${product.descriptionEn}</p>
+                                            <span>${product.nameEn}(x${product.number})</span>
                                         </c:when>
                                     </c:choose>
-                                    <ul class="actions">
-                                        <li><a href="/product.do?id=${product.id}" class="button">Просмотреть</a></li>
-                                    </ul>
-                                </article>
+                                    <span>${product.cost*product.number} BYN</span>
+                                </li>
+                                <form method="POST" action="/remove_product_from_basket.do?productId=${product.id}">
+                                    <input type="number" step="1" min="0" max="${product.number}" value="0"
+                                           id="number-for-delete" name="number_for_delete" onkeypress="return false">
+                                    <input type="submit" id="delete-button-from-basket" value="Удалить из корзины">
+                                </form>
                             </c:forEach>
+                            <h1>Итого: ${orderCost}</h1>
                         </c:when>
                         <c:otherwise>
-                            <h2>Ничего не найдено</h2>
+                            <h2>${found_nothing_word}</h2>
                         </c:otherwise>
                     </c:choose>
-                </div>
+                </ul>
             </section>
+
+            <%--<section>--%>
+                <%--<c:choose>--%>
+                    <%--<c:when test="${products != null}">--%>
+                        <%--<header class="major">--%>
+                            <%--<h2>Full cost</h2>--%>
+                        <%--</header>--%>
+                    <%--</c:when>--%>
+                <%--</c:choose>--%>
+            <%--</section>--%>
 
         </div>
     </div>

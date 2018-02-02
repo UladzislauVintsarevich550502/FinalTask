@@ -20,7 +20,10 @@ public enum JspElemetName {
     STATUS("status"),
     DESCRIPTION_RU("description_ru"),
     DESCRIPTION_EN("description_en"),
-    IMAGE("image");
+    PRODUCT_ID("productId"),
+    IMAGE("file"),
+    NUMBER_FOR_DELETE("number_for_delete"),
+    NUMBER_FOR_ADD("number_for_add");
 
     private String value;
 

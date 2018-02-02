@@ -82,6 +82,7 @@
     <fmt:message bundle="${loc}" key="local.word.exit" var="exit_word"/>
     <fmt:message bundle="${loc}" key="local.word.edit" var="edit_word"/>
     <fmt:message bundle="${loc}" key="local.word.basket_add" var="basket_add_word"/>
+    <fmt:message bundle="${loc}" key="local.word.basket" var="basket_word"/>
     <title>Epam Cafe</title>
 </head>
 <body>
@@ -102,56 +103,70 @@
                 <header class="major">
                     <h2>${range_word}</h2>
                 </header>
-                <div class="posts">
-                    <c:choose>
-                        <c:when test="${products!=null}">
-                            <c:forEach var="product" items="${products}">
-                                <article>
-                                    <a href="#" class="image"><img src="images/products/${product.imagePath}"
-                                                                   alt=""/></a>
-                                    <c:choose>
-                                        <c:when test="${locale eq 'ru'}">
-                                            <h3>${product.nameRu}</h3>
-                                            <p>${product.descriptionRu}</p>
-                                        </c:when>
-                                        <c:when test="${locale eq 'en'}">
-                                            <h3>${product.nameEn}</h3>
-                                            <p>${product.descriptionEn}</p>
-                                        </c:when>
-                                    </c:choose>
-
-                                    <ul class="actions">
-                                        <li><a href="/product.do?id=${product.id}" class="button">${view_word}</a></li>
+                <form method="POST"
+                      action="/add_product_to_basket.do?AllProducts=${products}">
+                    <div class="posts">
+                        <c:choose>
+                            <c:when test="${products!=null}">
+                                <c:forEach var="product" items="${products}">
+                                    <article>
+                                        <a href="#" class="image"><img src="images/products/${product.imagePath}"
+                                                                       alt="lorem"/></a>
                                         <c:choose>
-                                            <c:when test="${user.role eq 'user'}">
-                                                <li><a href="/product.do?id=${product.id}"
-                                                       class="button">${basket_add_word}</a></li>
+                                            <c:when test="${locale eq 'ru'}">
+                                                <h3>${product.nameRu}</h3>
+                                                <p>${product.descriptionRu}</p>
                                             </c:when>
-
-                                            <c:when test="${user.role eq 'admin'}">
-                                                <li><a href="/add_product_to_basket.do?idProduct=${product.id}"
-                                                       class="button">${edit_word}</a>
-                                                </li>
+                                            <c:when test="${locale eq 'en'}">
+                                                <h3>${product.nameEn}</h3>
+                                                <p>${product.descriptionEn}</p>
                                             </c:when>
-
                                         </c:choose>
 
-                                    </ul>
+                                        <ul class="actions">
+                                            <li><a href="" class="button">${view_word}</a>
+                                            </li>
+                                            <c:choose>
+                                                <c:when test="${user.role eq 'client'}">
+                                                    <li>
+                                                        <input type="number" step="1" min="0" max="10"
+                                                               value="0" id="number-for-add"
+                                                               name="number_for_add_${product.nameEn}"
+                                                               onkeypress="return false">
+                                                        <input type="text" style="display:none;" name="product_${product.nameEn}"
+                                                               value="${product.nameEn}">
+                                                    </li>
+                                                </c:when>
+
+                                                <c:when test="${user.role eq 'admin'}">
+
+                                                </c:when>
+
+                                            </c:choose>
+
+                                        </ul>
+                                    </article>
+                                </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                                <h2>${found_nothing_word}</h2>
+                            </c:otherwise>
+                        </c:choose>
+                        <c:choose>
+                            <c:when test="${user.role eq 'admin'}">
+                                <article>
+                                    <%@include file="/front/html/add_form.html" %>
                                 </article>
-                            </c:forEach>
-                        </c:when>
-                        <c:otherwise>
-                            <h2>${found_nothing_word}</h2>
-                        </c:otherwise>
-                    </c:choose>
-                    <c:choose>
-                        <c:when test="${user.role eq 'admin'}">
-                            <article>
-                                <%@include file="/front/html/add_form.html" %>
-                            </article>
-                        </c:when>
-                    </c:choose>
-                </div>
+                            </c:when>
+                        </c:choose>
+                        <c:choose>
+                            <c:when test="${user.role eq 'client'}">
+                                <input type="submit" id="add-button-to-basket"
+                                       value="${basket_add_word}">
+                            </c:when>
+                        </c:choose>
+                    </div>
+                </form>
             </section>
 
         </div>

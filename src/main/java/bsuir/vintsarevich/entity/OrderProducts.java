@@ -3,10 +3,12 @@ package bsuir.vintsarevich.entity;
 public class OrderProducts {
     Integer orderId;
     Integer productId;
+    Integer productCount;
 
-    public OrderProducts(Integer orderId, Integer productId) {
+    public OrderProducts(Integer orderId, Integer productId, Integer productCount) {
         this.orderId = orderId;
         this.productId = productId;
+        this.productCount = productCount;
     }
 
     public Integer getOrderId() {
@@ -25,12 +27,12 @@ public class OrderProducts {
         this.productId = productId;
     }
 
-    @Override
-    public String toString() {
-        return "OrderProducts{" +
-                "orderId=" + orderId +
-                ", productId=" + productId +
-                '}';
+    public Integer getProductCount() {
+        return productCount;
+    }
+
+    public void setProductCount(Integer productCount) {
+        this.productCount = productCount;
     }
 
     @Override
@@ -41,13 +43,25 @@ public class OrderProducts {
         OrderProducts that = (OrderProducts) o;
 
         if (orderId != null ? !orderId.equals(that.orderId) : that.orderId != null) return false;
-        return productId != null ? productId.equals(that.productId) : that.productId == null;
+        if (productId != null ? !productId.equals(that.productId) : that.productId != null) return false;
+        return productCount != null ? productCount.equals(that.productCount) : that.productCount == null;
     }
 
     @Override
     public int hashCode() {
         int result = orderId != null ? orderId.hashCode() : 0;
         result = 31 * result + (productId != null ? productId.hashCode() : 0);
+        result = 31 * result + (productCount != null ? productCount.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "OrderProducts{" +
+                "orderId=" + orderId +
+                ", productId=" + productId +
+                ", productCount=" + productCount +
+                '}';
+    }
+
 }

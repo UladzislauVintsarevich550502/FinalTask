@@ -19,8 +19,10 @@ public class OrderDAO implements IOrderDao {
 
     private static final Logger LOGGER = Logger.getLogger(OrderDAO.class);
     public static String ADD_ORDER = "INSERT INTO epamcafe.order (orderStatus, orderCost,clientId) VALUES(?,?,?)";
-    public static String GET_PRODUCTID_BY_CLIENTID = "SELECT epamcafe.order.orderId " +
+    public static String GET_ORDERID_BY_CLIENTID = "SELECT epamcafe.order.orderId " +
             "FROM(client join epamcafe.order ON client.clientId = epamcafe.order.clientId)" +
+            " WHERE client.clientId = ?;";
+    public static String GET_ORDER_BY_CLIENTID = "SELECT * FROM(client join epamcafe.order ON client.clientId = epamcafe.order.clientId)" +
             " WHERE client.clientId = ?;";
     public static String EDIT_ORDER = "UPDATE epamcafe.order SET epamcafe.order.orderCost = (epamcafe.order.orderCost + ?) " +
             "WHERE epamcafe.order.orderId = ?";
@@ -70,13 +72,13 @@ public class OrderDAO implements IOrderDao {
 
     @Override
     public Integer getOrderIdByClientId(Integer clientId) throws DaoException {
-        LOGGER.log(Level.DEBUG, "ProductService: start get productId by clientId");
+        LOGGER.log(Level.DEBUG, "Order DAO: start get orderId by clientId");
         Integer orderId = -1;
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.retrieve();
             statement = null;
-            statement = connection.prepareStatement(GET_PRODUCTID_BY_CLIENTID);
+            statement = connection.prepareStatement(GET_ORDERID_BY_CLIENTID);
             statement.setInt(1, clientId);
             resultSet = null;
             resultSet = statement.executeQuery();
@@ -98,12 +100,12 @@ public class OrderDAO implements IOrderDao {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
         }
-        LOGGER.log(Level.DEBUG, "Product Service: Finish get productsId by clientId");
+        LOGGER.log(Level.DEBUG, "Order DAO: Finish get orderId by clientId");
         return orderId;
     }
 
     @Override
-    public boolean editOrder(Integer clientId, Double orderCost) throws DaoException {
+    public boolean editOrder(Integer clientId, Double orderCost, Integer productCount) throws DaoException {
         LOGGER.log(Level.DEBUG, "Order DAO: edit start");
         Integer orderId = getOrderIdByClientId(clientId);
         try {
@@ -111,7 +113,7 @@ public class OrderDAO implements IOrderDao {
             connection = connectionPool.retrieve();
             statement = null;
             statement = connection.prepareStatement(EDIT_ORDER);
-            statement.setDouble(1, orderCost);
+            statement.setDouble(1, (orderCost * productCount));
             statement.setInt(2, orderId);
             if (statement.executeUpdate() != 0) {
                 LOGGER.log(Level.DEBUG, "edit order success");
@@ -136,6 +138,52 @@ public class OrderDAO implements IOrderDao {
             LOGGER.log(Level.DEBUG, "Order DAO: edit finish");
         }
     }
+
+    @Override
+    public Order getOrderByClientId(Integer clientId) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Order DAO: start get order by clientId");
+        orderEntity = null;
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.retrieve();
+            statement = null;
+            statement = connection.prepareStatement(GET_ORDER_BY_CLIENTID);
+            statement.setInt(1, clientId);
+            resultSet = null;
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                orderEntity = createOrderByResaultSet(resultSet);
+            }
+            LOGGER.log(Level.INFO, orders);
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                throw new DaoException(e);
+            }
+            throw new DaoException("Error of query to database(getProducts)", e);
+        } catch (ConnectionException e) {
+            throw new DaoException("Error with connection with database" + e);
+        } finally {
+            if (connectionPool != null) {
+                connectionPool.putBackConnection(connection, statement, resultSet);
+            }
+        }
+        LOGGER.log(Level.DEBUG, "Order DAO: Finish get order by clientId");
+        return orderEntity;
+    }
+
+    private Order createOrderByResaultSet(ResultSet resultSet) throws SQLException {
+        Order order = new Order();
+        order.setClientId(resultSet.getInt("clientId"));
+        order.setCost(resultSet.getDouble("orderCost"));
+        order.setData(resultSet.getString("orderData"));
+        order.setId(resultSet.getInt("orderId"));
+        order.setStatus(resultSet.getString("orderStatus"));
+        return order;
+    }
+
+
 }
 
 

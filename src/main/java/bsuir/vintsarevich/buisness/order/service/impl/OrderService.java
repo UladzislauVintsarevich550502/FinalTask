@@ -19,7 +19,7 @@ public class OrderService implements IOrderService {
     public boolean addOrder(String orderStatus, Double orderCost, Integer clientId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order service: start addOrder");
         IOrderDao orderDao = daoFactory.getOrderDao();
-        Order order = null;
+        Order order;
         try {
             order = new Order(orderStatus, orderCost, clientId);
             if (orderDao.addOrder(order)) {
@@ -33,16 +33,30 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public boolean editOrder(Integer clientId, Double orderCost) throws ServiceException {
+    public boolean editOrder(Integer clientId, Double orderCost,Integer productCount) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order service: start edit order");
         IOrderDao orderDao = daoFactory.getOrderDao();
         try {
-            orderDao.editOrder(clientId, orderCost);
+            orderDao.editOrder(clientId, orderCost,productCount);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
         LOGGER.log(Level.DEBUG, "Order service: finish edit order");
         return true;
+    }
+
+    @Override
+    public Double getOrderCost(Integer clientId) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "Order service: get Order cost start");
+        IOrderDao orderDao = daoFactory.getOrderDao();
+        Double orderCost;
+        try {
+             orderCost = (orderDao.getOrderByClientId(clientId)).getCost();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        LOGGER.log(Level.DEBUG, "Order service: get Order cost finish");
+        return orderCost;
     }
 }
 

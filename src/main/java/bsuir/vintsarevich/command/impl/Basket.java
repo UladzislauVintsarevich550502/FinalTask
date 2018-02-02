@@ -1,5 +1,6 @@
 package bsuir.vintsarevich.command.impl;
 
+import bsuir.vintsarevich.buisness.order.service.IOrderService;
 import bsuir.vintsarevich.buisness.product.service.IProductService;
 import bsuir.vintsarevich.command.ICommand;
 import bsuir.vintsarevich.entity.Product;
@@ -25,8 +26,10 @@ public class Basket implements ICommand {
         try {
             Integer clentId = ((User) request.getSession().getAttribute("user")).getId();
             IProductService producteService = serviceFactory.getProducteService();
+            IOrderService orderService = serviceFactory.getOrderService();
             List<Product> products = producteService.getProductByClientId(clentId);
             request.setAttribute("products", products);
+            request.setAttribute("orderCost",orderService.getOrderCost(clentId));
         } catch (ServiceException e) {
             LOGGER.log(Level.ERROR, this.getClass() + ":" + e.getMessage());
         }

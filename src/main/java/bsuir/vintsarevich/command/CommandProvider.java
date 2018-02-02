@@ -23,7 +23,8 @@ public final class CommandProvider {
         repository.put(CommandName.CHANGE_LOCALE, new ChangeLocale());
         repository.put(CommandName.ADD_PRODUCT, new AddProduct());
         repository.put(CommandName.BASKET, new Basket());
-//        repository.put(CommandName.ADD_PRODUCT_TO_BASKET, new )
+        repository.put(CommandName.ADD_PRODUCT_TO_BASKET, new AddProductToBasket());
+        repository.put(CommandName.REMOVE_PRODUCT_FROM_BASKET,new RemoveProductFromBasket());
     }
 
     public static CommandProvider getInstance() {

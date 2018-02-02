@@ -11,34 +11,34 @@ jQuery(document).ready(function ($) {
         $main_nav = $('.main-nav'),
         $i = 1;
 
-    //открыть модальное окно
+//открыть модальное окно
     $main_nav.on('click', function (event) {
-        //показать модальный слой
+//показать модальный слой
         $form_modal.addClass('is-visible');
-        //показать выбранную форму
+//показать выбранную форму
         ( $(event.target).is('.cd-signup') ) ? signup_selected() : login_selected();
     });
 
-    //закрыть модальное окно
+//закрыть модальное окно
     $('.cd-user-modal').on('click', function (event) {
         if ($(event.target).is($form_modal) || $(event.target).is('.cd-close-form')) {
             $form_modal.removeClass('is-visible');
         }
     });
-    //закрыть модальное окно нажатье клавиши Esc
+//закрыть модальное окно нажатье клавиши Esc
     $(document).keyup(function (event) {
         if (event.which == '27') {
             $form_modal.removeClass('is-visible');
         }
     });
 
-    //переключения  вкладки от одной к другой
+//переключения вкладки от одной к другой
     $form_modal_tab.on('click', function (event) {
         event.preventDefault();
         ( $(event.target).is($tab_login) ) ? login_selected() : signup_selected();
     });
 
-    //скрыть или показать пароль
+//скрыть или показать пароль
     $('.hide-password').on('click', function () {
         var $this = $(this),
             $password_field = $this.prev('input');
@@ -46,17 +46,17 @@ jQuery(document).ready(function ($) {
         ('password' == $password_field.attr('type') ) ? $password_field.attr('type', 'text') : $password_field.attr('type', 'password');
         ($i == 1) ? $i = 2 : $i = 1;
         (1 == $i) ? $(this).css('backgroundImage', 'url(/images/icon/visible.png)') : $(this).css('backgroundImage', 'url(/images/icon/not_visible.png)');
-        //фокус и перемещение курсора в конец поля ввода
+//фокус и перемещение курсора в конец поля ввода
         $password_field.putCursorAtEnd();
     });
 
-    //показать форму востановления пароля
+//показать форму востановления пароля
     $forgot_password_link.on('click', function (event) {
         event.preventDefault();
         forgot_password_selected();
     });
 
-    //Вернуться на страницу входа с формы востановления пароля
+//Вернуться на страницу входа с формы востановления пароля
     $back_to_login_link.on('click', function (event) {
         event.preventDefault();
         login_selected();
@@ -84,7 +84,7 @@ jQuery(document).ready(function ($) {
         $form_forgot_password.addClass('is-selected');
     }
 
-    $('.image-load').on('click', function () {
+    $('#a-image-name').on('click', function () {
         document.getElementById('file').click();
     });
 

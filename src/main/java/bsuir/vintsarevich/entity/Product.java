@@ -11,6 +11,7 @@ public class Product {
     private String descriptionRu;
     private String descriptionEn;
     private String imagePath;
+    private Integer number;
 
     public Product() {
     }
@@ -25,6 +26,14 @@ public class Product {
         this.descriptionRu = descriptionRu;
         this.descriptionEn = descriptionEn;
         this.imagePath = imagePath;
+    }
+
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 
     public Integer getId() {
@@ -120,6 +129,7 @@ public class Product {
                 ", descriptionRu='" + descriptionRu + '\'' +
                 ", descriptionEn='" + descriptionEn + '\'' +
                 ", imagePath='" + imagePath + '\'' +
+                ", number=" + number +
                 '}';
     }
 
@@ -130,35 +140,34 @@ public class Product {
 
         Product product = (Product) o;
 
-        if (weight != product.weight) return false;
-        if (Double.compare(product.cost, cost) != 0) return false;
         if (id != null ? !id.equals(product.id) : product.id != null) return false;
         if (type != null ? !type.equals(product.type) : product.type != null) return false;
         if (nameRu != null ? !nameRu.equals(product.nameRu) : product.nameRu != null) return false;
         if (nameEn != null ? !nameEn.equals(product.nameEn) : product.nameEn != null) return false;
+        if (weight != null ? !weight.equals(product.weight) : product.weight != null) return false;
+        if (cost != null ? !cost.equals(product.cost) : product.cost != null) return false;
         if (status != null ? !status.equals(product.status) : product.status != null) return false;
         if (descriptionRu != null ? !descriptionRu.equals(product.descriptionRu) : product.descriptionRu != null)
             return false;
         if (descriptionEn != null ? !descriptionEn.equals(product.descriptionEn) : product.descriptionEn != null)
             return false;
-        return imagePath != null ? imagePath.equals(product.imagePath) : product.imagePath == null;
+        if (imagePath != null ? !imagePath.equals(product.imagePath) : product.imagePath != null) return false;
+        return number != null ? number.equals(product.number) : product.number == null;
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = id != null ? id.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (nameRu != null ? nameRu.hashCode() : 0);
         result = 31 * result + (nameEn != null ? nameEn.hashCode() : 0);
-        result = 31 * result + weight;
-        temp = Double.doubleToLongBits(cost);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (weight != null ? weight.hashCode() : 0);
+        result = 31 * result + (cost != null ? cost.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (descriptionRu != null ? descriptionRu.hashCode() : 0);
         result = 31 * result + (descriptionEn != null ? descriptionEn.hashCode() : 0);
         result = 31 * result + (imagePath != null ? imagePath.hashCode() : 0);
+        result = 31 * result + (number != null ? number.hashCode() : 0);
         return result;
     }
 }
