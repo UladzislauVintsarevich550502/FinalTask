@@ -26,7 +26,6 @@ public class AdminDAO implements IAdminDao {
     private Connection connection;
     private ResultSet resultSet;
     private PreparedStatement statement;
-    private Admin adminEnyity;
     private List<Admin> admins;
 
     @Override
@@ -98,6 +97,7 @@ public class AdminDAO implements IAdminDao {
 
     @Override
     public Admin signIn(String login, String password) throws DaoException {
+        Admin adminEnyity = null;
         LOGGER.log(Level.DEBUG, "Admin DAO: start SignIn");
         try {
             connectionPool = ConnectionPool.getInstance();
@@ -154,6 +154,7 @@ public class AdminDAO implements IAdminDao {
     @Override
     public List<Admin> getAllAdmins() throws DaoException {
         LOGGER.log(Level.DEBUG, "Admin DAO: Start get all admins");
+        Admin adminEnyity;
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.retrieve();
@@ -161,7 +162,6 @@ public class AdminDAO implements IAdminDao {
             statement = connection.prepareStatement(GET_ALL_ADMINS);
             resultSet = null;
             resultSet = statement.executeQuery();
-            adminEnyity = null;
             admins = new ArrayList<>();
             while (resultSet.next()) {
                 adminEnyity = createAdminByResultSet(resultSet);

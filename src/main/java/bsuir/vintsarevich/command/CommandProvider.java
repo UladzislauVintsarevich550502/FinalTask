@@ -25,6 +25,9 @@ public final class CommandProvider {
         repository.put(CommandName.BASKET, new Basket());
         repository.put(CommandName.ADD_PRODUCT_TO_BASKET, new AddProductToBasket());
         repository.put(CommandName.REMOVE_PRODUCT_FROM_BASKET,new RemoveProductFromBasket());
+        repository.put(CommandName.ADD_ACCOUNT, new AddAccount());
+        repository.put(CommandName.EDIT_CLIENTS, new EditClients());
+        repository.put(CommandName.CHANGE_CLIENT_STATUS, new ChangeClientStatus());
     }
 
     public static CommandProvider getInstance() {

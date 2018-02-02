@@ -31,7 +31,7 @@ public class AccountDAO implements IAccountDao {
 
     @Override
     public boolean addAccount(Account account) throws DaoException {
-        LOGGER.log(Level.DEBUG, "Product DAO: Add account start");
+        LOGGER.log(Level.DEBUG, "Account DAO: Add account start");
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.retrieve();
@@ -60,7 +60,7 @@ public class AccountDAO implements IAccountDao {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
-            LOGGER.log(Level.DEBUG, "Product DAO: Add account finish");
+            LOGGER.log(Level.DEBUG, "Account DAO: Add account finish");
         }
     }
 

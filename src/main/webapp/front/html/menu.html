@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!— Sidebar —>
 <div id="sidebar">
@@ -16,6 +17,7 @@
                 <h2>${menu_word}</h2>
             </header>
             <ul>
+                <li><a href="/add_product.do">${account_add_word}</a></li>
                 <li>
                     <p>${range_word}</p>
                     <span class="opener" id="type_food">${type_food_word1}</span>
@@ -34,6 +36,8 @@
                         <li><a href="basket.do">${basket_word}</a></li>
                     </c:when>
                     <c:when test="${user.role eq 'admin'}">
+                        <li><a href="/edit_clients.do">${edit_word}</a>
+                        </li>
                     </c:when>
                 </c:choose>
             </ul>

@@ -3,23 +3,20 @@ package bsuir.vintsarevich.command.impl;
 import bsuir.vintsarevich.buisness.order.service.IOrderService;
 import bsuir.vintsarevich.buisness.orderproduct.dao.IOrderProductDao;
 import bsuir.vintsarevich.buisness.orderproduct.service.IOrderProductService;
-import bsuir.vintsarevich.command.ICommand;
 import bsuir.vintsarevich.buisness.product.service.IProductService;
+import bsuir.vintsarevich.command.ICommand;
 import bsuir.vintsarevich.entity.User;
 import bsuir.vintsarevich.enumeration.JspElemetName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.exception.dao.DaoException;
 import bsuir.vintsarevich.exception.service.ServiceException;
-import bsuir.vintsarevich.exception.service.ServiceLogicException;
 import bsuir.vintsarevich.factory.dao.DaoFactory;
 import bsuir.vintsarevich.factory.service.ServiceFactory;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 import java.io.IOException;
 
 

@@ -2,7 +2,12 @@
 
 /* Reset */
 
-
+li#client_s {
+    font-size: 1.25em;
+    color: #3d4449;
+    font-weight: 700;
+    line-height: 1.5;
+}
 
 .footer-content-social-links ul li a img {
     border-bottom: none;
@@ -193,6 +198,9 @@ h3 {
 
 h4 {
     font-size: 1.1em;
+    margin-left: 30px;
+    margin-top: 7px;
+    margin-bottom: 17px;
 }
 
 h5 {

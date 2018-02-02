@@ -9,13 +9,14 @@ import bsuir.vintsarevich.exception.service.ServiceException;
 import bsuir.vintsarevich.exception.service.ServiceLogicException;
 import bsuir.vintsarevich.exception.validation.ValidatorException;
 import bsuir.vintsarevich.factory.dao.DaoFactory;
-//import bsuir.vintsarevich.utils.Hasher;
 import bsuir.vintsarevich.utils.Hasher;
 import bsuir.vintsarevich.utils.Validator;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import java.util.List;
+
+//import bsuir.vintsarevich.utils.Hasher;
 
 public class ClientService implements IClientService {
     private static final Logger LOGGER = Logger.getLogger(ClientService.class);
@@ -91,6 +92,19 @@ public class ClientService implements IClientService {
             throw new ServiceException(e);
         }
         LOGGER.log(Level.DEBUG, "Client Service: Finish delete client");
+        return true;
+    }
+
+    @Override
+    public boolean changeClientStatus(Integer clientId) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "Client Sevice: Change client status start");
+        IClientDao clientDao = daoFactory.getClientDao();
+        try {
+            clientDao.changeClientStatus(clientId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        LOGGER.log(Level.DEBUG, "Client Service: Finish change client status");
         return true;
     }
 }

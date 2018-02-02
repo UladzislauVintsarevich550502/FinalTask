@@ -62,7 +62,8 @@
     <fmt:message bundle="${loc}" key="local.word.search" var="search_word"/>
     <fmt:message bundle="${loc}" key="local.word.contacts" var="contacts_word"/>
     <fmt:message bundle="${loc}" key="local.word.address" var="address_word"/>
-    <fmt:message bundle="${loc}" key="local.word.street" var="street_word"/>
+    <fmt:message
+            bundle="${loc}" key="local.word.street" var="street_word"/>
     <fmt:message bundle="${loc}" key="local.word.stocks" var="stocks_word"/>
     <fmt:message bundle="${loc}" key="local.word.stock1" var="stock1_word"/>
     <fmt:message bundle="${loc}" key="local.word.stock2" var="stock2_word"/>
@@ -83,12 +84,19 @@
     <fmt:message bundle="${loc}" key="local.word.edit" var="edit_word"/>
     <fmt:message bundle="${loc}" key="local.word.basket_add" var="basket_add_word"/>
     <fmt:message bundle="${loc}" key="local.word.basket" var="basket_word"/>
+    <fmt:message bundle="${loc}" key="local.word.basket_delete" var="basket_delete_word"/>
+    <fmt:message bundle="${loc}" key="local.word.found_nothing" var="found_nothing_word"/>
+    <fmt:message bundle="${loc}" key="local.word.clients_all" var="client_all_word"/>
+    <fmt:message bundle="${loc}" key="local.word.client_ban" var="client_ban_word"/>
+    <fmt:message bundle="${loc}" key="local.word.client_unban" var="client_unban_word"/>
+
+
     <title>Epam Cafe</title>
 </head>
 <body>
-<!-- Wrapper -->
+<!— Wrapper —>
 <div id="wrapper">
-    <!-- Main -->
+    <!— Main —>
     <div id="main">
         <div class="inner">
 
@@ -96,80 +104,36 @@
 
             <%@include file="/front/html/forms.html" %>
 
-            <%@include file="/front/html/banner.html" %>
 
-            <!-- Section -->
+            <!— Section —>
             <section>
                 <header class="major">
-                    <h2>${range_word}</h2>
+                    <h2>${client_all_word}</h2>
                 </header>
-                <div class="posts">
-                    <c:choose>
-                        <c:when test="${products!=null}">
-                            <c:forEach var="product" items="${products}">
-                                <article>
-                                    <a href="#" class="image"><img src="images/products/${product.imagePath}"
-                                                                   alt="lorem"/></a>
-                                    <c:choose>
-                                        <c:when test="${locale eq 'ru'}">
-                                            <h3>${product.nameRu}</h3>
-                                            <p>${product.descriptionRu}</p>
-                                        </c:when>
-                                        <c:when test="${locale eq 'en'}">
-                                            <h3>${product.nameEn}</h3>
-                                            <p>${product.descriptionEn}</p>
-                                        </c:when>
-                                    </c:choose>
-
-                                    <ul class="actions">
-                                        <li><a href="" class="button">${view_word}</a>
-                                        </li>
-                                        <c:choose>
-                                            <c:when test="${user.role eq 'client'}">
-                                                <form method="POST"
-                                                      action="/add_product_to_basket.do?productId=${product.id}">
-                                                    <li>
-                                                        <input type="number" step="1" min="0" max="10"
-                                                               value="0" id="number-for-add"
-                                                               name="number_for_add"
-                                                               onkeypress="return false">
-                                                        <input type="text" style="display:none;"
-                                                               name="product_${product.nameEn}"
-                                                               value="${product.nameEn}">
-                                                        <input type="submit" id="add-button-to-basket"
-                                                               value="${basket_add_word}">
-                                                    </li>
-                                                </form>
-                                            </c:when>
-
-                                            <c:when test="${user.role eq 'admin'}">
-
-                                            </c:when>
-
-                                        </c:choose>
-
-                                    </ul>
-                                </article>
-                            </c:forEach>
-                        </c:when>
-                        <c:otherwise>
-                            <h2>${found_nothing_word}</h2>
-                        </c:otherwise>
-                    </c:choose>
-                    <c:choose>
-                        <c:when test="${user.role eq 'admin'}">
-                            <article>
-                                <%@include file="/front/html/add_form.html" %>
-                            </article>
-                        </c:when>
-                    </c:choose>
-                    <c:choose>
-                        <c:when test="${user.role eq 'client'}">
-
-                        </c:when>
-                    </c:choose>
-                </div>
+                <c:choose>
+                    <c:when test="${clients!=null}">
+                        <c:forEach var="client" items="${clients}">
+                            <li id="client_s">${client.login}</li>
+                            <h4>${client.name} ${client.surname}</h4>
+                            <a href="/product.do?id=${product.id}" class="button">${view_word}</a>
+                            <c:choose>
+                                <c:when test="${client.status eq 'active'}">
+                                    <a href="/change_client_status.do?clientId=${client.id}"
+                                       class="button">${client_ban_word}</a>
+                                </c:when>
+                                <c:when test="${client.status eq 'banned'}">
+                                    <a href="/change_client_status.do?clientId=${client.id}"
+                                       class="button">${client_unban_word}</a>
+                                </c:when>
+                            </c:choose>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <h2>${found_nothing_word}</h2>
+                    </c:otherwise>
+                </c:choose>
             </section>
+
 
         </div>
     </div>
@@ -178,7 +142,7 @@
 
 </div>
 
-<!-- Scripts -->
+<!— Scripts —>
 <script>
     <%@include file="/front/js/menu/main.js" %>
 </script>
@@ -188,10 +152,6 @@
 <script>
     <%@include file="/front/js/form/form.js"%>
 </script>
-<script>
-    <%@include file="/front/js/validation.js" %>
-</script>
-
 
 </body>
 </html>

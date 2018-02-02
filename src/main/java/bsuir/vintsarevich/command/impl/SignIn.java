@@ -27,6 +27,7 @@ public class SignIn implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.INFO, "Sign in command start");
+        user = null;
         String login = request.getParameter(JspElemetName.SIGNIN_LOGIN.getValue());
         String password = request.getParameter(JspElemetName.SIGNIN_PASSWORD.getValue());
         System.out.println(login);
@@ -40,19 +41,25 @@ public class SignIn implements ICommand {
 
         IClientService clientService = serviceFactory.getClientService();
         Client client = clientService.signIn(login, password);
+        System.out.println(client);
         IAdminService adminService = serviceFactory.getAdminService();
         Admin admin = adminService.signIn(login, password);
+        System.out.println(admin);
         LOGGER.log(Level.INFO, client);
         try {
             if (client != null) {
-                user = new User(client.getId(), client.getLogin(), "client", client.getName(), client.getSurname());
-                HttpSession session = request.getSession();
-                session.setAttribute(JspElemetName.USER.getValue(), user);
-                LOGGER.log(Level.INFO, "Successfull sign in account as " + login);
-                response.sendRedirect("/index.do");
+                if (!client.getStatus().equals("banned")) {
+                    user = new User(client.getId(), client.getLogin(), "client", client.getName(), client.getSurname(), client.getStatus());
+                    HttpSession session = request.getSession();
+                    session.setAttribute(JspElemetName.USER.getValue(), user);
+                    LOGGER.log(Level.INFO, "Successfull sign in account as " + login);
+                    response.sendRedirect("/index.do");
+                } else {
+                    jspPageName = JspPageName.TEST;
+                }
             } else {
                 if (admin != null) {
-                    user = new User(admin.getId(), admin.getLogin(), "admin", null, null);
+                    user = new User(admin.getId(), admin.getLogin(), "admin", null, null, null);
                     HttpSession session = request.getSession();
                     session.setAttribute(JspElemetName.USER.getValue(), user);
                     LOGGER.log(Level.INFO, "Successfull sign in account as " + login);
@@ -69,4 +76,3 @@ public class SignIn implements ICommand {
         return jspPageName.getPath();
     }
 }
-

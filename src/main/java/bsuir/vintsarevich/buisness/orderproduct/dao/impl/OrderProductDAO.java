@@ -1,18 +1,13 @@
 package bsuir.vintsarevich.buisness.orderproduct.dao.impl;
 
-import bsuir.vintsarevich.buisness.order.dao.IOrderDao;
 import bsuir.vintsarevich.buisness.order.dao.impl.OrderDAO;
-import bsuir.vintsarevich.buisness.order.service.IOrderService;
 import bsuir.vintsarevich.buisness.orderproduct.dao.IOrderProductDao;
 import bsuir.vintsarevich.connectionpool.ConnectionPool;
 import bsuir.vintsarevich.entity.OrderProducts;
 import bsuir.vintsarevich.exception.dao.ConnectionException;
 import bsuir.vintsarevich.exception.dao.DaoException;
-import bsuir.vintsarevich.factory.dao.DaoFactory;
-import bsuir.vintsarevich.factory.service.ServiceFactory;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.omg.PortableInterceptor.INACTIVE;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

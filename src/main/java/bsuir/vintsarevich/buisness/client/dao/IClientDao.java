@@ -13,5 +13,11 @@ public interface IClientDao {
 
     Client getClientByLogin(String clientLogin) throws DaoException;
 
+    Client getClientById(Integer clientId) throws DaoException;
+
     List<Client> getAllClients() throws DaoException;
+
+    boolean changeClientStatus(Integer clientId) throws DaoException;
+
+
 }

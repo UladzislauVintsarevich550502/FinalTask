@@ -23,7 +23,8 @@ public enum JspElemetName {
     PRODUCT_ID("productId"),
     IMAGE("file"),
     NUMBER_FOR_DELETE("number_for_delete"),
-    NUMBER_FOR_ADD("number_for_add");
+    NUMBER_FOR_ADD("number_for_add"),
+    CLIENT_ID("clientId");
 
     private String value;
 

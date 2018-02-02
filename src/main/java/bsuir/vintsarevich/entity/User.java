@@ -6,17 +6,15 @@ public class User {
     private String role;
     private String name;
     private String surname;
+    private String status;
 
-    public User() {
-        role = "no";
-    }
-
-    public User(int id, String login, String role, String name, String surname) {
+    public User(int id, String login, String role, String name, String surname, String status) {
         this.id = id;
         this.login = login;
         this.role = role;
         this.name = name;
         this.surname = surname;
+        this.status = status;
     }
 
     public int getId() {
@@ -59,6 +57,14 @@ public class User {
         this.surname = surname;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -67,6 +73,7 @@ public class User {
                 ", role='" + role + '\'' +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 
@@ -81,7 +88,8 @@ public class User {
         if (login != null ? !login.equals(user.login) : user.login != null) return false;
         if (role != null ? !role.equals(user.role) : user.role != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
-        return surname != null ? surname.equals(user.surname) : user.surname == null;
+        if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
+        return status != null ? status.equals(user.status) : user.status == null;
     }
 
     @Override
@@ -91,7 +99,7 @@ public class User {
         result = 31 * result + (role != null ? role.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
     }
-
 }

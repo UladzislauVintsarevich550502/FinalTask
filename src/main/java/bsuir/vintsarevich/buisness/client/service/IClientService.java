@@ -9,8 +9,12 @@ import java.util.List;
 public interface IClientService {
     Client signUp(String name, String surname,
                   String login, String password, String email) throws ServiceException, ServiceLogicException;
+
     Client signIn(String clientLogin, String clientPassword);
+
     List<Client> getAllClients() throws ServiceException;
 
     boolean deleteClient(Integer id) throws ServiceException;
+
+    boolean changeClientStatus(Integer clientId) throws ServiceException;
 }

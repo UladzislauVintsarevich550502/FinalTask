@@ -4,7 +4,8 @@ public enum JspPageName {
     INDEX("/front/jsp/index.jsp"),
     INFORMATION("/pages/common/information.jsp"),
     TEST("/front/jsp/test.jsp"),
-    BASKET("/front/jsp/basket.jsp");
+    BASKET("/front/jsp/basket.jsp"),
+    CLIENTS("/front/jsp/client.jsp");
 
 
     private String path;

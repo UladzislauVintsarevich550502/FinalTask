@@ -8,7 +8,4 @@ public interface IOrderProductService {
 
     boolean deleteOrderProduct(Integer clientId, Integer productId) throws ServiceException;
 
-
-
-
 }
