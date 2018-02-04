@@ -29,9 +29,7 @@ public class SignOut implements bsuir.vintsarevich.command.ICommand {
             }
             request.getSession().removeAttribute(JspElemetName.USER.toString());
             request.getSession().invalidate();
-            request.getRequestDispatcher("/index.do").forward(request, response);
-        } catch (ServletException e) {
-            LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
+            response.sendRedirect("/index.do");
         } catch (IOException e) {
             LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
         }

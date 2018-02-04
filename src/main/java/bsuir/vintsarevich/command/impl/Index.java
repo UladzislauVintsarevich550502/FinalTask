@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -19,14 +20,31 @@ public class Index implements ICommand {
     private static final Logger LOGGER = Logger.getLogger(Index.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private JspPageName jspPageName = JspPageName.INDEX;
+    private static final int NUMBER_OF_PRODUCT_ON_PAGE = 2;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.INFO, "Index command start");
         try {
             IProductService producteService = serviceFactory.getProducteService();
-            List<Product> products = producteService.getAllProducts();
-            request.setAttribute("products", products);
+            List<Product> allProducts = producteService.getAllProducts();
+            int pageCount;
+            if (allProducts.size() % 2 == 0) {
+                pageCount = allProducts.size() / 2;
+            } else {
+                pageCount = allProducts.size() / 2 + 1;
+            }
+            if (request.getSession().getAttribute("currentPage") == null) {
+                request.getSession().setAttribute("currentPage", 1);
+            }
+            int currentPage = (Integer) request.getSession().getAttribute("currentPage");
+            List<Product> pageProducts = new ArrayList<>();
+            for (int i = (currentPage - 1) * NUMBER_OF_PRODUCT_ON_PAGE; i < currentPage * NUMBER_OF_PRODUCT_ON_PAGE
+                    && i < allProducts.size(); i++) {
+                pageProducts.add(allProducts.get(i));
+            }
+            request.setAttribute("products", pageProducts);
+            request.getSession().setAttribute("pageCount", pageCount);
             String locale = (String) request.getSession().getAttribute("locale");
             if (locale == null || locale.isEmpty()) {
                 request.getSession().setAttribute("locale", Locale.getDefault().getLanguage());

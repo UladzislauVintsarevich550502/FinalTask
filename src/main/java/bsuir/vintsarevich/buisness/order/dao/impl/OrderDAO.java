@@ -18,13 +18,13 @@ import java.util.List;
 public class OrderDAO implements IOrderDao {
 
     private static final Logger LOGGER = Logger.getLogger(OrderDAO.class);
-    public static String ADD_ORDER = "INSERT INTO epamcafe.order (orderStatus, orderCost,clientId) VALUES(?,?,?)";
-    public static String GET_ORDERID_BY_CLIENTID = "SELECT epamcafe.order.orderId " +
+    private static String ADD_ORDER = "INSERT INTO epamcafe.order (orderStatus, orderCost,clientId) VALUES(?,?,?)";
+    private static String GET_ORDERID_BY_CLIENTID = "SELECT epamcafe.order.orderId " +
             "FROM(client join epamcafe.order ON client.clientId = epamcafe.order.clientId)" +
             " WHERE client.clientId = ?;";
-    public static String GET_ORDER_BY_CLIENTID = "SELECT * FROM(client join epamcafe.order ON client.clientId = epamcafe.order.clientId)" +
+    private static String GET_ORDER_BY_CLIENTID = "SELECT * FROM(client join epamcafe.order ON client.clientId = epamcafe.order.clientId)" +
             " WHERE client.clientId = ?;";
-    public static String EDIT_ORDER = "UPDATE epamcafe.order SET epamcafe.order.orderCost = (epamcafe.order.orderCost + ?) " +
+    private static String EDIT_ORDER = "UPDATE epamcafe.order SET epamcafe.order.orderCost = (epamcafe.order.orderCost + ?) " +
             "WHERE epamcafe.order.orderId = ?";
     private ConnectionPool connectionPool;
     private Connection connection;

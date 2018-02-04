@@ -16,14 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClientDAO implements IClientDao {
-    public static String GET_CLIENT_BY_LOGIN_AND_PASSWORD = "SELECT * FROM epamcafe.client WHERE clientLogin=? AND clientPassword=?;";
-    public static String GET_CLIENT_BY_LOGIN = "SELECT * FROM epamcafe.client WHERE clientLogin=?";
-    public static String GET_CLIENT_BY_ID = "SELECT * FROM epamcafe.client WHERE clientId=?";
-    public static String ADD_CLIENT = "INSERT INTO client (clientName,clientSurname,clientLogin,clientPassword,clientEmail," +
+    private static String GET_CLIENT_BY_LOGIN_AND_PASSWORD = "SELECT * FROM epamcafe.client WHERE clientLogin=? AND clientPassword=?;";
+    private static String GET_CLIENT_BY_LOGIN = "SELECT * FROM epamcafe.client WHERE clientLogin=?";
+    private static String GET_CLIENT_BY_ID = "SELECT * FROM epamcafe.client WHERE clientId=?";
+    private static String ADD_CLIENT = "INSERT INTO client (clientName,clientSurname,clientLogin,clientPassword,clientEmail," +
             "clientStatus,clientPoint) VALUES(?,?,?,?,?,?,?);";
-    public static String DELETE_CLIENT = "DELETE FROM epamcafe.client WHERE clientId=?";
-    public static String GET_ALL_CLIENTS = "SELECT * FROM epamcafe.client";
-    public static String CHANGE_STATUS = " UPDATE epamcafe.client SET epamcafe.client.clientStatus=? WHERE epamcafe.client.clientId=?";
+    private static String DELETE_CLIENT = "DELETE FROM epamcafe.client WHERE clientId=?";
+    private static String GET_ALL_CLIENTS = "SELECT * FROM epamcafe.client";
+    private static String CHANGE_STATUS = " UPDATE epamcafe.client SET epamcafe.client.clientStatus=? WHERE epamcafe.client.clientId=?";
     private static final Logger LOGGER = Logger.getLogger(ClientDAO.class);
     private ConnectionPool connectionPool;
     private Connection connection;

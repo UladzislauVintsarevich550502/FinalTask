@@ -16,11 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminDAO implements IAdminDao {
-    public static String GET_ADMIN_BY_LOGIN_AND_PASSWORD = "SELECT * FROM epamcafe.admin WHERE adminLogin=? AND adminPassword=?;";
-    public static String ADD_ADMIN = "INSERT INTO admin (adminLogin, adminPassword) VALUES(?,?)";
-    public static String DELETE_ADMIN = "DELETE FROM epamcafe.admin WHERE adminId=?";
-    public static String GET_ALL_ADMINS = "SELECT *FROM epamcafe.admin";
-    public static String GET_ADMIN_BY_LOGIN = "SELECT * FROM epamcafe.admin WHERE adminLogin=?";
+    private static String GET_ADMIN_BY_LOGIN_AND_PASSWORD = "SELECT * FROM epamcafe.admin WHERE adminLogin=? AND adminPassword=?;";
+    private static String ADD_ADMIN = "INSERT INTO admin (adminLogin, adminPassword) VALUES(?,?)";
+    private static String DELETE_ADMIN = "DELETE FROM epamcafe.admin WHERE adminId=?";
+    private static String GET_ALL_ADMINS = "SELECT *FROM epamcafe.admin";
+    private static String GET_ADMIN_BY_LOGIN = "SELECT * FROM epamcafe.admin WHERE adminLogin=?";
     private static final Logger LOGGER = Logger.getLogger(AdminDAO.class);
     private ConnectionPool connectionPool;
     private Connection connection;

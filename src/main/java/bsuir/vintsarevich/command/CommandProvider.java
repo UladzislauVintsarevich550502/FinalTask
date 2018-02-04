@@ -28,6 +28,7 @@ public final class CommandProvider {
         repository.put(CommandName.ADD_ACCOUNT, new AddAccount());
         repository.put(CommandName.EDIT_CLIENTS, new EditClients());
         repository.put(CommandName.CHANGE_CLIENT_STATUS, new ChangeClientStatus());
+        repository.put(CommandName.SET_CURRENT_PAGE, new SetCurrentPage());
     }
 
     public static CommandProvider getInstance() {

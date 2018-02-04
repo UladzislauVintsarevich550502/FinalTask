@@ -24,7 +24,8 @@ public enum JspElemetName {
     IMAGE("file"),
     NUMBER_FOR_DELETE("number_for_delete"),
     NUMBER_FOR_ADD("number_for_add"),
-    CLIENT_ID("clientId");
+    CLIENT_ID("clientId"),
+    CURRENT_PAGE("current_page");
 
     private String value;
 

@@ -17,15 +17,15 @@ import java.util.List;
 
 public class ProductDAO implements IProductDao {
     private static final Logger LOGGER = Logger.getLogger(ProductDAO.class);
-    public static String GET_ALL_PRODUCTS = "SELECT * FROM epamcafe.product;";
-    public static String ADD_PRODUCT = "INSERT INTO product (productType,productNameRu,productNameEn,productWeight,productCost,productStatus," +
+    private static String GET_ALL_PRODUCTS = "SELECT * FROM epamcafe.product;";
+    private static String ADD_PRODUCT = "INSERT INTO product (productType,productNameRu,productNameEn,productWeight,productCost,productStatus," +
             "productDescriptionRu,productDescriptionEn,productImage) VALUES(?,?,?,?,?,?,?,?,?);";
-    public static String EDIT_PRODUCT = "UPDATE product SET productType=?,productNameRu=?,productNameEn=?,productWeight=?,productCost=?,productStatus=?," +
+    private static String EDIT_PRODUCT = "UPDATE product SET productType=?,productNameRu=?,productNameEn=?,productWeight=?,productCost=?,productStatus=?," +
             "productDescriptionRu=?,productDescriptionEn=?,productImage=? WHERE productId=?;";
-    public static String GET_PRODUCT_BY_ID = "SELECT * FROM epamcafe.product WHERE productId=?";
-    public static String GET_PRODUCT_BY_TYPE = "SELECT *FROM epamcafe.product WHERE productType=?";
-    public static String DELETE_PRODUCT = "DELETE FROM epamcafe.product WHERE productId=?";
-    public static String GET_PRODUCT_BY_CLIENTID = "SELECT product.productId, product.productType,product.productNameRu," +
+    private static String GET_PRODUCT_BY_ID = "SELECT * FROM epamcafe.product WHERE productId=?";
+    private static String GET_PRODUCT_BY_TYPE = "SELECT *FROM epamcafe.product WHERE productType=?";
+    private static String DELETE_PRODUCT = "DELETE FROM epamcafe.product WHERE productId=?";
+    private static String GET_PRODUCT_BY_CLIENTID = "SELECT product.productId, product.productType,product.productNameRu," +
             "product.productNameEn,product.productWeight,product.productCost,product.productStatus," +
             "product.productDescriptionRu,productDescriptionEn,product.productImage,orderproducts.productCount " +
             "FROM(((client join epamcafe.order ON client.clientId = epamcafe.order.clientId) JOIN orderproducts" +
