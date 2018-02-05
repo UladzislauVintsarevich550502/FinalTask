@@ -37,15 +37,26 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public boolean editAccount(Integer clientId) throws ServiceException {
+    public boolean editAccount(Integer clientId,Double orderCostNew) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Account service: start edit account");
         IAccountDao accountDao = daoFactory.getAccountDao();
         try {
-            accountDao.editAccount(clientId);
+            accountDao.editAccount(clientId,orderCostNew);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
         LOGGER.log(Level.DEBUG, "Account service: finish edit account");
         return true;
+    }
+
+    @Override
+    public boolean findAccountByClientId(Integer clientId) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "Account service: start find account");
+        IAccountDao accountDao = daoFactory.getAccountDao();
+        try {
+           return accountDao.findAccountByClientId(clientId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 }

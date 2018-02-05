@@ -3,18 +3,32 @@ package bsuir.vintsarevich.entity;
 public class Order {
     private Integer id;
     private String data;
-    private String status;
+    private String type;
     private Double cost;
     private Integer clientId;
 
-    public Order(String status, Double cost, Integer clientId) {
-        this.status = status;
+    public Order(Integer id, String data, String type, Double cost, Integer clientId) {
+        this.id = id;
+        this.data = data;
+        this.type = type;
+        this.cost = cost;
+        this.clientId = clientId;
+    }
+
+    public Order(String type, Double cost, Integer clientId) {
+        this.type = type;
+        this.cost = cost;
+        this.clientId = clientId;
+    }
+
+    public Order(String type, String data, Double cost, Integer clientId) {
+        this.data = data;
+        this.type = type;
         this.cost = cost;
         this.clientId = clientId;
     }
 
     public Order() {
-
     }
 
     public Integer getId() {
@@ -33,12 +47,12 @@ public class Order {
         this.data = data;
     }
 
-    public String getStatus() {
-        return status;
+    public String getType() {
+        return type;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public Double getCost() {
@@ -58,17 +72,6 @@ public class Order {
     }
 
     @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", data='" + data + '\'' +
-                ", status='" + status + '\'' +
-                ", cost=" + cost +
-                ", clientId=" + clientId +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -77,7 +80,7 @@ public class Order {
 
         if (id != null ? !id.equals(order.id) : order.id != null) return false;
         if (data != null ? !data.equals(order.data) : order.data != null) return false;
-        if (status != null ? !status.equals(order.status) : order.status != null) return false;
+        if (type != null ? !type.equals(order.type) : order.type != null) return false;
         if (cost != null ? !cost.equals(order.cost) : order.cost != null) return false;
         return clientId != null ? clientId.equals(order.clientId) : order.clientId == null;
     }
@@ -86,9 +89,20 @@ public class Order {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (data != null ? data.hashCode() : 0);
-        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (cost != null ? cost.hashCode() : 0);
         result = 31 * result + (clientId != null ? clientId.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", data='" + data + '\'' +
+                ", type='" + type + '\'' +
+                ", cost=" + cost +
+                ", clientId=" + clientId +
+                '}';
     }
 }

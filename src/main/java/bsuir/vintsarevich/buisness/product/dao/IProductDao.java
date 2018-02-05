@@ -14,7 +14,7 @@ public interface IProductDao {
 
     List<Product> getProductByType(String type) throws DaoException;
 
-    List<Product> getProductByClientId(Integer clientId) throws DaoException;
+    List<Product> getProductByOrderId(Integer orderId) throws DaoException;
 
     List<Product> getAllProducts() throws DaoException;
 

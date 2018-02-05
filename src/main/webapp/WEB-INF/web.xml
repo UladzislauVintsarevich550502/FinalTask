@@ -8,21 +8,13 @@
       <welcome-file>/index.html</welcome-file>
     <welcome-file>/index.jsp</welcome-file>
   </welcome-file-list>
-  <security-constraint>
-    <display-name>Restrict direct access to certain folders</display-name>
-    <web-resource-collection>
-      <web-resource-name>Restricted folders</web-resource-name>
-      <url-pattern>/pages/*</url-pattern>
-    </web-resource-collection>
-    <auth-constraint />
-  </security-constraint>
     <error-page>
         <error-code>404</error-code>
-        <location>/pages/common/error.jsp</location>
+        <location>/front/jsp/error.jsp</location>
     </error-page>
     <error-page>
         <error-code>403</error-code>
-        <location>/pages/common/error.jsp</location>
+        <location>/front/jsp/error.jsp</location>
     </error-page>
 
 </web-app>

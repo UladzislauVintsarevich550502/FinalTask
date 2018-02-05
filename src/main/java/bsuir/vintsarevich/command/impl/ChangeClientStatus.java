@@ -26,7 +26,7 @@ public class ChangeClientStatus implements ICommand {
         try {
             Integer clientId = Integer.valueOf(request.getParameter(JspElemetName.CLIENT_ID.getValue()));
             clientService.changeClientStatus(clientId);
-            response.sendRedirect("/edit_clients.do");
+            response.sendRedirect("/cafe.by/edit_clients");
         } catch (IOException e) {
             LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
         } catch (ServiceException e) {

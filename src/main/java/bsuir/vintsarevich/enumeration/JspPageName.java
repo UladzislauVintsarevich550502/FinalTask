@@ -2,7 +2,7 @@ package bsuir.vintsarevich.enumeration;
 
 public enum JspPageName {
     INDEX("/front/jsp/index.jsp"),
-    INFORMATION("/pages/common/information.jsp"),
+    ERROR("/front/jsp/error.jsp"),
     TEST("/front/jsp/test.jsp"),
     BASKET("/front/jsp/basket.jsp"),
     CLIENTS("/front/jsp/client.jsp");

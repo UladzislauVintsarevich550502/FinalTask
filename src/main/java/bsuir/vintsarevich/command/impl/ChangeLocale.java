@@ -23,7 +23,7 @@ public class ChangeLocale implements ICommand {
             } else {
                 request.getSession().setAttribute("locale", "ru");
             }
-            response.sendRedirect("/index.do");
+            response.sendRedirect("/cafe.by/index");
         } catch (IOException e) {
             LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
         }

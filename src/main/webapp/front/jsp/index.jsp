@@ -104,13 +104,13 @@
                     <h2>${range_word}</h2>
                 </header>
                 <form method="POST"
-                      action="/add_product_to_basket.do?productId">
+                      action="/cafe.by/add_product_to_basket?productId">
                     <div class="posts">
                         <c:choose>
                             <c:when test="${products!=null}">
                                 <c:forEach var="product" items="${products}">
                                     <article>
-                                        <a href="#" class="image"><img src="images/products/${product.imagePath}"
+                                        <a href="#" class="image"><img src="/images/products/${product.imagePath}"
                                                                        alt="lorem"/></a>
                                         <c:choose>
                                             <c:when test="${locale eq 'ru'}">
@@ -119,6 +119,8 @@
                                             </c:when>
                                             <c:when test="${locale eq 'en'}">
                                                 <h3>${product.nameEn}</h3>
+                                                <p>${product.descriptionEn}</p>
+                                                <p>${product.descriptionEn}</p>
                                                 <p>${product.descriptionEn}</p>
                                             </c:when>
                                         </c:choose>
@@ -132,7 +134,7 @@
                                                            name="number_for_add_${product.id}"
                                                            onkeypress="return false">
                                                     <input type="text" style="display:none;"
-                                                           name="product_id_${product.id}"
+                                                           name="productId_${product.id}"
                                                            value="${product.id}">
                                                     </li>
                                                 </c:when>
@@ -158,78 +160,113 @@
                                 </article>
                             </c:when>
                         </c:choose>
-                        <c:choose>
-                            <c:when test="${user.role eq 'client'}">
-
-                            </c:when>
-                        </c:choose>
                     </div>
-                    <input type="submit" id="add-button-to-basket"
-                           value="${basket_add_word}">
+                    <c:choose>
+                        <c:when test="${user.role eq 'client'}">
+                            <input type="submit" id="add-button-to-basket"
+                                   value="${basket_add_word}">
+                        </c:when>
+                    </c:choose>
+
                 </form>
             </section>
 
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    <c:choose>
-                        <c:when test="${currentPage==1}">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                            </li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="page-item">
-                                <a class="page-link" href="/set_current_page.do?current_page=${currentPage-1}"
-                                   aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                            </li>
-                        </c:otherwise>
-                    </c:choose>
-                    <%--For displaying all available pages--%>
-                    <c:forEach begin="${(currentPage-2 <= 1) ? 1 : currentPage-2}"
-                               end="${(currentPage+2>pageCount) ? pageCount : currentPage+2}" var="i">
-                        <c:choose>
-                            <c:when test="${currentPage eq i}">
-                                <li class="page-item active">
-                                    <a class="page-link" style="color: red"
-                                       href="/set_current_page.do?current_page=${i}">${i}</a>
-                                </li>
-                            </c:when>
-                            <c:otherwise>
-                                <li class="page-item">
-                                    <a class="page-link" href="/set_current_page.do?current_page=${i}">${i}</a>
-                                </li>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                    <c:choose>
-                        <c:when test="${currentPage eq pageCount}">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                            </li>
-                        </c:when>
-                        <c:otherwise>
-                            <li class="page-item">
-                                <a class="page-link"
-                                   href="controller?command=show_publications&pageNumber=${currentPage+1}"
-                                   aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                            </li>
-                        </c:otherwise>
-                    </c:choose>
+            <c:choose>
+                <c:when test="${pageCount!=0}">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            <c:choose>
+                                <c:when test="${currentPage==1}">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item">
+                                        <a class="page-link" href="/cafe.by/set_current_page?current_page=${currentPage-1}"
+                                           aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
+                                <%--For displaying all available pages--%>
+                            <c:forEach begin="${(currentPage-2 <= 1) ? 1 : currentPage-2}"
+                                       end="${(currentPage+2>=pageCount) ? pageCount : currentPage+2}" var="i">
+                                <c:choose>
+                                    <c:when test="${currentPage eq i}">
+                                        <li class="page-item active">
+                                            <a class="page-link" style="color: red"
+                                               href="/cafe.by/set_current_page?current_page=${i}">${i}</a>
+                                        </li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="page-item">
+                                            <a class="page-link" href="/cafe.by/set_current_page?current_page=${i}">${i}</a>
+                                        </li>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                            <c:choose>
+                                <c:when test="${currentPage eq pageCount}">
+                                    <li class="page-item disabled">
+                                        <a class="page-link" href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                           href="/cafe.by/set_current_page?current_page=${currentPage+1}"
+                                           aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
 
-                </ul>
-            </nav>
+                        </ul>
+                    </nav>
+                </c:when>
+            </c:choose>
+
+            <section>
+                <c:choose>
+                    <c:when test="${user.role eq 'client'}">
+                        <form method="post" class="cd-form" id="add-review" action="/cafe.by/add_review"
+                              enctype="multipart/form-data">
+                            <h2>Оставить отзыв:</h2>
+                            <div id="reviewStars-input">
+                                <input id="star-4" type="radio" value="5" name="review_stars"/>
+                                <label title="Отлично!" for="star-4"></label>
+
+                                <input id="star-3" type="radio" value="4" name="review_stars"/>
+                                <label title="Хорошо!" for="star-3"></label>
+
+                                <input id="star-2" type="radio" value="3" name="review_stars"/>
+                                <label title="Неплохо!" for="star-2"></label>
+
+                                <input id="star-1" type="radio" value="2" name="review_stars"/>
+                                <label title="Ужасно!" for="star-1"></label>
+
+                                <input id="star-0" type="radio" value="1" name="review_stars"/>
+                                <label title="Отвратительно!" for="star-0"></label>
+                            </div>
+                            <p class="fieldset">
+                                <input type="text" name="review_text" id="name-ru" placeholder="Напишите отзыв">
+                                <input type="submit" id="send-review" value="Отправить отзыв">
+                            </p>
+                        </form>
+                    </c:when>
+                </c:choose>
+            </section>
 
         </div>
     </div>

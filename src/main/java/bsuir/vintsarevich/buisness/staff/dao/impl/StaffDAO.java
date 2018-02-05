@@ -1,0 +1,192 @@
+package bsuir.vintsarevich.buisness.staff.dao.impl;
+
+import bsuir.vintsarevich.buisness.staff.dao.IStaffDao;
+import bsuir.vintsarevich.connectionpool.ConnectionPool;
+import bsuir.vintsarevich.entity.Staff;
+import bsuir.vintsarevich.exception.dao.ConnectionException;
+import bsuir.vintsarevich.exception.dao.DaoException;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class StaffDAO implements IStaffDao {
+    private static String ADD_STAFF = "INSERT INTO epamcafe.staff (staffLogin, staffPassword) VALUES(?,?)";
+    private static String DELETE_STAFF = "DELETE FROM epamcafe.staff WHERE staffId=?";
+    private static String GET_STAFF_BY_LOGIN_AND_PASSWORD = "SELECT * FROM epamcafe.staff WHERE staffLogin=? AND staffPassword=?";
+    private static String GET_STAFF_BY_LOGIN = "SELECT * FROM epamcafe.staff WHERE staffLogin=?";
+    private static String GET_ALL_STAFF = "SELECT * FROM epamcafe.staff";
+    private ConnectionPool connectionPool;
+    private Connection connection;
+    private PreparedStatement statement;
+    private ResultSet resultSet;
+    private static final Logger LOGGER = Logger.getLogger(StaffDAO.class);
+
+    @Override
+    public boolean addStaff(Staff staff) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Staff DAO: Add staff start");
+        try {
+            System.out.println(staff);
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            statement = connection.prepareStatement(ADD_STAFF);
+            statement.setString(1, staff.getLogin());
+            statement.setString(2, staff.getPassword());
+            if (statement.executeUpdate() != 0) {
+                LOGGER.log(Level.DEBUG, "Add staff success");
+                return true;
+            } else {
+                LOGGER.log(Level.DEBUG, "Add staff finish");
+                return false;
+            }
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                throw new DaoException(e);
+            }
+            throw new DaoException("Error of query to database(addStaff)", e);
+        } catch (ConnectionException e) {
+            throw new DaoException("Error with connection with database" + e);
+        } finally {
+            if (connectionPool != null) {
+                connectionPool.putBackConnection(connection, statement, resultSet);
+            }
+            LOGGER.log(Level.DEBUG, "Staff DAO: Add staff finish");
+        }
+    }
+
+    @Override
+    public boolean deleteStaff(Integer id) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Staff DAO: Delete staff start");
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            statement = connection.prepareStatement(DELETE_STAFF);
+            statement.setInt(1, id);
+            if (statement.executeUpdate() != 0) {
+                LOGGER.log(Level.DEBUG, "Delete staff success");
+                return true;
+            } else {
+                LOGGER.log(Level.DEBUG, "Delete staff finish");
+                return false;
+            }
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                throw new DaoException(e);
+            }
+            throw new DaoException("Error of query to database(deleteStaff)", e);
+        } catch (ConnectionException e) {
+            throw new DaoException("Error with connection with database" + e);
+        } finally {
+            if (connectionPool != null) {
+                connectionPool.putBackConnection(connection, statement, resultSet);
+            }
+            LOGGER.log(Level.DEBUG, "Staff DAO: Delete staff finish");
+        }
+    }
+
+    @Override
+    public Staff signIn(String login, String password) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Staff DAO: start signIn");
+        Staff staff = null;
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            statement = connection.prepareStatement(GET_STAFF_BY_LOGIN_AND_PASSWORD);
+            statement.setString(1, login);
+            statement.setString(2, password);
+            resultSet = statement.executeQuery();
+            if (resultSet.first()) {
+                staff = createStaffByResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Error with adding in database" + e);
+        } catch (ConnectionException e) {
+            throw new DaoException("Error with connection with database" + e);
+        } finally {
+            if (connectionPool != null) {
+                connectionPool.putBackConnection(connection, statement, resultSet);
+            }
+        }
+        LOGGER.log(Level.DEBUG, "Staff DAO: finish SignIn");
+        return staff;
+    }
+
+    private Staff createStaffByResultSet(ResultSet resultSet) throws DaoException {
+        Staff staff = new Staff();
+        try {
+            staff.setId(resultSet.getInt("staffId"));
+            staff.setLogin(resultSet.getString("staffLogin"));
+            staff.setPassword(resultSet.getString("staffPassword"));
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
+        return staff;
+    }
+
+    @Override
+    public boolean findStaffByLogin(String login) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Staff DAO: start Find");
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            statement = connection.prepareStatement(GET_STAFF_BY_LOGIN);
+            statement.setString(1, login);
+            resultSet = statement.executeQuery();
+            if (resultSet.first()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Error with adding in database" + e);
+        } catch (ConnectionException e) {
+            throw new DaoException("Error with connection with database" + e);
+        } finally {
+            if (connectionPool != null) {
+                connectionPool.putBackConnection(connection, statement, resultSet);
+            }
+        }
+        LOGGER.log(Level.DEBUG, "Staff DAO: finish Find");
+        return false;
+    }
+
+    @Override
+    public List<Staff> getAllStaff()  throws DaoException {
+        LOGGER.log(Level.DEBUG, "Staff DAO: Start get all staff");
+        List<Staff> staff = new ArrayList<>();
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            statement = connection.prepareStatement(GET_ALL_STAFF);
+            resultSet = statement.executeQuery();
+            if (resultSet.first()) {
+                do {
+                    staff.add(createStaffByResultSet(resultSet));
+                } while (resultSet.next());
+            }
+            LOGGER.log(Level.INFO, staff);
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                throw new DaoException(e);
+            }
+            throw new DaoException("Error of query to database(getAllStaff)", e);
+        } catch (ConnectionException e) {
+            throw new DaoException("Error with connection with database" + e);
+        } finally {
+            if (connectionPool != null) {
+                connectionPool.putBackConnection(connection, statement, resultSet);
+            }
+        }
+        LOGGER.log(Level.DEBUG, "Staff DAO: Finish get all staff");
+        return staff;
+    }
+}

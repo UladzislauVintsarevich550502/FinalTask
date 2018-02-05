@@ -20,7 +20,7 @@ public class SetCurrentPage implements ICommand {
             LOGGER.log(Level.INFO, "Set current page command start");
             Integer currentPage = Integer.valueOf(request.getParameter(JspElemetName.CURRENT_PAGE.getValue()));
             request.getSession().setAttribute("currentPage", currentPage);
-            response.sendRedirect("/index.do");
+            response.sendRedirect("/cafe.by/index");
         } catch (IOException e) {
             LOGGER.log(Level.ERROR, this.getClass() + e.getMessage());
         }

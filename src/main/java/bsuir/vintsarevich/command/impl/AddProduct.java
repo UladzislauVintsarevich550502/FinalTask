@@ -37,7 +37,7 @@ public class AddProduct implements ICommand {
             Part part = request.getPart(JspElemetName.IMAGE.getValue());
             String webPath = request.getServletContext().getRealPath("/");
             productService.addProduct(productType, nameRu, nameEn, weight, cost, status, descriptionRu, descriptionEn, part, webPath);
-            response.sendRedirect("/index.do");
+            response.sendRedirect("/cafe.by/index");
         } catch (IOException e) {
             LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
         } catch (ServletException e) {

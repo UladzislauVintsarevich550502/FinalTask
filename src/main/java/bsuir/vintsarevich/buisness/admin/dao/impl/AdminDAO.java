@@ -16,12 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminDAO implements IAdminDao {
+    private static final Logger LOGGER = Logger.getLogger(AdminDAO.class);
     private static String GET_ADMIN_BY_LOGIN_AND_PASSWORD = "SELECT * FROM epamcafe.admin WHERE adminLogin=? AND adminPassword=?;";
     private static String ADD_ADMIN = "INSERT INTO admin (adminLogin, adminPassword) VALUES(?,?)";
     private static String DELETE_ADMIN = "DELETE FROM epamcafe.admin WHERE adminId=?";
     private static String GET_ALL_ADMINS = "SELECT *FROM epamcafe.admin";
     private static String GET_ADMIN_BY_LOGIN = "SELECT * FROM epamcafe.admin WHERE adminLogin=?";
-    private static final Logger LOGGER = Logger.getLogger(AdminDAO.class);
     private ConnectionPool connectionPool;
     private Connection connection;
     private ResultSet resultSet;
@@ -34,8 +34,7 @@ public class AdminDAO implements IAdminDao {
         try {
             System.out.println(admin);
             connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.retrieve();
-            statement = null;
+            connection = connectionPool.getConnection();
             statement = connection.prepareStatement(ADD_ADMIN);
             statement.setString(1, admin.getLogin());
             statement.setString(2, admin.getPassword());
@@ -68,7 +67,7 @@ public class AdminDAO implements IAdminDao {
         LOGGER.log(Level.DEBUG, "Admin DAO: Delete admin start");
         try {
             connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.retrieve();
+            connection = connectionPool.getConnection();
             statement = connection.prepareStatement(DELETE_ADMIN);
             statement.setInt(1, id);
             if (statement.executeUpdate() != 0) {
@@ -101,12 +100,12 @@ public class AdminDAO implements IAdminDao {
         LOGGER.log(Level.DEBUG, "Admin DAO: start SignIn");
         try {
             connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.retrieve();
-            statement = null;
+            connection = connectionPool.getConnection();
+
             statement = connection.prepareStatement(GET_ADMIN_BY_LOGIN_AND_PASSWORD);
             statement.setString(1, login);
             statement.setString(2, password);
-            resultSet = null;
+
             resultSet = statement.executeQuery();
             if (resultSet.first()) {
                 adminEnyity = createAdminByResultSet(resultSet);
@@ -129,11 +128,11 @@ public class AdminDAO implements IAdminDao {
         LOGGER.log(Level.DEBUG, "Admin DAO: start Find");
         try {
             connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.retrieve();
-            statement = null;
+            connection = connectionPool.getConnection();
+
             statement = connection.prepareStatement(GET_ADMIN_BY_LOGIN);
             statement.setString(1, login);
-            resultSet = null;
+
             resultSet = statement.executeQuery();
             if (resultSet.first()) {
                 return true;
@@ -157,10 +156,8 @@ public class AdminDAO implements IAdminDao {
         Admin adminEnyity;
         try {
             connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.retrieve();
-            statement = null;
+            connection = connectionPool.getConnection();
             statement = connection.prepareStatement(GET_ALL_ADMINS);
-            resultSet = null;
             resultSet = statement.executeQuery();
             admins = new ArrayList<>();
             while (resultSet.next()) {

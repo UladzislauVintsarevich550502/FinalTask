@@ -1,7 +1,7 @@
 ﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- Header -->
 <header id="header">
-    <form method="post" id="c-locale" action="/change_locale.do">
+    <form method="post" id="c-locale" action="/cafe.by/change_locale">
         <c:choose>
             <c:when test="${locale eq 'ru'}">
                 <input type="submit" id="lang_en">
@@ -11,7 +11,7 @@
             </c:when>
         </c:choose>
     </form>
-    <a href="index.do" class="logo"><strong>${home_word}</strong></a>
+    <a href="/cafe.by/index" class="logo"><strong>${home_word}</strong></a>
     <div class="reg-conteiner">
         <c:choose>
             <c:when test="${user == null}">
@@ -23,12 +23,12 @@
                 </nav>
             </c:when>
             <c:when test="${user.role eq 'admin'}">
-                <form method="POST" action="/sign_out.do">
+                <form method="POST" action="/cafe.by/sign_out">
                     <input type="submit" class="cd-exit" href="#0" value=${exit_word}>
                 </form>
             </c:when>
             <c:when test="${user.role eq 'client'}">
-                <form method="POST" action="/sign_out.do">
+                <form method="POST" action="/cafe.by/sign_out">
                     <input type="submit" class="cd-exit" href="#0" value=${exit_word}>
                 </form>
             </c:when>

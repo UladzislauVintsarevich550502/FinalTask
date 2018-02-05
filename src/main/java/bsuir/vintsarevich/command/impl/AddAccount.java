@@ -1,5 +1,6 @@
 package bsuir.vintsarevich.command.impl;
 
+import bsuir.vintsarevich.buisness.account.service.IAccountService;
 import bsuir.vintsarevich.buisness.product.service.IProductService;
 import bsuir.vintsarevich.command.ICommand;
 import bsuir.vintsarevich.entity.Product;
@@ -26,6 +27,20 @@ public class AddAccount implements ICommand {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        LOGGER.log(Level.INFO, "Start add account");
+        try {
+            IAccountService accountService = serviceFactory.getAccountService();
+            User user = ((User) request.getSession().getAttribute("user"));
+            accountService.addAccount(user.getId());
+            user.setAccount(true);
+            request.getSession().setAttribute("user", user);
+            response.sendRedirect("/cafe.by/index");
+        } catch (IOException e) {
+            LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
+        } catch (ServiceException e) {
+            LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
+        }
+        LOGGER.log(Level.INFO, "Finish add product");
         return jspPageName.getPath();
     }
 }

@@ -51,5 +51,18 @@ public class OrderProductService implements IOrderProductService {
         return true;
     }
 
+    @Override
+    public boolean editOrderProductPayment(Integer orderIdNew,Integer orderId) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "OrderProduct Service: edit orderProduct start");
+        IOrderProductDao orderProductDao=daoFactory.getOrderProductDao();
+        try {
+            orderProductDao.editOrderProductPayment(orderIdNew,orderId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        LOGGER.log(Level.DEBUG, "OrderProduct Service: edit orderProduct finish");
+        return false;
+    }
+
 }
 

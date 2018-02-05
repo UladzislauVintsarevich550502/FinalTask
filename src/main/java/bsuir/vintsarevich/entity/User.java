@@ -7,14 +7,16 @@ public class User {
     private String name;
     private String surname;
     private String status;
+    private Boolean account;
 
-    public User(int id, String login, String role, String name, String surname, String status) {
+    public User(int id, String login, String role, String name, String surname, String status, Boolean account) {
         this.id = id;
         this.login = login;
         this.role = role;
         this.name = name;
         this.surname = surname;
         this.status = status;
+        this.account = account;
     }
 
     public int getId() {
@@ -65,16 +67,12 @@ public class User {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", login='" + login + '\'' +
-                ", role='" + role + '\'' +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", status='" + status + '\'' +
-                '}';
+    public Boolean getAccount() {
+        return account;
+    }
+
+    public void setAccount(Boolean account) {
+        this.account = account;
     }
 
     @Override
@@ -89,7 +87,8 @@ public class User {
         if (role != null ? !role.equals(user.role) : user.role != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
-        return status != null ? status.equals(user.status) : user.status == null;
+        if (status != null ? !status.equals(user.status) : user.status != null) return false;
+        return account != null ? account.equals(user.account) : user.account == null;
     }
 
     @Override
@@ -100,6 +99,20 @@ public class User {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (account != null ? account.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", role='" + role + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", status='" + status + '\'' +
+                ", account=" + account +
+                '}';
     }
 }

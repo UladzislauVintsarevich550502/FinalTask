@@ -36,8 +36,7 @@ public class ClientDAO implements IClientDao {
         LOGGER.log(Level.DEBUG, "Client DAO: start SignUp");
         try {
             connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.retrieve();
-            statement = null;
+            connection = connectionPool.getConnection();
             System.out.println(client);
             statement = connection.prepareStatement(ADD_CLIENT);
             statement.setString(1, client.getName());
@@ -74,7 +73,7 @@ public class ClientDAO implements IClientDao {
         LOGGER.log(Level.DEBUG, "Client DAO: Delete product start");
         try {
             connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.retrieve();
+            connection = connectionPool.getConnection();
             statement = connection.prepareStatement(DELETE_CLIENT);
             statement.setInt(1, id);
             if (statement.executeUpdate() != 0) {
@@ -107,14 +106,12 @@ public class ClientDAO implements IClientDao {
         Client clientEntity = null;
         try {
             connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.retrieve();
-            statement = null;
+            connection = connectionPool.getConnection();
             statement = connection.prepareStatement(GET_CLIENT_BY_LOGIN_AND_PASSWORD);
             System.out.println(login);
             System.out.println(password);
             statement.setString(1, login);
             statement.setString(2, password);
-            resultSet = null;
             resultSet = statement.executeQuery();
             if (resultSet.first()) {
                 clientEntity = createClientByResultSet(resultSet);
@@ -141,11 +138,9 @@ public class ClientDAO implements IClientDao {
     public Client getClientByLogin(String clientLogin) throws DaoException {
         LOGGER.log(Level.DEBUG, "Client DAO: start get Client bu login");
         Client clientEntity = null;
-        statement = null;
-        resultSet = null;
         try {
             connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.retrieve();
+            connection = connectionPool.getConnection();
             statement = connection.prepareStatement(GET_CLIENT_BY_LOGIN);
             statement.setString(1, clientLogin);
             resultSet = statement.executeQuery();
@@ -169,11 +164,9 @@ public class ClientDAO implements IClientDao {
     public Client getClientById(Integer clientId) throws DaoException {
         LOGGER.log(Level.DEBUG, "Client DAO: start get Client by ib");
         Client clientEntity = null;
-        statement = null;
-        resultSet = null;
         try {
             connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.retrieve();
+            connection = connectionPool.getConnection();
             statement = connection.prepareStatement(GET_CLIENT_BY_ID);
             statement.setInt(1, clientId);
             resultSet = statement.executeQuery();
@@ -198,12 +191,10 @@ public class ClientDAO implements IClientDao {
         LOGGER.log(Level.DEBUG, "Client DAO: Start get all clients");
         try {
             connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.retrieve();
-            statement = null;
+            connection = connectionPool.getConnection();
             statement = connection.prepareStatement(GET_ALL_CLIENTS);
-            resultSet = null;
             resultSet = statement.executeQuery();
-            Client clientEntity = null;
+            Client clientEntity;
             clients = new ArrayList<>();
             if (!resultSet.next()) {
                 return null;
@@ -240,7 +231,7 @@ public class ClientDAO implements IClientDao {
                 status = true;
             }
             connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.retrieve();
+            connection = connectionPool.getConnection();
             statement = connection.prepareStatement(CHANGE_STATUS);
             statement.setInt(2, clientId);
             if (status) {

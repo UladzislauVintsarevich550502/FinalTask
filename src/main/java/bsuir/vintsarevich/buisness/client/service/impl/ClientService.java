@@ -16,8 +16,6 @@ import org.apache.log4j.Logger;
 
 import java.util.List;
 
-//import bsuir.vintsarevich.utils.Hasher;
-
 public class ClientService implements IClientService {
     private static final Logger LOGGER = Logger.getLogger(ClientService.class);
     private DaoFactory daoFactory = DaoFactory.getInstance();
@@ -35,8 +33,8 @@ public class ClientService implements IClientService {
             Validator.matchLogin(login);
             Validator.matchPassword(password);
             Validator.matchEmail(email);
+            password = Hasher.hashBySha1(password);
             if (!adminDao.findAdminByLogin(login)) {
-               password = Hasher.hashBySha1(password);
                 client = new Client(name, surname, login, password, email, "active", 0);
                 return (clientDao.addClient(client));
             }

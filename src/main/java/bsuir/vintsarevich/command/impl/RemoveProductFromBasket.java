@@ -1,5 +1,6 @@
 package bsuir.vintsarevich.command.impl;
 
+import bsuir.vintsarevich.buisness.order.dao.IOrderDao;
 import bsuir.vintsarevich.buisness.order.service.IOrderService;
 import bsuir.vintsarevich.buisness.orderproduct.dao.IOrderProductDao;
 import bsuir.vintsarevich.buisness.orderproduct.service.IOrderProductService;
@@ -32,24 +33,26 @@ public class RemoveProductFromBasket implements ICommand {
             IOrderService orderService = serviceFactory.getOrderService();
             IProductService productService = serviceFactory.getProducteService();
             IOrderProductDao orderProductDao = DaoFactory.getInstance().getOrderProductDao();
-
+            IOrderDao orderDao = DaoFactory.getInstance().getOrderDao();
             Integer clentId = ((User) request.getSession().getAttribute("user")).getId();
             System.out.println(clentId);
             Integer productId = Integer.valueOf(request.getParameter(JspElemetName.PRODUCT_ID.getValue()));
             System.out.println(productId);
             Double orderCost = productService.getProductById(productId).getCost();
             System.out.println(orderCost);
+            Integer clientId = ((User) request.getSession().getAttribute("user")).getId();
             Integer productCount = Integer.valueOf(request.getParameter(JspElemetName.NUMBER_FOR_DELETE.getValue()));
             System.out.println(productCount);
             Integer productCountNow = orderProductDao.orderProductCount(productId);
+            Integer orderId = orderDao.getOrderIdByClientId(clientId);
             if (productCount >= productCountNow) {
                 orderService.editOrder(clentId, orderCost, -productCountNow);
                 orderProductService.deleteOrderProduct(clentId, productId);
             } else {
-                orderProductDao.editOrderProduct(productId, -productCount);
+                orderProductDao.editOrderProduct(productId, -productCount, orderId);
                 orderService.editOrder(clentId, orderCost, -productCount);
             }
-            response.sendRedirect("/basket.do");
+            response.sendRedirect("/cafe.by/basket");
         } catch (ServiceException e) {
             LOGGER.log(Level.ERROR, this.getClass() + ":" + e.getMessage());
         } catch (IOException e) {

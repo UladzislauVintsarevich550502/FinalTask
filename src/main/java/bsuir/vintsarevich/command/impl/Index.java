@@ -20,7 +20,7 @@ public class Index implements ICommand {
     private static final Logger LOGGER = Logger.getLogger(Index.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private JspPageName jspPageName = JspPageName.INDEX;
-    private static final int NUMBER_OF_PRODUCT_ON_PAGE = 2;
+    private static final int NUMBER_OF_PRODUCT_ON_PAGE = 4;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -29,12 +29,14 @@ public class Index implements ICommand {
             IProductService producteService = serviceFactory.getProducteService();
             List<Product> allProducts = producteService.getAllProducts();
             int pageCount;
-            if (allProducts.size() % 2 == 0) {
-                pageCount = allProducts.size() / 2;
+            if (allProducts.size() % NUMBER_OF_PRODUCT_ON_PAGE == 0) {
+                pageCount = allProducts.size() / NUMBER_OF_PRODUCT_ON_PAGE;
             } else {
-                pageCount = allProducts.size() / 2 + 1;
+                pageCount = allProducts.size() / NUMBER_OF_PRODUCT_ON_PAGE + 1;
             }
-            if (request.getSession().getAttribute("currentPage") == null) {
+            LOGGER.log(Level.INFO, "pageCount:" + pageCount);
+            if (request.getSession().getAttribute("currentPage") == null ||
+                    (Integer) request.getSession().getAttribute("currentPage") == 0) {
                 request.getSession().setAttribute("currentPage", 1);
             }
             int currentPage = (Integer) request.getSession().getAttribute("currentPage");

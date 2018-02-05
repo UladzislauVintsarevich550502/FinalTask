@@ -17,20 +17,20 @@ import java.util.List;
 
 public class ProductDAO implements IProductDao {
     private static final Logger LOGGER = Logger.getLogger(ProductDAO.class);
-    private static String GET_ALL_PRODUCTS = "SELECT * FROM epamcafe.product;";
-    private static String ADD_PRODUCT = "INSERT INTO product (productType,productNameRu,productNameEn,productWeight,productCost,productStatus," +
+    public static String GET_ALL_PRODUCTS = "SELECT * FROM epamcafe.product;";
+    public static String ADD_PRODUCT = "INSERT INTO product (productType,productNameRu,productNameEn,productWeight,productCost,productStatus," +
             "productDescriptionRu,productDescriptionEn,productImage) VALUES(?,?,?,?,?,?,?,?,?);";
-    private static String EDIT_PRODUCT = "UPDATE product SET productType=?,productNameRu=?,productNameEn=?,productWeight=?,productCost=?,productStatus=?," +
+    public static String EDIT_PRODUCT = "UPDATE product SET productType=?,productNameRu=?,productNameEn=?,productWeight=?,productCost=?,productStatus=?," +
             "productDescriptionRu=?,productDescriptionEn=?,productImage=? WHERE productId=?;";
-    private static String GET_PRODUCT_BY_ID = "SELECT * FROM epamcafe.product WHERE productId=?";
-    private static String GET_PRODUCT_BY_TYPE = "SELECT *FROM epamcafe.product WHERE productType=?";
-    private static String DELETE_PRODUCT = "DELETE FROM epamcafe.product WHERE productId=?";
-    private static String GET_PRODUCT_BY_CLIENTID = "SELECT product.productId, product.productType,product.productNameRu," +
+    public static String GET_PRODUCT_BY_ID = "SELECT * FROM epamcafe.product WHERE productId=?";
+    public static String GET_PRODUCT_BY_TYPE = "SELECT *FROM epamcafe.product WHERE productType=?";
+    public static String DELETE_PRODUCT = "DELETE FROM epamcafe.product WHERE productId=?";
+    public static String GET_PRODUCT_BY_ORDERID = "SELECT product.productId, product.productType,product.productNameRu," +
             "product.productNameEn,product.productWeight,product.productCost,product.productStatus," +
             "product.productDescriptionRu,productDescriptionEn,product.productImage,orderproducts.productCount " +
             "FROM(((client join epamcafe.order ON client.clientId = epamcafe.order.clientId) JOIN orderproducts" +
             " ON epamcafe.order.orderId = orderproducts.orderId) JOIN product " +
-            "ON product.productId = orderproducts.productId) WHERE client.clientId = ?";
+            "ON product.productId = orderproducts.productId) WHERE order.orderId = ?";
     private ConnectionPool connectionPool;
     private Connection connection;
     private ResultSet resultSet;
@@ -44,7 +44,7 @@ public class ProductDAO implements IProductDao {
         try {
             System.out.println(product);
             connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.retrieve();
+            connection = connectionPool.getConnection();
             statement = null;
             statement = connection.prepareStatement(ADD_PRODUCT);
             statement.setString(1, product.getType());
@@ -85,7 +85,7 @@ public class ProductDAO implements IProductDao {
         LOGGER.log(Level.DEBUG, "Product DAO: Delete product start");
         try {
             connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.retrieve();
+            connection = connectionPool.getConnection();
             statement = connection.prepareStatement(DELETE_PRODUCT);
             statement.setInt(1, id);
             if (statement.executeUpdate() != 0) {
@@ -118,7 +118,7 @@ public class ProductDAO implements IProductDao {
         productEntity = null;
         try {
             connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.retrieve();
+            connection = connectionPool.getConnection();
             statement = null;
             statement = connection.prepareStatement(GET_PRODUCT_BY_ID);
             statement.setInt(1, id);
@@ -151,7 +151,7 @@ public class ProductDAO implements IProductDao {
         LOGGER.log(Level.DEBUG, "product DAO: Start get all products");
         try {
             connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.retrieve();
+            connection = connectionPool.getConnection();
             statement = null;
             statement = connection.prepareStatement(GET_ALL_PRODUCTS);
             resultSet = null;
@@ -187,7 +187,7 @@ public class ProductDAO implements IProductDao {
         productEntity = null;
         try {
             connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.retrieve();
+            connection = connectionPool.getConnection();
             statement = null;
             statement = connection.prepareStatement(GET_PRODUCT_BY_TYPE);
             statement.setString(1, type);
@@ -219,15 +219,15 @@ public class ProductDAO implements IProductDao {
     }
 
     @Override
-    public List<Product> getProductByClientId(Integer clientId) throws DaoException {
-        LOGGER.log(Level.DEBUG, "product DAO: Start get product by clientId");
+    public List<Product> getProductByOrderId(Integer orderId) throws DaoException {
+        LOGGER.log(Level.DEBUG, "product DAO: Start get product by orderId");
         productEntity = null;
         try {
             connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.retrieve();
+            connection = connectionPool.getConnection();
             statement = null;
-            statement = connection.prepareStatement(GET_PRODUCT_BY_CLIENTID);
-            statement.setInt(1, clientId);
+            statement = connection.prepareStatement(GET_PRODUCT_BY_ORDERID);
+            statement.setInt(1, orderId);
             resultSet = null;
             resultSet = statement.executeQuery();
             products = new ArrayList<>();
@@ -255,7 +255,7 @@ public class ProductDAO implements IProductDao {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
         }
-        LOGGER.log(Level.DEBUG, "product DAO: finish get product by clientId");
+        LOGGER.log(Level.DEBUG, "product DAO: finish get product by orderId");
         return products;
     }
 
@@ -265,7 +265,7 @@ public class ProductDAO implements IProductDao {
         try {
             System.out.println(product);
             connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.retrieve();
+            connection = connectionPool.getConnection();
             statement = null;
             statement = connection.prepareStatement(EDIT_PRODUCT);
             statement.setString(1, product.getType());

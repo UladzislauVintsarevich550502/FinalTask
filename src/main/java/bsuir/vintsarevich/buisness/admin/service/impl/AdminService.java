@@ -30,7 +30,6 @@ public class AdminService implements IAdminService {
             Validator.isNull(adminLogin, adminPassword);
             adminPassword = Hasher.hashBySha1(adminPassword);
             if (clientDao.getClientByLogin(adminLogin) == null) {
-                adminPassword = Hasher.hashBySha1(adminPassword);
                 admin = new Admin(adminLogin, adminPassword);
                 return (adminDao.addAdmin(admin));
             }

@@ -14,7 +14,7 @@ public interface IProductService {
 
     boolean deleteProduct(Integer id) throws ServiceException;
 
-    List<Product> getProductByClientId(Integer clientId) throws ServiceException;
+    List<Product> getProductByOrderId(Integer orderId) throws ServiceException;
 
     Product getProductById(Integer id) throws ServiceException;
 

@@ -1,5 +1,6 @@
 package bsuir.vintsarevich.command.impl;
 
+import bsuir.vintsarevich.buisness.account.service.IAccountService;
 import bsuir.vintsarevich.buisness.admin.service.IAdminService;
 import bsuir.vintsarevich.buisness.client.service.IClientService;
 import bsuir.vintsarevich.command.ICommand;
@@ -8,6 +9,7 @@ import bsuir.vintsarevich.entity.Client;
 import bsuir.vintsarevich.entity.User;
 import bsuir.vintsarevich.enumeration.JspElemetName;
 import bsuir.vintsarevich.enumeration.JspPageName;
+import bsuir.vintsarevich.exception.service.ServiceException;
 import bsuir.vintsarevich.factory.service.ServiceFactory;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -35,7 +37,7 @@ public class SignIn implements ICommand {
 
         if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
             request.setAttribute("errorData", "введите логин или пароль");
-            jspPageName = JspPageName.INFORMATION;
+            jspPageName = JspPageName.ERROR;
             return jspPageName.getPath();
         }
 
@@ -44,31 +46,34 @@ public class SignIn implements ICommand {
         System.out.println(client);
         IAdminService adminService = serviceFactory.getAdminService();
         Admin admin = adminService.signIn(login, password);
+        IAccountService accountService = serviceFactory.getAccountService();
         System.out.println(admin);
         LOGGER.log(Level.INFO, client);
         try {
             if (client != null) {
                 if (!client.getStatus().equals("banned")) {
-                    user = new User(client.getId(), client.getLogin(), "client", client.getName(), client.getSurname(), client.getStatus());
+                    user = new User(client.getId(), client.getLogin(), "client", client.getName(), client.getSurname(), client.getStatus(),accountService.findAccountByClientId(client.getId()));
                     HttpSession session = request.getSession();
                     session.setAttribute(JspElemetName.USER.getValue(), user);
                     LOGGER.log(Level.INFO, "Successfull sign in account as " + login);
-                    response.sendRedirect("/index.do");
+                    response.sendRedirect("/cafe.by/index");
                 } else {
                     jspPageName = JspPageName.TEST;
                 }
             } else {
                 if (admin != null) {
-                    user = new User(admin.getId(), admin.getLogin(), "admin", null, null, null);
+                    user = new User(admin.getId(), admin.getLogin(), "admin", null, null, null,true);
                     HttpSession session = request.getSession();
                     session.setAttribute(JspElemetName.USER.getValue(), user);
                     LOGGER.log(Level.INFO, "Successfull sign in account as " + login);
-                    response.sendRedirect("/index.do");
+                    response.sendRedirect("/cafe.by/index");
                 }
                 LOGGER.log(Level.INFO, "Unsuccessfully sign in account.");
                 request.setAttribute(jspElemetName.getValue(), "Such user is not exist");
             }
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ServiceException e) {
             e.printStackTrace();
         }
 

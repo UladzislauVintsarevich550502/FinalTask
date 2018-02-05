@@ -12,6 +12,10 @@ import bsuir.vintsarevich.buisness.orderproduct.service.IOrderProductService;
 import bsuir.vintsarevich.buisness.orderproduct.service.impl.OrderProductService;
 import bsuir.vintsarevich.buisness.product.service.IProductService;
 import bsuir.vintsarevich.buisness.product.service.impl.ProductService;
+import bsuir.vintsarevich.buisness.review.service.IReviewService;
+import bsuir.vintsarevich.buisness.review.service.impl.ReviewService;
+import bsuir.vintsarevich.buisness.staff.service.IStaffService;
+import bsuir.vintsarevich.buisness.staff.service.impl.StaffService;
 
 public class ServiceFactory {
     private static final ServiceFactory instance = new ServiceFactory();
@@ -21,7 +25,8 @@ public class ServiceFactory {
     private final IOrderProductService orderProductService = new OrderProductService();
     private final IAccountService accountService = new AccountService();
     private final IOrderService orderService = new OrderService();
-
+    private final IReviewService reviewService = new ReviewService();
+    private final IStaffService staffService = new StaffService();
 
     private ServiceFactory() {
     }
@@ -52,5 +57,13 @@ public class ServiceFactory {
 
     public IOrderService getOrderService() {
         return orderService;
+    }
+
+    public IReviewService getReviewService() {
+        return reviewService;
+    }
+
+    public IStaffService getStaffService() {
+        return staffService;
     }
 }

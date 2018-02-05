@@ -12,6 +12,10 @@ import bsuir.vintsarevich.buisness.orderproduct.dao.IOrderProductDao;
 import bsuir.vintsarevich.buisness.orderproduct.dao.impl.OrderProductDAO;
 import bsuir.vintsarevich.buisness.product.dao.IProductDao;
 import bsuir.vintsarevich.buisness.product.dao.impl.ProductDAO;
+import bsuir.vintsarevich.buisness.review.dao.IReviewDao;
+import bsuir.vintsarevich.buisness.review.dao.impl.ReviewDao;
+import bsuir.vintsarevich.buisness.staff.dao.IStaffDao;
+import bsuir.vintsarevich.buisness.staff.dao.impl.StaffDAO;
 
 public class DaoFactory {
     private static final DaoFactory instance = new DaoFactory();
@@ -21,6 +25,8 @@ public class DaoFactory {
     private final IOrderDao orderDao = new OrderDAO();
     private final IOrderProductDao orderProductDao = new OrderProductDAO();
     private final IAccountDao accountDao = new AccountDAO();
+    private final IStaffDao staffDao = new StaffDAO();
+    private final IReviewDao reviewDao = new ReviewDao();
 
 
     private DaoFactory() {
@@ -52,5 +58,13 @@ public class DaoFactory {
 
     public IAccountDao getAccountDao() {
         return accountDao;
+    }
+
+    public IStaffDao getStaffDao() {
+        return staffDao;
+    }
+
+    public IReviewDao getReviewDao() {
+        return reviewDao;
     }
 }

@@ -115,14 +115,14 @@
                         <c:forEach var="client" items="${clients}">
                             <li id="client_s">${client.login}</li>
                             <h4>${client.name} ${client.surname}</h4>
-                            <a href="/product.do?id=${product.id}" class="button">${view_word}</a>
+                            <a href="/cafe.by/product?id=${product.id}" class="button">${view_word}</a>
                             <c:choose>
                                 <c:when test="${client.status eq 'active'}">
-                                    <a href="/change_client_status.do?clientId=${client.id}"
+                                    <a href="/cafe.by/change_client_status?clientId=${client.id}"
                                        class="button">${client_ban_word}</a>
                                 </c:when>
                                 <c:when test="${client.status eq 'banned'}">
-                                    <a href="/change_client_status.do?clientId=${client.id}"
+                                    <a href="/cafe.by/change_client_status?clientId=${client.id}"
                                        class="button">${client_unban_word}</a>
                                 </c:when>
                             </c:choose>

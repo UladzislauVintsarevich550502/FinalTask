@@ -5,7 +5,6 @@ import bsuir.vintsarevich.enumeration.JspPageName;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +13,7 @@ import java.io.IOException;
 public class SignOut implements bsuir.vintsarevich.command.ICommand {
 
     private static final Logger LOGGER = Logger.getLogger(SignOut.class);
-    private JspPageName jspPageName = JspPageName.INFORMATION;
+    private JspPageName jspPageName = JspPageName.ERROR;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -29,7 +28,7 @@ public class SignOut implements bsuir.vintsarevich.command.ICommand {
             }
             request.getSession().removeAttribute(JspElemetName.USER.toString());
             request.getSession().invalidate();
-            response.sendRedirect("/index.do");
+            response.sendRedirect("/cafe.by/index");
         } catch (IOException e) {
             LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
         }

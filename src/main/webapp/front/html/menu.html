@@ -5,8 +5,9 @@
 
         <!— Search —>
         <section id="search" class="alt">
-            <form method="post" action="#">
-                <input type="text" name="query" id="query" placeholder=${search_word}>
+            <form action="/cafe.by/search_product" method="post" class="search">
+                <input type="search" name="search_name" placeholder="${search_word}" class="input" />
+                <input type="submit" name="search_submit" value="" class="submit" />
             </form>
         </section>
 
@@ -16,26 +17,34 @@
                 <h2>${menu_word}</h2>
             </header>
             <ul>
-                <li><a href="/add_product.do">${account_add_word}</a></li>
+                <c:choose>
+                    <c:when test="${user.account eq 'false'}">
+                        <li><a href="/cafe.by/add_account">${account_add_word}</a></li>
+                    </c:when>
+                </c:choose>
                 <li>
                     <p>${range_word}</p>
                     <span class="opener" id="type_food">${type_food_word1}</span>
                     <ul>
-                        <li><a class="podmenu" href="#">Potato</a></li>
-                        <li><a class="podmenu" href="#">Bread</a></li>
+                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=soupe">Soups</a></li>
+                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=hotDish">Hot dishes</a></li>
+                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=dessert">Desserts</a></li>
+                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=salad">Salads</a></li>
                     </ul>
                     <span class="opener" id="type_drink">${type_drink_word1}</span>
                     <ul class="podmenu">
-                        <li><a class="podmenu" href="#">Cola</a></li>
-                        <li><a class="podmenu" href="#">Wiskey</a></li>
+                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=juices">Juices</a></li>
+                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=water">Water</a></li>
+                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=hotDrink">Hot drinks</a></li>
+                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=soda">Soda</a></li>
                     </ul>
                 </li>
                 <c:choose>
                     <c:when test="${user.role eq 'client'}">
-                        <li><a href="basket.do">${basket_word}</a></li>
+                        <li><a href="/cafe.by/basket">${basket_word}</a></li>
                     </c:when>
                     <c:when test="${user.role eq 'admin'}">
-                        <li><a href="/edit_clients.do">${edit_word}</a>
+                        <li><a href="/cafe.by/edit_clients">${edit_word}</a>
                         </li>
                     </c:when>
                 </c:choose>

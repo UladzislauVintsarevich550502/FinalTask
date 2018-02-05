@@ -6,6 +6,8 @@ public interface IAccountService {
 
     boolean addAccount(Integer clientId) throws ServiceException;
 
-    boolean editAccount(Integer clientId) throws ServiceException;
+    boolean editAccount(Integer clientId, Double orderCostNew) throws ServiceException;
+
+    boolean findAccountByClientId(Integer clientId) throws ServiceException;
 
 }

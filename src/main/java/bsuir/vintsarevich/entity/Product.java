@@ -1,6 +1,7 @@
 package bsuir.vintsarevich.entity;
 
 public class Product {
+
     private Integer id;
     private String type;
     private String nameRu;
@@ -12,11 +13,15 @@ public class Product {
     private String descriptionEn;
     private String imagePath;
     private Integer number;
+    private Integer ordered;
+    private Integer orderId;
 
     public Product() {
     }
 
-    public Product(String type, String nameRu, String nameEn, Integer weight, Double cost, String status, String descriptionRu, String descriptionEn, String imagePath) {
+    public Product(Integer id, String type, String nameRu, String nameEn, Integer weight, Double cost, String status, String descriptionRu, String descriptionEn, String imagePath, Integer number, Integer ordered, Integer orderId) {
+
+        this.id = id;
         this.type = type;
         this.nameRu = nameRu;
         this.nameEn = nameEn;
@@ -26,14 +31,9 @@ public class Product {
         this.descriptionRu = descriptionRu;
         this.descriptionEn = descriptionEn;
         this.imagePath = imagePath;
-    }
-
-    public Integer getNumber() {
-        return number;
-    }
-
-    public void setNumber(Integer number) {
         this.number = number;
+        this.ordered = ordered;
+        this.orderId = orderId;
     }
 
     public Integer getId() {
@@ -116,21 +116,28 @@ public class Product {
         this.imagePath = imagePath;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                ", nameRu='" + nameRu + '\'' +
-                ", nameEn='" + nameEn + '\'' +
-                ", weight=" + weight +
-                ", cost=" + cost +
-                ", status='" + status + '\'' +
-                ", descriptionRu='" + descriptionRu + '\'' +
-                ", descriptionEn='" + descriptionEn + '\'' +
-                ", imagePath='" + imagePath + '\'' +
-                ", number=" + number +
-                '}';
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+
+    public Integer getOrdered() {
+        return ordered;
+    }
+
+    public void setOrdered(Integer ordered) {
+        this.ordered = ordered;
+    }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 
     @Override
@@ -152,7 +159,9 @@ public class Product {
         if (descriptionEn != null ? !descriptionEn.equals(product.descriptionEn) : product.descriptionEn != null)
             return false;
         if (imagePath != null ? !imagePath.equals(product.imagePath) : product.imagePath != null) return false;
-        return number != null ? number.equals(product.number) : product.number == null;
+        if (number != null ? !number.equals(product.number) : product.number != null) return false;
+        if (ordered != null ? !ordered.equals(product.ordered) : product.ordered != null) return false;
+        return orderId != null ? orderId.equals(product.orderId) : product.orderId == null;
     }
 
     @Override
@@ -168,6 +177,27 @@ public class Product {
         result = 31 * result + (descriptionEn != null ? descriptionEn.hashCode() : 0);
         result = 31 * result + (imagePath != null ? imagePath.hashCode() : 0);
         result = 31 * result + (number != null ? number.hashCode() : 0);
+        result = 31 * result + (ordered != null ? ordered.hashCode() : 0);
+        result = 31 * result + (orderId != null ? orderId.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", nameRu='" + nameRu + '\'' +
+                ", nameEn='" + nameEn + '\'' +
+                ", weight=" + weight +
+                ", cost=" + cost +
+                ", status='" + status + '\'' +
+                ", descriptionRu='" + descriptionRu + '\'' +
+                ", descriptionEn='" + descriptionEn + '\'' +
+                ", imagePath='" + imagePath + '\'' +
+                ", number=" + number +
+                ", ordered=" + ordered +
+                ", orderId=" + orderId +
+                '}';
     }
 }

@@ -29,6 +29,10 @@ public final class CommandProvider {
         repository.put(CommandName.EDIT_CLIENTS, new EditClients());
         repository.put(CommandName.CHANGE_CLIENT_STATUS, new ChangeClientStatus());
         repository.put(CommandName.SET_CURRENT_PAGE, new SetCurrentPage());
+        repository.put(CommandName.SEARCH_PRODUCT,new SearchProduct());
+        repository.put(CommandName.FIND_BY_TYPE, new FindByType());
+        repository.put(CommandName.PAYMENT, new Payment());
+        repository.put(CommandName.ADD_REVIEW, new AddReview());
     }
 
     public static CommandProvider getInstance() {
@@ -37,8 +41,8 @@ public final class CommandProvider {
 
     public ICommand getCommand(HttpServletRequest request) {
         ICommand iCommand = repository.get(CommandName.WRONG_REQUEST);
-        String command = request.getRequestURI().replace("/", "");
-        command = command.replace(".do", "");
+        String command = request.getRequestURI();
+        command = command.replace("/cafe.by/", "");
         try {
             CommandName commandName = CommandName.valueOf(command.toUpperCase().replace('-', '_'));
             LOGGER.log(Level.DEBUG, "Command name:" + commandName.toString());

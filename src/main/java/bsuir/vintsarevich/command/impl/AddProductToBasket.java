@@ -1,5 +1,7 @@
 package bsuir.vintsarevich.command.impl;
 
+import bsuir.vintsarevich.buisness.order.dao.IOrderDao;
+import bsuir.vintsarevich.buisness.order.dao.impl.OrderDAO;
 import bsuir.vintsarevich.buisness.order.service.IOrderService;
 import bsuir.vintsarevich.buisness.orderproduct.dao.IOrderProductDao;
 import bsuir.vintsarevich.buisness.orderproduct.service.IOrderProductService;
@@ -29,7 +31,7 @@ public class AddProductToBasket implements ICommand {
     private JspPageName jspPageName = JspPageName.BASKET;
     private Integer productId;
     private Integer productCount;
-    private Integer clentId;
+    private Integer clientId;
     private IOrderProductService orderProductService = serviceFactory.getOrderProductService();
     private IOrderService orderService = serviceFactory.getOrderService();
     private IProductService productService = serviceFactory.getProducteService();
@@ -40,8 +42,9 @@ public class AddProductToBasket implements ICommand {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.INFO, "Start add product to basket");
         try {
-            clentId = ((User) request.getSession().getAttribute("user")).getId();
+            clientId = ((User) request.getSession().getAttribute("user")).getId();
             List<Product> allProducts = productService.getAllProducts();
+            IOrderDao orderDao = new OrderDAO();
 
             for (Product product : allProducts) {
                 if (request.getParameter(JspElemetName.PRODUCT_ID.getValue() + "_" + product.getId()) != null &&
@@ -51,17 +54,20 @@ public class AddProductToBasket implements ICommand {
                     productCount = Integer.valueOf(request.getParameter(JspElemetName.NUMBER_FOR_ADD.getValue() + "_" + product.getId()));
 
                     Double orderCost = productService.getProductById(productId).getCost();
-
-                    if (orderProductDao.findOrderProduct(productId)) {
-                        orderProductDao.editOrderProduct(productId, productCount);
-                        orderService.editOrder(clentId, orderCost, productCount);
+                    Integer orderId = orderDao.getOrderIdByClientId(clientId);
+                    if (productCount.equals(0)) {
                     } else {
-                        orderProductService.addOrderProduct(clentId, productId, productCount);
-                        orderService.editOrder(clentId, orderCost, productCount);
+                        if (orderProductDao.findOrderProduct(productId, orderId)) {
+                            orderProductDao.editOrderProduct(productId, productCount,orderId);
+                            orderService.editOrder(clientId, orderCost, productCount);
+                        } else {
+                            orderProductService.addOrderProduct(clientId, productId, productCount);
+                            orderService.editOrder(clientId, orderCost, productCount);
+                        }
                     }
                 }
             }
-            response.sendRedirect("/index.do");
+            response.sendRedirect("/cafe.by/index");
         } catch (ServiceException e) {
             LOGGER.log(Level.ERROR, this.getClass() + ":" + e.getMessage());
         } catch (IOException e) {

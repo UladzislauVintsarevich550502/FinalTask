@@ -18,7 +18,7 @@ import java.io.File;
 import java.io.IOException;
 
 @WebServlet(name = "Controller",
-        urlPatterns = {"*.do"},
+        urlPatterns = {"/cafe.by/*"},
         initParams = {@WebInitParam(name = "init_log4j", value = "/WEB-INF/log4j.properties")})
 @MultipartConfig
 

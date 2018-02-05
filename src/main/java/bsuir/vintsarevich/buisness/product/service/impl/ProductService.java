@@ -70,12 +70,12 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public List<Product> getProductByClientId(Integer clientId) throws ServiceException {
+    public List<Product> getProductByOrderId(Integer orderId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "ProductService: start get product by clientId");
         List<Product> products;
         try {
             IProductDao productDao = daoFactory.getProductDao();
-            products = productDao.getProductByClientId(clientId);
+            products = productDao.getProductByOrderId(orderId);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

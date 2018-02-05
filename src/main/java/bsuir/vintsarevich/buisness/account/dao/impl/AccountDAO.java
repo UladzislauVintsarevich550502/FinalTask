@@ -20,9 +20,8 @@ public class AccountDAO implements IAccountDao {
             "(accountNumber,accountCredit,clientId) VALUES(?,?,?)";
     public static String CHECK_ACCOUNT_NUMBER = "SELECT * FROM epamcafe.account WHERE accountNumber = ?";
     public static String EDIT_ACCOUNT = "UPDATE epamcafe.account SET epamcafe.account.accountCredit = " +
-            "(epamcafe.account.accountCredit - (SELECT orderCost FROM epamcafe.order" +
-            " WHERE epamcafe.order.clientId = epamcafe.account.clientId)) " +
-            "WHERE epamcafe.account.clientId = ?";
+            "(epamcafe.account.accountCredit - ?) WHERE epamcafe.account.clientId = ?";
+    public static String FIND_ACCOUNT = "SELECT * FROM epamcafe.account WHERE epamcafe.account.clientId=?";
     private ConnectionPool connectionPool;
     private Connection connection;
     private ResultSet resultSet;
@@ -34,7 +33,7 @@ public class AccountDAO implements IAccountDao {
         LOGGER.log(Level.DEBUG, "Account DAO: Add account start");
         try {
             connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.retrieve();
+            connection = connectionPool.getConnection();
             statement = null;
             statement = connection.prepareStatement(ADD_ACCOUNT);
             statement.setInt(1, account.getAccountNumber());
@@ -69,7 +68,7 @@ public class AccountDAO implements IAccountDao {
         LOGGER.log(Level.DEBUG, "Account DAO: check account number start");
         try {
             connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.retrieve();
+            connection = connectionPool.getConnection();
             statement = null;
             statement = connection.prepareStatement(CHECK_ACCOUNT_NUMBER);
             statement.setInt(1, accountNumber);
@@ -100,14 +99,15 @@ public class AccountDAO implements IAccountDao {
     }
 
     @Override
-    public boolean editAccount(Integer clientId) throws DaoException {
+    public boolean editAccount(Integer clientId, Double orderCostNew) throws DaoException {
         LOGGER.log(Level.DEBUG, "Account DAO: edit start");
         try {
             connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.retrieve();
+            connection = connectionPool.getConnection();
             statement = null;
             statement = connection.prepareStatement(EDIT_ACCOUNT);
-            statement.setInt(1, clientId);
+            statement.setDouble(1, orderCostNew);
+            statement.setInt(2, clientId);
             if (statement.executeUpdate() != 0) {
                 LOGGER.log(Level.DEBUG, "edit account success");
                 return true;
@@ -122,6 +122,35 @@ public class AccountDAO implements IAccountDao {
                 throw new DaoException(e);
             }
             throw new DaoException("Error of query to database(edit account)", e);
+        } catch (ConnectionException e) {
+            throw new DaoException("Error with connection with database" + e);
+        } finally {
+            if (connectionPool != null) {
+                connectionPool.putBackConnection(connection, statement, resultSet);
+            }
+            LOGGER.log(Level.DEBUG, "Account DAO: edit finish");
+        }
+    }
+
+    @Override
+    public boolean findAccountByClientId(Integer clientId) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Account DAO: find start");
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            statement = null;
+            statement = connection.prepareStatement(FIND_ACCOUNT);
+            statement.setInt(1, clientId);
+            resultSet = null;
+            resultSet = statement.executeQuery();
+            return resultSet.next();
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                throw new DaoException(e);
+            }
+            throw new DaoException("Error of query to database(edit order product)", e);
         } catch (ConnectionException e) {
             throw new DaoException("Error with connection with database" + e);
         } finally {

@@ -9,5 +9,7 @@ public interface IAccountDao {
 
     boolean checkAccountNumber(Integer accountNumber) throws DaoException;
 
-    boolean editAccount(Integer clientId) throws DaoException;
+    boolean editAccount(Integer clientId, Double orderCostNew) throws DaoException;
+
+    boolean findAccountByClientId(Integer clientId) throws DaoException;
 }

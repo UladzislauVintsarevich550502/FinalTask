@@ -1,14 +1,27 @@
 package bsuir.vintsarevich.entity;
 
+import java.util.Objects;
+
 public class Review {
     private String text;
-    private Double mark;
-    private Integer orderId;
+    private Integer mark;
+    private Integer clientId;
+    private Integer reviewId;
 
-    public Review(String text, Double mark, Integer orderId) {
+    public Review() {}
+
+    public Review(String text, Integer mark, Integer clientId) {
         this.text = text;
         this.mark = mark;
-        this.orderId = orderId;
+        this.clientId = clientId;
+    }
+
+    public Integer getReviewId() {
+        return reviewId;
+    }
+
+    public void setReviewId(Integer reviewId) {
+        this.reviewId = reviewId;
     }
 
     public String getText() {
@@ -19,28 +32,29 @@ public class Review {
         this.text = text;
     }
 
-    public Double getMark() {
+    public Integer getMark() {
         return mark;
     }
 
-    public void setMark(Double mark) {
+    public void setMark(Integer mark) {
         this.mark = mark;
     }
 
-    public Integer getOrderId() {
-        return orderId;
+    public Integer getClientId() {
+        return clientId;
     }
 
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
+    public void setClientId(Integer clientId) {
+        this.clientId = clientId;
     }
 
     @Override
     public String toString() {
         return "Review{" +
-                "text='" + text + '\'' +
+                "id=" + reviewId +
+                ", text='" + text + '\'' +
                 ", mark=" + mark +
-                ", orderId=" + orderId +
+                ", clientId=" + clientId +
                 '}';
     }
 
@@ -48,19 +62,15 @@ public class Review {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Review review = (Review) o;
-
-        if (text != null ? !text.equals(review.text) : review.text != null) return false;
-        if (mark != null ? !mark.equals(review.mark) : review.mark != null) return false;
-        return orderId != null ? orderId.equals(review.orderId) : review.orderId == null;
+        return Objects.equals(text, review.text) &&
+                Objects.equals(mark, review.mark) &&
+                Objects.equals(clientId, review.clientId) &&
+                Objects.equals(reviewId, review.reviewId);
     }
 
     @Override
     public int hashCode() {
-        int result = text != null ? text.hashCode() : 0;
-        result = 31 * result + (mark != null ? mark.hashCode() : 0);
-        result = 31 * result + (orderId != null ? orderId.hashCode() : 0);
-        return result;
+        return Objects.hash(text, mark, clientId, reviewId);
     }
 }
