@@ -120,7 +120,7 @@ public class OrderDAO implements IOrderDao {
             connection = connectionPool.getConnection();
             statement = null;
             statement = connection.prepareStatement(EDIT_ORDER);
-            statement.setDouble(1, (orderCost * productCount));
+            statement.setDouble(1, (double)((int)(orderCost*100)*productCount)/100);
             statement.setInt(2, orderId);
             if (statement.executeUpdate() != 0) {
                 LOGGER.log(Level.DEBUG, "edit order success");

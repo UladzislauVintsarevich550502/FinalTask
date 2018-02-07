@@ -1,4 +1,19 @@
 jQuery(document).ready(function ($) {
+
+    function move(e, obj) {
+        var id = obj.next().attr('id').substr(1);
+        var progress = e.pageX - obj.offset().left;
+        var rating = progress * 5 / $('.stars').width();
+        $('#mark_value').attr("value", rating.toFixed(1));
+        obj.next().width(progress);
+    }
+
+    $('#rating .stars').click(function (e) {
+        $(this).toggleClass('fixed');
+        move(e, $(this));
+    });
+
+
     $(document).ready(function () {
         var today = new Date();
         var dd = today.getDate();
@@ -61,7 +76,7 @@ jQuery(document).ready(function ($) {
         var name_enReg = new RegExp('^[0-9]{4}-[0-9]{2}-[0-9]{2}T1[0-9]:[0-9]{2}$');
         if (name_enReg.test(hourse) == false) {
             document.payment.elements['payment_button'].disabled = true;
-        }else {
+        } else {
             document.payment.elements['payment_button'].disabled = false;
         }
     });

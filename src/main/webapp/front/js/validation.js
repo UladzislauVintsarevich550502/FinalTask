@@ -136,8 +136,7 @@ jQuery(document).ready(function ($) {
 
         var name_ruReg = new RegExp('^([\u{0410}-\u{042F}]{1}[\u{0430}-\u{044F}]+)$');
         var name_enReg = new RegExp('^([A-Z]{1}[a-z]+)$');
-        var costReg = new RegExp('^(([0-9]+).([0-9]+))$');
-        var valueReg = new RegExp('^([0-9]+)$');
+        var costvalueReg = new RegExp('^(([0-9]+)(\\.){0,1}([0-9]+))$');
 
         var $form_modal = $('#add-form');
         var $form_add = $form_modal.find('#add-product');
@@ -182,7 +181,7 @@ jQuery(document).ready(function ($) {
             }
         }
 
-        if (cost != '' && costReg.test(cost)) {
+        if (cost != '' && costvalueReg.test(cost)) {
             $('input#cost').css('border-color', 'green');
             $form_add.find('input#cost').removeClass('has-error').next('span').removeClass('is-visible');
             $numberCorrectField++;
@@ -193,7 +192,7 @@ jQuery(document).ready(function ($) {
             }
         }
 
-        if (value != '' && valueReg.test(value)) {
+        if (value != '' && costvalueReg.test(value)) {
             $('input#value').css('border-color', 'green');
             $form_add.find('input#value').removeClass('has-error').next('span').removeClass('is-visible');
             $numberCorrectField++;
@@ -213,7 +212,7 @@ jQuery(document).ready(function ($) {
             $form_add.find('select#status').addClass('has-error').next('span').addClass('is-visible');
         }
 
-        if (image_name != "Please, choose picture" && image_name != "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u043A\u0430\u0440\u0442\u0438\u043D\u043A\u0443") {
+        if (image_name != "Choose file" && image_name != "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0444\u0430\u0439\u043B") {
             $('input#image-name').css('border-color', 'green');
             $form_add.find('a#a-image-name').removeClass('has-error').next('span').removeClass('is-visible');
             $numberCorrectField++;

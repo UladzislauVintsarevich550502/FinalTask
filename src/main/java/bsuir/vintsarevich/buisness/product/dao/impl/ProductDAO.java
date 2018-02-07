@@ -50,7 +50,7 @@ public class ProductDAO implements IProductDao {
             statement.setString(1, product.getType());
             statement.setString(2, product.getNameRu());
             statement.setString(3, product.getNameEn());
-            statement.setInt(4, product.getWeight());
+            statement.setDouble(4, product.getWeight());
             statement.setDouble(5, product.getCost());
             statement.setString(6, product.getStatus());
             statement.setString(7, product.getDescriptionRu());
@@ -271,7 +271,7 @@ public class ProductDAO implements IProductDao {
             statement.setString(1, product.getType());
             statement.setString(2, product.getNameRu());
             statement.setString(3, product.getNameEn());
-            statement.setInt(4, product.getWeight());
+            statement.setDouble(4, product.getWeight());
             statement.setDouble(5, product.getCost());
             statement.setString(6, product.getStatus());
             statement.setString(7, product.getDescriptionRu());
@@ -309,7 +309,7 @@ public class ProductDAO implements IProductDao {
             product.setType(resultSet.getString("productType"));
             product.setNameRu(resultSet.getString("productNameRu"));
             product.setNameEn(resultSet.getString("productNameEn"));
-            product.setWeight(resultSet.getInt("productWeight"));
+            product.setWeight(resultSet.getDouble("productWeight"));
             product.setCost(resultSet.getDouble("productCost"));
             product.setStatus(resultSet.getString("productStatus"));
             product.setDescriptionRu(resultSet.getString("productDescriptionRu"));

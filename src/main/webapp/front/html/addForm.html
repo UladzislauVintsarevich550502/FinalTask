@@ -1,0 +1,49 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<div id="add-form"> <!— форма входа —>
+    <form method="post" class="cd-form" id="add-product" action="/cafe.by/add_product" enctype="multipart/form-data">
+        <h2>${add_product_word}</h2>
+        <p class="fieldset">
+            <select id="product-type" name="product_type">
+                <option value="" disabled selected>${type_product_word}</option>
+                <option value="drink">${type_drink_word}</option>
+                <option value="food">${type_food_word}</option>
+            </select>
+            <span class="cd-error-message">${make_choose}</span>
+        </p>
+
+        <p class="fieldset">
+            <input type="text" name="name_ru" value="${product.nameRu}" id="name-ru" placeholder=${name_ru_word}>
+            <span class="cd-error-message">${name_ru_mistake}</span>
+        </p>
+        <p class="fieldset">
+            <input type="text" name="name_en" id="name-en" placeholder=${name_en_word}>
+            <span class="cd-error-message">${name_en_mistake}</span>
+        </p>
+        <p class="fieldset">
+            <input type="text" name="value" id="value" placeholder=${volume_word}>
+            <span class="cd-error-message">${valume_mistake}</span>
+        </p>
+        <p class="fieldset">
+            <input type="text" name="cost" id="cost" placeholder=${cost_word}>
+            <span class="cd-error-message">${cost_mistake}</span>
+        </p>
+        <p class="fieldset">
+            <select id="status" name="status">
+                <option value="" disabled selected>${existence_word}</option>
+                <option value="false">${existense_no_word}</option>
+                <option value="true">${existanse_yes_word}</option>
+            </select>
+            <span class="cd-error-message">${make_choose}</span>
+        </p>
+        <textarea name="description_ru" id="descrirtion-ru" placeholder=${desc_ru_word}></textarea>
+        <textarea name="description_en" id="descrirtion-en" placeholder=${desc_en_word}></textarea>
+        <p class="fieldset">
+            <input name="image_name" id="image-name" type="text" value=${choose_file_word}>
+            <a href="#0" id="a-image-name" class="image-load">""</a>
+            <span class="cd-error-message">${choose_not_choosen_word}</span>
+        </p>
+        <input type="file" style="display:none;" id="file" name="file" multiple
+               accept="image/*,image/jpeg"/>
+        <input type="submit" id="add" value=${add_button_word}>
+    </form>
+</div> <!— login —>

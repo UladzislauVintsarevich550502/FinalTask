@@ -1,14 +1,9 @@
 package bsuir.vintsarevich.servlet.filter;
 
-import bsuir.vintsarevich.entity.User;
-import org.apache.log4j.Logger;
-
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.regex.Pattern;
 
 @WebFilter(filterName = "EncodingFilter",
         urlPatterns = {"/cafe.by/*"},
@@ -16,23 +11,28 @@ import java.util.regex.Pattern;
                 @WebInitParam(name = "characterEncoding", value = "utf-8")})
 
 public class EncodingFilter implements Filter {
-    private String code;
+    private String encoding;
+    private ServletContext servletContext;
 
+    @Override
     public void init(FilterConfig fConfig) {
-        code = fConfig.getInitParameter("encoding");
+        encoding = fConfig.getInitParameter("characterEncoding");
+        servletContext=fConfig.getServletContext();
     }
 
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
-        String codeRequest = request.getCharacterEncoding();
-        if (code != null && !code.equalsIgnoreCase(codeRequest)) {
-            request.setCharacterEncoding(code);
-            response.setCharacterEncoding(code);
-        }
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        request.setCharacterEncoding(encoding);
+        response.setCharacterEncoding(encoding);
+        servletContext.log("charset is set");
         chain.doFilter(request, response);
     }
+
+
+    @Override
     public void destroy() {
-        code = null;
+        encoding = null;
     }
 }
+
 

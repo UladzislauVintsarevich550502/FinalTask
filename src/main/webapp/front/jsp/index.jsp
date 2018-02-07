@@ -8,81 +8,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <style>
         <%@include file="/front/css/menu/main.css" %>
-    </style>
-    <style>
         <%@include file="/front/css/form/form.css"%>
+        <%@include file="/front/css/index/review.css"%>
+        <%@include file="/front/css/menu/search.css"%>
+        <%@include file="/front/css/form/addForm.css"%>
+        <%@include file="/front/css/form/button.css"%>
     </style>
     <script>
         <%@include file="/front/js/lib/jquery.min.js" %>
-    </script>
-    <script>
         <%@include file="/front/js/lib/skel.min.js" %>
     </script>
-
-    <fmt:setLocale scope="session" value="${locale}"/>
-    <fmt:setBundle basename="localization.pageInformation" scope="session" var="loc"/>
-    <fmt:message bundle="${loc}" key="local.word.welcome" var="welcome_word"/>
-    <fmt:message bundle="${loc}" key="local.word.cafename_with_other_information"
-                 var="cafename_with_other_information_word"/>
-    <fmt:message bundle="${loc}" key="local.word.cafe_description" var="cafe_description_word"/>
-    <fmt:message bundle="${loc}" key="local.word.login" var="login_word"/>
-    <fmt:message bundle="${loc}" key="local.word.password" var="password_word"/>
-    <fmt:message bundle="${loc}" key="local.word.name" var="name_word"/>
-    <fmt:message bundle="${loc}" key="local.word.surname" var="surname_word"/>
-    <fmt:message bundle="${loc}" key="local.word.remember" var="remember_word"/>
-    <fmt:message bundle="${loc}" key="local.word.email" var="email_word"/>
-    <fmt:message bundle="${loc}" key="local.button.signin" var="signin_button"/>
-    <fmt:message bundle="${loc}" key="local.button.signup" var="signup_button"/>
-    <fmt:message bundle="${loc}" key="local.button.signout" var="signout_button"/>
-    <fmt:message bundle="${loc}" key="local.button.create" var="create_button"/>
-    <fmt:message bundle="${loc}" key="local.button.comein" var="comein_button"/>
-    <fmt:message bundle="${loc}" key="local.word.home" var="home_word"/>
-    <fmt:message bundle="${loc}" key="local.word.view" var="view_word"/>
-    <fmt:message bundle="${loc}" key="local.word.description_under_welcome" var="description_under_welcome_word"/>
-    <fmt:message bundle="${loc}" key="local.word.add_product" var="add_product_word"/>
-    <fmt:message bundle="${loc}" key="local.word.type_product" var="type_product_word"/>
-    <fmt:message bundle="${loc}" key="local.word.name_ru" var="name_ru_word"/>
-    <fmt:message bundle="${loc}" key="local.word.name_en" var="name_en_word"/>
-    <fmt:message bundle="${loc}" key="local.word.volume" var="volume_word"/>
-    <fmt:message bundle="${loc}" key="local.word.existence" var="existence_word"/>
-    <fmt:message bundle="${loc}" key="local.word.desc_en" var="desc_en_word"/>
-    <fmt:message bundle="${loc}" key="local.word.desc_ru" var="desc_ru_word"/>
-    <fmt:message bundle="${loc}" key="local.word.cost" var="cost_word"/>
-    <fmt:message bundle="${loc}" key="local.word.type_drink" var="type_drink_word"/>
-    <fmt:message bundle="${loc}" key="local.word.type_food" var="type_food_word"/>
-    <fmt:message bundle="${loc}" key="local.word.type_drink1" var="type_drink_word1"/>
-    <fmt:message bundle="${loc}" key="local.word.type_food1" var="type_food_word1"/>
-    <fmt:message bundle="${loc}" key="local.word.existense_no" var="existense_no_word"/>
-    <fmt:message bundle="${loc}" key="local.word.existanse_yes" var="existanse_yes_word"/>
-    <fmt:message bundle="${loc}" key="local.word.choose_file" var="choose_file_word"/>
-    <fmt:message bundle="${loc}" key="local.word.choose_not_choosen" var="choose_not_choosen_word"/>
-    <fmt:message bundle="${loc}" key="local.word.add_button" var="add_button_word"/>
-    <fmt:message bundle="${loc}" key="local.word.found_nothing" var="found_nothing_word"/>
-    <fmt:message bundle="${loc}" key="local.word.menu" var="menu_word"/>
-    <fmt:message bundle="${loc}" key="local.word.search" var="search_word"/>
-    <fmt:message bundle="${loc}" key="local.word.contacts" var="contacts_word"/>
-    <fmt:message bundle="${loc}" key="local.word.address" var="address_word"/>
-    <fmt:message bundle="${loc}" key="local.word.street" var="street_word"/>
-    <fmt:message bundle="${loc}" key="local.word.stocks" var="stocks_word"/>
-    <fmt:message bundle="${loc}" key="local.word.stock1" var="stock1_word"/>
-    <fmt:message bundle="${loc}" key="local.word.stock2" var="stock2_word"/>
-    <fmt:message bundle="${loc}" key="local.word.re_password" var="re_password_word"/>
-    <fmt:message bundle="${loc}" key="local.word.mistake" var="mistake_word"/>
-    <fmt:message bundle="${loc}" key="local.word.range" var="range_word"/>
-    <fmt:message bundle="${loc}" key="local.word.forgot_pass" var="forgot_pass_word"/>
-    <fmt:message bundle="${loc}" key="local.word.re_pass" var="re_pass_word"/>
-    <fmt:message bundle="${loc}" key="local.word.back" var="back_word"/>
-    <fmt:message bundle="${loc}" key="local.word.re_message" var="re_message_word"/>
-    <fmt:message bundle="${loc}" key="local.word.mistake_login" var="mistake_login_word"/>
-    <fmt:message bundle="${loc}" key="local.word.mistake_password" var="mistake_password_word"/>
-    <fmt:message bundle="${loc}" key="local.word.mistake_email" var="mistake_email_word"/>
-    <fmt:message bundle="${loc}" key="local.word.close" var="close_word"/>
-    <fmt:message bundle="${loc}" key="local.word.mistake_name" var="mistake_name_word"/>
-    <fmt:message bundle="${loc}" key="local.word.mistake_surname" var="mistake_surname_word"/>
-    <fmt:message bundle="${loc}" key="local.word.exit" var="exit_word"/>
-    <fmt:message bundle="${loc}" key="local.word.edit" var="edit_word"/>
-    <fmt:message bundle="${loc}" key="local.word.basket_add" var="basket_add_word"/>
-    <fmt:message bundle="${loc}" key="local.word.basket" var="basket_word"/>
+    <%@include file="/front/html/allBundle.html" %>
     <title>Epam Cafe</title>
 </head>
 <body>
@@ -104,7 +40,7 @@
                     <h2>${range_word}</h2>
                 </header>
                 <form method="POST"
-                      action="/cafe.by/add_product_to_basket?productId">
+                      action="/cafe.by/add_product_to_basket">
                     <div class="posts">
                         <c:choose>
                             <c:when test="${products!=null}">
@@ -115,36 +51,68 @@
                                         <c:choose>
                                             <c:when test="${locale eq 'ru'}">
                                                 <h3>${product.nameRu}</h3>
-                                                <p>${product.descriptionRu}</p>
                                             </c:when>
                                             <c:when test="${locale eq 'en'}">
                                                 <h3>${product.nameEn}</h3>
-                                                <p>${product.descriptionEn}</p>
-                                                <p>${product.descriptionEn}</p>
-                                                <p>${product.descriptionEn}</p>
                                             </c:when>
                                         </c:choose>
+                                        <p>${product.cost}</p>
+                                        <div class="wall_form" id="popup_message_form_${product.id}"
+                                             style="display:none;">
+                                            <p>${product.weight}</p>
+                                            <c:choose>
+                                                <c:when test="${locale eq 'en'}">
+                                                    <p>${product.descriptionEn}</p>
+                                                </c:when>
+                                                <c:when test="${locale eq 'ru'}">
+                                                    <p>${product.descriptionRu}</p>
+                                                </c:when>
+                                            </c:choose>
+                                        </div>
                                         <ul class="actions">
-                                            <li><a href="" class="button">${view_word}</a>
+                                            <li><input type="button" id="click_mes_form_${product.id}"
+                                                       value="${view_word}">
+                                                <script type="text/javascript">
+                                                    $(document).ready(function () {
+                                                        $("#click_mes_form_${product.id}").click(function () {
+                                                            $("#popup_message_form_${product.id}").slideToggle("slow");
+                                                            $(this).toggleClass("active");
+                                                            return false;
+                                                        });
+                                                    });
+                                                </script>
                                             </li>
                                             <c:choose>
                                                 <c:when test="${user.role eq 'client'}">
-                                                    <input type="number" step="1" min="0" max="10"
-                                                           value="0" id="number-for-add"
-                                                           name="number_for_add_${product.id}"
-                                                           onkeypress="return false">
-                                                    <input type="text" style="display:none;"
-                                                           name="productId_${product.id}"
-                                                           value="${product.id}">
+                                                    <li>
+                                                        <input type="number" step="1" min="0" max="10"
+                                                               value="0" class="number" id="number-for-add-${product.id}"
+                                                               name="number_for_add_${product.id}"
+                                                               onkeypress="return false">
+                                                        <script type="text/javascript">
+                                                            $(document).ready(function () {
+                                                                $("#number-for-add-${product.id}").click(function () {
+                                                                    width = screen.width;
+                                                                    if (width < 500) {
+                                                                        var i = $("#number-for-add-${product.id}").val();
+                                                                        if (i == 10) {
+                                                                            $("#number-for-add-${product.id}").val(0);
+                                                                        } else {
+                                                                            i = +i + 1;
+                                                                            $("#number-for-add-${product.id}").val(i);
+                                                                        }
+                                                                    }
+                                                                    return false;
+                                                                });
+                                                            });
+                                                        </script>
+                                                        <input type="text" style="display:none;"
+                                                               name="productId_${product.id}"
+                                                               value="${product.id}">
                                                     </li>
                                                 </c:when>
 
-                                                <c:when test="${user.role eq 'admin'}">
-
-                                                </c:when>
-
                                             </c:choose>
-
                                         </ul>
                                     </article>
                                 </c:forEach>
@@ -153,117 +121,53 @@
                                 <h2>${found_nothing_word}</h2>
                             </c:otherwise>
                         </c:choose>
-                        <c:choose>
-                            <c:when test="${user.role eq 'admin'}">
-                                <article>
-                                    <%@include file="/front/html/add_form.html" %>
-                                </article>
-                            </c:when>
-                        </c:choose>
                     </div>
                     <c:choose>
                         <c:when test="${user.role eq 'client'}">
-                            <input type="submit" id="add-button-to-basket"
-                                   value="${basket_add_word}">
+                            <div class="posts">
+                                <article>
+                                    <input type="submit" id="add-button-to-basket"
+                                           value="${basket_add_word}">
+                                </article>
+                            </div>
                         </c:when>
                     </c:choose>
-
                 </form>
+                <c:choose>
+                    <c:when test="${user.role eq 'admin'}">
+                        <div class="posts">
+                            <article>
+                                <%@include file="/front/html/addForm.html" %>
+                            </article>
+                        </div>
+                    </c:when>
+                </c:choose>
             </section>
 
-            <c:choose>
-                <c:when test="${pageCount!=0}">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-center">
-                            <c:choose>
-                                <c:when test="${currentPage==1}">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                            <span class="sr-only">Previous</span>
-                                        </a>
-                                    </li>
-                                </c:when>
-                                <c:otherwise>
-                                    <li class="page-item">
-                                        <a class="page-link" href="/cafe.by/set_current_page?current_page=${currentPage-1}"
-                                           aria-label="Previous">
-                                            <span aria-hidden="true">&laquo;</span>
-                                            <span class="sr-only">Previous</span>
-                                        </a>
-                                    </li>
-                                </c:otherwise>
-                            </c:choose>
-                                <%--For displaying all available pages--%>
-                            <c:forEach begin="${(currentPage-2 <= 1) ? 1 : currentPage-2}"
-                                       end="${(currentPage+2>=pageCount) ? pageCount : currentPage+2}" var="i">
-                                <c:choose>
-                                    <c:when test="${currentPage eq i}">
-                                        <li class="page-item active">
-                                            <a class="page-link" style="color: red"
-                                               href="/cafe.by/set_current_page?current_page=${i}">${i}</a>
-                                        </li>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <li class="page-item">
-                                            <a class="page-link" href="/cafe.by/set_current_page?current_page=${i}">${i}</a>
-                                        </li>
-                                    </c:otherwise>
-                                </c:choose>
-                            </c:forEach>
-                            <c:choose>
-                                <c:when test="${currentPage eq pageCount}">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                            <span class="sr-only">Next</span>
-                                        </a>
-                                    </li>
-                                </c:when>
-                                <c:otherwise>
-                                    <li class="page-item">
-                                        <a class="page-link"
-                                           href="/cafe.by/set_current_page?current_page=${currentPage+1}"
-                                           aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                            <span class="sr-only">Next</span>
-                                        </a>
-                                    </li>
-                                </c:otherwise>
-                            </c:choose>
-
-                        </ul>
-                    </nav>
-                </c:when>
-            </c:choose>
+            <%@include file="/front/html/navigation.html" %>
 
             <section>
                 <c:choose>
                     <c:when test="${user.role eq 'client'}">
-                        <form method="post" class="cd-form" id="add-review" action="/cafe.by/add_review"
-                              enctype="multipart/form-data">
-                            <h2>Оставить отзыв:</h2>
-                            <div id="reviewStars-input">
-                                <input id="star-4" type="radio" value="5" name="review_stars"/>
-                                <label title="Отлично!" for="star-4"></label>
+                        <div id="rating">
+                            <form method="post" id="add-review" action="/cafe.by/add_review">
+                                <h2>Оставить отзыв:</h2>
+                                <textarea name="review_text" id="review_text" placeholder="Напишите отзыв"></textarea>
+                                <div id="mark">
+                                    <div class="param">Оценка:</div>
+                                    <div id="stars_form">
+                                        <div class="stars"></div>
+                                        <p class="progress" id="p1"></p>
+                                    </div>
+                                    <div class="rating" id="param1"><input type="text" id="mark_value" name="mark_value"
+                                                                           value="5.0">
+                                    </div>
+                                    <div id="send-review"><input type="submit" value="Отправить отзыв"></div>
+                                </div>
+                            </form>
+                        </div>
 
-                                <input id="star-3" type="radio" value="4" name="review_stars"/>
-                                <label title="Хорошо!" for="star-3"></label>
 
-                                <input id="star-2" type="radio" value="3" name="review_stars"/>
-                                <label title="Неплохо!" for="star-2"></label>
-
-                                <input id="star-1" type="radio" value="2" name="review_stars"/>
-                                <label title="Ужасно!" for="star-1"></label>
-
-                                <input id="star-0" type="radio" value="1" name="review_stars"/>
-                                <label title="Отвратительно!" for="star-0"></label>
-                            </div>
-                            <p class="fieldset">
-                                <input type="text" name="review_text" id="name-ru" placeholder="Напишите отзыв">
-                                <input type="submit" id="send-review" value="Отправить отзыв">
-                            </p>
-                        </form>
                     </c:when>
                 </c:choose>
             </section>
@@ -278,15 +182,10 @@
 <!-- Scripts -->
 <script>
     <%@include file="/front/js/menu/main.js" %>
-</script>
-<script>
     <%@include file="/front/js/menu/util.js" %>
-</script>
-<script>
     <%@include file="/front/js/form/form.js"%>
-</script>
-<script>
     <%@include file="/front/js/validation.js" %>
+    <%@include file="/front/js/elementcontroller.js" %>
 </script>
 
 

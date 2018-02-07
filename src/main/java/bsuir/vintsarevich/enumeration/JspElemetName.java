@@ -28,7 +28,8 @@ public enum JspElemetName {
     CURRENT_PAGE("current_page"),
     SEARCH_NAME("search_name"),
     REVIEW_TEXT("review_text"),
-    REVIEW_STARS("review_stars");
+    REVIEW_STARS("review_stars"),
+    MARK("mark_value");
 
     private String value;
 

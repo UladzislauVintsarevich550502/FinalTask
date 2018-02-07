@@ -16,11 +16,7 @@ import bsuir.vintsarevich.factory.service.ServiceFactory;
 
 public class Main {
     public static void main(String[] args) throws ServiceException {
-        IClientService clientService = new ClientService();
-        try {
-            clientService.signUp("Винцаревич","Владислав","venchick","Qwe123","vlad@gmail.com");
-        } catch (ServiceLogicException e) {
-            e.printStackTrace();
-        }
+        double a = 1.25;
+        System.out.println((double)((int)(a*100)*3)/100);
     }
 }

@@ -1,0 +1,16 @@
+input#image-name {
+    margin-top: -3%;
+}
+
+input#name-ru, input#name-en, input#value, input#cost, input#image, select#status, select#product-type, textarea#descrirtion-en, textarea#descrirtion-ru, input#image-name {
+    margin: 1.4em 0;
+    font-size: 15px;
+    font-style: inherit;
+    padding-left: 10px;
+    color: #9fa3a6;
+}
+
+textarea#descrirtion-ru, textarea#descrirtion-en {
+    font-size: 15px;
+    font-style: inherit;
+}

@@ -15,7 +15,7 @@ public class ReviewService implements IReviewService {
     private static final Logger LOGGER = Logger.getLogger(ReviewService.class);
     private static final IReviewDao reviewDao = DaoFactory.getInstance().getReviewDao();
     @Override
-    public boolean addReview(String text, Integer mark, Integer clientId) {
+    public boolean addReview(String text, Float mark, Integer clientId) {
         LOGGER.log(Level.DEBUG, "Review Service: start addReview");
         Review review = new Review(text, mark, clientId);
         try {

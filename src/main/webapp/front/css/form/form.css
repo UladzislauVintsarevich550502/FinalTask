@@ -13,82 +13,6 @@ input, textarea {
     font-size: 1rem;
 }
 
-/*sprite with stars*/
-#reviewStars-input input:checked ~ label, #reviewStars-input label, #reviewStars-input label:hover, #reviewStars-input label:hover ~ label {
-    background: url(/images/icon/star.png) no-repeat;
-}
-
-#reviewStars-input {
-
-    /*fix floating problems*/
-    overflow: hidden;
-    *zoom: 1;
-    /*end of fix floating problems*/
-
-    position: relative;
-    float: left;
-}
-
-#reviewStars-input input {
-    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
-    opacity: 0;
-
-    width: 43px;
-    height: 40px;
-
-    position: absolute;
-    top: 0;
-    z-index: 0;
-}
-
-#reviewStars-input input:checked ~ label {
-    background-position: 0 -40px;
-    height: 40px;
-    width: 43px;
-}
-
-#reviewStars-input label {
-    background-position: 0 0;
-    height: 40px;
-    width: 43px;
-    float: right;
-    cursor: pointer;
-    margin-right: 10px;
-
-    position: relative;
-    z-index: 1;
-}
-
-#reviewStars-input label:hover, #reviewStars-input label:hover ~ label {
-    background-position: 0 -40px;
-    height: 40px;
-    width: 43px;
-}
-
-#reviewStars-input #star-0 {
-    left: 0px;
-}
-#reviewStars-input #star-1 {
-    left: 53px;
-}
-#reviewStars-input #star-2 {
-    left: 106px;
-}
-#reviewStars-input #star-3 {
-    left: 159px;
-}
-#reviewStars-input #star-4 {
-    left: 212px;
-}
-#reviewStars-input #star-5 {
-    left: 265px;
-}
-
-label#cost_data {
-    float: right;
-    margin-left: 30px;
-}
-
 input::-ms-clear, textarea::-ms-clear {
     display: none;
 }
@@ -479,45 +403,6 @@ a.cd-signin:hover, a.cd-signup:hover {
     margin-bottom: 30px;
 }
 
-input#lang_en {
-    background-image: url(/images/flags/english.png);
-}
-
-input#lang_ru {
-    background-image: url(/images/flags/russia.png);
-}
-
-input#lang_ru, input#lang_en {
-    background-size: cover;
-    padding-right: 0;
-    border: none;
-    box-shadow: none;
-    height: 20px;
-    width: 30px;
-    max-width: 30px;
-    max-width: 30px;
-    float: right;
-    color: rgba(0, 0, 0, 0);
-}
-
-input#image-name {
-    margin-top: -3%;
-}
-
-input#name-ru, input#name-en, input#value, input#cost, input#image, select#status, select#product-type, input#descrirtion-en, input#descrirtion-ru, input#image-name {
-    margin-bottom: 10px;
-    font-size: 15px;
-    font-style: inherit;
-    padding-left: 10px;
-    color: #9fa3a6;
-}
-
-input#descrirtion-ru, input#descrirtion-en {
-    margin-bottom: 10px;
-    font-size: 15px;
-    font-style: inherit;
-}
-
 form#c-locale {
     /* width: 30px; */
     height: 30px;
@@ -529,6 +414,11 @@ ul.leaders {
     padding: 0;
     overflow-x: hidden;
     list-style: none
+}
+
+label#cost_data {
+    display: inline-block;
+    margin-left: 42px;
 }
 
 input#number-for-delete {

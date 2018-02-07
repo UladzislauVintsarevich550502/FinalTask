@@ -9,14 +9,11 @@ import bsuir.vintsarevich.entity.User;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.exception.service.ServiceException;
 import bsuir.vintsarevich.factory.service.ServiceFactory;
-import com.sun.org.apache.xpath.internal.operations.Or;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +36,7 @@ public class Basket implements ICommand {
             if (tempProducts != null) {
                 for (Product product : tempProducts) {
                     product.setOrdered(0);
+                    product.setCommonCost(product.getCost() * product.getNumber());
                 }
                 allProducts.addAll(tempProducts);
             }
@@ -49,6 +47,8 @@ public class Basket implements ICommand {
                     for (Product product : tempProducts) {
                         product.setOrdered(1);
                         product.setOrderId(order.getId());
+                        double commonCost = (double) ((int) (product.getCost() * 100) * product.getNumber()) / 100;
+                        product.setCommonCost(commonCost);
                     }
                     allProducts.addAll(tempProducts);
                 }
