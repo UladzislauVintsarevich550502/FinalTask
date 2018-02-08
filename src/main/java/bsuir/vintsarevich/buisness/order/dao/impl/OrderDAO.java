@@ -120,7 +120,7 @@ public class OrderDAO implements IOrderDao {
             connection = connectionPool.getConnection();
             statement = null;
             statement = connection.prepareStatement(EDIT_ORDER);
-            statement.setDouble(1, (double)((int)(orderCost*100)*productCount)/100);
+            statement.setDouble(1, Math.rint(100.0 * (orderCost * productCount)) / 100.0);
             statement.setInt(2, orderId);
             if (statement.executeUpdate() != 0) {
                 LOGGER.log(Level.DEBUG, "edit order success");
@@ -184,7 +184,6 @@ public class OrderDAO implements IOrderDao {
     public Integer paymentOrder(Order order) throws DaoException {
         LOGGER.log(Level.DEBUG, "Product DAO: Payment order start");
         try {
-            Integer orderId = getOrderIdByClientId(order.getClientId());
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
             statement = null;

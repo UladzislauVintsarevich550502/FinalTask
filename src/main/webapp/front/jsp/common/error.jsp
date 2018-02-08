@@ -8,14 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <style>
         <%@include file="/front/css/menu/main.css" %>
-    </style>
-    <style>
         <%@include file="/front/css/form/form.css"%>
     </style>
     <script>
         <%@include file="/front/js/lib/jquery.min.js" %>
-    </script>
-    <script>
         <%@include file="/front/js/lib/skel.min.js" %>
     </script>
 
@@ -102,14 +98,7 @@
 <!-- Scripts -->
 <script>
     <%@include file="/front/js/menu/main.js" %>
-</script>
-<script>
-    <%@include file="/front/js/menu/util.js" %>
-</script>
-<script>
     <%@include file="/front/js/form/form.js"%>
-</script>
-<script>
     <%@include file="/front/js/validation.js" %>
 </script>
 

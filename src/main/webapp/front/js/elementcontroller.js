@@ -1,7 +1,6 @@
 jQuery(document).ready(function ($) {
 
     function move(e, obj) {
-        var id = obj.next().attr('id').substr(1);
         var progress = e.pageX - obj.offset().left;
         var rating = progress * 5 / $('.stars').width();
         $('#mark_value').attr("value", rating.toFixed(1));

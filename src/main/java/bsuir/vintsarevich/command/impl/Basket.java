@@ -47,7 +47,8 @@ public class Basket implements ICommand {
                     for (Product product : tempProducts) {
                         product.setOrdered(1);
                         product.setOrderId(order.getId());
-                        double commonCost = (double) ((int) (product.getCost() * 100) * product.getNumber()) / 100;
+                        double commonCost = Math.rint(100.0 * (product.getCost() * product.getNumber())) / 100.0;
+                        System.out.println(commonCost);
                         product.setCommonCost(commonCost);
                     }
                     allProducts.addAll(tempProducts);

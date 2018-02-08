@@ -1,3 +1,12 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:useBean class="bsuir.vintsarevich.entity.Product" scope="page" id="product"/>
+<html>
+<head>
+    <%@include file="/front/html/allBundle.html" %>
+</head>
+
 <!— Sidebar —>
 <div id="sidebar">
     <div class="inner">
@@ -10,11 +19,6 @@
                 <h2>${menu_word}</h2>
             </header>
             <ul>
-                <c:choose>
-                    <c:when test="${user.account eq 'false'}">
-                        <li><a href="/cafe.by/add_account">${account_add_word}</a></li>
-                    </c:when>
-                </c:choose>
                 <li>
                     <p>${range_word}</p>
                     <span class="opener" id="type_food">${type_food_word1}</span>
@@ -32,15 +36,6 @@
                         <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=soda">Soda</a></li>
                     </ul>
                 </li>
-                <c:choose>
-                    <c:when test="${user.role eq 'client'}">
-                        <li><a href="/cafe.by/basket">${basket_word}</a></li>
-                    </c:when>
-                    <c:when test="${user.role eq 'admin'}">
-                        <li><a href="/cafe.by/edit_clients">${edit_word}</a>
-                        </li>
-                    </c:when>
-                </c:choose>
             </ul>
         </nav>
 
@@ -49,3 +44,4 @@
         <%@include file="/front/html/footer.html" %>
     </div>
 </div>
+</html>
