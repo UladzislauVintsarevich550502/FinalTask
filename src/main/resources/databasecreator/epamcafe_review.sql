@@ -23,13 +23,15 @@ DROP TABLE IF EXISTS `review`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `review` (
+  `reviewId` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Номер заказа, к которому относится комментарий.',
   `reviewText` text COMMENT 'Отзыв клиента о заказе.',
-  `reviewMark` double DEFAULT NULL COMMENT 'Оценка Закакза Клиентом.',
-  `orderId` int(11) NOT NULL COMMENT 'Номер заказа, к которому относится комментарий.',
-  PRIMARY KEY (`orderId`),
-  KEY `fk_Review_Order1_idx` (`orderId`),
-  CONSTRAINT `fk_Review_Order1` FOREIGN KEY (`orderId`) REFERENCES `order` (`orderId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Таблица, обеспечиваюшая механизм комментирования и оценки Заказа Клиентом.';
+  `reviewMark` int(11) NOT NULL COMMENT 'Оценка Закакза Клиентом.',
+  `clientId` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`reviewId`),
+  UNIQUE KEY `fk_Review_Order1_idx` (`reviewId`),
+  KEY `fk_review_client1_idx` (`clientId`),
+  CONSTRAINT `fk_review_client1` FOREIGN KEY (`clientId`) REFERENCES `client` (`clientId`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Таблица, обеспечиваюшая механизм комментирования и оценки Заказа Клиентом.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +40,7 @@ CREATE TABLE `review` (
 
 LOCK TABLES `review` WRITE;
 /*!40000 ALTER TABLE `review` DISABLE KEYS */;
+INSERT INTO `review` VALUES (1,'dsfSD',4,0);
 /*!40000 ALTER TABLE `review` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-04 13:12:03
+-- Dump completed on 2018-02-09 22:01:55

@@ -23,16 +23,16 @@ DROP TABLE IF EXISTS `order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `order` (
-  `orderId` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Уникальный номер заказа, использующийся для связи данной таблицы с другими.',
-  `orderData` datetime DEFAULT NULL COMMENT 'Время в которое заказ был доставлен.',
-  `orderStatus` varchar(15) NOT NULL COMMENT 'Статус заказа, используется для отслеживания прогресса доставки заказа в сиситеме.',
-  `clientId` int(11) NOT NULL COMMENT 'Внешний ключ, по которому Клиент связывается с совершенными им заказами. Клиент может сделать несколько заказов, по этому ключу имеется возможность все заказы клиента.',
-  `orderCost` double NOT NULL COMMENT 'Общая стоимость заказа.',
+  `orderId` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Уникальный номер заказа, использующийся для связи данной таблицы с другими.',
+  `orderDate` datetime DEFAULT NULL COMMENT 'Время в которое заказ был доставлен.',
+  `orderType` varchar(45) NOT NULL COMMENT 'Статус заказа, используется для отслеживания прогресса доставки заказа в сиситеме.',
+  `orderCost` decimal(10,2) NOT NULL COMMENT 'Общая стоимость заказа.',
+  `clientId` int(11) unsigned NOT NULL,
   PRIMARY KEY (`orderId`),
   UNIQUE KEY `orderId_UNIQUE` (`orderId`),
-  KEY `fk_Order_Client1_idx` (`clientId`),
-  CONSTRAINT `fk_Order_Client1` FOREIGN KEY (`clientId`) REFERENCES `client` (`clientId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='Таблица, использующаяся для хранения данных о заказе(кроме заказанных Продуктов).';
+  KEY `fk_order_client1_idx` (`clientId`),
+  CONSTRAINT `fk_order_client1` FOREIGN KEY (`clientId`) REFERENCES `client` (`clientId`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8 COMMENT='Таблица, использующаяся для хранения данных о заказе(кроме заказанных Продуктов).';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +41,7 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
+INSERT INTO `order` VALUES (16,NULL,'Not order',0.00,37),(39,NULL,'Not order',0.00,39);
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-04 13:12:04
+-- Dump completed on 2018-02-09 22:01:56

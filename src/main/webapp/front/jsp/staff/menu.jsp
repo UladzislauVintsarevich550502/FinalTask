@@ -19,13 +19,12 @@
                 <h2>${menu_word}</h2>
             </header>
             <ul>
-                <li>
-                    <p>${range_word}</p>
-                </li>
+                <li><a href="/cafe.by/order_show">Список заказов</a></li>
+                <li><a href="/cafe.by/change_password_forward">Сменить пароль</a></li>
             </ul>
         </nav>
 
-        <%@include file="/front/html/promotions.html" %>
+
         <%@include file="/front/html/contacts.html" %>
         <%@include file="/front/html/footer.html" %>
     </div>

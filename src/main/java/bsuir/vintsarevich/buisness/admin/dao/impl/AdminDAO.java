@@ -22,6 +22,8 @@ public class AdminDAO implements IAdminDao {
     private static String DELETE_ADMIN = "DELETE FROM epamcafe.admin WHERE adminId=?";
     private static String GET_ALL_ADMINS = "SELECT *FROM epamcafe.admin";
     private static String GET_ADMIN_BY_LOGIN = "SELECT * FROM epamcafe.admin WHERE adminLogin=?";
+    private static String CHECK_PASSWORD = "SELECT * FROM epamcafe.admin WHERE epamcafe.admin.adminId=? AND epamcafe.admin.adminPassword=?";
+    private static String CHANGE_PASSWORD = "UPDATE epamcafe.admin SET epamcafe.admin.adminPassword=? WHERE epamcafe.admin.adminId=?";
     private ConnectionPool connectionPool;
     private Connection connection;
     private ResultSet resultSet;
@@ -181,6 +183,57 @@ public class AdminDAO implements IAdminDao {
         }
         LOGGER.log(Level.DEBUG, "Admin DAO: Finish get all admins");
         return admins;
+    }
+
+    @Override
+    public boolean checkPassword(String password, Integer id) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Admin DAO: Check password start");
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            statement = connection.prepareStatement(CHECK_PASSWORD);
+            statement.setInt(1, id);
+            statement.setString(2, password);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Error with adding in database" + e);
+        } catch (ConnectionException e) {
+            throw new DaoException("Error with connection with database" + e);
+        } finally {
+            if (connectionPool != null) {
+                connectionPool.putBackConnection(connection, statement, resultSet);
+            }
+        }
+        LOGGER.log(Level.DEBUG, "Admin DAO: finish check password");
+        return false;
+    }
+
+    @Override
+    public boolean changePassword(String password, Integer id) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Admin DAO: Change password start");
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            statement = connection.prepareStatement(CHANGE_PASSWORD);
+            statement.setString(1, password);
+            statement.setInt(2, id);
+            if (statement.executeUpdate() != 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Error with adding in database" + e);
+        } catch (ConnectionException e) {
+            throw new DaoException("Error with connection with database" + e);
+        } finally {
+            if (connectionPool != null) {
+                connectionPool.putBackConnection(connection, statement, resultSet);
+            }
+        }
+        LOGGER.log(Level.DEBUG, "Admin DAO: finish change password");
+        return false;
     }
 
     private Admin createAdminByResultSet(ResultSet resultSet) throws DaoException {

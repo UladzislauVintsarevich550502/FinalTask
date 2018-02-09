@@ -20,7 +20,7 @@ public class Index implements ICommand {
     private static final Logger LOGGER = Logger.getLogger(Index.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private JspPageName jspPageName = JspPageName.INDEX;
-    private static final int NUMBER_OF_PRODUCT_ON_PAGE = 6;
+    private static final int NUMBER_OF_PRODUCT_ON_PAGE = 4;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

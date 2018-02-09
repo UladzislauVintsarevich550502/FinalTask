@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AddReview implements ICommand {
     private static final Logger LOGGER = Logger.getLogger(AddProduct.class);
@@ -31,10 +33,13 @@ public class AddReview implements ICommand {
             IReviewService reviewService = serviceFactory.getReviewService();
             Integer clientId = ((User)request.getSession().getAttribute("user")).getId();
             String text = request.getParameter(JspElemetName.REVIEW_TEXT.getValue());
-            System.out.println(text);
-            double mark = Double.parseDouble(request.getParameter(JspElemetName.MARK.getValue()));
-            System.out.println(mark);
-            reviewService.addReview(text, (float)mark, clientId);
+            String mark = request.getParameter(JspElemetName.REVIEW_STARS.getValue());
+            if (mark != null) {
+                reviewService.addReview(text, Integer.parseInt(mark), clientId);
+            } else {
+                reviewService.addReview(text, 0, clientId);
+            }
+
             response.sendRedirect("/cafe.by/index");
         } catch (IOException e) {
             LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());

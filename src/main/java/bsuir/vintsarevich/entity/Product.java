@@ -1,14 +1,12 @@
 package bsuir.vintsarevich.entity;
 
-import java.util.Objects;
-
 public class Product {
 
     private Integer id;
     private String type;
     private String nameRu;
     private String nameEn;
-    private Double weight;
+    private Integer weight;
     private Double cost;
     private String status;
     private String descriptionRu;
@@ -17,10 +15,12 @@ public class Product {
     private Integer number;
     private Integer ordered;
     private Integer orderId;
-    private Double commonCost;
 
+    public Product() {
+    }
 
-    public Product(Integer id, String type, String nameRu, String nameEn, Double weight, Double cost, String status, String descriptionRu, String descriptionEn, String imagePath, Integer number, Integer ordered, Integer orderId) {
+    public Product(Integer id, String type, String nameRu, String nameEn, Integer weight, Double cost, String status, String descriptionRu, String descriptionEn, String imagePath, Integer number, Integer ordered, Integer orderId) {
+
         this.id = id;
         this.type = type;
         this.nameRu = nameRu;
@@ -34,10 +34,6 @@ public class Product {
         this.number = number;
         this.ordered = ordered;
         this.orderId = orderId;
-    }
-
-    public Product() {
-
     }
 
     public Integer getId() {
@@ -72,11 +68,11 @@ public class Product {
         this.nameEn = nameEn;
     }
 
-    public Double getWeight() {
+    public Integer getWeight() {
         return weight;
     }
 
-    public void setWeight(Double weight) {
+    public void setWeight(Integer weight) {
         this.weight = weight;
     }
 
@@ -144,12 +140,46 @@ public class Product {
         this.orderId = orderId;
     }
 
-    public Double getCommonCost() {
-        return commonCost;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        if (id != null ? !id.equals(product.id) : product.id != null) return false;
+        if (type != null ? !type.equals(product.type) : product.type != null) return false;
+        if (nameRu != null ? !nameRu.equals(product.nameRu) : product.nameRu != null) return false;
+        if (nameEn != null ? !nameEn.equals(product.nameEn) : product.nameEn != null) return false;
+        if (weight != null ? !weight.equals(product.weight) : product.weight != null) return false;
+        if (cost != null ? !cost.equals(product.cost) : product.cost != null) return false;
+        if (status != null ? !status.equals(product.status) : product.status != null) return false;
+        if (descriptionRu != null ? !descriptionRu.equals(product.descriptionRu) : product.descriptionRu != null)
+            return false;
+        if (descriptionEn != null ? !descriptionEn.equals(product.descriptionEn) : product.descriptionEn != null)
+            return false;
+        if (imagePath != null ? !imagePath.equals(product.imagePath) : product.imagePath != null) return false;
+        if (number != null ? !number.equals(product.number) : product.number != null) return false;
+        if (ordered != null ? !ordered.equals(product.ordered) : product.ordered != null) return false;
+        return orderId != null ? orderId.equals(product.orderId) : product.orderId == null;
     }
 
-    public void setCommonCost(Double commonCost) {
-        this.commonCost = commonCost;
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        result = 31 * result + (nameRu != null ? nameRu.hashCode() : 0);
+        result = 31 * result + (nameEn != null ? nameEn.hashCode() : 0);
+        result = 31 * result + (weight != null ? weight.hashCode() : 0);
+        result = 31 * result + (cost != null ? cost.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + (descriptionRu != null ? descriptionRu.hashCode() : 0);
+        result = 31 * result + (descriptionEn != null ? descriptionEn.hashCode() : 0);
+        result = 31 * result + (imagePath != null ? imagePath.hashCode() : 0);
+        result = 31 * result + (number != null ? number.hashCode() : 0);
+        result = 31 * result + (ordered != null ? ordered.hashCode() : 0);
+        result = 31 * result + (orderId != null ? orderId.hashCode() : 0);
+        return result;
     }
 
     @Override
@@ -168,34 +198,6 @@ public class Product {
                 ", number=" + number +
                 ", ordered=" + ordered +
                 ", orderId=" + orderId +
-                ", commonCost=" + commonCost +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Product product = (Product) o;
-        return Objects.equals(id, product.id) &&
-                Objects.equals(type, product.type) &&
-                Objects.equals(nameRu, product.nameRu) &&
-                Objects.equals(nameEn, product.nameEn) &&
-                Objects.equals(weight, product.weight) &&
-                Objects.equals(cost, product.cost) &&
-                Objects.equals(status, product.status) &&
-                Objects.equals(descriptionRu, product.descriptionRu) &&
-                Objects.equals(descriptionEn, product.descriptionEn) &&
-                Objects.equals(imagePath, product.imagePath) &&
-                Objects.equals(number, product.number) &&
-                Objects.equals(ordered, product.ordered) &&
-                Objects.equals(orderId, product.orderId) &&
-                Objects.equals(commonCost, product.commonCost);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id, type, nameRu, nameEn, weight, cost, status, descriptionRu, descriptionEn, imagePath, number, ordered, orderId, commonCost);
     }
 }

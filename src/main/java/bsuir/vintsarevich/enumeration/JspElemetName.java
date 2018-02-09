@@ -29,7 +29,13 @@ public enum JspElemetName {
     SEARCH_NAME("search_name"),
     REVIEW_TEXT("review_text"),
     REVIEW_STARS("review_stars"),
-    MARK("mark_value");
+    ORDER_ID("order_id"),
+    STAFF_LOGIN("staff_login"),
+    STAFF_PASSWORD("staff_password"),
+    OLD_PASSWORD("old_password"),
+    NEW_PASSWORD("new_password"),
+    NEW_PASSWORD_REPEAT("new_password_repeat"),
+    POINT("point");
 
     private String value;
 

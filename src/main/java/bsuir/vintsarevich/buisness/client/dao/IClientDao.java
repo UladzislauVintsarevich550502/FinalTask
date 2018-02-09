@@ -9,6 +9,7 @@ public interface IClientDao {
     Client addClient(Client client) throws DaoException;
 
     boolean deleteClient(Integer id) throws DaoException;
+
     Client signIn(String login, String password) throws DaoException;
 
     Client getClientByLogin(String clientLogin) throws DaoException;
@@ -19,5 +20,13 @@ public interface IClientDao {
 
     boolean changeClientStatus(Integer clientId) throws DaoException;
 
+    boolean checkPassword(String password, Integer clientId) throws DaoException;
 
+    boolean changePassword(String password, Integer clientId) throws DaoException;
+
+    boolean editPoint(Integer clientId, Double clientPoint) throws DaoException;
+
+    boolean addPoints(Double points, Integer clientId) throws DaoException;
+
+    boolean clearPoints(Integer clientId) throws DaoException;
 }

@@ -8,6 +8,6 @@ public interface IOrderProductService {
 
     boolean deleteOrderProduct(Integer clientId, Integer productId) throws ServiceException;
 
-    boolean editOrderProductPayment(Integer orderIdNew,Integer orderId) throws ServiceException;
+    boolean editOrderProductPayment(Integer orderIdNew, Integer orderId) throws ServiceException;
 
 }

@@ -24,15 +24,21 @@ public final class CommandProvider {
         repository.put(CommandName.ADD_PRODUCT, new AddProduct());
         repository.put(CommandName.BASKET, new Basket());
         repository.put(CommandName.ADD_PRODUCT_TO_BASKET, new AddProductToBasket());
-        repository.put(CommandName.REMOVE_PRODUCT_FROM_BASKET,new RemoveProductFromBasket());
+        repository.put(CommandName.REMOVE_PRODUCT_FROM_BASKET, new RemoveProductFromBasket());
         repository.put(CommandName.ADD_ACCOUNT, new AddAccount());
         repository.put(CommandName.EDIT_CLIENTS, new EditClients());
         repository.put(CommandName.CHANGE_CLIENT_STATUS, new ChangeClientStatus());
         repository.put(CommandName.SET_CURRENT_PAGE, new SetCurrentPage());
-        repository.put(CommandName.SEARCH_PRODUCT,new SearchProduct());
+        repository.put(CommandName.SEARCH_PRODUCT, new SearchProduct());
         repository.put(CommandName.FIND_BY_TYPE, new FindByType());
         repository.put(CommandName.PAYMENT, new Payment());
         repository.put(CommandName.ADD_REVIEW, new AddReview());
+        repository.put(CommandName.ORDER_SHOW, new OrderShow());
+        repository.put(CommandName.ORDER_ACCEPT, new OrderAccept());
+        repository.put(CommandName.ORDER_DENY, new OrderDeny());
+        repository.put(CommandName.ADD_STAFF, new AddStaff());
+        repository.put(CommandName.CHANGE_PASSWORD_FORWARD, new ChangePasswordForward());
+        repository.put(CommandName.CHANGE_PASSWORD, new ChangePassword());
     }
 
     public static CommandProvider getInstance() {

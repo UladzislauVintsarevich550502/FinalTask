@@ -21,6 +21,8 @@ public class StaffDAO implements IStaffDao {
     private static String GET_STAFF_BY_LOGIN_AND_PASSWORD = "SELECT * FROM epamcafe.staff WHERE staffLogin=? AND staffPassword=?";
     private static String GET_STAFF_BY_LOGIN = "SELECT * FROM epamcafe.staff WHERE staffLogin=?";
     private static String GET_ALL_STAFF = "SELECT * FROM epamcafe.staff";
+    private static String CHECK_PASSWORD = "SELECT * FROM epamcafe.staff WHERE epamcafe.staff.staffId=? AND epamcafe.staff.staffPassword=?";
+    private static String CHANGE_PASSWORD = "UPDATE epamcafe.admin SET epamcafe.staff.staffPassword=? WHERE epamcafe.staff.staffId=?";
     private ConnectionPool connectionPool;
     private Connection connection;
     private PreparedStatement statement;
@@ -158,7 +160,7 @@ public class StaffDAO implements IStaffDao {
     }
 
     @Override
-    public List<Staff> getAllStaff()  throws DaoException {
+    public List<Staff> getAllStaff() throws DaoException {
         LOGGER.log(Level.DEBUG, "Staff DAO: Start get all staff");
         List<Staff> staff = new ArrayList<>();
         try {
@@ -188,5 +190,57 @@ public class StaffDAO implements IStaffDao {
         }
         LOGGER.log(Level.DEBUG, "Staff DAO: Finish get all staff");
         return staff;
+    }
+
+
+    @Override
+    public boolean checkPassword(String password, Integer id) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Staff DAO: Check password start");
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            statement = connection.prepareStatement(CHECK_PASSWORD);
+            statement.setInt(1, id);
+            statement.setString(2, password);
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Error with adding in database" + e);
+        } catch (ConnectionException e) {
+            throw new DaoException("Error with connection with database" + e);
+        } finally {
+            if (connectionPool != null) {
+                connectionPool.putBackConnection(connection, statement, resultSet);
+            }
+        }
+        LOGGER.log(Level.DEBUG, "Staff DAO: finish check password");
+        return false;
+    }
+
+    @Override
+    public boolean changePassword(String password, Integer id) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Staff DAO: Change password start");
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+            statement = connection.prepareStatement(CHANGE_PASSWORD);
+            statement.setString(1, password);
+            statement.setInt(2, id);
+            if (statement.executeUpdate() != 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new DaoException("Error with adding in database" + e);
+        } catch (ConnectionException e) {
+            throw new DaoException("Error with connection with database" + e);
+        } finally {
+            if (connectionPool != null) {
+                connectionPool.putBackConnection(connection, statement, resultSet);
+            }
+        }
+        LOGGER.log(Level.DEBUG, "Staff DAO: finish change password");
+        return false;
     }
 }

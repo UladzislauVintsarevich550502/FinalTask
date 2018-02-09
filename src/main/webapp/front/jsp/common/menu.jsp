@@ -39,7 +39,7 @@
             </ul>
         </nav>
 
-        <%@include file="/front/html/promotions.html" %>
+        <%@include file="/front/html/stock.html" %>
         <%@include file="/front/html/contacts.html" %>
         <%@include file="/front/html/footer.html" %>
     </div>

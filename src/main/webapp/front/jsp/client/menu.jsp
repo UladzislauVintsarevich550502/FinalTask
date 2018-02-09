@@ -42,10 +42,11 @@
                     </ul>
                 </li>
                 <li><a href="/cafe.by/basket">${basket_word}</a></li>
+                <li><a href="/cafe.by/change_password_forward">Сменить пароль</a></li>
             </ul>
         </nav>
 
-        <%@include file="/front/html/promotions.html" %>
+        <%@include file="/front/html/stock.html" %>
         <%@include file="/front/html/contacts.html" %>
         <%@include file="/front/html/footer.html" %>
     </div>

@@ -1,6 +1,7 @@
 package bsuir.vintsarevich.command.impl;
 
 import bsuir.vintsarevich.buisness.account.service.IAccountService;
+import bsuir.vintsarevich.buisness.client.service.IClientService;
 import bsuir.vintsarevich.buisness.order.dao.IOrderDao;
 import bsuir.vintsarevich.buisness.order.service.IOrderService;
 import bsuir.vintsarevich.buisness.orderproduct.service.IOrderProductService;
@@ -28,28 +29,33 @@ public class Payment implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.INFO, "Start payment");
+
         IOrderService orderService = serviceFactory.getOrderService();
         IOrderProductService orderProductService = serviceFactory.getOrderProductService();
         IOrderDao orderDao = DaoFactory.getInstance().getOrderDao();
         IAccountService accountService = ServiceFactory.getInstance().getAccountService();
+        IClientService clientService = serviceFactory.getClientService();
+
         try {
             String radio = request.getParameter("choise_of_payment");
             String dateTime = request.getParameter("dateTime");
-
+            Double pointToPayment = Double.valueOf(request.getParameter("point_to_payment"));
             Integer clientId = ((User) request.getSession().getAttribute("user")).getId();
             Double orderCost = orderService.getOrderCost(clientId);
             Integer orderId = orderDao.getOrderIdByClientId(clientId);
 
             if (radio.equals("cash")) {
-                Integer orderIdNew = orderService.paymentOrder("ordered", dateTime, orderCost, clientId);
+                Integer orderIdNew = orderService.paymentOrder("ordered", dateTime, (orderCost - pointToPayment), clientId);
                 orderService.clearOrderCost(orderId);
                 orderProductService.editOrderProductPayment(orderIdNew, orderId);
+                clientService.editPoint(clientId, pointToPayment);
             } else {
                 if (accountService.findAccountByClientId(clientId)) {
-                    Integer orderIdNew = orderService.paymentOrder("payment", dateTime, orderCost, clientId);
+                    Integer orderIdNew = orderService.paymentOrder("payment", dateTime, (orderCost - pointToPayment), clientId);
                     orderService.clearOrderCost(orderId);
                     orderProductService.editOrderProductPayment(orderIdNew, orderId);
                     accountService.editAccount(clientId, orderCost);
+                    clientService.editPoint(clientId, pointToPayment);
                 } else {
                     System.out.println("NO");
                 }

@@ -1,6 +1,8 @@
 package bsuir.vintsarevich.buisness.client.service;
 
 import bsuir.vintsarevich.entity.Client;
+import bsuir.vintsarevich.entity.Order;
+import bsuir.vintsarevich.exception.dao.DaoException;
 import bsuir.vintsarevich.exception.service.ServiceException;
 import bsuir.vintsarevich.exception.service.ServiceLogicException;
 
@@ -14,7 +16,19 @@ public interface IClientService {
 
     List<Client> getAllClients() throws ServiceException;
 
+    boolean countPoints(Order order) throws ServiceException;
+
+    boolean clearPoints(Integer clientId) throws ServiceException ;
+
     boolean deleteClient(Integer id) throws ServiceException;
 
     boolean changeClientStatus(Integer clientId) throws ServiceException;
+
+    boolean checkPassword(String password, Integer id) throws ServiceException;
+
+    boolean changePassword(String password, Integer id) throws ServiceException;
+
+    boolean editPoint(Integer clientId, Double clientPoint) throws ServiceException;
+
+    Client getClientById(Integer clientId) throws ServiceException;
 }

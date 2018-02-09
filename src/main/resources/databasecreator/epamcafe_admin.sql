@@ -23,13 +23,13 @@ DROP TABLE IF EXISTS `admin`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `admin` (
-  `adminId` int(11) NOT NULL AUTO_INCREMENT,
-  `adminLogin` varchar(20) NOT NULL COMMENT 'Данный столбец хранит уникальные логины администраторов, для авторизации администраторов в системе.',
+  `adminId` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `adminLogin` varchar(45) NOT NULL COMMENT 'Данный столбец хранит уникальные логины администраторов, для авторизации администраторов в системе.',
   `adminPassword` text NOT NULL COMMENT 'Пароль, использующийся для опеспечения безопасности доступа в систему.',
   PRIMARY KEY (`adminId`),
   UNIQUE KEY `adminLogin_UNIQUE` (`adminLogin`),
   UNIQUE KEY `adminId_UNIQUE` (`adminId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Таблица для хренении информации об Администраторах.';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Таблица для хренении информации об Администраторах.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES (1,'Odmen','4D26A5BAFD3AE19DA1C6E8D5A5B1FFDDD096411A');
+INSERT INTO `admin` VALUES (1,'Odmen','4D26A5BAFD3AE19DA1C6E8D5A5B1FFDDD096411A'),(2,'ilusha','D033E22AE348AEB5660FC2140AEC35850C4DA997');
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-04 13:12:03
+-- Dump completed on 2018-02-09 22:01:54

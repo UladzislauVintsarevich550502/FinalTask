@@ -18,6 +18,7 @@ public interface IProductService {
 
     Product getProductById(Integer id) throws ServiceException;
 
-    void addProduct(String type, String nameRu, String nameEn, Double weight, Double cost, String status,
+    void addProduct(String type, String nameRu, String nameEn, Integer weight, Double cost, String status,
                     String descriptionRu, String descriptionEn, Part image, String webPath) throws ServiceException, ServiceLogicException;
+
 }

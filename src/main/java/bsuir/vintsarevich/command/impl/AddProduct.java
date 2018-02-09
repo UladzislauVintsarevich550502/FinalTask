@@ -29,7 +29,7 @@ public class AddProduct implements ICommand {
             String productType = request.getParameter(JspElemetName.PRODUCT_TYPE.getValue());
             String nameRu = request.getParameter(JspElemetName.NAME_RU.getValue());
             String nameEn = request.getParameter(JspElemetName.NAME_EN.getValue());
-            Double weight = new Double(request.getParameter(JspElemetName.VALUE.getValue()));
+            Integer weight = new Integer(request.getParameter(JspElemetName.VALUE.getValue()));
             Double cost = new Double(request.getParameter(JspElemetName.COST.getValue()));
             String status = request.getParameter(JspElemetName.STATUS.getValue());
             String descriptionRu = request.getParameter(JspElemetName.DESCRIPTION_RU.getValue());

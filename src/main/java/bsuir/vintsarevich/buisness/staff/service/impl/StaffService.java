@@ -86,4 +86,31 @@ public class StaffService implements IStaffService {
         LOGGER.log(Level.DEBUG, "Staff Service: Finish get all staff");
         return staff;
     }
+
+    @Override
+    public boolean checkPassword(String password, Integer id) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "Staff Service: check password start");
+        password = Hasher.hashBySha1(password);
+        IStaffDao staffDao = daoFactory.getStaffDao();
+        try {
+            LOGGER.log(Level.DEBUG, "Staff Service: finish check password");
+            return staffDao.checkPassword(password, id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean changePassword(String password, Integer id) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "Staff Service: change password start");
+        password = Hasher.hashBySha1(password);
+        IStaffDao staffDao = daoFactory.getStaffDao();
+        try {
+            staffDao.changePassword(password, id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        LOGGER.log(Level.DEBUG, "Staff Service: finish change password");
+        return true;
+    }
 }

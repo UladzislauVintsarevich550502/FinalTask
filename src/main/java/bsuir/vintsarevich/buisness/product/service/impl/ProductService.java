@@ -102,7 +102,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public void addProduct(String type, String nameRu, String nameEn, Double weight, Double cost, String status,
+    public void addProduct(String type, String nameRu, String nameEn, Integer weight, Double cost, String status,
                            String descriptionRu, String descriptionEn, Part image, String webPath) throws ServiceException, ServiceLogicException {
         LOGGER.log(Level.DEBUG, "ProductService: addProduct start");
         Product product = new Product();
@@ -141,6 +141,8 @@ public class ProductService implements IProductService {
         }
         LOGGER.log(Level.DEBUG, "ProductService: addProduct finish");
     }
+
+
 
     private void uploadImage(Part filePart, String fileName, String webInfPath) throws ServiceException, ServiceLogicException {
         try {

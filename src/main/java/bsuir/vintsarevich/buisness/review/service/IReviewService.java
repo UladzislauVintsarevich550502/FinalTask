@@ -5,7 +5,7 @@ import bsuir.vintsarevich.entity.Review;
 import java.util.List;
 
 public interface IReviewService {
-    boolean addReview(String text, Float mark, Integer clientId);
+    boolean addReview(String text, Integer mark, Integer clientId);
     boolean editReview(Integer reviewId, String text, Integer mark);
     boolean deleteReview(Integer reviewId);
     List<Review> getAllReviews();

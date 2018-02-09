@@ -4,13 +4,13 @@ import java.util.Objects;
 
 public class Review {
     private String text;
-    private Float mark;
+    private Integer mark;
     private Integer clientId;
     private Integer reviewId;
 
     public Review() {}
 
-    public Review(String text, Float mark, Integer clientId) {
+    public Review(String text, Integer mark, Integer clientId) {
         this.text = text;
         this.mark = mark;
         this.clientId = clientId;
@@ -32,11 +32,11 @@ public class Review {
         this.text = text;
     }
 
-    public Float getMark() {
+    public Integer getMark() {
         return mark;
     }
 
-    public void setMark(Float mark) {
+    public void setMark(Integer mark) {
         this.mark = mark;
     }
 

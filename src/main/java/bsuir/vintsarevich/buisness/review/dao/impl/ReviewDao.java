@@ -156,7 +156,7 @@ public class ReviewDao implements IReviewDao {
         try {
             review.setReviewId(resultSet.getInt("reviewId"));
             review.setClientId(resultSet.getInt("clientId"));
-            review.setMark(resultSet.getFloat("reviewMark"));
+            review.setMark(resultSet.getInt("reviewMark"));
             review.setText(resultSet.getString("reviewText"));
         } catch (SQLException e) {
             throw new DaoException(e);

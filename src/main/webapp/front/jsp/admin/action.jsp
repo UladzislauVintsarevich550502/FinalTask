@@ -37,11 +37,11 @@
                                     </c:when>
                                 </c:choose>
                             </div>
-                            <%--<div class="wall_form" id="popup_edit_form_${product.id}" style="display:none;">--%>
-                                <%--<form method="post" class="cd-form" action="/cafe.by/add_product">--%>
+                            <div class="wall_form" id="popup_edit_form_${product.id}" style="display:none;">
+                                <%--<form method="post" class="cd-form" action="/cafe.by/edit_product">--%>
                                     <%--<%@include file="/front/html/addForm.html" %>--%>
                                 <%--</form>--%>
-                            <%--</div>--%>
+                            </div>
                             <ul class="actions">
                                 <li>
                                     <input type="button" id="click_mes_form_${product.id}"

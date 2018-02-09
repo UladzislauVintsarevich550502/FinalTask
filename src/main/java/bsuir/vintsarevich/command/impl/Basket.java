@@ -1,5 +1,6 @@
 package bsuir.vintsarevich.command.impl;
 
+import bsuir.vintsarevich.buisness.client.service.IClientService;
 import bsuir.vintsarevich.buisness.order.service.IOrderService;
 import bsuir.vintsarevich.buisness.product.service.IProductService;
 import bsuir.vintsarevich.command.ICommand;
@@ -29,6 +30,7 @@ public class Basket implements ICommand {
             Integer clentId = ((User) request.getSession().getAttribute("user")).getId();
             IProductService producteService = serviceFactory.getProducteService();
             IOrderService orderService = serviceFactory.getOrderService();
+            IClientService clientService = serviceFactory.getClientService();
             Integer orderId = orderService.getOrderIdByClientId(clentId);
             List<Product> allProducts = new ArrayList<>();
             List<Product> tempProducts = producteService.getProductByOrderId(orderId);
@@ -36,20 +38,16 @@ public class Basket implements ICommand {
             if (tempProducts != null) {
                 for (Product product : tempProducts) {
                     product.setOrdered(0);
-                    product.setCommonCost(product.getCost() * product.getNumber());
                 }
                 allProducts.addAll(tempProducts);
             }
             for (Order order : orders) {
-                order.setData(converDataToString(order.getData()));
+                order.setDate(converDataToString(order.getDate()));
                 tempProducts = producteService.getProductByOrderId(order.getId());
                 if (tempProducts != null) {
                     for (Product product : tempProducts) {
                         product.setOrdered(1);
                         product.setOrderId(order.getId());
-                        double commonCost = Math.rint(100.0 * (product.getCost() * product.getNumber())) / 100.0;
-                        System.out.println(commonCost);
-                        product.setCommonCost(commonCost);
                     }
                     allProducts.addAll(tempProducts);
                 }
@@ -57,6 +55,7 @@ public class Basket implements ICommand {
             request.setAttribute("products", allProducts);
             request.setAttribute("orderCost", orderService.getOrderCost(clentId));
             request.setAttribute("orders", orders);
+            request.setAttribute("point", clientService.getClientById(clentId).getPoint());
         } catch (ServiceException e) {
             LOGGER.log(Level.ERROR, this.getClass() + ":" + e.getMessage());
         }

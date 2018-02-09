@@ -86,4 +86,31 @@ public class AdminService implements IAdminService {
         LOGGER.log(Level.DEBUG, "Product Service: Finish get all admins");
         return admins;
     }
+
+    @Override
+    public boolean checkPassword(String password, Integer id) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "Admin Service: check password start");
+        password = Hasher.hashBySha1(password);
+        IAdminDao adminDao = daoFactory.getAdminDao();
+        try {
+            LOGGER.log(Level.DEBUG, "Admin Service: finish check password");
+            return adminDao.checkPassword(password, id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean changePassword(String password, Integer id) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "Admin Service: change password start");
+        password = Hasher.hashBySha1(password);
+        IAdminDao adminDao = daoFactory.getAdminDao();
+        try {
+            adminDao.changePassword(password, id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+        LOGGER.log(Level.DEBUG, "Admin Service: finish change password");
+        return true;
+    }
 }

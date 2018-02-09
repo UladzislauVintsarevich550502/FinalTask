@@ -3,9 +3,12 @@ package bsuir.vintsarevich.command.impl;
 import bsuir.vintsarevich.buisness.account.service.IAccountService;
 import bsuir.vintsarevich.buisness.admin.service.IAdminService;
 import bsuir.vintsarevich.buisness.client.service.IClientService;
+import bsuir.vintsarevich.buisness.staff.dao.IStaffDao;
+import bsuir.vintsarevich.buisness.staff.service.IStaffService;
 import bsuir.vintsarevich.command.ICommand;
 import bsuir.vintsarevich.entity.Admin;
 import bsuir.vintsarevich.entity.Client;
+import bsuir.vintsarevich.entity.Staff;
 import bsuir.vintsarevich.entity.User;
 import bsuir.vintsarevich.enumeration.JspElemetName;
 import bsuir.vintsarevich.enumeration.JspPageName;
@@ -32,8 +35,6 @@ public class SignIn implements ICommand {
         user = null;
         String login = request.getParameter(JspElemetName.SIGNIN_LOGIN.getValue());
         String password = request.getParameter(JspElemetName.SIGNIN_PASSWORD.getValue());
-        System.out.println(login);
-        System.out.println(password);
 
         if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
             request.setAttribute("errorData", "введите логин или пароль");
@@ -43,16 +44,19 @@ public class SignIn implements ICommand {
 
         IClientService clientService = serviceFactory.getClientService();
         Client client = clientService.signIn(login, password);
-        System.out.println(client);
+
         IAdminService adminService = serviceFactory.getAdminService();
         Admin admin = adminService.signIn(login, password);
+
+        IStaffService staffService = serviceFactory.getStaffService();
+        Staff staff = staffService.signIn(login, password);
+
         IAccountService accountService = serviceFactory.getAccountService();
-        System.out.println(admin);
         LOGGER.log(Level.INFO, client);
         try {
             if (client != null) {
                 if (!client.getStatus().equals("banned")) {
-                    user = new User(client.getId(), client.getLogin(), "client", client.getName(), client.getSurname(), client.getStatus(),accountService.findAccountByClientId(client.getId()));
+                    user = new User(client.getId(), client.getLogin(), "client", client.getName(), client.getSurname(), client.getStatus(), accountService.findAccountByClientId(client.getId()), client.getPoint());
                     HttpSession session = request.getSession();
                     session.setAttribute(JspElemetName.USER.getValue(), user);
                     LOGGER.log(Level.INFO, "Successfull sign in account as " + login);
@@ -62,18 +66,24 @@ public class SignIn implements ICommand {
                 }
             } else {
                 if (admin != null) {
-                    user = new User(admin.getId(), admin.getLogin(), "admin", null, null, null,true);
+                    user = new User(admin.getId(), admin.getLogin(), "admin", null, null, null, true);
                     HttpSession session = request.getSession();
                     session.setAttribute(JspElemetName.USER.getValue(), user);
                     LOGGER.log(Level.INFO, "Successfull sign in account as " + login);
                     response.sendRedirect("/cafe.by/index");
+                } else {
+                    if (staff != null) {
+                        user = new User(staff.getId(), staff.getLogin(), "staff", null, null, null, true);
+                        request.getSession().setAttribute(JspElemetName.USER.getValue(), user);
+                        LOGGER.log(Level.INFO, "Successfull sign in account as " + login);
+                        response.sendRedirect("/cafe.by/order_show");
+                    } else {
+                        LOGGER.log(Level.INFO, "Unsuccessfully sign in account.");
+                        request.setAttribute(jspElemetName.getValue(), "Such user is not exist");
+                    }
                 }
-                LOGGER.log(Level.INFO, "Unsuccessfully sign in account.");
-                request.setAttribute(jspElemetName.getValue(), "Such user is not exist");
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ServiceException e) {
+        } catch (IOException | ServiceException e) {
             e.printStackTrace();
         }
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="EpamCafe@localhost" uuid="070dd4e4-5dce-4ca4-beca-fa80fe137af7">
+    <data-source source="LOCAL" name="epamcafe@localhost" uuid="abf297c4-b954-4667-8b04-e82c9b81138e">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/EpamCafe</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/epamcafe</jdbc-url>
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="convertToNull" />

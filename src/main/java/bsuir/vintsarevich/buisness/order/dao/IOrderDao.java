@@ -11,7 +11,7 @@ public interface IOrderDao {
 
     Integer getOrderIdByClientId(Integer clientId) throws DaoException;
 
-    boolean editOrder(Integer clientId, Double orderCost,Integer productCount) throws DaoException;
+    boolean editOrder(Integer clientId, Double orderCost, Integer productCount) throws DaoException;
 
     Order getOrderByClientId(Integer clientId) throws DaoException;
 
@@ -22,4 +22,10 @@ public interface IOrderDao {
     List<Order> getPaymentOrdersByClientId(Integer clientId) throws DaoException;
 
     List<Order> getAllOrdersByClientId(Integer clientId) throws DaoException;
+
+    List<Order> getAllOrderedOrders() throws DaoException;
+
+    boolean deleteOrder(Integer orderId) throws  DaoException;
+
+    Order getOrderByOrderId(Integer orderId) throws DaoException;
 }

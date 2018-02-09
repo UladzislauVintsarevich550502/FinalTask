@@ -2,6 +2,7 @@ package bsuir.vintsarevich.buisness.product.dao;
 
 import bsuir.vintsarevich.entity.Product;
 import bsuir.vintsarevich.exception.dao.DaoException;
+import javafx.beans.property.ListProperty;
 
 import java.util.List;
 
@@ -19,5 +20,6 @@ public interface IProductDao {
     List<Product> getAllProducts() throws DaoException;
 
     boolean editProduct(Product product) throws DaoException;
+
 
 }

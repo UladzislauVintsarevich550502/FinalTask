@@ -23,7 +23,7 @@ public class ProductDAO implements IProductDao {
     public static String EDIT_PRODUCT = "UPDATE product SET productType=?,productNameRu=?,productNameEn=?,productWeight=?,productCost=?,productStatus=?," +
             "productDescriptionRu=?,productDescriptionEn=?,productImage=? WHERE productId=?;";
     public static String GET_PRODUCT_BY_ID = "SELECT * FROM epamcafe.product WHERE productId=?";
-    public static String GET_PRODUCT_BY_TYPE = "SELECT *FROM epamcafe.product WHERE productType=?";
+    public static String GET_PRODUCT_BY_TYPE = "SELECT * FROM epamcafe.product WHERE productType=?";
     public static String DELETE_PRODUCT = "DELETE FROM epamcafe.product WHERE productId=?";
     public static String GET_PRODUCT_BY_ORDERID = "SELECT product.productId, product.productType,product.productNameRu," +
             "product.productNameEn,product.productWeight,product.productCost,product.productStatus," +
@@ -50,7 +50,7 @@ public class ProductDAO implements IProductDao {
             statement.setString(1, product.getType());
             statement.setString(2, product.getNameRu());
             statement.setString(3, product.getNameEn());
-            statement.setDouble(4, product.getWeight());
+            statement.setInt(4, product.getWeight());
             statement.setDouble(5, product.getCost());
             statement.setString(6, product.getStatus());
             statement.setString(7, product.getDescriptionRu());
@@ -236,7 +236,7 @@ public class ProductDAO implements IProductDao {
             }
             do {
                 products.add(createProductByResultSet(resultSet));
-                products.get(products.size()-1).setNumber(resultSet.getInt("orderproducts.productCount"));
+                products.get(products.size() - 1).setNumber(resultSet.getInt("orderproducts.productCount"));
             } while (resultSet.next());
             LOGGER.log(Level.INFO, products);
         } catch (SQLException e) {
@@ -271,7 +271,7 @@ public class ProductDAO implements IProductDao {
             statement.setString(1, product.getType());
             statement.setString(2, product.getNameRu());
             statement.setString(3, product.getNameEn());
-            statement.setDouble(4, product.getWeight());
+            statement.setInt(4, product.getWeight());
             statement.setDouble(5, product.getCost());
             statement.setString(6, product.getStatus());
             statement.setString(7, product.getDescriptionRu());
@@ -302,6 +302,7 @@ public class ProductDAO implements IProductDao {
         }
     }
 
+
     private Product createProductByResultSet(ResultSet resultSet) throws DaoException {
         Product product = new Product();
         try {
@@ -309,7 +310,7 @@ public class ProductDAO implements IProductDao {
             product.setType(resultSet.getString("productType"));
             product.setNameRu(resultSet.getString("productNameRu"));
             product.setNameEn(resultSet.getString("productNameEn"));
-            product.setWeight(resultSet.getDouble("productWeight"));
+            product.setWeight(resultSet.getInt("productWeight"));
             product.setCost(resultSet.getDouble("productCost"));
             product.setStatus(resultSet.getString("productStatus"));
             product.setDescriptionRu(resultSet.getString("productDescriptionRu"));

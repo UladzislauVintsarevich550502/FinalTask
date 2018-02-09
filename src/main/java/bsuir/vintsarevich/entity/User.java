@@ -1,15 +1,16 @@
 package bsuir.vintsarevich.entity;
 
 public class User {
-    private int id;
+    private Integer id;
     private String login;
     private String role;
     private String name;
     private String surname;
     private String status;
     private Boolean account;
+    private Double point;
 
-    public User(int id, String login, String role, String name, String surname, String status, Boolean account) {
+    public User(Integer id, String login, String role, String name, String surname, String status, Boolean account) {
         this.id = id;
         this.login = login;
         this.role = role;
@@ -19,11 +20,22 @@ public class User {
         this.account = account;
     }
 
-    public int getId() {
+    public User(Integer id, String login, String role, String name, String surname, String status, Boolean account, Double point) {
+        this.id = id;
+        this.login = login;
+        this.role = role;
+        this.name = name;
+        this.surname = surname;
+        this.status = status;
+        this.account = account;
+        this.point = point;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -75,6 +87,14 @@ public class User {
         this.account = account;
     }
 
+    public Double getPoint() {
+        return point;
+    }
+
+    public void setPoint(Double point) {
+        this.point = point;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,24 +102,26 @@ public class User {
 
         User user = (User) o;
 
-        if (id != user.id) return false;
+        if (id != null ? !id.equals(user.id) : user.id != null) return false;
         if (login != null ? !login.equals(user.login) : user.login != null) return false;
         if (role != null ? !role.equals(user.role) : user.role != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
         if (status != null ? !status.equals(user.status) : user.status != null) return false;
-        return account != null ? account.equals(user.account) : user.account == null;
+        if (account != null ? !account.equals(user.account) : user.account != null) return false;
+        return point != null ? point.equals(user.point) : user.point == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (login != null ? login.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (account != null ? account.hashCode() : 0);
+        result = 31 * result + (point != null ? point.hashCode() : 0);
         return result;
     }
 
@@ -113,6 +135,7 @@ public class User {
                 ", surname='" + surname + '\'' +
                 ", status='" + status + '\'' +
                 ", account=" + account +
+                ", point=" + point +
                 '}';
     }
 }

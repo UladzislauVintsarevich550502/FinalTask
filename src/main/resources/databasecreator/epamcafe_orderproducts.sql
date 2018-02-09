@@ -23,14 +23,13 @@ DROP TABLE IF EXISTS `orderproducts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `orderproducts` (
-  `orderId` int(11) NOT NULL COMMENT 'id Закакза с которым связан заказываемый продукт.',
-  `productId` int(11) NOT NULL COMMENT 'id продукта, для поиска информации о нем в таблице Menu.',
-  `productCount` int(11) NOT NULL,
-  PRIMARY KEY (`orderId`,`productId`),
-  KEY `fk_OrderList_Order1_idx` (`orderId`),
-  KEY `fk_OrderList_Menu1_idx` (`productId`),
-  CONSTRAINT `fk_OrderList_Menu1` FOREIGN KEY (`productId`) REFERENCES `product` (`productId`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `fk_OrderList_Order1` FOREIGN KEY (`orderId`) REFERENCES `order` (`orderId`) ON DELETE CASCADE ON UPDATE CASCADE
+  `productCount` int(11) unsigned NOT NULL,
+  `productId` int(11) unsigned NOT NULL,
+  `orderId` int(11) unsigned NOT NULL,
+  KEY `fk_orderproducts_product1_idx` (`productId`),
+  KEY `fk_orderproducts_order1_idx` (`orderId`),
+  CONSTRAINT `fk_orderproducts_order1` FOREIGN KEY (`orderId`) REFERENCES `order` (`orderId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_orderproducts_product1` FOREIGN KEY (`productId`) REFERENCES `product` (`productId`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Таблица, содержащая информацию о всех заказаных Продуктах, и использующаяся для связи Перечня продуктов(таблица Menu) и всеми совершенными заказами Пользователями(таблица Order). Данная таблица явлется списком, для получения заказаных Продуктов по индификатору заказа.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -52,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-04 13:12:03
+-- Dump completed on 2018-02-09 22:01:54

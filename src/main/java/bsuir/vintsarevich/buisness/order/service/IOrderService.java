@@ -23,4 +23,9 @@ public interface IOrderService {
 
     List<Order> getAllOrdersByClientId(Integer clientId) throws ServiceException;
 
+    List<Order> getAllOrderedOrders() throws ServiceException;
+
+    boolean deleteOrder(Integer orderId) throws ServiceException;
+
+    Order getOrderByOrderId(Integer orderId) throws ServiceException;
 }

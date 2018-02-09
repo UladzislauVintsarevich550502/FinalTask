@@ -19,7 +19,7 @@
             <span class="cd-error-message">${name_en_mistake}</span>
         </p>
         <p class="fieldset">
-            <input type="text" name="value" value="${product.value}" id="value" placeholder=${volume_word}>
+            <input type="text" name="value" value="${product.weight}" id="value" placeholder=${volume_word}>
             <span class="cd-error-message">${valume_mistake}</span>
         </p>
         <p class="fieldset">
@@ -34,15 +34,15 @@
             </select>
             <span class="cd-error-message">${make_choose}</span>
         </p>
-        <textarea name="description_ru" id="descrirtion-ru" placeholder=${desc_ru_word}></textarea>
-        <textarea name="description_en" id="descrirtion-en" placeholder=${desc_en_word}></textarea>
+        <textarea name="description_ru" value="${product.descriptionRu}" id="descrirtion-ru" placeholder=${desc_ru_word}></textarea>
+        <textarea name="description_en" value="${product.descriptionEn}" id="descrirtion-en" placeholder=${desc_en_word}></textarea>
 
         <p class="fieldset">
             <input name="image_name" id="image-name" type="text" value=${choose_file_word}>
             <a href="#0" id="a-image-name" class="image-load">""</a>
             <span class="cd-error-message">${choose_not_choosen_word}</span>
         </p>
-        <input type="file" style="display:none;" id="file" name="file" multiple
-               accept="image/*,image/jpeg"/>
-        <input type="submit" id="add" value=${add_button_word}>
+    <input type="file" style="display:none;" id="file" name="file" multiple
+           accept="image/*,image/jpeg"/>
+    <input type="submit" id="add" value=${add_button_word}>
 </div> <!— login —>

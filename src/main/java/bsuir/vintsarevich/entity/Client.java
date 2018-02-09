@@ -8,12 +8,12 @@ public class Client {
     private String surname;
     private String email;
     private String status;
-    private Integer point;
+    private Double point;
 
     public Client() {
     }
 
-    public Client(String name, String surname, String login, String password, String email, String status, Integer point) {
+    public Client(String name, String surname, String login, String password, String email, String status, Double point) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -80,13 +80,14 @@ public class Client {
         this.status = status;
     }
 
-    public Integer getPoint() {
+    public Double getPoint() {
         return point;
     }
 
-    public void setPoint(Integer point) {
+    public void setPoint(Double point) {
         this.point = point;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -95,14 +96,14 @@ public class Client {
 
         Client client = (Client) o;
 
-        if (point != client.point) return false;
         if (id != null ? !id.equals(client.id) : client.id != null) return false;
         if (login != null ? !login.equals(client.login) : client.login != null) return false;
         if (password != null ? !password.equals(client.password) : client.password != null) return false;
         if (name != null ? !name.equals(client.name) : client.name != null) return false;
         if (surname != null ? !surname.equals(client.surname) : client.surname != null) return false;
         if (email != null ? !email.equals(client.email) : client.email != null) return false;
-        return status != null ? status.equals(client.status) : client.status == null;
+        if (status != null ? !status.equals(client.status) : client.status != null) return false;
+        return point != null ? point.equals(client.point) : client.point == null;
     }
 
     @Override
@@ -114,7 +115,7 @@ public class Client {
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
-        result = 31 * result + point;
+        result = 31 * result + (point != null ? point.hashCode() : 0);
         return result;
     }
 

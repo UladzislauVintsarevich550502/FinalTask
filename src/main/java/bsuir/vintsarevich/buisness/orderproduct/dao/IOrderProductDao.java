@@ -9,11 +9,11 @@ public interface IOrderProductDao {
 
     boolean deleteOrderProduct(Integer ordertId, Integer productId) throws DaoException;
 
-    boolean editOrderProduct(Integer productId, Integer productCount,Integer orderId) throws DaoException;
+    boolean editOrderProduct(Integer productId, Integer productCount, Integer orderId) throws DaoException;
 
-    boolean findOrderProduct(Integer productId,Integer orderId) throws DaoException;
+    boolean findOrderProduct(Integer productId, Integer orderId) throws DaoException;
 
     Integer orderProductCount(Integer productId) throws DaoException;
 
-    boolean editOrderProductPayment(Integer orderIdNew,Integer orderId) throws DaoException;
+    boolean editOrderProductPayment(Integer orderIdNew, Integer orderId) throws DaoException;
 }

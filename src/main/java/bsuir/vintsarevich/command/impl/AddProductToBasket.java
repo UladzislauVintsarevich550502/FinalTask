@@ -49,7 +49,6 @@ public class AddProductToBasket implements ICommand {
             for (Product product : allProducts) {
                 if (request.getParameter(JspElemetName.PRODUCT_ID.getValue() + "_" + product.getId()) != null &&
                         request.getParameter(JspElemetName.NUMBER_FOR_ADD.getValue() + "_" + product.getId()) != null) {
-                    System.out.println("cdecedc");
                     productId = Integer.valueOf(request.getParameter(JspElemetName.PRODUCT_ID.getValue() + "_" + product.getId()));
                     productCount = Integer.valueOf(request.getParameter(JspElemetName.NUMBER_FOR_ADD.getValue() + "_" + product.getId()));
 

@@ -8,6 +8,7 @@ import bsuir.vintsarevich.entity.Product;
 import bsuir.vintsarevich.exception.dao.DaoException;
 import bsuir.vintsarevich.exception.service.ServiceException;
 import bsuir.vintsarevich.factory.dao.DaoFactory;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -129,6 +130,51 @@ public class OrderService implements IOrderService {
         }
         LOGGER.log(Level.DEBUG, "Order Service: Finish get all orders by clientId");
         return orders;
+    }
+
+    @Override
+    public List<Order> getAllOrderedOrders() throws ServiceException {
+        LOGGER.log(Level.DEBUG, "Order Service: start get all ordered orders");
+        List<Order> orders;
+        try {
+            orders = daoFactory.getOrderDao().getAllOrderedOrders();
+        } catch (DaoException e) {
+            LOGGER.log(Level.DEBUG, "Order Service: finish get all orders by clientId");
+            throw new ServiceException(e);
+        }
+        LOGGER.log(Level.DEBUG, "Order Service: Success get all orders by clientId");
+        return orders;
+    }
+
+    @Override
+    public boolean deleteOrder(Integer orderId) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "Order Service: start delete order");
+        try {
+            if (daoFactory.getOrderDao().deleteOrder(orderId)) {
+                LOGGER.log(Level.DEBUG, "Order Service: success delete order");
+                return true;
+            } else {
+                LOGGER.log(Level.DEBUG, "Order Service: finish delete order");
+                return false;
+            }
+        } catch (DaoException e) {
+            LOGGER.log(Level.DEBUG, "Order Service: finish get all orders by clientId");
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public Order getOrderByOrderId(Integer orderId) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "Order Service: start getOrderByOrderId");
+        Order order;
+        try {
+            order = daoFactory.getOrderDao().getOrderByOrderId(orderId);
+        } catch (DaoException e) {
+            LOGGER.log(Level.DEBUG, "Order Service: finish getOrderByOrderId");
+            throw new ServiceException(e);
+        }
+        LOGGER.log(Level.DEBUG, "Order Service: Success getOrderByOrderId");
+        return order;
     }
 }
 

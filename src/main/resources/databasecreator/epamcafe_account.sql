@@ -23,13 +23,12 @@ DROP TABLE IF EXISTS `account`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `account` (
-  `accountNumber` int(11) NOT NULL COMMENT 'Номер счета Клиента.',
-  `accountCredit` double DEFAULT NULL COMMENT 'Количество денег на счете.',
-  `clientId` int(11) NOT NULL COMMENT 'Уникальный индификатор Клиента, по которому номер счета связывается с Клиентом.',
+  `accountNumber` int(11) unsigned NOT NULL COMMENT 'Номер счета Клиента.',
+  `accountCredit` decimal(10,2) DEFAULT '0.00' COMMENT 'Количество денег на счете.',
+  `clientId` int(11) unsigned NOT NULL,
   PRIMARY KEY (`clientId`),
   UNIQUE KEY `accountNamber_UNIQUE` (`accountNumber`),
-  UNIQUE KEY `Client_clientId_UNIQUE` (`clientId`),
-  CONSTRAINT `fk_Account_Client1` FOREIGN KEY (`clientId`) REFERENCES `client` (`clientId`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_account_client1` FOREIGN KEY (`clientId`) REFERENCES `client` (`clientId`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Данная таблица используется для хранения счетов Клиентов. Таблица может использоваться Администраторами для перевода средств на счет клиента, который по тем или иным причинам не смог забрать заказ или же отменил его. В этом случае, при небольшом колисчестве аккаунов и большом количетве клиентов операция будет выполняться быстрее.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -39,6 +38,7 @@ CREATE TABLE `account` (
 
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
+INSERT INTO `account` VALUES (64106,-112.40,0);
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-04 13:12:02
+-- Dump completed on 2018-02-09 22:01:54
