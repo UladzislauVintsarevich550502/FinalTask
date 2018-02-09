@@ -5,7 +5,7 @@ public enum JspPageName {
     ERROR("/front/jsp/error.jsp"),
     TEST("/front/jsp/test.jsp"),
     BASKET("/front/jsp/client/basket.jsp"),
-    CLIENTS("/front/jsp/client.jsp"),
+    CLIENTS("/front/jsp/admin/client.jsp"),
     CHANGE_PASSWORD("/front/jsp/common/change_password.jsp");
 
 
