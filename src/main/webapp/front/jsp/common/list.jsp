@@ -58,7 +58,9 @@
                     </c:forEach>
                 </c:when>
                 <c:otherwise>
-                    <h2>${found_nothing_word}</h2>
+                    <article>
+                        <h2>Nothing</h2>
+                    </article>
                 </c:otherwise>
             </c:choose>
         </div>

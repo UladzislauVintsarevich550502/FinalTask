@@ -12,7 +12,6 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 
 public class FindByType implements ICommand {
@@ -28,7 +27,11 @@ public class FindByType implements ICommand {
             String type = request.getParameter(JspElemetName.PRODUCT_TYPE.getValue());
             LOGGER.log(Level.INFO, "Type is:" + type);
             List<Product> products = producteService.getProductByType(type);
-            request.setAttribute("products", products);
+            if(products.size()==0) {
+                request.setAttribute("products", null);
+            }else{
+                request.setAttribute("products", products);
+            }
             request.getSession().setAttribute("pageCount", 0);
         } catch (ServiceException e) {
             LOGGER.log(Level.ERROR, this.getClass() + e.getMessage());

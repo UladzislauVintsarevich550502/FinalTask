@@ -16,9 +16,6 @@
             <p>${cafe_description_word}</p>
         </header>
         <p>${description_under_welcome_word}</p>
-        <ul class="actions">
-            <li><a href="#" class="button big">${view_word}</a></li>
-        </ul>
     </div>
     <span class="image object"><img src="/images/other/canteen.jpg" alt=""/></span>
 </section>

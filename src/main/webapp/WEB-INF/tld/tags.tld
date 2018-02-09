@@ -10,8 +10,8 @@
     <uri>http://cafe.by</uri>
 
     <tag>
-        <name>action</name>
-        <tag-class>bsuir.vintsarevich.tag.ActionTag</tag-class>
+        <name>list</name>
+        <tag-class>bsuir.vintsarevich.tag.ListTag</tag-class>
         <body-content>empty</body-content>
     </tag>
 

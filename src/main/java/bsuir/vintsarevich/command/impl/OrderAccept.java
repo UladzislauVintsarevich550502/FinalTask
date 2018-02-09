@@ -16,7 +16,7 @@ import java.io.IOException;
 
 public class OrderAccept implements ICommand {
     private final static Logger LOGGER = Logger.getLogger(OrderDeny.class);
-    private final JspPageName jspPageName = JspPageName.ORDER;
+    private final JspPageName jspPageName = JspPageName.INDEX;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

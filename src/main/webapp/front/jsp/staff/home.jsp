@@ -33,12 +33,12 @@
 
             <%@include file="/front/html/forms.html" %>
 
-            <jsp:include page="${ctg:chooseBanner(user)}"/>
+            <ctg:list/>
 
         </div>
     </div>
 
-    <%@include file="/front/html/menu.html" %>
+    <ctg:menu/>
 
 </div>
 

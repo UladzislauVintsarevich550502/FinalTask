@@ -38,6 +38,7 @@ public class ChangePassword implements ICommand {
             if (user.getRole().equals("admin")) {
                 if (adminService.checkPassword(oldPassword, user.getId()) && newPassword.equals(newPasswordRepeat)) {
                     adminService.changePassword(newPassword, user.getId());
+                    response.sendRedirect("/cafe.by/index");
                 } else {
                     jspPageName = JspPageName.ERROR;
                 }
@@ -45,6 +46,7 @@ public class ChangePassword implements ICommand {
             if (user.getRole().equals("client")) {
                 if (clientService.checkPassword(oldPassword, user.getId()) && newPassword.equals(newPasswordRepeat)) {
                     clientService.changePassword(newPassword, user.getId());
+                    response.sendRedirect("/cafe.by/index");
                 } else {
                     jspPageName = JspPageName.ERROR;
                 }
@@ -52,12 +54,15 @@ public class ChangePassword implements ICommand {
             if (user.getRole().equals("staff")) {
                 if (staffService.checkPassword(oldPassword, user.getId()) && newPassword.equals(newPasswordRepeat)) {
                     staffService.changePassword(newPassword, user.getId());
+                    response.sendRedirect("/cafe.by/index");
                 } else {
                     jspPageName = JspPageName.ERROR;
                 }
             }
         } catch (ServiceException e) {
             LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         LOGGER.log(Level.INFO, "Change password finish");
         return jspPageName.getPath();

@@ -35,7 +35,7 @@
 
             <jsp:include page="${ctg:chooseBanner(user)}"/>
 
-            <ctg:action/>
+            <ctg:list/>
 
             <%@include file="/front/html/navigation.html" %>
             <section>

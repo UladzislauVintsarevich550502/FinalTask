@@ -3,7 +3,6 @@ package bsuir.vintsarevich.command.impl;
 import bsuir.vintsarevich.buisness.account.service.IAccountService;
 import bsuir.vintsarevich.buisness.admin.service.IAdminService;
 import bsuir.vintsarevich.buisness.client.service.IClientService;
-import bsuir.vintsarevich.buisness.staff.dao.IStaffDao;
 import bsuir.vintsarevich.buisness.staff.service.IStaffService;
 import bsuir.vintsarevich.command.ICommand;
 import bsuir.vintsarevich.entity.Admin;
@@ -66,14 +65,14 @@ public class SignIn implements ICommand {
                 }
             } else {
                 if (admin != null) {
-                    user = new User(admin.getId(), admin.getLogin(), "admin", null, null, null, true);
+                    user = new User(admin.getId(), admin.getLogin(), "admin", null, null, null, false);
                     HttpSession session = request.getSession();
                     session.setAttribute(JspElemetName.USER.getValue(), user);
                     LOGGER.log(Level.INFO, "Successfull sign in account as " + login);
                     response.sendRedirect("/cafe.by/index");
                 } else {
                     if (staff != null) {
-                        user = new User(staff.getId(), staff.getLogin(), "staff", null, null, null, true);
+                        user = new User(staff.getId(), staff.getLogin(), "staff", null, null, null, false);
                         request.getSession().setAttribute(JspElemetName.USER.getValue(), user);
                         LOGGER.log(Level.INFO, "Successfull sign in account as " + login);
                         response.sendRedirect("/cafe.by/order_show");

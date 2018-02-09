@@ -28,6 +28,6 @@ public class OrderShow implements ICommand {
         }
         request.setAttribute("orders", orders);
         LOGGER.log(Level.DEBUG, "success order show");
-        return JspPageName.ORDER.getPath();
+        return JspPageName.INDEX.getPath();
     }
 }
