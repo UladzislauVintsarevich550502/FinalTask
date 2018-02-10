@@ -34,7 +34,6 @@ public class AccountDAO implements IAccountDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = null;
             statement = connection.prepareStatement(ADD_ACCOUNT);
             statement.setInt(1, account.getAccountNumber());
             statement.setDouble(2, account.getAccountCredit());
@@ -47,14 +46,9 @@ public class AccountDAO implements IAccountDao {
                 return false;
             }
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(addAccount)", e);
+           return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(e);
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
@@ -81,14 +75,9 @@ public class AccountDAO implements IAccountDao {
                 return false;
             }
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(check account number)", e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(e);
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
@@ -104,7 +93,6 @@ public class AccountDAO implements IAccountDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = null;
             statement = connection.prepareStatement(EDIT_ACCOUNT);
             statement.setDouble(1, orderCostNew);
             statement.setInt(2, clientId);
@@ -116,14 +104,9 @@ public class AccountDAO implements IAccountDao {
                 return false;
             }
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(edit account)", e);
+           return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
@@ -138,26 +121,19 @@ public class AccountDAO implements IAccountDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = null;
             statement = connection.prepareStatement(FIND_ACCOUNT);
             statement.setInt(1, clientId);
-            resultSet = null;
             resultSet = statement.executeQuery();
             return resultSet.next();
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(edit order product)", e);
+           return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
-            LOGGER.log(Level.DEBUG, "Account DAO: edit finish");
+            LOGGER.log(Level.DEBUG, "Account DAO: find finish");
         }
     }
 }

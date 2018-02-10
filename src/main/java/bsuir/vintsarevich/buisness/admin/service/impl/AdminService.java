@@ -2,7 +2,6 @@ package bsuir.vintsarevich.buisness.admin.service.impl;
 
 import bsuir.vintsarevich.buisness.admin.dao.IAdminDao;
 import bsuir.vintsarevich.buisness.admin.service.IAdminService;
-import bsuir.vintsarevich.buisness.client.dao.IClientDao;
 import bsuir.vintsarevich.entity.Admin;
 import bsuir.vintsarevich.exception.dao.DaoException;
 import bsuir.vintsarevich.exception.service.ServiceException;
@@ -20,25 +19,23 @@ public class AdminService implements IAdminService {
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
     @Override
-    public boolean signUp(String adminLogin, String adminPassword) {
-        LOGGER.log(Level.DEBUG, "Admin service: start addAdmin");
-        IAdminDao adminDao = daoFactory.getAdminDao();
-        IClientDao clientDao = daoFactory.getClientDao();
+    public boolean signUp(String adminLogin, String adminPassword) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "Admin service: start signUp");
         Admin admin;
         try {
             Validator.isEmptyString(adminLogin, adminPassword);
             Validator.isNull(adminLogin, adminPassword);
             adminPassword = Hasher.hashBySha1(adminPassword);
-            if (clientDao.getClientByLogin(adminLogin) == null) {
+            if (daoFactory.getClientDao().getClientByLogin(adminLogin) == null) {
                 admin = new Admin(adminLogin, adminPassword);
-                return (adminDao.addAdmin(admin));
+                return (daoFactory.getAdminDao().addAdmin(admin));
             }
         } catch (ValidatorException e) {
-            LOGGER.log(Level.DEBUG, e.getMessage());
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         } catch (DaoException e) {
-            LOGGER.log(Level.DEBUG, e.getMessage());
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "Admin service: finish addAdmin");
+        LOGGER.log(Level.DEBUG, "Admin service: finish signUp");
         return false;
 
     }
@@ -46,57 +43,49 @@ public class AdminService implements IAdminService {
     @Override
     public boolean deleteAdmin(Integer id) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Product DAO: Delete admin start");
-        IAdminDao adminDao = daoFactory.getAdminDao();
         try {
-            adminDao.deleteAdmin(id);
+            LOGGER.log(Level.DEBUG, "ProductService: finish delete admin");
+            return daoFactory.getAdminDao().deleteAdmin(id);
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "ProductService: finish admin client");
-        return true;
     }
 
     @Override
     public Admin signIn(String adminLogin, String adminPassword) {
         LOGGER.log(Level.DEBUG, "Admin service: start SignIn");
-        Admin admin;
-        IAdminDao adminDao = daoFactory.getAdminDao();
         try {
             Validator.isEmptyString(adminLogin, adminPassword);
             Validator.isNull(adminLogin, adminPassword);
             adminPassword = Hasher.hashBySha1(adminPassword);
-            admin = adminDao.signIn(adminLogin, adminPassword);
+            LOGGER.log(Level.DEBUG, "Admin service: finish SignIn");
+            return daoFactory.getAdminDao().signIn(adminLogin, adminPassword);
         } catch (DaoException | ValidatorException e) {
             return null;
         }
-        LOGGER.log(Level.DEBUG, "Admin service: finish SignIn");
-        return admin;
     }
 
     @Override
     public List<Admin> getAllAdmins() throws ServiceException {
         LOGGER.log(Level.DEBUG, "Product Service: Start get all admins");
-        List<Admin> admins;
         try {
+            LOGGER.log(Level.DEBUG, "Product Service: Finish get all admins");
             IAdminDao adminDao = daoFactory.getAdminDao();
-            admins = adminDao.getAllAdmins();
+            return adminDao.getAllAdmins();
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "Product Service: Finish get all admins");
-        return admins;
     }
 
     @Override
     public boolean checkPassword(String password, Integer id) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Admin Service: check password start");
         password = Hasher.hashBySha1(password);
-        IAdminDao adminDao = daoFactory.getAdminDao();
         try {
             LOGGER.log(Level.DEBUG, "Admin Service: finish check password");
-            return adminDao.checkPassword(password, id);
+            return daoFactory.getAdminDao().checkPassword(password, id);
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
     }
 
@@ -104,13 +93,11 @@ public class AdminService implements IAdminService {
     public boolean changePassword(String password, Integer id) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Admin Service: change password start");
         password = Hasher.hashBySha1(password);
-        IAdminDao adminDao = daoFactory.getAdminDao();
         try {
-            adminDao.changePassword(password, id);
+            LOGGER.log(Level.DEBUG, "Admin Service: finish change password");
+            return daoFactory.getAdminDao().changePassword(password, id);
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "Admin Service: finish change password");
-        return true;
     }
 }

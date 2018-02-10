@@ -3,7 +3,10 @@ package bsuir.vintsarevich.servlet;
 import bsuir.vintsarevich.command.CommandProvider;
 import bsuir.vintsarevich.command.ICloseDBCommand;
 import bsuir.vintsarevich.command.ICommand;
+import bsuir.vintsarevich.command.impl.CloseDBCommand;
 import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import javax.servlet.RequestDispatcher;
@@ -23,6 +26,7 @@ import java.io.IOException;
 @MultipartConfig
 
 public class ServletController extends HttpServlet {
+    private static final Logger LOGGER = Logger.getLogger(ServletController.class);
     private static final String LOG4J_PARAM = "init_log4j";
     private static final long serialVersionUID = 1L;
 
@@ -30,7 +34,7 @@ public class ServletController extends HttpServlet {
 
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         try {
             String prefix = getServletContext().getRealPath("");
 
@@ -41,7 +45,7 @@ public class ServletController extends HttpServlet {
                 PropertyConfigurator.configure(prefix + File.separator + filename);
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            LOGGER.log(Level.FATAL, e.getMessage());
         }
     }
 
@@ -58,6 +62,7 @@ public class ServletController extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ICommand command = commandProvider.getCommand(request);
         String page = command.execute(request, response);
+        LOGGER.log(Level.INFO, page);
         RequestDispatcher dispatcher = request.getRequestDispatcher(page);
         if (dispatcher != null && !response.isCommitted()) {
             dispatcher.forward(request, response);
@@ -75,12 +80,5 @@ public class ServletController extends HttpServlet {
     private void errorMessageDirectlyFromResponse(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/html");
         response.getWriter().println(" UNKNOWN ERROR");
-    }
-
-    private class CloseDBCommand implements ICloseDBCommand {
-        @Override
-        public void closeDB() {
-
-        }
     }
 }

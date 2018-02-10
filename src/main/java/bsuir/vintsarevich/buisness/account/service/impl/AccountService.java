@@ -1,6 +1,5 @@
 package bsuir.vintsarevich.buisness.account.service.impl;
 
-import bsuir.vintsarevich.buisness.account.dao.IAccountDao;
 import bsuir.vintsarevich.buisness.account.service.IAccountService;
 import bsuir.vintsarevich.entity.Account;
 import bsuir.vintsarevich.exception.dao.DaoException;
@@ -17,46 +16,40 @@ public class AccountService implements IAccountService {
 
     @Override
     public boolean addAccount(Integer clientId) throws ServiceException {
-        LOGGER.log(Level.DEBUG, "Account Product service: start add account");
-        IAccountDao accountDao = daoFactory.getAccountDao();
+        LOGGER.log(Level.DEBUG, "Account service: start add account");
         Account account;
         Integer accountNumber;
         try {
             do {
                 accountNumber = (int) (Math.random() * 100000);
-            } while (accountDao.checkAccountNumber(accountNumber));
+            } while (daoFactory.getAccountDao().checkAccountNumber(accountNumber));
             account = new Account(accountNumber, 0.0, clientId);
-            if (accountDao.addAccount(account)) {
-                return true;
-            }
+            LOGGER.log(Level.DEBUG, "Account service: finish add account");
+            return daoFactory.getAccountDao().addAccount(account);
         } catch (DaoException e) {
-            LOGGER.log(Level.DEBUG, e.getMessage());
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "Account Product service: finish add account");
-        return false;
     }
 
     @Override
-    public boolean editAccount(Integer clientId,Double orderCostNew) throws ServiceException {
+    public boolean editAccount(Integer clientId, Double orderCostNew) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Account service: start edit account");
-        IAccountDao accountDao = daoFactory.getAccountDao();
         try {
-            accountDao.editAccount(clientId,orderCostNew);
+            LOGGER.log(Level.DEBUG, "Account service: finish edit account");
+            return daoFactory.getAccountDao().editAccount(clientId, orderCostNew);
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "Account service: finish edit account");
-        return true;
     }
 
     @Override
     public boolean findAccountByClientId(Integer clientId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Account service: start find account");
-        IAccountDao accountDao = daoFactory.getAccountDao();
         try {
-           return accountDao.findAccountByClientId(clientId);
+            LOGGER.log(Level.DEBUG, "Account service: finish find account");
+            return daoFactory.getAccountDao().findAccountByClientId(clientId);
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
     }
 }

@@ -1,7 +1,7 @@
 package bsuir.vintsarevich.tag;
 
 import bsuir.vintsarevich.entity.User;
-import bsuir.vintsarevich.enumeration.JspElemetName;
+import bsuir.vintsarevich.enumeration.AttributeName;
 
 import javax.servlet.ServletException;
 import javax.servlet.jsp.JspException;
@@ -12,7 +12,7 @@ public class ListTag extends TagSupport {
 
     @Override
     public int doStartTag() throws JspException {
-        User user = (User) pageContext.getSession().getAttribute(JspElemetName.USER.getValue());
+        User user = (User) pageContext.getSession().getAttribute(AttributeName.USER.getValue());
         String action;
 
         if (user != null && user.getRole().equals("client")) {
@@ -28,7 +28,6 @@ public class ListTag extends TagSupport {
                 }
             }
         }
-        System.out.println(action);
         try {
             pageContext.include(action);
         } catch (IOException | ServletException e) {

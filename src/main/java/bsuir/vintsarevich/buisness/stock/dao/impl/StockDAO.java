@@ -4,7 +4,6 @@ import bsuir.vintsarevich.buisness.product.dao.impl.ProductDAO;
 import bsuir.vintsarevich.buisness.stock.dao.IStockDao;
 import bsuir.vintsarevich.connectionpool.ConnectionPool;
 import bsuir.vintsarevich.entity.Product;
-import bsuir.vintsarevich.entity.Staff;
 import bsuir.vintsarevich.exception.dao.ConnectionException;
 import bsuir.vintsarevich.exception.dao.DaoException;
 import org.apache.log4j.Level;
@@ -24,35 +23,25 @@ public class StockDAO implements IStockDao {
     private Connection connection;
     private ResultSet resultSet;
     private PreparedStatement statement;
-    private Product productEntity;
-    private List<Product> products;
 
     @Override
     public List<Product> getStockProducts() throws DaoException {
         LOGGER.log(Level.DEBUG, "stock DAO: Start get stock products");
+        List<Product> products;
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = null;
             statement = connection.prepareStatement(GET_STOCK_PRODUCTS);
-            resultSet = null;
             resultSet = statement.executeQuery();
-            productEntity = null;
             products = new ArrayList<>();
             while (resultSet.next()) {
-                productEntity = createProductByResultSet(resultSet);
-                products.add(productEntity);
+                products.add(createProductByResultSet(resultSet));
             }
             LOGGER.log(Level.INFO, products);
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(getSTOCKproducts)", e);
+            return null;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
@@ -76,7 +65,7 @@ public class StockDAO implements IStockDao {
             product.setDescriptionEn(resultSet.getString("productDescriptionEn"));
             product.setImagePath(resultSet.getString("productImage"));
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         }
         return product;
     }

@@ -1,7 +1,8 @@
 package bsuir.vintsarevich.command;
 
 
-import bsuir.vintsarevich.command.impl.*;
+import bsuir.vintsarevich.command.impl.dispatching.*;
+import bsuir.vintsarevich.command.impl.redirecting.*;
 import bsuir.vintsarevich.enumeration.CommandName;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -37,8 +38,15 @@ public final class CommandProvider {
         repository.put(CommandName.ORDER_ACCEPT, new OrderAccept());
         repository.put(CommandName.ORDER_DENY, new OrderDeny());
         repository.put(CommandName.ADD_STAFF, new AddStaff());
-        repository.put(CommandName.CHANGE_PASSWORD_FORWARD, new ChangePasswordForward());
-        repository.put(CommandName.CHANGE_PASSWORD, new ChangePassword());
+        repository.put(CommandName.CHANGE_PASSWORD_FORWARD, new ChangePassword());
+        repository.put(CommandName.CHANGE_PASSWORD, new ChangePasswordFunction());
+        repository.put(CommandName.STAFF_LIST, new StaffList());
+        repository.put(CommandName.DELETE_STAFF, new DeleteStaff());
+        repository.put(CommandName.DELETE_CLIENT, new DeleteClient());
+        repository.put(CommandName.ADMIN_LIST, new AdminList());
+        repository.put(CommandName.DELETE_ADMIN, new DeleteAdmin());
+        repository.put(CommandName.ADD_ADMIN, new AddAdmin());
+
     }
 
     public static CommandProvider getInstance() {

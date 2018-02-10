@@ -37,7 +37,7 @@ CREATE TABLE `product` (
   UNIQUE KEY `menuId_UNIQUE` (`productId`),
   UNIQUE KEY `product_prioductNameEn_uindex` (`productNameEn`),
   UNIQUE KEY `productNameRu_UNIQUE` (`productNameRu`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='Таблица Меню содержит информацию о доступных продектах, блюдах для заказа Пользователем.';
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COMMENT='Таблица Меню содержит информацию о доступных продектах, блюдах для заказа Пользователем.';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -46,7 +46,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (9,'напиток','Кока-Кола',250,2.50,'there',NULL,'cola.jpg','Coca-cola',NULL),(10,'суп','Борщ',250,1.40,'there',NULL,'borsch.jpg','Borsch',NULL),(11,'салат','Греческий',200,2.40,'there',NULL,'greece.jpg','Greece',NULL),(12,'салат','Мимоза',220,1.30,'there',NULL,'mimosa.jpg','Mimosa',NULL),(13,'горячее блюдо','Котлета по-киевски',120,2.00,'there',NULL,'kiev.jpg','Tre Kiev`s cutlet',NULL),(14,'гарнир','Рис',200,1.20,'there',NULL,'rice.jpg','Rice',NULL),(15,'гарнир','Картошка',200,1.00,'there',NULL,'bulba.jpg','Potato',NULL),(16,'напиток','Яблочный компот',250,1.40,'there',NULL,'apple.jpg','Apple compot',NULL),(17,'выпечка','Смаженка',100,5.40,'there','','smajenka.jpg','Smajenka',NULL);
+INSERT INTO `product` VALUES (9,'lemonade','Кока-Кола',500,1.05,'there',NULL,'cola.jpg','Coca-cola',NULL),(10,'soup','Борщ',250,1.40,'there',NULL,'borsch.jpg','Borsch',NULL),(11,'salad','Греческий',200,1.30,'there',NULL,'greece.jpg','Greece',NULL),(12,'salad','Мимоза',220,1.60,'there',NULL,'mimosa.jpg','Mimosa',NULL),(13,'hotDish','Котлета по-киевски',120,1.85,'there',NULL,'kiev.jpg','Tre Kiev`s cutlet',NULL),(14,'garnish','Рис',200,1.20,'there',NULL,'rice.jpg','Rice',NULL),(15,'garnish','Картошка',200,1.00,'there',NULL,'bulba.jpg','Potato',NULL),(16,'juice','Яблочный компот',400,0.80,'there',NULL,'apple.jpg','Apple compot',NULL),(17,'bakeryProduct','Смаженка',150,1.10,'there','','smajenka.jpg','Smajenka',NULL),(18,'soup','Гороховый суп',350,1.20,'true','Очень вкусный и сытный суп','pea soup.jpg','Pea soup','Very well'),(19,'hotDish','Стейк',500,18.00,'true','','steak.jpg','Steak',''),(20,'bakeryProduct','Пирог',450,7.40,'true','','pie.jpg','Pie',''),(21,'dessert','Мороженое',150,3.20,'true','','ice-scream.jpg','Ice-scream',''),(22,'dessert','Тирамису',100,2.60,'true','','tiramisu.jpg','Tiramisu',''),(23,'juice','Томатный сок',300,0.85,'true','','tomato juice.jpg','Tomato juice',''),(24,'water','Вода',400,0.50,'true','','water.jpg','Water',''),(25,'hotDrink','Чай',350,1.40,'true','','tea.jpg','Tea',''),(26,'hotDrink','Кофе',250,3.50,'true','','coffe.jpg','Coffe',''),(27,'lemonade','Фанта',250,1.20,'true','','fanta.jpg','Fanta','');
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -59,4 +59,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-09 22:01:55
+-- Dump completed on 2018-02-11  0:35:00

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StaffDAO implements IStaffDao {
+    private static final Logger LOGGER = Logger.getLogger(StaffDAO.class);
     private static String ADD_STAFF = "INSERT INTO epamcafe.staff (staffLogin, staffPassword) VALUES(?,?)";
     private static String DELETE_STAFF = "DELETE FROM epamcafe.staff WHERE staffId=?";
     private static String GET_STAFF_BY_LOGIN_AND_PASSWORD = "SELECT * FROM epamcafe.staff WHERE staffLogin=? AND staffPassword=?";
@@ -27,13 +28,11 @@ public class StaffDAO implements IStaffDao {
     private Connection connection;
     private PreparedStatement statement;
     private ResultSet resultSet;
-    private static final Logger LOGGER = Logger.getLogger(StaffDAO.class);
 
     @Override
     public boolean addStaff(Staff staff) throws DaoException {
         LOGGER.log(Level.DEBUG, "Staff DAO: Add staff start");
         try {
-            System.out.println(staff);
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
             statement = connection.prepareStatement(ADD_STAFF);
@@ -47,14 +46,9 @@ public class StaffDAO implements IStaffDao {
                 return false;
             }
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(addStaff)", e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
@@ -79,14 +73,9 @@ public class StaffDAO implements IStaffDao {
                 return false;
             }
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(deleteStaff)", e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
@@ -110,26 +99,14 @@ public class StaffDAO implements IStaffDao {
                 staff = createStaffByResultSet(resultSet);
             }
         } catch (SQLException e) {
-            throw new DaoException("Error with adding in database" + e);
+            return null;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
-        }
-        LOGGER.log(Level.DEBUG, "Staff DAO: finish SignIn");
-        return staff;
-    }
-
-    private Staff createStaffByResultSet(ResultSet resultSet) throws DaoException {
-        Staff staff = new Staff();
-        try {
-            staff.setId(resultSet.getInt("staffId"));
-            staff.setLogin(resultSet.getString("staffLogin"));
-            staff.setPassword(resultSet.getString("staffPassword"));
-        } catch (SQLException e) {
-            throw new DaoException(e);
+            LOGGER.log(Level.DEBUG, "Staff DAO: finish SignIn");
         }
         return staff;
     }
@@ -147,15 +124,15 @@ public class StaffDAO implements IStaffDao {
                 return true;
             }
         } catch (SQLException e) {
-            throw new DaoException("Error with adding in database" + e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
+            LOGGER.log(Level.DEBUG, "Staff DAO: finish Find");
         }
-        LOGGER.log(Level.DEBUG, "Staff DAO: finish Find");
         return false;
     }
 
@@ -175,14 +152,9 @@ public class StaffDAO implements IStaffDao {
             }
             LOGGER.log(Level.INFO, staff);
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(getAllStaff)", e);
+            return null;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
@@ -191,7 +163,6 @@ public class StaffDAO implements IStaffDao {
         LOGGER.log(Level.DEBUG, "Staff DAO: Finish get all staff");
         return staff;
     }
-
 
     @Override
     public boolean checkPassword(String password, Integer id) throws DaoException {
@@ -203,20 +174,18 @@ public class StaffDAO implements IStaffDao {
             statement.setInt(1, id);
             statement.setString(2, password);
             resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return true;
-            }
+            LOGGER.log(Level.DEBUG, "Staff DAO: finish check password");
+            return resultSet.next();
         } catch (SQLException e) {
-            throw new DaoException("Error with adding in database" + e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
+            LOGGER.log(Level.DEBUG, "Staff DAO: Check password finish");
         }
-        LOGGER.log(Level.DEBUG, "Staff DAO: finish check password");
-        return false;
     }
 
     @Override
@@ -232,15 +201,27 @@ public class StaffDAO implements IStaffDao {
                 return true;
             }
         } catch (SQLException e) {
-            throw new DaoException("Error with adding in database" + e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
+            LOGGER.log(Level.DEBUG, "Staff DAO: finish change password");
         }
-        LOGGER.log(Level.DEBUG, "Staff DAO: finish change password");
         return false;
+    }
+
+    private Staff createStaffByResultSet(ResultSet resultSet) throws DaoException {
+        Staff staff = new Staff();
+        try {
+            staff.setId(resultSet.getInt("staffId"));
+            staff.setLogin(resultSet.getString("staffLogin"));
+            staff.setPassword(resultSet.getString("staffPassword"));
+        } catch (SQLException e) {
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
+        }
+        return staff;
     }
 }

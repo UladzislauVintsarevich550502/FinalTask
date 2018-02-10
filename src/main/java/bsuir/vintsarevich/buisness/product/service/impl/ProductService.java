@@ -31,79 +31,60 @@ public class ProductService implements IProductService {
     @Override
     public List<Product> getAllProducts() throws ServiceException {
         LOGGER.log(Level.DEBUG, "Product Service: Start get all products");
-        List<Product> products;
         try {
-            IProductDao productDao = daoFactory.getProductDao();
-            products = productDao.getAllProducts();
+            LOGGER.log(Level.DEBUG, "Product Service: Finish get all products");
+            return daoFactory.getProductDao().getAllProducts();
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "Product Service: Finish get all products");
-        return products;
     }
 
     @Override
     public List<Product> getProductByType(String type) throws ServiceException {
         LOGGER.log(Level.DEBUG, "ProductService: start get product by type");
-        List<Product> products;
         try {
-            IProductDao productDao = daoFactory.getProductDao();
-            products = productDao.getProductByType(type);
+            LOGGER.log(Level.DEBUG, "Product Service: Finish get products by type");
+            return daoFactory.getProductDao().getProductByType(type);
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "Product Service: Finish get products by type");
-        return products;
     }
 
     @Override
     public boolean deleteProduct(Integer id) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Product DAO: Delete product start");
-        IProductDao productDao = daoFactory.getProductDao();
         try {
-            productDao.deleteProduct(id);
+            LOGGER.log(Level.DEBUG, "ProductService: finish delete products");
+            return daoFactory.getProductDao().deleteProduct(id);
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "ProductService: finish delete products");
-        return true;
     }
 
     @Override
     public List<Product> getProductByOrderId(Integer orderId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "ProductService: start get product by clientId");
-        List<Product> products;
         try {
-            IProductDao productDao = daoFactory.getProductDao();
-            products = productDao.getProductByOrderId(orderId);
+            LOGGER.log(Level.DEBUG, "Product Service: Finish get products by clientId");            return daoFactory.getProductDao().getProductByOrderId(orderId);
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "Product Service: Finish get products by clientId");
-        return products;
     }
 
     @Override
     public Product getProductById(Integer id) throws ServiceException {
         LOGGER.log(Level.DEBUG, "ProductService: start get product by ID");
-        Product product;
-        IProductDao productDao = daoFactory.getProductDao();
         try {
-            product = productDao.getProductById(id);
-        } catch (NumberFormatException e) {
-            LOGGER.log(Level.DEBUG, e.getMessage());
-            throw new ServiceException("number format exception", e);
-        } catch (DaoException e) {
-            LOGGER.log(Level.DEBUG, e.getMessage());
-            throw new ServiceException(e);
+            LOGGER.log(Level.DEBUG, "ProductService: finish get product by ID");
+            return daoFactory.getProductDao().getProductById(id);
+        }catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "ProductService: finish get product by ID");
-        return product;
     }
 
     @Override
-    public void addProduct(String type, String nameRu, String nameEn, Integer weight, Double cost, String status,
-                           String descriptionRu, String descriptionEn, Part image, String webPath) throws ServiceException, ServiceLogicException {
+    public boolean addProduct(String type, String nameRu, String nameEn, Integer weight, Double cost, String status,
+                              String descriptionRu, String descriptionEn, Part image, String webPath) throws ServiceException, ServiceLogicException {
         LOGGER.log(Level.DEBUG, "ProductService: addProduct start");
         Product product = new Product();
         IProductDao productDao = daoFactory.getProductDao();
@@ -123,28 +104,24 @@ public class ProductService implements IProductService {
             if (!imageName.isEmpty()) {
                 product.setImagePath(imageName);
             }
-            productDao.addProduct(product);
             String fileName = Paths.get(image.getSubmittedFileName()).getFileName().toString();
             if (!fileName.isEmpty()) {
                 System.out.println(webPath);
                 uploadImage(image, fileName, webPath);
             }
+            LOGGER.log(Level.DEBUG, "ProductService: addProduct finish");
+            return productDao.addProduct(product);
+
         } catch (ValidatorException e) {
-            LOGGER.log(Level.DEBUG, e.getMessage());
-            throw new ServiceException(e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         } catch (NumberFormatException e) {
-            LOGGER.log(Level.DEBUG, e.getMessage());
-            throw new ServiceException("number format exception", e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         } catch (DaoException e) {
-            LOGGER.log(Level.DEBUG, e.getMessage());
-            throw new ServiceException(e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "ProductService: addProduct finish");
     }
 
-
-
-    private void uploadImage(Part filePart, String fileName, String webInfPath) throws ServiceException, ServiceLogicException {
+    private void uploadImage(Part filePart, String fileName, String webInfPath) throws ServiceLogicException {
         try {
             LOGGER.log(Level.DEBUG, "ProductServer: upload start");
             File dir = new File(webInfPath + "images" + File.separator + "products");
@@ -175,9 +152,6 @@ public class ProductService implements IProductService {
     }
 
     private String getImageName(Part filePart) {
-        LOGGER.log(Level.DEBUG, "MedicamentServiceImpl.getImageName()" + filePart);
-        String name = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-        LOGGER.log(Level.DEBUG, "MedicamentServiceImpl.getImageName() - success");
-        return name;
+        return Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
     }
 }

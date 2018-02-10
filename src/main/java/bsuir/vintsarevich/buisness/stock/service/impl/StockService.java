@@ -1,8 +1,5 @@
 package bsuir.vintsarevich.buisness.stock.service.impl;
 
-import bsuir.vintsarevich.buisness.product.dao.IProductDao;
-import bsuir.vintsarevich.buisness.staff.dao.IStaffDao;
-import bsuir.vintsarevich.buisness.stock.dao.IStockDao;
 import bsuir.vintsarevich.buisness.stock.service.IStockService;
 import bsuir.vintsarevich.entity.Product;
 import bsuir.vintsarevich.exception.dao.DaoException;
@@ -20,14 +17,11 @@ public class StockService implements IStockService {
     @Override
     public List<Product> getStockProducts() throws ServiceException {
         LOGGER.log(Level.DEBUG, "Product Service: Start get stock products");
-        List<Product> products;
         try {
-            IStockDao stockDao = daoFactory.getStockDao();
-            products = stockDao.getStockProducts();
+            LOGGER.log(Level.DEBUG, "Product Service: Finish get stock products");
+            return daoFactory.getStockDao().getStockProducts();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
-        LOGGER.log(Level.DEBUG, "Product Service: Finish get stock products");
-        return products;
     }
 }

@@ -1,10 +1,7 @@
 package bsuir.vintsarevich.buisness.staff.service.impl;
 
-import bsuir.vintsarevich.buisness.admin.dao.IAdminDao;
-import bsuir.vintsarevich.buisness.client.dao.IClientDao;
 import bsuir.vintsarevich.buisness.staff.dao.IStaffDao;
 import bsuir.vintsarevich.buisness.staff.service.IStaffService;
-import bsuir.vintsarevich.entity.Admin;
 import bsuir.vintsarevich.entity.Staff;
 import bsuir.vintsarevich.exception.dao.DaoException;
 import bsuir.vintsarevich.exception.service.ServiceException;
@@ -22,22 +19,20 @@ public class StaffService implements IStaffService {
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
     @Override
-    public boolean signUp(String staffLogin, String staffPassword) {
+    public boolean signUp(String staffLogin, String staffPassword) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Staff service: start addStaff");
-        IStaffDao staffDao = daoFactory.getStaffDao();
-        IAdminDao adminDao = daoFactory.getAdminDao();
-        IClientDao clientDao = daoFactory.getClientDao();
-        Staff staff;
         try {
             Validator.isEmptyString(staffLogin, staffPassword);
             Validator.isNull(staffLogin, staffPassword);
             staffPassword = Hasher.hashBySha1(staffPassword);
-            if (clientDao.getClientByLogin(staffLogin) == null && !adminDao.findAdminByLogin(staffLogin)) {
-                staff = new Staff(staffLogin, staffPassword);
-                return staffDao.addStaff(staff);
+            if (daoFactory.getClientDao().getClientByLogin(staffLogin) == null &&
+                    !daoFactory.getAdminDao().findAdminByLogin(staffLogin)) {
+                Staff staff = new Staff(staffLogin, staffPassword);
+                return daoFactory.getStaffDao().addStaff(staff);
             }
         } catch (ValidatorException | DaoException e) {
             LOGGER.log(Level.DEBUG, e.getMessage());
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
         LOGGER.log(Level.DEBUG, "Admin service: finish addAdmin");
         return false;
@@ -50,7 +45,7 @@ public class StaffService implements IStaffService {
         try {
             staffDao.deleteStaff(id);
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
         LOGGER.log(Level.DEBUG, "ProductService: finish staff client");
         return true;
@@ -59,32 +54,26 @@ public class StaffService implements IStaffService {
     @Override
     public Staff signIn(String staffLogin, String staffPassword) {
         LOGGER.log(Level.DEBUG, "Staff service: start SignIn");
-        Staff staff;
-        IStaffDao staffDao = daoFactory.getStaffDao();
         try {
             Validator.isEmptyString(staffLogin, staffPassword);
             Validator.isNull(staffLogin, staffPassword);
             staffPassword = Hasher.hashBySha1(staffPassword);
-            staff = staffDao.signIn(staffLogin, staffPassword);
+            LOGGER.log(Level.DEBUG, "Staff service: finish SignIn");
+            return daoFactory.getStaffDao().signIn(staffLogin, staffPassword);
         } catch (DaoException | ValidatorException e) {
             return null;
         }
-        LOGGER.log(Level.DEBUG, "Staff service: finish SignIn");
-        return staff;
     }
 
     @Override
     public List<Staff> getAllStaff() throws ServiceException {
         LOGGER.log(Level.DEBUG, "Staff Service: Start get all staff");
-        List<Staff> staff;
         try {
-            IStaffDao staffDao = daoFactory.getStaffDao();
-            staff = staffDao.getAllStaff();
+            LOGGER.log(Level.DEBUG, "Staff Service: Finish get all staff");
+            return daoFactory.getStaffDao().getAllStaff();
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "Staff Service: Finish get all staff");
-        return staff;
     }
 
     @Override
@@ -96,7 +85,7 @@ public class StaffService implements IStaffService {
             LOGGER.log(Level.DEBUG, "Staff Service: finish check password");
             return staffDao.checkPassword(password, id);
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
     }
 
@@ -104,13 +93,11 @@ public class StaffService implements IStaffService {
     public boolean changePassword(String password, Integer id) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Staff Service: change password start");
         password = Hasher.hashBySha1(password);
-        IStaffDao staffDao = daoFactory.getStaffDao();
         try {
-            staffDao.changePassword(password, id);
+            LOGGER.log(Level.DEBUG, "Staff Service: finish change password");
+            return daoFactory.getStaffDao().changePassword(password, id);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
-        LOGGER.log(Level.DEBUG, "Staff Service: finish change password");
-        return true;
     }
 }

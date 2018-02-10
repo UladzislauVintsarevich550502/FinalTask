@@ -37,14 +37,14 @@
             <!— Section —>
             <section>
                 <header class="major">
-                    <h2>${client_all_word}</h2>
+                    <h2>${list_clients_word}</h2>
                 </header>
                 <c:choose>
                     <c:when test="${clients!=null}">
                         <c:forEach var="client" items="${clients}">
                             <li id="client_s">${client.login}</li>
                             <h4>${client.name} ${client.surname}</h4>
-                            <a href="/cafe.by/product?id=${product.id}" class="button">${view_word}</a>
+                            <a href="/cafe.by/product?id=${client.id}" class="button">${view_word}</a>
                             <c:choose>
                                 <c:when test="${client.status eq 'active'}">
                                     <a href="/cafe.by/change_client_status?clientId=${client.id}"
@@ -55,6 +55,7 @@
                                        class="button">${client_unban_word}</a>
                                 </c:when>
                             </c:choose>
+                            <a href="/cafe.by/delete_client?clientId=${client.id}" class="button">${delete_word}</a>
                         </c:forEach>
                     </c:when>
                     <c:otherwise>

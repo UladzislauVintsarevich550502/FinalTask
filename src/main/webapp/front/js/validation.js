@@ -40,6 +40,47 @@ jQuery(document).ready(function ($) {
         }
     });
 
+
+    $('form#staff-form').on('click', function (e) {
+
+        $('#a-image-name').on('click', function () {
+            document.getElementById('file').click();
+        });
+        var loginReg = new RegExp('^([a-zA-Z][a-zA-Z-_0-9]+)$');
+        var passwordReg = new RegExp('[a-zA-Z-_0-9]{6,}');
+        var $form_modal = $('.cd-user-modal');
+        var $form_login = $form_modal.find('#login');
+        var $numberCorrectField = 0;
+
+        var password = $('input#staff-password').val();
+        var login = $('input#staff-login').val();
+
+        if (password.length >= 4 && password != '' && passwordReg.test(password)) {
+            $('input#staff-password').css('border-color', 'green');
+            $form_login.find('a#a-staff-password').removeClass('has-error').next('span').removeClass('is-visible');
+            $numberCorrectField++;
+        }
+        else {
+            if (password.length != 0) {
+                $('input#staff-password').css('border-color', 'red');
+                $form_login.find('a#a-staff-password').addClass('has-error').next('span').addClass('is-visible');
+            }
+        }
+        if (login.length > 3 && login != '' && loginReg.test(login)) {
+            $('input#staff-login').css('border-color', 'green');
+            $form_login.find('input#staff-login').removeClass('has-error').next('span').removeClass('is-visible');
+            $numberCorrectField++;
+        } else {
+            if (login.length != 0) {
+                $('input#staff-login').css('border-color', 'red');
+                $form_login.find('input#staff-login').addClass('has-error').next('span').addClass('is-visible');
+            }
+        }
+        if ($numberCorrectField != 2) {
+            e.preventDefault();
+        }
+    });
+
     $('form#signup-form').on('click', function (e) {
         var name_surnameReg = new RegExp("^([\u{0410}-\u{042F}]{1}[\u{0430}-\u{044F}]+)$|^([A-Z]{1}[a-z]+)$");
         var loginReg = new RegExp('^([a-zA-Z][a-zA-Z-_0-9]+)$');

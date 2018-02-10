@@ -22,19 +22,17 @@ public class AdminDAO implements IAdminDao {
     private static String DELETE_ADMIN = "DELETE FROM epamcafe.admin WHERE adminId=?";
     private static String GET_ALL_ADMINS = "SELECT *FROM epamcafe.admin";
     private static String GET_ADMIN_BY_LOGIN = "SELECT * FROM epamcafe.admin WHERE adminLogin=?";
-    private static String CHECK_PASSWORD = "SELECT * FROM epamcafe.admin WHERE epamcafe.admin.adminId=? AND epamcafe.admin.adminPassword=?";
+    private static String CHECK_ADMIN_PASSWORD = "SELECT * FROM epamcafe.admin WHERE epamcafe.admin.adminId=? AND epamcafe.admin.adminPassword=?";
     private static String CHANGE_PASSWORD = "UPDATE epamcafe.admin SET epamcafe.admin.adminPassword=? WHERE epamcafe.admin.adminId=?";
     private ConnectionPool connectionPool;
     private Connection connection;
     private ResultSet resultSet;
     private PreparedStatement statement;
-    private List<Admin> admins;
 
     @Override
     public boolean addAdmin(Admin admin) throws DaoException {
         LOGGER.log(Level.DEBUG, "Admin DAO: Add admin start");
         try {
-            System.out.println(admin);
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
             statement = connection.prepareStatement(ADD_ADMIN);
@@ -48,14 +46,9 @@ public class AdminDAO implements IAdminDao {
                 return false;
             }
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(addMedicament)", e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
@@ -80,14 +73,9 @@ public class AdminDAO implements IAdminDao {
                 return false;
             }
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(deleteAdmin)", e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
@@ -98,7 +86,7 @@ public class AdminDAO implements IAdminDao {
 
     @Override
     public Admin signIn(String login, String password) throws DaoException {
-        Admin adminEnyity = null;
+        Admin adminEntity = null;
         LOGGER.log(Level.DEBUG, "Admin DAO: start SignIn");
         try {
             connectionPool = ConnectionPool.getInstance();
@@ -110,19 +98,19 @@ public class AdminDAO implements IAdminDao {
 
             resultSet = statement.executeQuery();
             if (resultSet.first()) {
-                adminEnyity = createAdminByResultSet(resultSet);
+                adminEntity = createAdminByResultSet(resultSet);
             }
         } catch (SQLException e) {
-            throw new DaoException("Error with adding in database" + e);
+            return null;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
+            LOGGER.log(Level.DEBUG, "Admin DAO: finish SignIn");
         }
-        LOGGER.log(Level.DEBUG, "Admin DAO: finish SignIn");
-        return adminEnyity;
+        return adminEntity;
     }
 
     @Override
@@ -140,22 +128,22 @@ public class AdminDAO implements IAdminDao {
                 return true;
             }
         } catch (SQLException e) {
-            throw new DaoException("Error with adding in database" + e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
+            LOGGER.log(Level.DEBUG, "Admin DAO: finish Find");
         }
-        LOGGER.log(Level.DEBUG, "Admin DAO: finish Find");
         return false;
     }
 
     @Override
     public List<Admin> getAllAdmins() throws DaoException {
         LOGGER.log(Level.DEBUG, "Admin DAO: Start get all admins");
-        Admin adminEnyity;
+        List<Admin> admins;
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
@@ -163,25 +151,19 @@ public class AdminDAO implements IAdminDao {
             resultSet = statement.executeQuery();
             admins = new ArrayList<>();
             while (resultSet.next()) {
-                adminEnyity = createAdminByResultSet(resultSet);
-                admins.add(adminEnyity);
+                admins.add(createAdminByResultSet(resultSet));
             }
             LOGGER.log(Level.INFO, admins);
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(getAdminDAO)", e);
+            return null;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
+            LOGGER.log(Level.DEBUG, "Admin DAO: Finish get all admins");
         }
-        LOGGER.log(Level.DEBUG, "Admin DAO: Finish get all admins");
         return admins;
     }
 
@@ -191,7 +173,7 @@ public class AdminDAO implements IAdminDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(CHECK_PASSWORD);
+            statement = connection.prepareStatement(CHECK_ADMIN_PASSWORD);
             statement.setInt(1, id);
             statement.setString(2, password);
             resultSet = statement.executeQuery();
@@ -199,15 +181,15 @@ public class AdminDAO implements IAdminDao {
                 return true;
             }
         } catch (SQLException e) {
-            throw new DaoException("Error with adding in database" + e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
+            LOGGER.log(Level.DEBUG, "Admin DAO: finish check password");
         }
-        LOGGER.log(Level.DEBUG, "Admin DAO: finish check password");
         return false;
     }
 
@@ -224,9 +206,9 @@ public class AdminDAO implements IAdminDao {
                 return true;
             }
         } catch (SQLException e) {
-            throw new DaoException("Error with adding in database" + e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
@@ -243,7 +225,7 @@ public class AdminDAO implements IAdminDao {
             admin.setLogin(resultSet.getString("adminLogin"));
             admin.setPassword(resultSet.getString("adminPassword"));
         } catch (SQLException e) {
-            throw new DaoException(e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         }
         return admin;
     }

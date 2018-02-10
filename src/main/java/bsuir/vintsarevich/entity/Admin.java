@@ -1,9 +1,10 @@
 package bsuir.vintsarevich.entity;
 
 public class Admin {
-    private int id;
+    private Integer id;
     private String login;
     private String password;
+    private Integer isMain;
 
     public Admin() {
     }
@@ -13,11 +14,18 @@ public class Admin {
         this.password = password;
     }
 
-    public int getId() {
+    public Admin(Integer id, String login, String password, Integer isMain) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.isMain = isMain;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -37,6 +45,14 @@ public class Admin {
         this.password = password;
     }
 
+    public Integer getIsMain() {
+        return isMain;
+    }
+
+    public void setIsMain(Integer isMain) {
+        this.isMain = isMain;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -44,16 +60,18 @@ public class Admin {
 
         Admin admin = (Admin) o;
 
-        if (id != admin.id) return false;
+        if (id != null ? !id.equals(admin.id) : admin.id != null) return false;
         if (login != null ? !login.equals(admin.login) : admin.login != null) return false;
-        return password != null ? password.equals(admin.password) : admin.password == null;
+        if (password != null ? !password.equals(admin.password) : admin.password != null) return false;
+        return isMain != null ? isMain.equals(admin.isMain) : admin.isMain == null;
     }
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (login != null ? login.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (isMain != null ? isMain.hashCode() : 0);
         return result;
     }
 
@@ -63,6 +81,7 @@ public class Admin {
                 "id=" + id +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
+                ", isMain=" + isMain +
                 '}';
     }
 }

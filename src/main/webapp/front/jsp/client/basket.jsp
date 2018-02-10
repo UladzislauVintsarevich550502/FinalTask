@@ -24,9 +24,9 @@
     <title>Epam Cafe</title>
 </head>
 <body>
-<!-- Wrapper -->
+<!— Wrapper —>
 <div id="wrapper">
-    <!-- Main -->
+    <!— Main —>
     <div id="main">
         <div class="inner">
 
@@ -34,7 +34,7 @@
 
             <%@include file="/front/html/forms.html" %>
 
-            <!-- Section -->
+            <!— Section —>
             <section>
                 <header class="major">
                     <h2>${basket_word}</h2>
@@ -61,12 +61,12 @@
                                                        id="number-for-delete" name="number_for_delete"
                                                        onkeypress="return false">
                                                 <input type="submit" id="delete-button-from-basket"
-                                                       value="Удалить из корзины">
+                                                       value="${delete_from_basket_word}">
                                             </form>
                                         </c:when>
                                     </c:choose>
                                 </c:forEach>
-                                <h1>Итого: ${orderCost}</h1>
+                                <h1>${total_word}: ${orderCost} BYN</h1>
                             </c:when>
                             <c:otherwise>
                                 <h2>${found_nothing_word}</h2>
@@ -75,7 +75,7 @@
                     </article>
                     <article>
                         <h2>
-                            Остаток бонусов: ${point}
+                            ${points_word}: ${point}
                         </h2>
                         <form method="POST" name="payment" action="/cafe.by/payment">
                             <input type="number" step="0.05" min="0"
@@ -86,23 +86,23 @@
                             <c:when test="${products!=null}">
                             <h2>
                                 <div>
-                                    <p>Выберете форму оплаты</p>
+                                    <p>${choose_the_form_payment}</p>
                                     <input type="radio" class="radio_payment" id="by-card"
                                            name="choise_of_payment"
                                            value="card" checked>
-                                    <label for="by-card">Кард</label>
+                                    <label for="by-card">${card_word}</label>
                                     <input type="radio" class="radio_payment" id="by-cash"
                                            name="choise_of_payment"
                                            value="cash">
-                                    <label for="by-cash">Кэш</label>
+                                    <label for="by-cash">${cash_word}</label>
                                 </div>
                                 <h3>
-                                    <p>Время желаемого получения</p>
+                                    <p>${desired_acquisition_time_word}</p>
                                     <input id="dateTime" type="datetime-local" name="dateTime" required>
                                     <span class="validity"></span>
                                 </h3>
                                 <div>
-                                    <input type="submit" id="payment_button" value="Оплатить">
+                                    <input type="submit" id="payment_button" value="${pay_word}">
                                 </div>
                             </h2>
                         </form>
@@ -114,7 +114,7 @@
 
             <section>
                 <header class="major">
-                    <h2>Заказанные</h2>
+                    <h2>${ordered_word}</h2>
                 </header>
 
                 <ul>
@@ -139,8 +139,8 @@
                                     </c:choose>
                                 </c:forEach>
                                 <div style="display: inline-block">
-                                    <h3 id="COST" style="float: left">Итого: ${order.cost} BYN</h3>
-                                    <label id="cost_data" for="COST">Дата получения: ${order.date}</label>
+                                    <h3 id="COST" style="float: left">${total_word}: ${order.cost} BYN</h3>
+                                    <label id="cost_data" for="COST">${date_of_receiving_word}: ${order.date}</label>
                                 </div>
                             </c:forEach>
                         </c:when>
@@ -150,8 +150,6 @@
                     </c:choose>
                 </ul>
             </section>
-
-
         </div>
     </div>
 
@@ -159,17 +157,11 @@
 
 </div>
 
-<!-- Scripts -->
+<!— Scripts —>
 <script>
     <%@include file="/front/js/menu/main.js" %>
-</script>
-<script>
     <%@include file="/front/js/menu/util.js" %>
-</script>
-<script>
     <%@include file="/front/js/form/form.js"%>
-</script>
-<script>
     <%@include file="/front/js/elementcontroller.js"%>
 </script>
 

@@ -40,21 +40,17 @@ public class ReviewDao implements IReviewDao {
                 LOGGER.log(Level.DEBUG, "ReviewDao: success addReview");
                 return true;
             } else {
-                LOGGER.log(Level.DEBUG, "ReviewDao: finish addReview");
+                LOGGER.log(Level.DEBUG, "ReviewDao: unsuccess addReview");
                 return false;
             }
         } catch (ConnectionException e) {
-            throw new DaoException(e);
-        } catch (SQLException exception) {
-            try {
-                connection.rollback();
-            } catch (SQLException e) {
-                throw new DaoException(exception);
-            }
-            throw new DaoException(exception);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
+        } catch (SQLException e) {
+            return false;
         } finally {
-            if (connectionPool != null)
+            if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
+            }
         }
     }
 
@@ -70,53 +66,17 @@ public class ReviewDao implements IReviewDao {
                 LOGGER.log(Level.DEBUG, "ReviewDao: success deleteReview");
                 return true;
             } else {
-                LOGGER.log(Level.DEBUG, "ReviewDao: finish deleteReview");
+                LOGGER.log(Level.DEBUG, "ReviewDao: unsuccess deleteReview");
                 return false;
             }
         } catch (ConnectionException e) {
-            throw new DaoException(e);
-        } catch (SQLException exception) {
-            try {
-                connection.rollback();
-            } catch (SQLException e) {
-                throw new DaoException(exception);
-            }
-            throw new DaoException(exception);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
+        } catch (SQLException e) {
+            return false;
         } finally {
-            if (connectionPool != null)
+            if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
-        }
-    }
-
-    @Override
-    public boolean editReview(Integer id, String text, Integer mark) throws DaoException {
-        LOGGER.log(Level.DEBUG, "ReviewDao: start deleteReview");
-        try {
-            connectionPool = ConnectionPool.getInstance();
-            connection = connectionPool.getConnection();
-            statement = connection.prepareStatement(EDIT_REVIEW);
-            statement.setString(1, text);
-            statement.setInt(2, mark);
-            statement.setInt(3, id);
-            if (statement.executeUpdate() != 0) {
-                LOGGER.log(Level.DEBUG, "ReviewDao: success editReview");
-                return true;
-            } else {
-                LOGGER.log(Level.DEBUG, "ReviewDao: finish editReview");
-                return false;
             }
-        } catch (ConnectionException e) {
-            throw new DaoException(e);
-        } catch (SQLException exception) {
-            try {
-                connection.rollback();
-            } catch (SQLException e) {
-                throw new DaoException(exception);
-            }
-            throw new DaoException(exception);
-        } finally {
-            if (connectionPool != null)
-                connectionPool.putBackConnection(connection, statement, resultSet);
         }
     }
 
@@ -129,23 +89,17 @@ public class ReviewDao implements IReviewDao {
             connection = connectionPool.getConnection();
             statement = connection.prepareStatement(GET_ALL_REVIEWS);
             resultSet = statement.executeQuery();
-            if (resultSet.first()) {
-                do {
-                    reviews.add(createReviewByResultSet(resultSet));
-                } while (resultSet.next());
+            while (resultSet.next()) {
+                reviews.add(createReviewByResultSet(resultSet));
             }
         } catch (ConnectionException e) {
-            throw new DaoException(e);
-        } catch (SQLException exception) {
-            try {
-                connection.rollback();
-            } catch (SQLException e) {
-                throw new DaoException(exception);
-            }
-            throw new DaoException(exception);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
+        } catch (SQLException e) {
+            return null;
         } finally {
-            if (connectionPool != null)
+            if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
+            }
         }
         LOGGER.log(Level.DEBUG, "ReviewDao: success getAllReviews");
         return reviews;
@@ -156,7 +110,7 @@ public class ReviewDao implements IReviewDao {
         try {
             review.setReviewId(resultSet.getInt("reviewId"));
             review.setClientId(resultSet.getInt("clientId"));
-            review.setMark(resultSet.getInt("reviewMark"));
+            review.setMark(resultSet.getDouble("reviewMark"));
             review.setText(resultSet.getString("reviewText"));
         } catch (SQLException e) {
             throw new DaoException(e);

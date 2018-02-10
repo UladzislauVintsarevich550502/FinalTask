@@ -32,22 +32,22 @@
             <%@include file="/front/html/header.html" %>
 
             <%@include file="/front/html/forms.html" %>
-            <div id="add-form"> <!— форма входа —>
+            <div id="add-form">
                 <form method="post" class="cd-form" id="change-password" action="/cafe.by/change_password" enctype="multipart/form-date">
-                    <h2>Смена пароля</h2>
+                    <h2>${change_password_word}</h2>
                     <p class="fieldset">
-                        <input type="text" name="old_password" id="old-password" placeholder="Введите текущий пароль">
+                        <input type="text" name="old_password" id="old-password" placeholder=${old_password_word}>
                         <span class="cd-error-message">Неверный пароль</span>
                     </p>
                     <p class="fieldset">
-                        <input type="text" name="new_password" id="new-password" placeholder="Введите новый пароль">
+                        <input type="text" name="new_password" id="new-password" placeholder=${new_password_word}>
                         <span class="cd-error-message">Некорректный пароль</span>
                     </p>
                     <p class="fieldset">
-                        <input type="text" name="new_password_repeat" id="new-password-repeat" placeholder="Повторите новый пароль">
+                        <input type="text" name="new_password_repeat" id="new-password-repeat" placeholder=${re_new_password_word}>
                         <span class="cd-error-message">Пароль не совпадают</span>
                     </p>
-                    <input type="submit" id="add" value=${add_button_word}>
+                    <input type="submit" id="add" value=${change_password_word}>
                 </form>
             </div> <!— login —>
 

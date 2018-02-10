@@ -35,17 +35,13 @@ public class ProductDAO implements IProductDao {
     private Connection connection;
     private ResultSet resultSet;
     private PreparedStatement statement;
-    private Product productEntity;
-    private List<Product> products;
 
     @Override
     public boolean addProduct(Product product) throws DaoException {
         LOGGER.log(Level.DEBUG, "Product DAO: Add product start");
         try {
-            System.out.println(product);
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = null;
             statement = connection.prepareStatement(ADD_PRODUCT);
             statement.setString(1, product.getType());
             statement.setString(2, product.getNameRu());
@@ -64,14 +60,9 @@ public class ProductDAO implements IProductDao {
                 return false;
             }
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(addProduct)", e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
@@ -96,14 +87,9 @@ public class ProductDAO implements IProductDao {
                 return false;
             }
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(deleteProduct)", e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
@@ -115,63 +101,46 @@ public class ProductDAO implements IProductDao {
     @Override
     public Product getProductById(Integer id) throws DaoException {
         LOGGER.log(Level.DEBUG, "product DAO: Start get product by ID");
-        productEntity = null;
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = null;
             statement = connection.prepareStatement(GET_PRODUCT_BY_ID);
             statement.setInt(1, id);
-            resultSet = null;
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                productEntity = createProductByResultSet(resultSet);
+                return createProductByResultSet(resultSet);
             }
-            LOGGER.log(Level.INFO, products);
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(getAllproducts)", e);
+            return null;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
         }
         LOGGER.log(Level.DEBUG, "product DAO: get product by ID");
-        return productEntity;
+        return null;
     }
 
     @Override
     public List<Product> getAllProducts() throws DaoException {
         LOGGER.log(Level.DEBUG, "product DAO: Start get all products");
+        List<Product> products;
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = null;
             statement = connection.prepareStatement(GET_ALL_PRODUCTS);
-            resultSet = null;
             resultSet = statement.executeQuery();
-            productEntity = null;
             products = new ArrayList<>();
             while (resultSet.next()) {
-                productEntity = createProductByResultSet(resultSet);
-                products.add(productEntity);
+                products.add(createProductByResultSet(resultSet));
             }
             LOGGER.log(Level.INFO, products);
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(getAllproducts)", e);
+            return null;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
@@ -184,14 +153,12 @@ public class ProductDAO implements IProductDao {
     @Override
     public List<Product> getProductByType(String type) throws DaoException {
         LOGGER.log(Level.DEBUG, "product DAO: Start get product by type");
-        productEntity = null;
+        List<Product> products = null;
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = null;
             statement = connection.prepareStatement(GET_PRODUCT_BY_TYPE);
             statement.setString(1, type);
-            resultSet = null;
             resultSet = statement.executeQuery();
             products = new ArrayList<>();
             while (resultSet.next()) {
@@ -199,14 +166,9 @@ public class ProductDAO implements IProductDao {
             }
             LOGGER.log(Level.INFO, products);
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(getAllproducts)", e);
+            return null;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } catch (DaoException e) {
             e.printStackTrace();
         } finally {
@@ -221,7 +183,7 @@ public class ProductDAO implements IProductDao {
     @Override
     public List<Product> getProductByOrderId(Integer orderId) throws DaoException {
         LOGGER.log(Level.DEBUG, "product DAO: Start get product by orderId");
-        productEntity = null;
+        List<Product> products = null;
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
@@ -231,23 +193,15 @@ public class ProductDAO implements IProductDao {
             resultSet = null;
             resultSet = statement.executeQuery();
             products = new ArrayList<>();
-            if (!resultSet.next()) {
-                return null;
-            }
-            do {
+            while (resultSet.next()) {
                 products.add(createProductByResultSet(resultSet));
                 products.get(products.size() - 1).setNumber(resultSet.getInt("orderproducts.productCount"));
-            } while (resultSet.next());
+            }
             LOGGER.log(Level.INFO, products);
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(getProducts)", e);
+            return null;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } catch (DaoException e) {
             e.printStackTrace();
         } finally {
@@ -263,10 +217,8 @@ public class ProductDAO implements IProductDao {
     public boolean editProduct(Product product) throws DaoException {
         LOGGER.log(Level.DEBUG, "Product DAO: Add product start");
         try {
-            System.out.println(product);
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = null;
             statement = connection.prepareStatement(EDIT_PRODUCT);
             statement.setString(1, product.getType());
             statement.setString(2, product.getNameRu());
@@ -286,14 +238,9 @@ public class ProductDAO implements IProductDao {
                 return false;
             }
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(editProduct)", e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);

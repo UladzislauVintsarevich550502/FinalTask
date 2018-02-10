@@ -1084,42 +1084,36 @@
       <DefaultExpression>&apos;0.00&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="261" parent="231" name="clientAccount">
-      <Position>9</Position>
-      <DataType>tinyint(4)|0</DataType>
-      <DefaultExpression>&apos;0&apos;</DefaultExpression>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <index id="262" parent="231" name="IdClient_UNIQUE">
+    <index id="261" parent="231" name="IdClient_UNIQUE">
       <ColNames>clientId</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="263" parent="231" name="ClientLogin_UNIQUE">
+    <index id="262" parent="231" name="ClientLogin_UNIQUE">
       <ColNames>clientLogin</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="264" parent="231" name="E-mail_UNIQUE">
+    <index id="263" parent="231" name="E-mail_UNIQUE">
       <ColNames>clientEmail</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="265" parent="231" name="PRIMARY">
+    <key id="264" parent="231" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>clientId</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="266" parent="231" name="IdClient_UNIQUE">
+    <key id="265" parent="231" name="IdClient_UNIQUE">
       <ColNames>clientId</ColNames>
       <UnderlyingIndexName>IdClient_UNIQUE</UnderlyingIndexName>
     </key>
-    <key id="267" parent="231" name="ClientLogin_UNIQUE">
+    <key id="266" parent="231" name="ClientLogin_UNIQUE">
       <ColNames>clientLogin</ColNames>
       <UnderlyingIndexName>ClientLogin_UNIQUE</UnderlyingIndexName>
     </key>
-    <key id="268" parent="231" name="E-mail_UNIQUE">
+    <key id="267" parent="231" name="E-mail_UNIQUE">
       <ColNames>clientEmail</ColNames>
       <UnderlyingIndexName>E-mail_UNIQUE</UnderlyingIndexName>
     </key>
-    <column id="269" parent="232" name="orderId">
+    <column id="268" parent="232" name="orderId">
       <Position>1</Position>
       <Comment>Уникальный номер заказа, использующийся для связи данной таблицы с другими.</Comment>
       <DataType>int(11) unsigned|0</DataType>
@@ -1127,49 +1121,49 @@
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="270" parent="232" name="orderDate">
+    <column id="269" parent="232" name="orderDate">
       <Position>2</Position>
       <Comment>Время в которое заказ был доставлен.</Comment>
       <DataType>datetime|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="271" parent="232" name="orderType">
+    <column id="270" parent="232" name="orderType">
       <Position>3</Position>
       <Comment>Статус заказа, используется для отслеживания прогресса доставки заказа в сиситеме.</Comment>
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="272" parent="232" name="orderCost">
+    <column id="271" parent="232" name="orderCost">
       <Position>4</Position>
       <Comment>Общая стоимость заказа.</Comment>
       <DataType>decimal(10,2)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="273" parent="232" name="clientId">
+    <column id="272" parent="232" name="clientId">
       <Position>5</Position>
       <DataType>int(11) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="274" parent="232" name="orderId_UNIQUE">
+    <index id="273" parent="232" name="orderId_UNIQUE">
       <ColNames>orderId</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="275" parent="232" name="fk_order_client1_idx">
+    <index id="274" parent="232" name="fk_order_client1_idx">
       <ColNames>clientId</ColNames>
     </index>
-    <key id="276" parent="232" name="PRIMARY">
+    <key id="275" parent="232" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>orderId</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="277" parent="232" name="orderId_UNIQUE">
+    <key id="276" parent="232" name="orderId_UNIQUE">
       <ColNames>orderId</ColNames>
       <UnderlyingIndexName>orderId_UNIQUE</UnderlyingIndexName>
     </key>
-    <foreign-key id="278" parent="232" name="fk_order_client1">
+    <foreign-key id="277" parent="232" name="fk_order_client1">
       <ColNames>clientId</ColNames>
       <RefSchemaName>epamcafe</RefSchemaName>
       <RefTableName>client</RefTableName>
@@ -1177,31 +1171,31 @@
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="279" parent="233" name="productCount">
+    <column id="278" parent="233" name="productCount">
       <Position>1</Position>
       <DataType>int(11) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="280" parent="233" name="productId">
+    <column id="279" parent="233" name="productId">
       <Position>2</Position>
       <DataType>int(11) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="281" parent="233" name="orderId">
+    <column id="280" parent="233" name="orderId">
       <Position>3</Position>
       <DataType>int(11) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="282" parent="233" name="fk_orderproducts_product1_idx">
+    <index id="281" parent="233" name="fk_orderproducts_product1_idx">
       <ColNames>productId</ColNames>
     </index>
-    <index id="283" parent="233" name="fk_orderproducts_order1_idx">
+    <index id="282" parent="233" name="fk_orderproducts_order1_idx">
       <ColNames>orderId</ColNames>
     </index>
-    <foreign-key id="284" parent="233" name="fk_orderproducts_product1">
+    <foreign-key id="283" parent="233" name="fk_orderproducts_product1">
       <ColNames>productId</ColNames>
       <RefSchemaName>epamcafe</RefSchemaName>
       <RefTableName>product</RefTableName>
@@ -1209,7 +1203,7 @@
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="285" parent="233" name="fk_orderproducts_order1">
+    <foreign-key id="284" parent="233" name="fk_orderproducts_order1">
       <ColNames>orderId</ColNames>
       <RefSchemaName>epamcafe</RefSchemaName>
       <RefTableName>order</RefTableName>
@@ -1217,7 +1211,7 @@
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="286" parent="234" name="productId">
+    <column id="285" parent="234" name="productId">
       <Position>1</Position>
       <Comment>Уникальный индификационный номер(Синтетический ключ) Продукта, использующийся для связи таблицы Меню с другими таблицами.</Comment>
       <DataType>int(11) unsigned|0</DataType>
@@ -1225,112 +1219,112 @@
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="287" parent="234" name="productType">
+    <column id="286" parent="234" name="productType">
       <Position>2</Position>
       <Comment>Тип продука. Например, напиток, пицца...</Comment>
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="288" parent="234" name="productNameRu">
+    <column id="287" parent="234" name="productNameRu">
       <Position>3</Position>
       <Comment>Название блюда.</Comment>
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="289" parent="234" name="productWeight">
+    <column id="288" parent="234" name="productWeight">
       <Position>4</Position>
       <Comment>Вес продукта.</Comment>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="290" parent="234" name="productCost">
+    <column id="289" parent="234" name="productCost">
       <Position>5</Position>
       <Comment>Стоимость Продукта.</Comment>
       <DataType>decimal(10,2)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="291" parent="234" name="productStatus">
+    <column id="290" parent="234" name="productStatus">
       <Position>6</Position>
       <Comment>Наличие данного продукта в данный момент.</Comment>
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="292" parent="234" name="productDescriptionRu">
+    <column id="291" parent="234" name="productDescriptionRu">
       <Position>7</Position>
       <Comment>Описание продукта. Состав.</Comment>
       <DataType>text|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="293" parent="234" name="productImage">
+    <column id="292" parent="234" name="productImage">
       <Position>8</Position>
       <Comment>Путь для подгрузки изображения продукта.</Comment>
       <DataType>tinytext|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="294" parent="234" name="productNameEn">
+    <column id="293" parent="234" name="productNameEn">
       <Position>9</Position>
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="295" parent="234" name="productDescriptionEn">
+    <column id="294" parent="234" name="productDescriptionEn">
       <Position>10</Position>
       <DataType>text|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="296" parent="234" name="menuId_UNIQUE">
+    <index id="295" parent="234" name="menuId_UNIQUE">
       <ColNames>productId</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="297" parent="234" name="productNameRu_UNIQUE">
+    <index id="296" parent="234" name="productNameRu_UNIQUE">
       <ColNames>productNameRu</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="298" parent="234" name="product_prioductNameEn_uindex">
+    <index id="297" parent="234" name="product_prioductNameEn_uindex">
       <ColNames>productNameEn</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="299" parent="234" name="PRIMARY">
+    <key id="298" parent="234" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>productId</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="300" parent="234" name="menuId_UNIQUE">
+    <key id="299" parent="234" name="menuId_UNIQUE">
       <ColNames>productId</ColNames>
       <UnderlyingIndexName>menuId_UNIQUE</UnderlyingIndexName>
     </key>
-    <key id="301" parent="234" name="productNameRu_UNIQUE">
+    <key id="300" parent="234" name="productNameRu_UNIQUE">
       <ColNames>productNameRu</ColNames>
       <UnderlyingIndexName>productNameRu_UNIQUE</UnderlyingIndexName>
     </key>
-    <key id="302" parent="234" name="product_prioductNameEn_uindex">
+    <key id="301" parent="234" name="product_prioductNameEn_uindex">
       <ColNames>productNameEn</ColNames>
       <UnderlyingIndexName>product_prioductNameEn_uindex</UnderlyingIndexName>
     </key>
-    <column id="303" parent="235" name="productSale">
+    <column id="302" parent="235" name="productSale">
       <Position>1</Position>
       <DataType>decimal(3,2)|0</DataType>
       <DefaultExpression>&apos;0.00&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="304" parent="235" name="productId">
+    <column id="303" parent="235" name="productId">
       <Position>2</Position>
       <DataType>int(11) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="305" parent="235" name="PRIMARY">
+    <key id="304" parent="235" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>productId</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="306" parent="235" name="fk_productstock_product1">
+    <foreign-key id="305" parent="235" name="fk_productstock_product1">
       <ColNames>productId</ColNames>
       <RefSchemaName>epamcafe</RefSchemaName>
       <RefTableName>product</RefTableName>
@@ -1338,7 +1332,7 @@
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="307" parent="236" name="reviewId">
+    <column id="306" parent="236" name="reviewId">
       <Position>1</Position>
       <Comment>Номер заказа, к которому относится комментарий.</Comment>
       <DataType>int(11) unsigned|0</DataType>
@@ -1346,42 +1340,42 @@
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="308" parent="236" name="reviewText">
+    <column id="307" parent="236" name="reviewText">
       <Position>2</Position>
       <Comment>Отзыв клиента о заказе.</Comment>
       <DataType>text|0</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="309" parent="236" name="reviewMark">
+    <column id="308" parent="236" name="reviewMark">
       <Position>3</Position>
       <Comment>Оценка Закакза Клиентом.</Comment>
-      <DataType>int(11)|0</DataType>
+      <DataType>decimal(3,2)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="310" parent="236" name="clientId">
+    <column id="309" parent="236" name="clientId">
       <Position>4</Position>
       <DataType>int(11) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="311" parent="236" name="fk_Review_Order1_idx">
+    <index id="310" parent="236" name="fk_Review_Order1_idx">
       <ColNames>reviewId</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="312" parent="236" name="fk_review_client1_idx">
+    <index id="311" parent="236" name="fk_review_client1_idx">
       <ColNames>clientId</ColNames>
     </index>
-    <key id="313" parent="236" name="PRIMARY">
+    <key id="312" parent="236" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>reviewId</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="314" parent="236" name="fk_Review_Order1_idx">
+    <key id="313" parent="236" name="fk_Review_Order1_idx">
       <ColNames>reviewId</ColNames>
       <UnderlyingIndexName>fk_Review_Order1_idx</UnderlyingIndexName>
     </key>
-    <foreign-key id="315" parent="236" name="fk_review_client1">
+    <foreign-key id="314" parent="236" name="fk_review_client1">
       <ColNames>clientId</ColNames>
       <RefSchemaName>epamcafe</RefSchemaName>
       <RefTableName>client</RefTableName>
@@ -1389,43 +1383,43 @@
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="316" parent="237" name="staffId">
+    <column id="315" parent="237" name="staffId">
       <Position>1</Position>
       <DataType>int(11) unsigned|0</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="317" parent="237" name="staffLogin">
+    <column id="316" parent="237" name="staffLogin">
       <Position>2</Position>
       <DataType>varchar(45)|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="318" parent="237" name="staffPassword">
+    <column id="317" parent="237" name="staffPassword">
       <Position>3</Position>
       <DataType>text|0</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="319" parent="237" name="staff_staffId_uindex">
+    <index id="318" parent="237" name="staff_staffId_uindex">
       <ColNames>staffId</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="320" parent="237" name="staff_staffLogin_uindex">
+    <index id="319" parent="237" name="staff_staffLogin_uindex">
       <ColNames>staffLogin</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="321" parent="237" name="PRIMARY">
+    <key id="320" parent="237" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>staffId</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="322" parent="237" name="staff_staffId_uindex">
+    <key id="321" parent="237" name="staff_staffId_uindex">
       <ColNames>staffId</ColNames>
       <UnderlyingIndexName>staff_staffId_uindex</UnderlyingIndexName>
     </key>
-    <key id="323" parent="237" name="staff_staffLogin_uindex">
+    <key id="322" parent="237" name="staff_staffLogin_uindex">
       <ColNames>staffLogin</ColNames>
       <UnderlyingIndexName>staff_staffLogin_uindex</UnderlyingIndexName>
     </key>

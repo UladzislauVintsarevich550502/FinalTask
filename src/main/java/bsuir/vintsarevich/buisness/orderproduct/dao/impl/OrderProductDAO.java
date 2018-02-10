@@ -3,7 +3,7 @@ package bsuir.vintsarevich.buisness.orderproduct.dao.impl;
 import bsuir.vintsarevich.buisness.order.dao.impl.OrderDAO;
 import bsuir.vintsarevich.buisness.orderproduct.dao.IOrderProductDao;
 import bsuir.vintsarevich.connectionpool.ConnectionPool;
-import bsuir.vintsarevich.entity.OrderProducts;
+import bsuir.vintsarevich.entity.OrderProduct;
 import bsuir.vintsarevich.exception.dao.ConnectionException;
 import bsuir.vintsarevich.exception.dao.DaoException;
 import org.apache.log4j.Level;
@@ -30,16 +30,15 @@ public class OrderProductDAO implements IOrderProductDao {
     private PreparedStatement statement;
 
     @Override
-    public boolean addOrderProduct(OrderProducts orderProducts) throws DaoException {
-        LOGGER.log(Level.DEBUG, "Product DAO: Add order start");
+    public boolean addOrderProduct(OrderProduct orderProduct) throws DaoException {
+        LOGGER.log(Level.DEBUG, "OrderProduct DAO: Add order start");
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = null;
             statement = connection.prepareStatement(ADD_ORDER_PRODUCT);
-            statement.setInt(1, orderProducts.getOrderId());
-            statement.setInt(2, orderProducts.getProductId());
-            statement.setInt(3, orderProducts.getProductCount());
+            statement.setInt(1, orderProduct.getOrderId());
+            statement.setInt(2, orderProduct.getProductId());
+            statement.setInt(3, orderProduct.getProductCount());
             if (statement.executeUpdate() != 0) {
                 LOGGER.log(Level.DEBUG, "Add order product success");
                 return true;
@@ -48,25 +47,20 @@ public class OrderProductDAO implements IOrderProductDao {
                 return false;
             }
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(addOrderProduct)", e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
-            LOGGER.log(Level.DEBUG, "Product DAO: Add order product finish");
+            LOGGER.log(Level.DEBUG, "OrderProduct DAO: Add order product finish");
         }
     }
 
     @Override
     public boolean deleteOrderProduct(Integer orderId, Integer productId) throws DaoException {
-        LOGGER.log(Level.DEBUG, "Product DAO: Delete orderProduct start");
+        LOGGER.log(Level.DEBUG, "Order Product DAO: Delete orderProduct start");
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
@@ -81,19 +75,14 @@ public class OrderProductDAO implements IOrderProductDao {
                 return false;
             }
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(deleteOrderProduct)", e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
-            LOGGER.log(Level.DEBUG, "Product DAO: Delete orderProduct finish");
+            LOGGER.log(Level.DEBUG, "Order Product DAO: Delete orderProduct finish");
         }
     }
 
@@ -103,7 +92,6 @@ public class OrderProductDAO implements IOrderProductDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = null;
             statement = connection.prepareStatement(EDIT_ORDER_PRODUCT);
             statement.setInt(1, productCount);
             statement.setInt(2, productId);
@@ -116,14 +104,9 @@ public class OrderProductDAO implements IOrderProductDao {
                 return false;
             }
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(edit order product)", e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
@@ -138,22 +121,15 @@ public class OrderProductDAO implements IOrderProductDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = null;
             statement = connection.prepareStatement(FIND_ORDER_PRODUCT);
             statement.setInt(1, productId);
             statement.setInt(2, orderId);
-            resultSet = null;
             resultSet = statement.executeQuery();
             return resultSet.next();
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(edit order product)", e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
@@ -169,23 +145,16 @@ public class OrderProductDAO implements IOrderProductDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = null;
             statement = connection.prepareStatement(FIND_ORDER_PRODUCT_COUNT);
             statement.setInt(1, productId);
-            resultSet = null;
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 return resultSet.getInt("productCount");
             }
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(find count order product)", e);
+            return null;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
@@ -201,7 +170,6 @@ public class OrderProductDAO implements IOrderProductDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = null;
             statement = connection.prepareStatement(EDIT_ORDER_PRODUCT_PAYMENT);
             statement.setInt(1, orderIdNew);
             statement.setInt(2, orderId);
@@ -213,14 +181,9 @@ public class OrderProductDAO implements IOrderProductDao {
                 return false;
             }
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(edit order product payment)", e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);

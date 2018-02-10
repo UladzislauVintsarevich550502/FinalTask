@@ -32,7 +32,7 @@ public class SecurityFilter implements Filter {
             if (commandName == null) {
                 commandRole = "none";
             } else {
-                commandRole = commandName.getValue();
+                commandRole = commandName.getRole();
             }
             if (!commandRole.equals("none")) {
                 User user = (User) ((HttpServletRequest) request).getSession().getAttribute("user");
@@ -48,7 +48,6 @@ public class SecurityFilter implements Filter {
                 }
             }
         }catch (IllegalArgumentException e){
-            System.out.println("dcsdscsdcsmeljfvnlevjlevnkjenvkje");
             HttpServletRequest req = (HttpServletRequest) request;
             HttpServletResponse resp = (HttpServletResponse) response;
             RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher(JspPageName.ERROR.getPath());

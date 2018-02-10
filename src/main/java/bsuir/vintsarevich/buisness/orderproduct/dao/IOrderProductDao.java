@@ -1,13 +1,13 @@
 package bsuir.vintsarevich.buisness.orderproduct.dao;
 
-import bsuir.vintsarevich.entity.OrderProducts;
+import bsuir.vintsarevich.entity.OrderProduct;
 import bsuir.vintsarevich.exception.dao.DaoException;
 
 public interface IOrderProductDao {
 
-    boolean addOrderProduct(OrderProducts orderProducts) throws DaoException;
+    boolean addOrderProduct(OrderProduct orderProduct) throws DaoException;
 
-    boolean deleteOrderProduct(Integer ordertId, Integer productId) throws DaoException;
+    boolean deleteOrderProduct(Integer orderId, Integer productId) throws DaoException;
 
     boolean editOrderProduct(Integer productId, Integer productCount, Integer orderId) throws DaoException;
 

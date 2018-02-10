@@ -13,7 +13,6 @@ public class ChooseBanner {
         } else {
             banner = "/front/jsp/common/banner.jsp";
         }
-        System.out.println(banner);
         return banner;
     }
 }

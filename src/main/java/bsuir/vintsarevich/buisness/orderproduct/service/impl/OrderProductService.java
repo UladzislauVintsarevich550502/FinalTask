@@ -1,10 +1,8 @@
 package bsuir.vintsarevich.buisness.orderproduct.service.impl;
 
-import bsuir.vintsarevich.buisness.order.dao.IOrderDao;
 import bsuir.vintsarevich.buisness.order.service.impl.OrderService;
-import bsuir.vintsarevich.buisness.orderproduct.dao.IOrderProductDao;
 import bsuir.vintsarevich.buisness.orderproduct.service.IOrderProductService;
-import bsuir.vintsarevich.entity.OrderProducts;
+import bsuir.vintsarevich.entity.OrderProduct;
 import bsuir.vintsarevich.exception.dao.DaoException;
 import bsuir.vintsarevich.exception.service.ServiceException;
 import bsuir.vintsarevich.factory.dao.DaoFactory;
@@ -18,50 +16,38 @@ public class OrderProductService implements IOrderProductService {
 
     @Override
     public boolean addOrderProduct(Integer clientId, Integer productId, Integer productCount) throws ServiceException {
-        IOrderDao orderDao = daoFactory.getOrderDao();
         LOGGER.log(Level.DEBUG, "Order Product service: start addOrderProducts");
-        IOrderProductDao orderProductDao = daoFactory.getOrderProductDao();
-        OrderProducts orderProducts;
         try {
-            Integer orderId = orderDao.getOrderIdByClientId(clientId);
-            orderProducts = new OrderProducts(orderId, productId, productCount);
-            if (orderProductDao.addOrderProduct(orderProducts)) {
-                return true;
-            }
+            Integer orderId = daoFactory.getOrderDao().getOrderIdByClientId(clientId);
+            OrderProduct orderProduct = new OrderProduct(orderId, productId, productCount);
+            LOGGER.log(Level.DEBUG, "Order Product service: finish addOrderProducts");
+            return daoFactory.getOrderProductDao().addOrderProduct(orderProduct);
         } catch (DaoException e) {
-            LOGGER.log(Level.DEBUG, e.getMessage());
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "Order Product service: finish addOrderProducts");
-        return false;
     }
 
     @Override
     public boolean deleteOrderProduct(Integer clientId, Integer productId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Product DAO: Delete orderProduct start");
-        IOrderProductDao orderProductDao = daoFactory.getOrderProductDao();
-        IOrderDao orderDao = daoFactory.getOrderDao();
-        OrderProducts orderProducts;
         try {
-            Integer orderId = orderDao.getOrderIdByClientId(clientId);
-            orderProductDao.deleteOrderProduct(orderId, productId);
+            Integer orderId = daoFactory.getOrderDao().getOrderIdByClientId(clientId);
+            LOGGER.log(Level.DEBUG, "ProductService: finish orderProduct client");
+            return daoFactory.getOrderProductDao().deleteOrderProduct(orderId, productId);
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "ProductService: finish orderProduct client");
-        return true;
     }
 
     @Override
-    public boolean editOrderProductPayment(Integer orderIdNew,Integer orderId) throws ServiceException {
+    public boolean editOrderProductPayment(Integer orderIdNew, Integer orderId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "OrderProduct Service: edit orderProduct start");
-        IOrderProductDao orderProductDao=daoFactory.getOrderProductDao();
         try {
-            orderProductDao.editOrderProductPayment(orderIdNew,orderId);
+            LOGGER.log(Level.DEBUG, "OrderProduct Service: edit orderProduct finish");
+            return daoFactory.getOrderProductDao().editOrderProductPayment(orderIdNew, orderId);
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "OrderProduct Service: edit orderProduct finish");
-        return false;
     }
 
 }

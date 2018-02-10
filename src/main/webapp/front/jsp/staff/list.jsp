@@ -9,7 +9,7 @@
 <!-- Section -->
 <section>
     <header class="major">
-        <h2>Cписок заказов</h2>
+        <h2>${list_orders_word}</h2>
     </header>
 
     <ul>
@@ -18,12 +18,12 @@
                 <c:forEach var="order" items="${orders}">
                     <h3>${order.id}</h3>
                     <div style="display: inline-block">
-                        <h3 id="COST" style="float: left">Итого: ${order.cost} BYN</h3>
-                        <label id="cost_data" for="COST">Дата получения: ${order.date}</label>
+                        <h3 id="COST" style="float: left">${total_word}: ${order.cost} BYN</h3>
+                        <label id="cost_data" for="COST">${date_of_receiving_word}: ${order.date}</label>
                     </div>
                     <li>
-                        <a class="button" href="/cafe.by/order_accept?order_id=${order.id}">Подтвердить</a>
-                        <a class="button" href="/cafe.by/order_deny?order_id=${order.id}">Отменить</a>
+                        <a class="button" href="/cafe.by/order_accept?order_id=${order.id}">${submit_word}</a>
+                        <a class="button" href="/cafe.by/order_deny?order_id=${order.id}">${deny_word}</a>
                     </li>
                 </c:forEach>
             </c:when>

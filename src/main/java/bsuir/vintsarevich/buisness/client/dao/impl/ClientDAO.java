@@ -35,11 +35,10 @@ public class ClientDAO implements IClientDao {
     private Connection connection;
     private ResultSet resultSet;
     private PreparedStatement statement;
-    private List<Client> clients;
 
     @Override
     public boolean addPoints(Double points, Integer clientId) throws DaoException {
-        LOGGER.log(Level.DEBUG, "DiscountDao: start addPoints");
+        LOGGER.log(Level.DEBUG, "ClientDao: start addPoints");
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
@@ -47,73 +46,62 @@ public class ClientDAO implements IClientDao {
             statement.setInt(1, clientId);
             resultSet = statement.executeQuery();
             Double existingPoints;
-            if (resultSet.first())
+            if (resultSet.first()) {
                 existingPoints = resultSet.getDouble("clientPoint");
-            else
-                throw new DaoException("Client with given id is not exist");
-
+            } else {
+                return false;
+            }
             statement = connection.prepareStatement(SET_POINTS);
             statement.setDouble(1, existingPoints + points);
             statement.setInt(2, clientId);
             if (statement.executeUpdate() != 0) {
-                LOGGER.log(Level.DEBUG, "DiscountDao: success addPoints");
+                LOGGER.log(Level.DEBUG, "ClientDao: success addPoints");
                 return true;
             }
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(addPoints)", e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
         }
-        LOGGER.log(Level.DEBUG, "DiscountDao: finish addPoints");
+        LOGGER.log(Level.DEBUG, "ClientDao: finish addPoints");
         return false;
     }
 
     @Override
     public boolean clearPoints(Integer clientId) throws DaoException {
-        LOGGER.log(Level.DEBUG, "DiscountDao: start clearPoints");
+        LOGGER.log(Level.DEBUG, "ClientDao: start clearPoints");
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
             statement = connection.prepareStatement(CLEAR_POINTS);
             statement.setInt(1, clientId);
             if (statement.executeUpdate() != 0) {
-                LOGGER.log(Level.DEBUG, "DiscountDao: success clearPoints");
+                LOGGER.log(Level.DEBUG, "ClientDao: success clearPoints");
                 return true;
             }
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(clearPoints)", e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
         }
-        LOGGER.log(Level.DEBUG, "DiscountDao: finish clearPoints");
+        LOGGER.log(Level.DEBUG, "ClientDao: finish clearPoints");
         return false;
     }
 
     @Override
     public Client addClient(Client client) throws DaoException {
-        LOGGER.log(Level.DEBUG, "Client DAO: start SignUp");
+        LOGGER.log(Level.DEBUG, "Client DAO: start add");
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            System.out.println(client);
             statement = connection.prepareStatement(ADD_CLIENT);
             statement.setString(1, client.getName());
             statement.setString(2, client.getSurname());
@@ -123,30 +111,24 @@ public class ClientDAO implements IClientDao {
             statement.setString(6, client.getStatus());
             statement.setDouble(7, client.getPoint());
             if (statement.executeUpdate() != 0) {
-                LOGGER.log(Level.INFO, "Client DAO: Client adds successful");
                 return getClientByLogin(client.getLogin());
             }
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(addClient)", e);
+            return null;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
         }
-        LOGGER.log(Level.DEBUG, "Client DAO: finish SignUp");
+        LOGGER.log(Level.DEBUG, "Client DAO: finish add");
         return null;
     }
 
     @Override
     public boolean deleteClient(Integer id) throws DaoException {
-        LOGGER.log(Level.DEBUG, "Client DAO: Delete product start");
+        LOGGER.log(Level.DEBUG, "Client DAO: Delete client start");
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
@@ -160,14 +142,9 @@ public class ClientDAO implements IClientDao {
                 return false;
             }
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(deleteClient)", e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
@@ -184,8 +161,6 @@ public class ClientDAO implements IClientDao {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
             statement = connection.prepareStatement(GET_CLIENT_BY_LOGIN_AND_PASSWORD);
-            System.out.println(login);
-            System.out.println(password);
             statement.setString(1, login);
             statement.setString(2, password);
             resultSet = statement.executeQuery();
@@ -193,14 +168,9 @@ public class ClientDAO implements IClientDao {
                 clientEntity = createClientByResultSet(resultSet);
             }
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(signIn)", e);
+            return null;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
@@ -212,7 +182,7 @@ public class ClientDAO implements IClientDao {
 
     @Override
     public Client getClientByLogin(String clientLogin) throws DaoException {
-        LOGGER.log(Level.DEBUG, "Client DAO: start get Client bu login");
+        LOGGER.log(Level.DEBUG, "Client DAO: start get Client by login");
         Client clientEntity = null;
         try {
             connectionPool = ConnectionPool.getInstance();
@@ -224,21 +194,21 @@ public class ClientDAO implements IClientDao {
                 clientEntity = createClientByResultSet(resultSet);
             }
         } catch (SQLException e) {
-            throw new DaoException("Error with adding in database" + e);
+            return null;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
+            LOGGER.log(Level.DEBUG, "Client DAO: finish get Client by login");
         }
-        LOGGER.log(Level.DEBUG, "Client DAO: finish get Client by login");
         return clientEntity;
     }
 
     @Override
     public Client getClientById(Integer clientId) throws DaoException {
-        LOGGER.log(Level.DEBUG, "Client DAO: start get Client by ib");
+        LOGGER.log(Level.DEBUG, "Client DAO: start get Client by id");
         Client clientEntity = null;
         try {
             connectionPool = ConnectionPool.getInstance();
@@ -250,21 +220,22 @@ public class ClientDAO implements IClientDao {
                 clientEntity = createClientByResultSet(resultSet);
             }
         } catch (SQLException e) {
-            throw new DaoException("Error with adding in database" + e);
+            return null;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
+            LOGGER.log(Level.DEBUG, "Client DAO: finish get Client by id");
         }
-        LOGGER.log(Level.DEBUG, "Client DAO: finish get Client by id");
         return clientEntity;
     }
 
     @Override
     public List<Client> getAllClients() throws DaoException {
         LOGGER.log(Level.DEBUG, "Client DAO: Start get all clients");
+        List<Client> clients;
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
@@ -281,14 +252,9 @@ public class ClientDAO implements IClientDao {
             } while (resultSet.next());
             LOGGER.log(Level.INFO, clients);
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(getAllclients)", e);
+            return null;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
@@ -323,37 +289,14 @@ public class ClientDAO implements IClientDao {
                 return false;
             }
         } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException e1) {
-                throw new DaoException(e);
-            }
-            throw new DaoException("Error of query to database(Change status)", e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
             LOGGER.log(Level.DEBUG, "Client DAO: Change status finish");
-        }
-    }
-
-    private Client createClientByResultSet(ResultSet resultSet) throws DaoException {
-        Client client = new Client();
-        try {
-            client.setId(resultSet.getInt("clientId"));
-            client.setName(resultSet.getString("clientName"));
-            client.setSurname(resultSet.getString("clientSurname"));
-            client.setLogin(resultSet.getString("clientLogin"));
-            client.setPassword(resultSet.getString("clientPassword"));
-            client.setEmail(resultSet.getString("clientEmail"));
-            client.setStatus(resultSet.getString("clientStatus"));
-            client.setPoint(resultSet.getDouble("clientPoint"));
-            System.out.println(client);
-            return client;
-        } catch (SQLException e) {
-            throw new DaoException(e);
         }
     }
 
@@ -371,15 +314,15 @@ public class ClientDAO implements IClientDao {
                 return true;
             }
         } catch (SQLException e) {
-            throw new DaoException("Error with adding in database" + e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
+            LOGGER.log(Level.DEBUG, "Client DAO: finish check password");
         }
-        LOGGER.log(Level.DEBUG, "Client DAO: finish check password");
         return false;
     }
 
@@ -396,15 +339,15 @@ public class ClientDAO implements IClientDao {
                 return true;
             }
         } catch (SQLException e) {
-            throw new DaoException("Error with adding in database" + e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
+            LOGGER.log(Level.DEBUG, "Client DAO: finish change password");
         }
-        LOGGER.log(Level.DEBUG, "Client DAO: finish change password");
         return false;
     }
 
@@ -421,15 +364,32 @@ public class ClientDAO implements IClientDao {
                 return true;
             }
         } catch (SQLException e) {
-            throw new DaoException("Error with adding in database" + e);
+            return false;
         } catch (ConnectionException e) {
-            throw new DaoException("Error with connection with database" + e);
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
             if (connectionPool != null) {
                 connectionPool.putBackConnection(connection, statement, resultSet);
             }
+            LOGGER.log(Level.DEBUG, "Client DAO: finish edit points");
         }
-        LOGGER.log(Level.DEBUG, "Client DAO: finish edit points");
         return false;
+    }
+
+    private Client createClientByResultSet(ResultSet resultSet) throws DaoException {
+        Client client = new Client();
+        try {
+            client.setId(resultSet.getInt("clientId"));
+            client.setName(resultSet.getString("clientName"));
+            client.setSurname(resultSet.getString("clientSurname"));
+            client.setLogin(resultSet.getString("clientLogin"));
+            client.setPassword(resultSet.getString("clientPassword"));
+            client.setEmail(resultSet.getString("clientEmail"));
+            client.setStatus(resultSet.getString("clientStatus"));
+            client.setPoint(resultSet.getDouble("clientPoint"));
+            return client;
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        }
     }
 }

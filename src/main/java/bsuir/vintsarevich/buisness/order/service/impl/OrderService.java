@@ -1,14 +1,10 @@
 package bsuir.vintsarevich.buisness.order.service.impl;
 
-import bsuir.vintsarevich.buisness.order.dao.IOrderDao;
 import bsuir.vintsarevich.buisness.order.service.IOrderService;
-import bsuir.vintsarevich.buisness.product.dao.IProductDao;
 import bsuir.vintsarevich.entity.Order;
-import bsuir.vintsarevich.entity.Product;
 import bsuir.vintsarevich.exception.dao.DaoException;
 import bsuir.vintsarevich.exception.service.ServiceException;
 import bsuir.vintsarevich.factory.dao.DaoFactory;
-import com.sun.org.apache.xpath.internal.operations.Or;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -19,162 +15,128 @@ public class OrderService implements IOrderService {
     private static final Logger LOGGER = Logger.getLogger(OrderService.class);
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
-
     @Override
     public boolean addOrder(String orderType, Double orderCost, Integer clientId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order service: start addOrder");
-        IOrderDao orderDao = daoFactory.getOrderDao();
         Order order;
         try {
+            LOGGER.log(Level.DEBUG, "Order service: finish addOrder");
             order = new Order(orderType, orderCost, clientId);
-            if (orderDao.addOrder(order)) {
-                return true;
-            }
+            return daoFactory.getOrderDao().addOrder(order);
         } catch (DaoException e) {
-            LOGGER.log(Level.DEBUG, e.getMessage());
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "Order service: finish addOrder");
-        return false;
     }
 
     @Override
     public boolean editOrder(Integer clientId, Double orderCost, Integer productCount) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order service: start edit order");
-        IOrderDao orderDao = daoFactory.getOrderDao();
         try {
-            orderDao.editOrder(clientId, orderCost, productCount);
+            LOGGER.log(Level.DEBUG, "Order service: finish edit order");
+            return daoFactory.getOrderDao().editOrder(clientId, orderCost, productCount);
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "Order service: finish edit order");
-        return true;
     }
 
     @Override
     public Double getOrderCost(Integer clientId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order service: get Order cost start");
-        IOrderDao orderDao = daoFactory.getOrderDao();
-        Double orderCost;
         try {
-            orderCost = (orderDao.getOrderByClientId(clientId)).getCost();
+            LOGGER.log(Level.DEBUG, "Order service: get Order cost finish");
+            return daoFactory.getOrderDao().getOrderByClientId(clientId).getCost();
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "Order service: get Order cost finish");
-        return orderCost;
     }
 
     @Override
     public Integer paymentOrder(String orderType, String orderData, Double orderCost, Integer clientId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order service: start payment order");
-        IOrderDao orderDao = daoFactory.getOrderDao();
-        Order order;
         try {
-            order = new Order(orderType, orderData, orderCost, clientId);
-            return orderDao.paymentOrder(order);
+            Order order = new Order(orderType, orderData, orderCost, clientId);
+            LOGGER.log(Level.DEBUG, "Order service: finish payment order");
+            return daoFactory.getOrderDao().paymentOrder(order);
         } catch (DaoException e) {
-            LOGGER.log(Level.DEBUG, e.getMessage());
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "Order service: finish payment order");
-        return null;
     }
 
     @Override
     public boolean clearOrderCost(Integer orderId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order service: start clear order");
-        IOrderDao orderDao = daoFactory.getOrderDao();
         try {
-            orderDao.clearOrderCost(orderId);
+            LOGGER.log(Level.DEBUG, "Order service: finish clear order");
+            return daoFactory.getOrderDao().clearOrderCost(orderId);
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "Order service: finish clear order");
-        return true;    }
+    }
 
     @Override
     public List<Order> getPaymentOrdersByClientId(Integer clientId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order Service: start get orders by clientId");
-        List<Order> orders;
         try {
-            IOrderDao orderDao = daoFactory.getOrderDao();
-            orders = orderDao.getPaymentOrdersByClientId(clientId);
+            LOGGER.log(Level.DEBUG, "Order Service: Finish get orders by clientId");
+            return daoFactory.getOrderDao().getPaymentOrdersByClientId(clientId);
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "Order Service: Finish get orders by clientId");
-        return orders;
     }
 
     @Override
     public Integer getOrderIdByClientId(Integer clientId) throws ServiceException {
-        LOGGER.log(Level.DEBUG,"Order Service: start get order id");
-        IOrderDao orderDao = daoFactory.getOrderDao();
+        LOGGER.log(Level.DEBUG, "Order Service: start get order id");
         try {
-            return orderDao.getOrderIdByClientId(clientId);
+            LOGGER.log(Level.DEBUG, "Order Service: finish get order id");
+            return daoFactory.getOrderDao().getOrderIdByClientId(clientId);
         } catch (DaoException e) {
-            LOGGER.log(Level.DEBUG, e.getMessage());
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG,"Order Service: finish get order id");
-        return null;
     }
 
     @Override
     public List<Order> getAllOrdersByClientId(Integer clientId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order Service: start get all orders by clientId");
-        List<Order> orders;
         try {
-            IOrderDao orderDao = daoFactory.getOrderDao();
-            orders = orderDao.getAllOrdersByClientId(clientId);
+            LOGGER.log(Level.DEBUG, "Order Service: Finish get all orders by clientId");
+            return daoFactory.getOrderDao().getAllOrdersByClientId(clientId);
         } catch (DaoException e) {
-            throw new ServiceException(e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "Order Service: Finish get all orders by clientId");
-        return orders;
     }
 
     @Override
     public List<Order> getAllOrderedOrders() throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order Service: start get all ordered orders");
-        List<Order> orders;
         try {
-            orders = daoFactory.getOrderDao().getAllOrderedOrders();
+            LOGGER.log(Level.DEBUG, "Order Service: Success get all orders by clientId");
+            return daoFactory.getOrderDao().getAllOrderedOrders();
         } catch (DaoException e) {
-            LOGGER.log(Level.DEBUG, "Order Service: finish get all orders by clientId");
-            throw new ServiceException(e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "Order Service: Success get all orders by clientId");
-        return orders;
     }
 
     @Override
     public boolean deleteOrder(Integer orderId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order Service: start delete order");
         try {
-            if (daoFactory.getOrderDao().deleteOrder(orderId)) {
-                LOGGER.log(Level.DEBUG, "Order Service: success delete order");
-                return true;
-            } else {
-                LOGGER.log(Level.DEBUG, "Order Service: finish delete order");
-                return false;
-            }
-        } catch (DaoException e) {
             LOGGER.log(Level.DEBUG, "Order Service: finish get all orders by clientId");
-            throw new ServiceException(e);
+            return daoFactory.getOrderDao().deleteOrder(orderId);
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
     }
 
     @Override
     public Order getOrderByOrderId(Integer orderId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order Service: start getOrderByOrderId");
-        Order order;
         try {
-            order = daoFactory.getOrderDao().getOrderByOrderId(orderId);
+            LOGGER.log(Level.DEBUG, "Order Service: Success getOrderByOrderId");
+            return daoFactory.getOrderDao().getOrderByOrderId(orderId);
         } catch (DaoException e) {
-            LOGGER.log(Level.DEBUG, "Order Service: finish getOrderByOrderId");
-            throw new ServiceException(e);
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
-        LOGGER.log(Level.DEBUG, "Order Service: Success getOrderByOrderId");
-        return order;
     }
 }
 

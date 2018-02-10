@@ -1,11 +1,20 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div id="add-form"> <!— форма входа —>
+<div id="add-form">
         <h2>${add_product_word}</h2>
         <p class="fieldset">
             <select id="product-type" name="product_type">
                 <option value="" disabled selected>${type_product_word}</option>
-                <option value="drink">${type_drink_word}</option>
-                <option value="food">${type_food_word}</option>
+                <option value="soup" >${soup_word}</option>
+                <option value="hotDish">${hot_dishes_word}</option>
+                <option value="bakeryProduct">${bakery_products_word}</option>
+                <option value="salad">${salad_word}</option>
+                <option value="garnish">${garnish_word}</option>
+                <option value="pizza">${pizza_word}</option>
+                <option value="dessert">${desserts_word}</option>
+                <option value="juice">${juice_word}</option>
+                <option value="water">${water_word}</option>
+                <option value="hotDrink">${hot_drink_word}</option>
+                <option value="lemonade">${lemonade_word}</option>
             </select>
             <span class="cd-error-message">${make_choose}</span>
         </p>
@@ -45,4 +54,4 @@
     <input type="file" style="display:none;" id="file" name="file" multiple
            accept="image/*,image/jpeg"/>
     <input type="submit" id="add" value=${add_button_word}>
-</div> <!— login —>
+</div>

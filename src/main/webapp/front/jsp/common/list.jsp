@@ -59,7 +59,7 @@
                 </c:when>
                 <c:otherwise>
                     <article>
-                        <h2>Nothing</h2>
+                        <h2>${found_nothing_word}</h2>
                     </article>
                 </c:otherwise>
             </c:choose>

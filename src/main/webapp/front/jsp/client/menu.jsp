@@ -28,21 +28,24 @@
                     <p>${range_word}</p>
                     <span class="opener" id="type_food">${type_food_word1}</span>
                     <ul>
-                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=soupe">Soups</a></li>
-                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=hotDish">Hot dishes</a></li>
-                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=dessert">Desserts</a></li>
-                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=salad">Salads</a></li>
+                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=soup">${soup_word}</a></li>
+                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=hotDish">${hot_dishes_word}</a></li>
+                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=bakeryProduct">${bakery_products_word}</a></li>
+                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=salad">${salad_word}</a></li>
+                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=garnish">${garnish_word}</a></li>
+                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=pizza">${pizza_word}</a></li>
+                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=dessert">${desserts_word}</a></li>
                     </ul>
                     <span class="opener" id="type_drink">${type_drink_word1}</span>
                     <ul class="podmenu">
-                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=juices">Juices</a></li>
-                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=water">Water</a></li>
-                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=hotDrink">Hot drinks</a></li>
-                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=soda">Soda</a></li>
+                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=juice">${juice_word}</a></li>
+                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=water">${water_word}</a></li>
+                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=hotDrink">${hot_drink_word}</a></li>
+                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=lemonade">${lemonade_word}</a></li>
                     </ul>
                 </li>
                 <li><a href="/cafe.by/basket">${basket_word}</a></li>
-                <li><a href="/cafe.by/change_password_forward">Сменить пароль</a></li>
+                <li><a href="/cafe.by/change_password_forward">${change_password_word}</a></li>
             </ul>
         </nav>
 

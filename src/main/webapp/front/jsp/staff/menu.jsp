@@ -19,8 +19,8 @@
                 <h2>${menu_word}</h2>
             </header>
             <ul>
-                <li><a href="/cafe.by/order_show">Список заказов</a></li>
-                <li><a href="/cafe.by/change_password_forward">Сменить пароль</a></li>
+                <li><a href="/cafe.by/order_show">${list_orders_word}</a></li>
+                <li><a href="/cafe.by/change_password_forward">${change_password_word}</a></li>
             </ul>
         </nav>
 

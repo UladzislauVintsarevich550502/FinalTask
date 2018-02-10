@@ -8,14 +8,14 @@
         <div id="login"> <!-- форма входа -->
             <form id="login-form" class="cd-form" method="POST" action="/cafe.by/sign_in">
                 <p class="fieldset">
-                    <label class="image-replace cd-login" for="signin-login">Логин</label>
+                    <label class="image-replace cd-login" for="signin-login">${login_word}</label>
                     <input class="full-width has-padding has-border" name="signin_login" id="signin-login" type="text"
                            placeholder="${login_word}">
                     <span class="cd-error-message">${mistake_login_word}</span>
                 </p>
 
                 <p class="fieldset">
-                    <label class="image-replace cd-password" for="signin-password">Пароль</label>
+                    <label class="image-replace cd-password" for="signin-password">${password_word}</label>
                     <input class="full-width has-padding has-border" name="signin_password" id="signin-password"
                            type="text" placeholder="${password_word}">
                     <a href="#0" id="a-signin-password" class="hide-password">""</a>
@@ -39,7 +39,7 @@
         <div id="cd-signup"> <!-- форма регистрации -->
             <form id="signup-form" class="cd-form" method="POST" action="/cafe.by/sign_up">
                 <p class="fieldset">
-                    <label class="image-replace cd-surname" for="signup-surname">Фамилия</label>
+                    <label class="image-replace cd-surname" for="signup-surname">${surname_word}</label>
                     <input class="full-width has-padding has-border" name="signup_surname" id="signup-surname"
                            type="text"
                            placeholder=${surname_word}>
@@ -47,28 +47,28 @@
                 </p>
 
                 <p class="fieldset">
-                    <label class="image-replace cd-name" for="signup-name">Name</label>
+                    <label class="image-replace cd-name" for="signup-name">${name_word}</label>
                     <input class="full-width has-padding has-border" name="signup_name" id="signup-name" type="text"
                            placeholder=${name_word}>
                     <span class="cd-error-message">${mistake_name_word}</span>
                 </p>
 
                 <p class="fieldset">
-                    <label class="image-replace cd-login" for="signin-login">Login</label>
+                    <label class="image-replace cd-login" for="signin-login">${login_word}</label>
                     <input class="full-width has-padding has-border" name="signup_login" id="signup-login" type="text"
                            placeholder=${login_word}>
                     <span class="cd-error-message">${mistake_login_word}</span>
                 </p>
 
                 <p class="fieldset">
-                    <label class="image-replace cd-email" for="signup-email">E-mail</label>
+                    <label class="image-replace cd-email" for="signup-email">${email_word}</label>
                     <input class="full-width has-padding has-border" name="signup_email" id="signup-email"
                            type="email" placeholder=${email_word}>
                     <span class="cd-error-message">${mistake_email_word}</span>
                 </p>
 
                 <p class="fieldset">
-                    <label class="image-replace cd-password" for="signup-password">Password</label>
+                    <label class="image-replace cd-password" for="signup-password">{password_word}</label>
                     <input class="full-width has-padding has-border" name="signup_password" id="signup-password"
                            type="text"
                            placeholder=${password_word}>
@@ -77,7 +77,7 @@
                 </p>
 
                 <p class="fieldset">
-                    <label class="image-replace cd-password" for="signup-rePassword">rePassword</label>
+                    <label class="image-replace cd-password" for="signup-rePassword">{re_password_word}</label>
                     <input class="full-width has-padding has-border" id="signup-rePassword" type="text"
                            placeholder=${re_password_word}>
                     <a href="#0" class="hide-password">""</a>
@@ -96,7 +96,7 @@
 
             <form class="cd-form">
                 <p class="fieldset">
-                    <label class="image-replace cd-email" for="reset-email">E-mail</label>
+                    <label class="image-replace cd-email" for="reset-email">${email_word}</label>
                     <input class="full-width has-padding has-border" id="reset-email" type="email"
                            placeholder=${email_word}>
                     <span class="cd-error-message">${mistake_email_word}</span>

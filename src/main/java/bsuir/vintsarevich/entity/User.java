@@ -9,6 +9,20 @@ public class User {
     private String status;
     private Boolean account;
     private Double point;
+    private Integer isMain;
+
+    public User(Integer id, String login, String role, Integer isMain) {
+        this.id = id;
+        this.login = login;
+        this.role = role;
+        this.isMain = isMain;
+    }
+
+    public User(Integer id, String login, String role) {
+        this.id = id;
+        this.login = login;
+        this.role = role;
+    }
 
     public User(Integer id, String login, String role, String name, String surname, String status, Boolean account) {
         this.id = id;
@@ -95,6 +109,14 @@ public class User {
         this.point = point;
     }
 
+    public Integer getIsMain() {
+        return isMain;
+    }
+
+    public void setIsMain(Integer isMain) {
+        this.isMain = isMain;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -109,7 +131,8 @@ public class User {
         if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
         if (status != null ? !status.equals(user.status) : user.status != null) return false;
         if (account != null ? !account.equals(user.account) : user.account != null) return false;
-        return point != null ? point.equals(user.point) : user.point == null;
+        if (point != null ? !point.equals(user.point) : user.point != null) return false;
+        return isMain != null ? isMain.equals(user.isMain) : user.isMain == null;
     }
 
     @Override
@@ -122,6 +145,7 @@ public class User {
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (account != null ? account.hashCode() : 0);
         result = 31 * result + (point != null ? point.hashCode() : 0);
+        result = 31 * result + (isMain != null ? isMain.hashCode() : 0);
         return result;
     }
 
@@ -136,6 +160,7 @@ public class User {
                 ", status='" + status + '\'' +
                 ", account=" + account +
                 ", point=" + point +
+                ", isMain=" + isMain +
                 '}';
     }
 }

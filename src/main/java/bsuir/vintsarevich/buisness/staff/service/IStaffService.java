@@ -6,7 +6,7 @@ import bsuir.vintsarevich.exception.service.ServiceException;
 import java.util.List;
 
 public interface IStaffService {
-    boolean signUp(String staffLogin, String staffPassword);
+    boolean signUp(String staffLogin, String staffPassword) throws ServiceException;
 
     boolean deleteStaff(Integer id) throws ServiceException;
 
