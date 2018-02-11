@@ -40,7 +40,6 @@ jQuery(document).ready(function ($) {
         }
     });
 
-
     $('form#staff-form').on('click', function (e) {
 
         $('#a-image-name').on('click', function () {
@@ -267,4 +266,53 @@ jQuery(document).ready(function ($) {
         }
     });
 
+    $('form#changePassword-form').on('click', function (e) {
+        var passwordReg = new RegExp('[a-zA-Z-_0-9]{6,}');
+
+        var $form_modal = $('input#changePassword-form');
+        var $form_add = $form_modal.find('#cd-changePassword');
+
+        var passwordOld = $('input#changePassword-old').val();
+        var password = $('input#changePassword-new').val();
+        var repassword = $('input#changePassword-re-new').val();
+
+        var $numberCorrectField = 0;
+
+        if (passwordOld.length >= 4 && passwordReg.test(passwordOld)) {
+            $('input#changePassword-old').css('border-color', 'green');
+            $form_add.find('a#a-changePassword-old').removeClass('has-error').next('span').removeClass('is-visible');
+            $numberCorrectField++;
+        } else {
+            if (passwordOld.length != 0) {
+                $('input#changePassword-old').css('border-color', 'red');
+                $form_add.find('a#a-changePassword-old').addClass('has-error').next('span').addClass('is-visible');
+            }
+        }
+
+        if (password.length >= 4 && passwordReg.test(password)) {
+            $('input#changePassword-new').css('border-color', 'green');
+            $form_add.find('a#a-changePassword-new').removeClass('has-error').next('span').removeClass('is-visible');
+            $numberCorrectField++;
+        } else {
+            if (password.length != 0) {
+                $('input#changePassword-new').css('border-color', 'red');
+                $form_add.find('a#a-changePassword-new').addClass('has-error').next('span').addClass('is-visible');
+            }
+        }
+
+        if (repassword == password && repassword.length >= 4) {
+            $('input#changePassword-re-new').css('border-color', 'green');
+            $form_add.find('a#a-changePassword-re-new').removeClass('has-error').next('span').removeClass('is-visible');
+            $numberCorrectField++;
+        } else {
+            if (repassword.length != 0) {
+                $('input#changePassword-re-new').css('border-color', 'red');
+                $form_add.find('a#a-changePassword-re-new').addClass('has-error').next('span').addClass('is-visible');
+            }
+        }
+
+        if ($numberCorrectField != 3) {
+            e.preventDefault();
+        }
+    });
 });

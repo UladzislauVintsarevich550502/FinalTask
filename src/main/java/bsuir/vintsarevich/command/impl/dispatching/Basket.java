@@ -64,6 +64,7 @@ public class Basket implements ICommand {
                 request.setAttribute("orderCost", orderService.getOrderCost(clientId));
                 request.setAttribute("orders", orders);
                 request.setAttribute("point", clientService.getClientById(clientId).getPoint());
+                rewrite(request);
             } else {
                 diagnoseError(request);
             }
@@ -77,10 +78,17 @@ public class Basket implements ICommand {
 
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.setAttribute(AttributeName.BASKET_ERROR.getValue(), "Ничего не найдено");
+            request.getSession().setAttribute(AttributeName.BASKET_ERROR.getValue(), "Ничего не найдено");
         } else {
-            request.setAttribute(AttributeName.BASKET_ERROR.getValue(), "Nothing found");
+            request.getSession().setAttribute(AttributeName.BASKET_ERROR.getValue(), "Nothing found");
         }
+    }
+
+    private void rewrite(HttpServletRequest request) {
+        request.setAttribute(AttributeName.BASKET_ERROR.getValue(), request.getSession().getAttribute(AttributeName.BASKET_ERROR.getValue()));
+        request.getSession().removeAttribute(AttributeName.BASKET_ERROR.getValue());
+        request.setAttribute(AttributeName.ACCOUNT_PAYMENT_ERROR.getValue(), request.getSession().getAttribute(AttributeName.ACCOUNT_PAYMENT_ERROR.getValue()));
+        request.getSession().removeAttribute(AttributeName.ACCOUNT_PAYMENT_ERROR.getValue());
     }
 
     private String convertDataToString(String data) {

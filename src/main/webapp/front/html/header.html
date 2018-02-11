@@ -1,4 +1,4 @@
-﻿<!-- Header -->
+﻿﻿<!-- Header -->
 <header id="header">
     <form method="post" id="c-locale" action="/cafe.by/change_locale">
         <c:choose>
@@ -18,6 +18,13 @@
             <a href="/cafe.by/index" class="logo"><strong>${home_word}</strong></a>
         </c:otherwise>
     </c:choose>
+    <div style="float: left">
+        <h3>${sign_error}</h3>
+        <h3>${add_account_error}</h3>
+        <h3>${add_review_error}</h3>
+        <h3>${add_product_to_basket_error}</h3>
+        <h3>${add_product_error}</h3>
+    </div>
     <div class="reg-conteiner">
         <c:choose>
             <c:when test="${user == null}">

@@ -54,9 +54,9 @@ public class SignUp implements ICommand {
 
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.setAttribute(AttributeName.FIND_BY_TYPE_ERROR.getValue(), "Пользователя с таким логином уже сужествует");
+            request.setAttribute(AttributeName.SIGN_ERROR.getValue(), "Пользователя с таким логином уже сужествует");
         } else {
-            request.setAttribute(AttributeName.FIND_BY_TYPE_ERROR.getValue(), "User with such login already exists");
+            request.setAttribute(AttributeName.SIGN_ERROR.getValue(), "User with such login already exists");
         }
     }
 }

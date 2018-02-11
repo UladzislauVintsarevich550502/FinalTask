@@ -1,6 +1,6 @@
 package bsuir.vintsarevich.command.impl.redirecting;
 
-import bsuir.vintsarevich.buisness.client.service.IClientService;
+import bsuir.vintsarevich.buisness.review.service.IReviewService;
 import bsuir.vintsarevich.command.ICommand;
 import bsuir.vintsarevich.enumeration.AttributeName;
 import bsuir.vintsarevich.enumeration.JspPageName;
@@ -14,24 +14,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class ChangeClientStatus implements ICommand {
-
-    private static final Logger LOGGER = Logger.getLogger(ChangeClientStatus.class);
-    private JspPageName jspPageName = JspPageName.CLIENTS;
+public class DeleteReview implements ICommand{
+    private static final Logger LOGGER = Logger.getLogger(AddProduct.class);
+    private JspPageName jspPageName = JspPageName.INDEX;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        IClientService clientService = ServiceFactory.getInstance().getClientService();
-        LOGGER.log(Level.DEBUG, "Change client status start");
+        LOGGER.log(Level.INFO, "Start delete client");
         try {
-            Integer clientId = Integer.valueOf(request.getParameter(AttributeName.CLIENT_ID.getValue()));
-            clientService.changeClientStatus(clientId);
-            response.sendRedirect(RedirectingCommandName.CLIENT.getCommand());
-        } catch (IOException | ServiceException e) {
+            IReviewService reviewService = ServiceFactory.getInstance().getReviewService();
+            Integer reviewId = Integer.valueOf(request.getParameter(AttributeName.REVIEW_ID.getValue()));
+            reviewService.deleteReview(reviewId);
+            response.sendRedirect(RedirectingCommandName.INDEX.getCommand());
+        } catch (ServiceException | IOException e) {
             LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
             jspPageName = JspPageName.ERROR;
         }
-        LOGGER.log(Level.DEBUG, "Change client status finish");
+        LOGGER.log(Level.INFO, "Finish delete client");
         return jspPageName.getPath();
     }
 }

@@ -8,6 +8,7 @@ import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.enumeration.RedirectingCommandName;
 import bsuir.vintsarevich.exception.service.ServiceException;
 import bsuir.vintsarevich.factory.service.ServiceFactory;
+import bsuir.vintsarevich.utils.Common;
 import bsuir.vintsarevich.utils.SessionElements;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -20,21 +21,20 @@ public class FindByType implements ICommand {
     private static final Logger LOGGER = Logger.getLogger(Index.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private JspPageName jspPageName = JspPageName.INDEX;
+    private String productType;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.INFO, "Find command start");
         try {
-            IProductService productService = serviceFactory.getProducteService();
             String type = request.getParameter(AttributeName.PRODUCT_TYPE.getValue());
-            LOGGER.log(Level.INFO, "Type is:" + type);
-            List<Product> products = productService.getProductByType(type);
-            if (products.size() == 0) {
-                diagnoseError(request);
-            } else {
-                request.setAttribute("products", products);
+            if (type != null) {
+                productType = type;
+                request.getSession().setAttribute("currentPage", 1);
             }
-            request.getSession().setAttribute("pageCount", 0);
+            setPageProduct(request);
+            Common.setReview(request);
+            rewrite(request);
             request.getSession().setAttribute("pageCommand", RedirectingCommandName.FIND_BY_TYPE.getCommand());
         } catch (ServiceException e) {
             LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
@@ -49,6 +49,22 @@ public class FindByType implements ICommand {
             request.setAttribute(AttributeName.FIND_BY_TYPE_ERROR.getValue(), "Ничего не найдено");
         } else {
             request.setAttribute(AttributeName.FIND_BY_TYPE_ERROR.getValue(), "Nothing found");
+        }
+    }
+
+    private void rewrite(HttpServletRequest request) {
+        request.setAttribute(AttributeName.FIND_BY_TYPE_ERROR.getValue(), request.getSession().getAttribute(AttributeName.FIND_BY_TYPE_ERROR.getValue()));
+        request.getSession().removeAttribute(AttributeName.FIND_BY_TYPE_ERROR.getValue());
+    }
+
+    private void setPageProduct(HttpServletRequest request) throws ServiceException {
+        IProductService productService = serviceFactory.getProducteService();
+        List<Product> allProducts = productService.getProductByType(productType);
+        if (allProducts.size() == 0) {
+            diagnoseError(request);
+            request.getSession().setAttribute("pageCount", 0);
+        } else {
+          Common.calculatePageNumber(request,allProducts);
         }
     }
 }

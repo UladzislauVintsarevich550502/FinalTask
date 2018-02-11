@@ -136,7 +136,6 @@ public class ProductDAO implements IProductDao {
             while (resultSet.next()) {
                 products.add(createProductByResultSet(resultSet));
             }
-            LOGGER.log(Level.INFO, products);
         } catch (SQLException e) {
             return null;
         } catch (ConnectionException e) {
@@ -164,7 +163,6 @@ public class ProductDAO implements IProductDao {
             while (resultSet.next()) {
                 products.add(createProductByResultSet(resultSet));
             }
-            LOGGER.log(Level.INFO, products);
         } catch (SQLException e) {
             return null;
         } catch (ConnectionException e) {
@@ -197,7 +195,6 @@ public class ProductDAO implements IProductDao {
                 products.add(createProductByResultSet(resultSet));
                 products.get(products.size() - 1).setNumber(resultSet.getInt("orderproducts.productCount"));
             }
-            LOGGER.log(Level.INFO, products);
         } catch (SQLException e) {
             return null;
         } catch (ConnectionException e) {

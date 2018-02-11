@@ -46,8 +46,11 @@ public enum AttributeName {
     CHANGE_PASSWORD_ERROR("change_password_error"),
     FIND_BY_TYPE_ERROR("find_by_type_error"),
     SEARCH_PRODUCT("search_product"),
-    STAFF_ID("staff_id"),
-    ADMIN_ID("admin_id");
+    STAFF_ID("staffId"),
+    ADMIN_ID("adminId"),
+    REVIEW_ID("reviewId"),
+    SIGN_ERROR("sign_error"),
+    ACCOUNT_PAYMENT_ERROR("account_payment_error");
 
 
     private String value;

@@ -17,7 +17,7 @@ import java.io.IOException;
 
 public class AddStaff implements ICommand {
     private static final Logger LOGGER = Logger.getLogger(SignOut.class);
-    private JspPageName jspPageName = JspPageName.INDEX;
+    private JspPageName jspPageName = JspPageName.STAFF;
     private final ServiceFactory serviceFactory = ServiceFactory.getInstance();
 
     @Override
@@ -30,7 +30,7 @@ public class AddStaff implements ICommand {
             if(!staffService.signUp(staffLogin, staffPassword)){
                 diagnoseError(request);
             }
-            response.sendRedirect(RedirectingCommandName.CLIENT.getCommand());
+            response.sendRedirect(RedirectingCommandName.STAFF_LIST.getCommand());
         } catch (IOException | ServiceException e) {
             LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
             jspPageName = JspPageName.ERROR;
@@ -41,9 +41,9 @@ public class AddStaff implements ICommand {
 
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.setAttribute(AttributeName.ADD_STAFF_ERROR.getValue(), "Работник с таким логиом уже существует");
+            request.getSession().setAttribute(AttributeName.ADD_STAFF_ERROR.getValue(), "Работник с таким логиом уже существует");
         } else {
-            request.setAttribute(AttributeName.ADD_STAFF_ERROR.getValue(), "User with this nickname already exist");
+            request.getSession().setAttribute(AttributeName.ADD_STAFF_ERROR.getValue(), "User with this nickname already exist");
         }
     }
 }

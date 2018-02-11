@@ -85,8 +85,9 @@
                             <c:choose>
                             <c:when test="${products!=null}">
                             <h2>
+                                <p>${choose_the_form_payment_word}</p>
+                                <p>${account_payment_error}</p>
                                 <div>
-                                    <p>${choose_the_form_payment}</p>
                                     <input type="radio" class="radio_payment" id="by-card"
                                            name="choise_of_payment"
                                            value="card" checked>

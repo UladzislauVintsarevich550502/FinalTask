@@ -43,9 +43,9 @@ public class AddAccount implements ICommand {
 
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.setAttribute(AttributeName.ADD_ACCOUNT_ERROR.getValue(), "Ошибка! Аккаунт не добавлен");
+            request.getSession().setAttribute(AttributeName.ADD_ACCOUNT_ERROR.getValue(), "Ошибка! Аккаунт не добавлен");
         } else {
-            request.setAttribute(AttributeName.ADD_ACCOUNT_ERROR.getValue(), "Error! Account wasn't added");
+            request.getSession().setAttribute(AttributeName.ADD_ACCOUNT_ERROR.getValue(), "Error! Account wasn't added");
         }
     }
 }

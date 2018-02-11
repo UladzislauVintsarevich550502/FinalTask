@@ -14,3 +14,22 @@ textarea#descrirtion-ru, textarea#descrirtion-en {
     font-size: 15px;
     font-style: inherit;
 }
+
+input#image-name-edit {
+    margin-top: -3%;
+}
+
+input#name-ru-edit, input#name-en-edit, input#value-edit, input#cost-edit, input#image-name-edit,
+select#status-edit, select#product-type-edit, textarea#descrirtion-en-edit,
+textarea#descrirtion-ru-edit, input#image-name-edit {
+    margin: 1.4em 0;
+    font-size: 15px;
+    font-style: inherit;
+    padding-left: 10px;
+    color: #9fa3a6;
+}
+
+textarea#descrirtion-ru-edit, textarea#descrirtion-en-edit {
+    font-size: 15px;
+    font-style: inherit;
+}

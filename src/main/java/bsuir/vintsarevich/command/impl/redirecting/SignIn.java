@@ -63,7 +63,8 @@ public class SignIn implements ICommand {
                     LOGGER.log(Level.INFO, "Successful sign in account as " + login);
                     response.sendRedirect(RedirectingCommandName.INDEX.getCommand());
                 } else {
-                    jspPageName = JspPageName.TEST;
+                    diagnoseBan(request);
+                    response.sendRedirect(RedirectingCommandName.INDEX.getCommand());
                 }
             } else {
                 if (admin != null) {
@@ -95,9 +96,17 @@ public class SignIn implements ICommand {
 
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.setAttribute(AttributeName.FIND_BY_TYPE_ERROR.getValue(), "Пользователя с таким логином не существует");
+            request.setAttribute(AttributeName.SIGN_ERROR.getValue(), "Пользователя с таким логином не существует");
         } else {
-            request.setAttribute(AttributeName.FIND_BY_TYPE_ERROR.getValue(), "User with such login not exists");
+            request.setAttribute(AttributeName.SIGN_ERROR.getValue(), "User with such login not exists");
+        }
+    }
+
+    private void diagnoseBan(HttpServletRequest request) {
+        if (SessionElements.getLocale(request).equals("ru")) {
+            request.setAttribute(AttributeName.SIGN_ERROR.getValue(), "Вы заблокированы. Пожалуйста, обратитесь к администратору");
+        } else {
+            request.setAttribute(AttributeName.SIGN_ERROR.getValue(), "You're was blocked. Please, get in touch with administrator");
         }
     }
 }

@@ -65,7 +65,8 @@ public class ProductService implements IProductService {
     public List<Product> getProductByOrderId(Integer orderId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "ProductService: start get product by clientId");
         try {
-            LOGGER.log(Level.DEBUG, "Product Service: Finish get products by clientId");            return daoFactory.getProductDao().getProductByOrderId(orderId);
+            LOGGER.log(Level.DEBUG, "Product Service: Finish get products by clientId");
+            return daoFactory.getProductDao().getProductByOrderId(orderId);
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
@@ -77,14 +78,14 @@ public class ProductService implements IProductService {
         try {
             LOGGER.log(Level.DEBUG, "ProductService: finish get product by ID");
             return daoFactory.getProductDao().getProductById(id);
-        }catch (DaoException e) {
+        } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
     }
 
     @Override
     public boolean addProduct(String type, String nameRu, String nameEn, Integer weight, Double cost, String status,
-                              String descriptionRu, String descriptionEn, Part image, String webPath) throws ServiceException, ServiceLogicException {
+                              String descriptionRu, String descriptionEn, Part image, String webPath) throws ServiceException {
         LOGGER.log(Level.DEBUG, "ProductService: addProduct start");
         Product product = new Product();
         IProductDao productDao = daoFactory.getProductDao();
@@ -112,11 +113,42 @@ public class ProductService implements IProductService {
             LOGGER.log(Level.DEBUG, "ProductService: addProduct finish");
             return productDao.addProduct(product);
 
-        } catch (ValidatorException e) {
+        } catch (ValidatorException | NumberFormatException | DaoException | ServiceLogicException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
-        } catch (NumberFormatException e) {
-            throw new ServiceException(this.getClass() + ":" + e.getMessage());
-        } catch (DaoException e) {
+        }
+    }
+
+    @Override
+    public boolean editProduct(Integer id, String type, String nameRu, String nameEn, Integer weight, Double cost, String status,
+                               String descriptionRu, String descriptionEn, Part image, String webPath) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "ProductService: addProduct start");
+        Product product = new Product();
+        IProductDao productDao = daoFactory.getProductDao();
+        try {
+            Validator.isNull(nameEn, nameRu, type, status);
+            Validator.isEmptyString(nameEn, nameRu, type, status);
+            product.setId(id);
+            product.setType(type);
+            product.setNameRu(nameRu);
+            product.setNameEn(nameEn);
+            product.setWeight(weight);
+            product.setCost(cost);
+            product.setStatus(status);
+            product.setDescriptionRu(descriptionRu);
+            product.setDescriptionEn(descriptionEn);
+            String imageName = getImageName(image);
+            if (!imageName.isEmpty()) {
+                product.setImagePath(imageName);
+            }
+            String fileName = Paths.get(image.getSubmittedFileName()).getFileName().toString();
+            if (!fileName.isEmpty()) {
+                System.out.println(webPath);
+                uploadImage(image, fileName, webPath);
+            }
+            LOGGER.log(Level.DEBUG, "ProductService: addProduct finish");
+            return productDao.editProduct(product);
+
+        } catch (ValidatorException | NumberFormatException | DaoException | ServiceLogicException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
     }

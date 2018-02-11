@@ -31,6 +31,11 @@ public class Order {
     public Order() {
     }
 
+    public String[] getYear(){
+        return date.split("[\\s\\-:]+");
+    }
+
+
     public Integer getId() {
         return id;
     }

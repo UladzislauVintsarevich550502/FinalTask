@@ -46,7 +46,8 @@ public final class CommandProvider {
         repository.put(CommandName.ADMIN_LIST, new AdminList());
         repository.put(CommandName.DELETE_ADMIN, new DeleteAdmin());
         repository.put(CommandName.ADD_ADMIN, new AddAdmin());
-
+        repository.put(CommandName.DELETE_REVIEW, new DeleteReview());
+        repository.put(CommandName.EDIT_PRODUCT, new EditProduct());
     }
 
     public static CommandProvider getInstance() {

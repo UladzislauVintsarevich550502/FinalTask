@@ -46,7 +46,7 @@
                                 <c:when test="${admin.isMain == 0}">
                                     <li id="client_s">${admin.id} ${admin.login} </li>
                                     <h4>
-                                        <a href="/cafe.by/delete_admin?admin_id=${admin.id}" class="button">${delete_word}</a>
+                                        <a href="/cafe.by/delete_admin?adminId=${admin.id}" class="button">${delete_word}</a>
                                     </h4>
                                 </c:when>
                             </c:choose>

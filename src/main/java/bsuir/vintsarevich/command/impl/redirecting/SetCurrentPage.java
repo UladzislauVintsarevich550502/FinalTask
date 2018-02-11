@@ -4,7 +4,7 @@ import bsuir.vintsarevich.command.ICommand;
 import bsuir.vintsarevich.command.impl.dispatching.Index;
 import bsuir.vintsarevich.enumeration.AttributeName;
 import bsuir.vintsarevich.enumeration.JspPageName;
-import bsuir.vintsarevich.enumeration.RedirectingCommandName;
+import bsuir.vintsarevich.utils.SessionElements;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -22,7 +22,7 @@ public class SetCurrentPage implements ICommand {
             LOGGER.log(Level.INFO, "Set current page command start");
             Integer currentPage = Integer.valueOf(request.getParameter(AttributeName.CURRENT_PAGE.getValue()));
             request.getSession().setAttribute("currentPage", currentPage);
-            response.sendRedirect(RedirectingCommandName.INDEX.getCommand());
+            response.sendRedirect(SessionElements.getPageCommand(request));
         } catch (IOException e) {
             LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
             jspPageName = JspPageName.ERROR;

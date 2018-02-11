@@ -71,6 +71,10 @@
                     <h2>${found_nothing_word}</h2>
                 </c:otherwise>
             </c:choose>
+            <article>
+                <h2>${search_product}</h2>
+                <h2>${find_by_type_error}</h2>
+            </article>
         </div>
         <div class="posts">
             <article>

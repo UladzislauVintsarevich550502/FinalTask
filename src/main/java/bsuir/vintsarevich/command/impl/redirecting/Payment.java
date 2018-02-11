@@ -7,12 +7,14 @@ import bsuir.vintsarevich.buisness.order.service.IOrderService;
 import bsuir.vintsarevich.buisness.orderproduct.service.IOrderProductService;
 import bsuir.vintsarevich.command.ICommand;
 import bsuir.vintsarevich.entity.User;
+import bsuir.vintsarevich.enumeration.AttributeName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.enumeration.RedirectingCommandName;
 import bsuir.vintsarevich.exception.dao.DaoException;
 import bsuir.vintsarevich.exception.service.ServiceException;
 import bsuir.vintsarevich.factory.dao.DaoFactory;
 import bsuir.vintsarevich.factory.service.ServiceFactory;
+import bsuir.vintsarevich.utils.SessionElements;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -34,7 +36,6 @@ public class Payment implements ICommand {
         IOrderDao orderDao = DaoFactory.getInstance().getOrderDao();
         IAccountService accountService = ServiceFactory.getInstance().getAccountService();
         IClientService clientService = serviceFactory.getClientService();
-
         try {
             String radio = request.getParameter("choise_of_payment");
             String dateTime = request.getParameter("dateTime");
@@ -55,6 +56,8 @@ public class Payment implements ICommand {
                     orderProductService.editOrderProductPayment(orderIdNew, orderId);
                     accountService.editAccount(clientId, orderCost);
                     clientService.editPoint(clientId, pointToPayment);
+                } else {
+                    diagnoseError(request);
                 }
             }
             response.sendRedirect(RedirectingCommandName.BASKET.getCommand());
@@ -64,6 +67,14 @@ public class Payment implements ICommand {
         }
         LOGGER.log(Level.INFO, "Finish payment");
         return jspPageName.getPath();
+    }
+
+    private void diagnoseError(HttpServletRequest request) {
+        if (SessionElements.getLocale(request).equals("ru")) {
+            request.getSession().setAttribute(AttributeName.ACCOUNT_PAYMENT_ERROR.getValue(), "Счет не добавлен");
+        } else {
+            request.getSession().setAttribute(AttributeName.ACCOUNT_PAYMENT_ERROR.getValue(), "Account don't added");
+        }
     }
 
 }

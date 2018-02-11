@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <jsp:useBean class="bsuir.vintsarevich.entity.Product" scope="page" id="product"/>
+<jsp:useBean class="bsuir.vintsarevich.entity.Review" scope="page" id="review"/>
 <%@ taglib prefix="ctg" uri="tags" %>
 
 <html>
@@ -38,11 +39,32 @@
             <ctg:list/>
 
             <%@include file="/front/html/navigation.html" %>
+            <c:choose>
+                <c:when test="${user.role eq 'client'}">
+                    <section>
+                        <header class="major">
+                            <h2>Оставьте ваш отзыв</h2>
+                        </header>
+                        <%@include file="/front/html/addReview.html" %>
+                    </section>
+                </c:when>
+            </c:choose>
+
             <section>
+                <header class="major">
+                    <h2>${reviews_word}</h2>
+                </header>
                 <c:choose>
-                    <c:when test="${user.role eq 'client'}">
-                        <%@include file="/front/html/review.html" %>
+                    <c:when test="${reviews!=null}">
+                        <div class="layer">
+                            <c:forEach var="review" items="${reviews}">
+                                <%@include file="/front/html/review.html" %>
+                            </c:forEach>
+                        </div>
                     </c:when>
+                    <c:otherwise>
+                        <h3>${found_nothing_word}</h3>
+                    </c:otherwise>
                 </c:choose>
             </section>
 

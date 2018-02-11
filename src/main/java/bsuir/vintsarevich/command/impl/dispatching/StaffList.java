@@ -3,6 +3,7 @@ package bsuir.vintsarevich.command.impl.dispatching;
 import bsuir.vintsarevich.buisness.staff.service.IStaffService;
 import bsuir.vintsarevich.command.ICommand;
 import bsuir.vintsarevich.entity.Staff;
+import bsuir.vintsarevich.enumeration.AttributeName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.enumeration.RedirectingCommandName;
 import bsuir.vintsarevich.exception.service.ServiceException;
@@ -28,11 +29,17 @@ public class StaffList implements ICommand {
             List<Staff> allStaff = staffService.getAllStaff();
             request.setAttribute("allStaff", allStaff);
             request.getSession().setAttribute("pageCommand", RedirectingCommandName.STAFF_LIST.getCommand());
+            rewrite(request);
         } catch (ServiceException e) {
             LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
             jspPageName = JspPageName.ERROR;
         }
         LOGGER.log(Level.INFO, "Command: Finish staff command");
         return jspPageName.getPath();
+    }
+
+    private void rewrite(HttpServletRequest request) {
+        request.setAttribute(AttributeName.ADD_STAFF_ERROR.getValue(), request.getSession().getAttribute(AttributeName.ADD_STAFF_ERROR.getValue()));
+        request.getSession().removeAttribute(AttributeName.ADD_STAFF_ERROR.getValue());
     }
 }

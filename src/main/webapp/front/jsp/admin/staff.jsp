@@ -44,7 +44,7 @@
                         <c:forEach var="staff" items="${allStaff}">
                             <li id="client_s">${staff.id} ${staff.login} </li>
                             <h4>
-                                <a href="/cafe.by/delete_staff?staff_id=${staff.id}" class="button">${delete_word}</a>
+                                <a href="/cafe.by/delete_staff?staff=${staff.id}" class="button">${delete_word}</a>
                             </h4>
                         </c:forEach>
                     </c:when>
@@ -55,6 +55,7 @@
             </section>
             <section>
                 <h2>${add_personal_word}</h2>
+                <h3>${add_staff_error}</h3>
                 <form id="staff-form" class="cd-form" method="POST" action="/cafe.by/add_staff">
                     <p class="fieldset">
                         <label class="image-replace cd-login" for="staff-login">${login_word}</label>

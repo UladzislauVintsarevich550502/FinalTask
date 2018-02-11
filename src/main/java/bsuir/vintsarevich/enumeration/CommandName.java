@@ -7,7 +7,7 @@ public enum CommandName {
     CHANGE_CLIENT_STATUS("admin"), SET_CURRENT_PAGE("all"), SEARCH_PRODUCT("all"), FIND_BY_TYPE("all"),
     PAYMENT("client"), ADD_REVIEW("client"), ORDER_SHOW("staff"), ORDER_DENY("staff"), ORDER_ACCEPT("staff"), ADD_STAFF("admin"),
     CHANGE_PASSWORD_FORWARD("all"), CHANGE_PASSWORD("all"), STAFF_LIST("admin"), DELETE_STAFF("admin"), DELETE_CLIENT("admin"),
-    ADMIN_LIST("admin"), DELETE_ADMIN("admin"), ADD_ADMIN("admin");
+    ADMIN_LIST("admin"), DELETE_ADMIN("admin"), ADD_ADMIN("admin"), DELETE_REVIEW("admin"), EDIT_PRODUCT("admin");
 
     private String role;
 

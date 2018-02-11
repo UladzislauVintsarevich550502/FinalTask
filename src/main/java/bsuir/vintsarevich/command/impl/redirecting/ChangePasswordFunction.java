@@ -69,9 +69,9 @@ public class ChangePasswordFunction implements ICommand {
 
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.setAttribute(AttributeName.CHANGE_PASSWORD_ERROR.getValue(), "Старый пароль введен не верно!");
+            request.getSession().setAttribute(AttributeName.CHANGE_PASSWORD_ERROR.getValue(), "Старый пароль введен не верно!");
         } else {
-            request.setAttribute(AttributeName.CHANGE_PASSWORD_ERROR.getValue(), "Users status wasn't changed!");
+            request.getSession().setAttribute(AttributeName.CHANGE_PASSWORD_ERROR.getValue(), "Users status wasn't changed!");
         }
     }
 

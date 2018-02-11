@@ -17,16 +17,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
 
-public class AddProduct implements ICommand {
+public class EditProduct implements ICommand {
     private static final Logger LOGGER = Logger.getLogger(AddProduct.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private JspPageName jspPageName = JspPageName.TEST;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.log(Level.INFO, "Start add product");
         try {
             IProductService productService = serviceFactory.getProducteService();
+            Integer productId = new Integer(request.getParameter(AttributeName.PRODUCT_ID.getValue()));
             String productType = request.getParameter(AttributeName.PRODUCT_TYPE.getValue());
             String nameRu = request.getParameter(AttributeName.NAME_RU.getValue());
             String nameEn = request.getParameter(AttributeName.NAME_EN.getValue());
@@ -37,23 +37,22 @@ public class AddProduct implements ICommand {
             String descriptionEn = request.getParameter(AttributeName.DESCRIPTION_EN.getValue());
             Part part = request.getPart(AttributeName.IMAGE.getValue());
             String webPath = request.getServletContext().getRealPath("/");
-            if(!productService.addProduct(productType, nameRu, nameEn, weight, cost, status, descriptionRu, descriptionEn, part, webPath)){
+            if (!productService.editProduct(productId, productType, nameRu, nameEn, weight, cost, status, descriptionRu, descriptionEn, part, webPath)) {
                 diagnoseError(request);
             }
             response.sendRedirect(RedirectingCommandName.INDEX.getCommand());
-        } catch (IOException | ServletException | ServiceException e) {
+        } catch (ServletException | IOException | ServiceException e) {
             LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
             jspPageName = JspPageName.ERROR;
         }
-        LOGGER.log(Level.INFO, "Finish add product");
         return jspPageName.getPath();
     }
 
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.setAttribute(AttributeName.ADD_PRODUCT_ERROR.getValue(), "Ошибка! Продукт не добавлен");
+            request.setAttribute(AttributeName.ADD_PRODUCT_ERROR.getValue(), "Ошибка! Продукт не изменен");
         } else {
-            request.setAttribute(AttributeName.ADD_PRODUCT_ERROR.getValue(), "Error! Product wasn't added");
+            request.setAttribute(AttributeName.ADD_PRODUCT_ERROR.getValue(), "Error! Product wasn't edited");
         }
     }
 }

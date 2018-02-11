@@ -8,7 +8,7 @@ public enum JspPageName {
     CLIENTS("/front/jsp/admin/client.jsp"),
     CHANGE_PASSWORD("/front/jsp/common/change_password.jsp"),
     STAFF("/front/jsp/admin/staff.jsp"),
-    ADMIN("/front/jsp/admin/admin_list.jsp");
+    ADMIN("/front/jsp/admin/adminList.jsp");
 
 
     private String path;
