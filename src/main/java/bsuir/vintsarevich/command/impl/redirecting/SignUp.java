@@ -35,7 +35,11 @@ public class SignUp implements ICommand {
             String email = request.getParameter(AttributeName.SIGNUP_EMAIL.getValue());
             Client client = clientService.signUp(name, surname, login, password, email);
             if (client == null) {
-                diagnoseError(request);
+                if(clientService.findClientByLogin(login)) {
+                    diagnoseError(request);
+                }else{
+                    diagnoseCommonEmail(request);
+                }
             } else {
                 User user = new User(client.getId(), client.getLogin(), "client", client.getName(), client.getSurname(), client.getStatus(), false);
                 orderService.addOrder("Not order", 0.0, client.getId());
@@ -54,9 +58,17 @@ public class SignUp implements ICommand {
 
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.setAttribute(AttributeName.SIGN_ERROR.getValue(), "Пользователя с таким логином уже сужествует");
+            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "Пользовател с таким логином уже сужествует");
         } else {
-            request.setAttribute(AttributeName.SIGN_ERROR.getValue(), "User with such login already exists");
+            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "User with such login already exists");
+        }
+    }
+
+    private void diagnoseCommonEmail(HttpServletRequest request) {
+        if (SessionElements.getLocale(request).equals("ru")) {
+            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "Пользовател с такой почтой уже сужествует");
+        } else {
+            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "User with such mail already exists");
         }
     }
 }

@@ -5,7 +5,6 @@ import bsuir.vintsarevich.entity.Client;
 import bsuir.vintsarevich.entity.Order;
 import bsuir.vintsarevich.exception.dao.DaoException;
 import bsuir.vintsarevich.exception.service.ServiceException;
-import bsuir.vintsarevich.exception.service.ServiceLogicException;
 import bsuir.vintsarevich.exception.validation.ValidatorException;
 import bsuir.vintsarevich.factory.dao.DaoFactory;
 import bsuir.vintsarevich.utils.Hasher;
@@ -42,7 +41,7 @@ public class ClientService implements IClientService {
     }
 
     @Override
-    public Client signUp(String name, String surname, String login, String password, String email) throws ServiceException, ServiceLogicException {
+    public Client signUp(String name, String surname, String login, String password, String email) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Client Service: start SignUp");
         Client client;
         try {
@@ -57,11 +56,7 @@ public class ClientService implements IClientService {
                 client = new Client(name, surname, login, password, email, "active", 0.0);
                 return daoFactory.getClientDao().addClient(client);
             }
-        } catch (ValidatorException e) {
-            throw new ServiceException(this.getClass() + ":" + e.getMessage());
-        } catch (NumberFormatException e) {
-            throw new ServiceException(this.getClass() + ":" + e.getMessage());
-        } catch (DaoException e) {
+        } catch (ValidatorException | NumberFormatException | DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
         LOGGER.log(Level.DEBUG, "Client Service: finish SignUp");
@@ -123,6 +118,17 @@ public class ClientService implements IClientService {
         try {
             LOGGER.log(Level.DEBUG, "Client Service: finish check password");
             return daoFactory.getClientDao().checkPassword(password, id);
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+    }
+
+    @Override
+    public boolean findClientByLogin(String login) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "Client Service:  find by login start");
+        try {
+            LOGGER.log(Level.DEBUG, "Client Service:  find by login finish");
+            return (daoFactory.getClientDao().getClientByLogin(login) != null);
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }

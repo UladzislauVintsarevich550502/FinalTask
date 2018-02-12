@@ -2,7 +2,7 @@
 <div id="edit-form-${product.id}" onclick="checkEditInformation('${product.id}')">
     <h2>${add_product_word}</h2>
     <p class="fieldset">
-        <select id="product-type-edit-${product.id}" name="product_type">
+        <select id="product-type-edit-${product.id}" class="product_type" name="product_type">
             <option value="" disabled selected>${type_product_word}</option>
             <option value="soup">${soup_word}</option>
             <option value="hotDish">${hot_dishes_word}</option>
@@ -20,39 +20,39 @@
     </p>
 
     <p class="fieldset">
-        <input type="text" name="name_ru" value="${product.nameRu}" id="name-ru-edit-${product.id}"
+        <input type="text" name="name_ru" class="name_ru" value="${product.nameRu}" id="name-ru-edit-${product.id}"
                placeholder=${name_ru_word}>
         <span class="cd-error-message" id="nameRu-mistake-${product.id}">${name_ru_mistake}</span>
     </p>
     <p class="fieldset">
-        <input type="text" name="name_en" value="${product.nameEn}" id="name-en-edit-${product.id}"
+        <input type="text" name="name_en" class="name_en" value="${product.nameEn}" id="name-en-edit-${product.id}"
                placeholder=${name_en_word}>
         <span class="cd-error-message" id="nameEn-mistake-${product.id}">${name_en_mistake}</span>
     </p>
     <p class="fieldset">
-        <input type="text" name="value" value="${product.weight}" id="value-edit-${product.id}"
+        <input type="text" name="value" class="value" value="${product.weight}" id="value-edit-${product.id}"
                placeholder=${volume_word}>
         <span class="cd-error-message" id="value-mistake-${product.id}">${value_mistake}</span>
     </p>
     <p class="fieldset">
-        <input type="text" name="cost" value="${product.cost}" id="cost-edit-${product.id}" placeholder=${cost_word}>
+        <input type="text" name="cost" class="cost" value="${product.cost}" id="cost-edit-${product.id}" placeholder=${cost_word}>
         <span class="cd-error-message" id="cost-mistake-${product.id}">${cost_mistake}</span>
     </p>
     <p class="fieldset">
-        <select id="status-edit-${product.id}" name="status">
+        <select id="status-edit-${product.id}" name="status" class="status">
             <option value="" disabled selected>${existence_word}</option>
             <option value="false">${existense_no_word}</option>
             <option value="true">${existanse_yes_word}</option>
         </select>
         <span class="cd-error-message" id="status-mistake-${product.id}">${make_choose}</span>
     </p>
-    <textarea name="description_ru" value="${product.descriptionRu}" id="descrirtion-ru-edit-${product.id}"
+    <textarea name="description_ru" class="description_ru" value="${product.descriptionRu}" id="descrirtion-ru-edit-${product.id}"
               placeholder=${desc_ru_word}></textarea>
-    <textarea name="description_en" value="${product.descriptionEn}" id="descrirtion-en-edit-${product.id}"
+    <textarea name="description_en" class="description_en" value="${product.descriptionEn}" id="descrirtion-en-edit-${product.id}"
               placeholder=${desc_en_word}></textarea>
 
     <p class="fieldset">
-        <input name="image_name" id="image-name-edit-${product.id}" type="text" value=${choose_file_word}>
+        <input name="image_name" class="image_name" id="image-name-edit-${product.id}" type="text" value=${choose_file_word}>
         <a href="#0" id="a-image-name-edit-${product.id}" class="image-load" onclick="fileclick(${product.id})">""</a>
         <span class="cd-error-message" id="file-mistake-${product.id}">${choose_not_choosen_word}</span>
     </p>

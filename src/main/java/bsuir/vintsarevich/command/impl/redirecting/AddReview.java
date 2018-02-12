@@ -47,9 +47,9 @@ public class AddReview implements ICommand {
 
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.getSession().setAttribute(AttributeName.ADD_REVIEW_ERROR.getValue(), "Пожалуйста, поставьте оценку!");
+            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "Пожалуйста, поставьте оценку!");
         } else {
-            request.getSession().setAttribute(AttributeName.ADD_REVIEW_ERROR.getValue(), "You hadn't choose anything to add");
+            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "You hadn't choose anything to add");
         }
     }
 }

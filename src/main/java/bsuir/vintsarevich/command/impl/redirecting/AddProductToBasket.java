@@ -87,9 +87,9 @@ public class AddProductToBasket implements ICommand {
 
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.getSession().setAttribute(AttributeName.ADD_PRODUCT_TO_BASKET_ERROR.getValue(), "Ничего не выбрано");
+            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "Ничего не выбрано");
         } else {
-            request.getSession().setAttribute(AttributeName.ADD_PRODUCT_TO_BASKET_ERROR.getValue(), "You hadn't choose anything to add");
+            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "You hadn't choose anything to add");
         }
     }
 }

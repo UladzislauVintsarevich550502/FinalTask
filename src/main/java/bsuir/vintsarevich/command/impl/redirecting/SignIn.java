@@ -27,7 +27,6 @@ public class SignIn implements ICommand {
     private static final Logger LOGGER = Logger.getLogger(SignIn.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private JspPageName jspPageName = JspPageName.TEST;
-    private AttributeName attributeName = AttributeName.INFORMATION;
     private User user;
 
     @Override
@@ -80,7 +79,11 @@ public class SignIn implements ICommand {
                         LOGGER.log(Level.INFO, "Successful sign in account as " + login);
                         response.sendRedirect(RedirectingCommandName.ORDER_SHOW.getCommand());
                     } else {
-                        diagnoseError(request);
+                        if (clientService.findClientByLogin(login) || adminService.findAdminByLogin(login) || staffService.findStaffByLogin(login)) {
+                            diagnoseIncorrectPassword(request);
+                        } else {
+                            diagnoseError(request);
+                        }
                         response.sendRedirect(RedirectingCommandName.INDEX.getCommand());
                     }
                 }
@@ -96,17 +99,25 @@ public class SignIn implements ICommand {
 
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.setAttribute(AttributeName.SIGN_ERROR.getValue(), "Пользователя с таким логином не существует");
+            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "Пользователя с таким логином не существует");
         } else {
-            request.setAttribute(AttributeName.SIGN_ERROR.getValue(), "User with such login not exists");
+            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "User with such login not exists");
+        }
+    }
+
+    private void diagnoseIncorrectPassword(HttpServletRequest request) {
+        if (SessionElements.getLocale(request).equals("ru")) {
+            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "Неверный пароль");
+        } else {
+            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "Incorrect password");
         }
     }
 
     private void diagnoseBan(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.setAttribute(AttributeName.SIGN_ERROR.getValue(), "Вы заблокированы. Пожалуйста, обратитесь к администратору");
+            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "Вы заблокированы. Пожалуйста, обратитесь к администратору");
         } else {
-            request.setAttribute(AttributeName.SIGN_ERROR.getValue(), "You're was blocked. Please, get in touch with administrator");
+            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "You're was blocked. Please, get in touch with administrator");
         }
     }
 }

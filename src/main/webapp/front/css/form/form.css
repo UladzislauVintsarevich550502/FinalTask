@@ -404,7 +404,7 @@ a.cd-signin:hover, a.cd-signup:hover {
 }
 
 form#c-locale {
-    /* width: 30px; */
+    margin-right: 7px;
     height: 30px;
     max-width: 30px;
 }

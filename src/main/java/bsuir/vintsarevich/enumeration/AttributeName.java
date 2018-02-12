@@ -36,10 +36,6 @@ public enum AttributeName {
     NEW_PASSWORD("new_password"),
     NEW_PASSWORD_REPEAT("new_password_repeat"),
     POINT("point"),
-    ADD_ACCOUNT_ERROR("add_account_error"),
-    ADD_PRODUCT_ERROR("add_product_error"),
-    ADD_PRODUCT_TO_BASKET_ERROR("add_product_to_basket_error"),
-    ADD_REVIEW_ERROR("add_review_error"),
     ADD_STAFF_ERROR("add_staff_error"),
     BASKET_ERROR("basket_error"),
     CHANGE_CLIENT_STATUS_ERROR("change_client_status_error"),
@@ -49,7 +45,7 @@ public enum AttributeName {
     STAFF_ID("staffId"),
     ADMIN_ID("adminId"),
     REVIEW_ID("reviewId"),
-    SIGN_ERROR("sign_error"),
+    HEADER_ERROR("header_error"),
     ACCOUNT_PAYMENT_ERROR("account_payment_error");
 
 

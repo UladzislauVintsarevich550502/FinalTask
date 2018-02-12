@@ -17,4 +17,6 @@ public interface IStaffService {
     boolean checkPassword(String password, Integer id) throws ServiceException;
 
     boolean changePassword(String password, Integer id) throws ServiceException;
+
+    boolean findStaffByLogin(String login) throws ServiceException;
 }

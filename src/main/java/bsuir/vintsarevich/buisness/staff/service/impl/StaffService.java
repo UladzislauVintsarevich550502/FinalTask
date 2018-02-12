@@ -100,4 +100,16 @@ public class StaffService implements IStaffService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public boolean findStaffByLogin(String login) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "Admin Service: find by login start");
+        try {
+            LOGGER.log(Level.DEBUG, "Admin Service: find by login finish");
+            return daoFactory.getStaffDao().findStaffByLogin(login);
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+    }
+
 }

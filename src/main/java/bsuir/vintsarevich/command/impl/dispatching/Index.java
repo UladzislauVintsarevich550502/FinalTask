@@ -40,14 +40,8 @@ public class Index implements ICommand {
     }
 
     private void rewrite(HttpServletRequest request) {
-        request.setAttribute(AttributeName.SIGN_ERROR.getValue(), request.getSession().getAttribute(AttributeName.SIGN_ERROR.getValue()));
-        request.getSession().removeAttribute(AttributeName.SIGN_ERROR.getValue());
-        request.setAttribute(AttributeName.ADD_REVIEW_ERROR.getValue(), request.getSession().getAttribute(AttributeName.ADD_REVIEW_ERROR.getValue()));
-        request.getSession().removeAttribute(AttributeName.ADD_REVIEW_ERROR.getValue());
-        request.setAttribute(AttributeName.ADD_PRODUCT_TO_BASKET_ERROR.getValue(), request.getSession().getAttribute(AttributeName.ADD_PRODUCT_TO_BASKET_ERROR.getValue()));
-        request.getSession().removeAttribute(AttributeName.ADD_PRODUCT_TO_BASKET_ERROR.getValue());
-        request.setAttribute(AttributeName.ADD_PRODUCT_ERROR.getValue(), request.getSession().getAttribute(AttributeName.ADD_PRODUCT_ERROR.getValue()));
-        request.getSession().removeAttribute(AttributeName.ADD_PRODUCT_ERROR.getValue());
+        request.setAttribute(AttributeName.HEADER_ERROR.getValue(), request.getSession().getAttribute(AttributeName.HEADER_ERROR.getValue()));
+        request.getSession().removeAttribute(AttributeName.HEADER_ERROR.getValue());
     }
 
     private void setPageProduct(HttpServletRequest request) throws ServiceException {

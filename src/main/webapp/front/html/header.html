@@ -10,20 +10,9 @@
             </c:when>
         </c:choose>
     </form>
-    <c:choose>
-        <c:when test="${user eq ''}">
-            <a href="/cafe.by/order_show" class="logo"><strong>${home_word}</strong></a>
-        </c:when>
-        <c:otherwise>
-            <a href="/cafe.by/index" class="logo"><strong>${home_word}</strong></a>
-        </c:otherwise>
-    </c:choose>
+    <a href="/cafe.by/index" class="logo"><strong>${home_word}</strong></a>
     <div style="float: left">
-        <h3>${sign_error}</h3>
-        <h3>${add_account_error}</h3>
-        <h3>${add_review_error}</h3>
-        <h3>${add_product_to_basket_error}</h3>
-        <h3>${add_product_error}</h3>
+        <h3>${header_error}</h3>
     </div>
     <div class="reg-conteiner">
         <c:choose>

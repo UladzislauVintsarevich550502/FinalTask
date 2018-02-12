@@ -100,4 +100,15 @@ public class AdminService implements IAdminService {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
     }
+
+    @Override
+    public boolean findAdminByLogin(String login) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "Admin Service: find by login start");
+        try {
+            LOGGER.log(Level.DEBUG, "Admin Service: find by login finish");
+            return daoFactory.getAdminDao().findAdminByLogin(login);
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+    }
 }

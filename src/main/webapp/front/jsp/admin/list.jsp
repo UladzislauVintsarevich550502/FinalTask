@@ -56,10 +56,16 @@
                             <script type="text/javascript">
                                 $(document).ready(function () {
                                     $("#click_edit_form_${product.id}").click(function () {
+                                        if ($('#popup_message_form_${product.id}').is(':visible')) {
+                                            $("#popup_message_form_${product.id}").slideToggle("slow");
+                                        }
                                         $("#popup_edit_form_${product.id}").slideToggle("slow");
                                         return false;
                                     });
                                     $("#click_mes_form_${product.id}").click(function () {
+                                        if ($('#popup_edit_form_${product.id}').is(':visible')) {
+                                            $("#popup_edit_form_${product.id}").slideToggle("slow");
+                                        }
                                         $("#popup_message_form_${product.id}").slideToggle("slow");
                                         return false;
                                     });

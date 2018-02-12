@@ -51,9 +51,9 @@ public class AddProduct implements ICommand {
 
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.setAttribute(AttributeName.ADD_PRODUCT_ERROR.getValue(), "Ошибка! Продукт не добавлен");
+            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "Ошибка! Продукт не добавлен");
         } else {
-            request.setAttribute(AttributeName.ADD_PRODUCT_ERROR.getValue(), "Error! Product wasn't added");
+            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "Error! Product wasn't added");
         }
     }
 }

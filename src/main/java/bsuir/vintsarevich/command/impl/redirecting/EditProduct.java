@@ -50,9 +50,9 @@ public class EditProduct implements ICommand {
 
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.setAttribute(AttributeName.ADD_PRODUCT_ERROR.getValue(), "Ошибка! Продукт не изменен");
+            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "Ошибка! Продукт не изменен");
         } else {
-            request.setAttribute(AttributeName.ADD_PRODUCT_ERROR.getValue(), "Error! Product wasn't edited");
+            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "Error! Product wasn't edited");
         }
     }
 }
