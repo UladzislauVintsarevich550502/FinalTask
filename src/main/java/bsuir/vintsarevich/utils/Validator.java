@@ -7,11 +7,11 @@ import java.util.regex.Pattern;
 
 public class Validator {
 
-    private static final String REGEX_FOR_NAME = "([A-Z]{1}[a-z]+)|([А-Я]{1}[а-я]+)";
+    private static final String REGEX_FOR_NAME = "([A-Z][a-z]+)|([А-Я][а-я]+)";
     private static final String REGEX_FOR_PRODUCT_NAME = "([A-Z][a-z\\s\\-\\`A-Z]+)|([А-Я][а-я\\s\\-\\`А-Я]+)";
     private static final String REGEX_FOR_LOGIN = "^[a-zA-Z](.[a-zA-Z0-9_-]*)$";
     private static final String REGEX_FOR_PASSWORD = "\\w{6,}";
-    private static final String REGEX_FOR_EMAIL = "[0-9a-z_-]+@[0-9a-z_-]+\\.[a-z]{2,5}";
+    private static final String REGEX_FOR_EMAIL = "[0-9a-z\\_\\-\\.]+@[0-9a-z_-]+\\.[a-z]{2,5}";
 
     private static Pattern pattern;
     private static Matcher matcher;
@@ -79,6 +79,12 @@ public class Validator {
             if (!matcher.matches()) {
                 throw new ValidatorException("product name format error");
             }
+        }
+    }
+
+    public static void matchOrderType(String orderType) throws ValidatorException {
+        if(!orderType.equals("ordered") || !orderType.equals("Not order") || !orderType.equals("payment")){
+            throw new ValidatorException("product type error");
         }
     }
 }

@@ -42,9 +42,6 @@ jQuery(document).ready(function ($) {
 
     $('form#staff-form').on('click', function (e) {
 
-        $('#a-image-name').on('click', function () {
-            document.getElementById('file').click();
-        });
         var loginReg = new RegExp('^([a-zA-Z][a-zA-Z-_0-9]+)$');
         var passwordReg = new RegExp('[a-zA-Z-_0-9]{6,}');
         var $numberCorrectField = 0;
@@ -71,6 +68,41 @@ jQuery(document).ready(function ($) {
             if (login.length != 0) {
                 $('input#staff-login').css('border-color', 'red');
                 $('#staff-login-span').addClass('is-visible');
+            }
+        }
+        if ($numberCorrectField != 2) {
+            e.preventDefault();
+        }
+    });
+
+    $('form#admin-form').on('click', function (e) {
+
+        var loginReg = new RegExp('^([a-zA-Z][a-zA-Z-_0-9]+)$');
+        var passwordReg = new RegExp('[a-zA-Z-_0-9]{6,}');
+        var $numberCorrectField = 0;
+
+        var password = $('input#admin-password').val();
+        var login = $('input#admin-login').val();
+
+        if (password.length >= 4 && password != '' && passwordReg.test(password)) {
+            $('input#admin-password').css('border-color', 'green');
+            $('#admin-password-span').removeClass('is-visible');
+            $numberCorrectField++;
+        }
+        else {
+            if (password.length != 0) {
+                $('input#admin-password').css('border-color', 'red');
+                $('#admin-password-span').addClass('is-visible');
+            }
+        }
+        if (login.length > 3 && login != '' && loginReg.test(login)) {
+            $('input#admin-login').css('border-color', 'green');
+            $('#admin-login-span').removeClass('is-visible');
+            $numberCorrectField++;
+        } else {
+            if (login.length != 0) {
+                $('input#admin-login').css('border-color', 'red');
+                $('#admin-login-span').addClass('is-visible');
             }
         }
         if ($numberCorrectField != 2) {
@@ -318,9 +350,6 @@ jQuery(document).ready(function ($) {
     $('form#changePassword-form').on('click', function (e) {
         var passwordReg = new RegExp('[a-zA-Z-_0-9]{6,}');
 
-        var $form_modal = $('input#changePassword-form');
-        var $form_add = $form_modal.find('#cd-changePassword');
-
         var passwordOld = $('input#changePassword-old').val();
         var password = $('input#changePassword-new').val();
         var repassword = $('input#changePassword-re-new').val();
@@ -329,34 +358,34 @@ jQuery(document).ready(function ($) {
 
         if (passwordOld.length >= 4 && passwordReg.test(passwordOld)) {
             $('input#changePassword-old').css('border-color', 'green');
-            $form_add.find('a#a-changePassword-old').removeClass('has-error').next('span').removeClass('is-visible');
+            $('#changePassword-old-span').removeClass('is-visible');
             $numberCorrectField++;
         } else {
             if (passwordOld.length != 0) {
                 $('input#changePassword-old').css('border-color', 'red');
-                $form_add.find('a#a-changePassword-old').addClass('has-error').next('span').addClass('is-visible');
+                $('#changePassword-old-span').addClass('is-visible');
             }
         }
 
         if (password.length >= 4 && passwordReg.test(password)) {
             $('input#changePassword-new').css('border-color', 'green');
-            $form_add.find('a#a-changePassword-new').removeClass('has-error').next('span').removeClass('is-visible');
+            $('#changePassword-new-span').removeClass('is-visible');
             $numberCorrectField++;
         } else {
             if (password.length != 0) {
                 $('input#changePassword-new').css('border-color', 'red');
-                $form_add.find('a#a-changePassword-new').addClass('has-error').next('span').addClass('is-visible');
+                $('#changePassword-new-span').addClass('is-visible');
             }
         }
 
         if (repassword == password && repassword.length >= 4) {
             $('input#changePassword-re-new').css('border-color', 'green');
-            $form_add.find('a#a-changePassword-re-new').removeClass('has-error').next('span').removeClass('is-visible');
+            $('#changePassword-re-new-span').removeClass('is-visible');
             $numberCorrectField++;
         } else {
             if (repassword.length != 0) {
                 $('input#changePassword-re-new').css('border-color', 'red');
-                $form_add.find('a#a-changePassword-re-new').addClass('has-error').next('span').addClass('is-visible');
+                $('#changePassword-re-new-span').addClass('is-visible');
             }
         }
 

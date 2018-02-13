@@ -139,3 +139,16 @@ function checkEdit(id) {
     }
     return false;
 }
+
+function checkStaffPassword() {
+    var password = document.getElementById("staff-new-password").value;
+    var passwordReg = new RegExp('[a-zA-Z-_0-9]{6,}');
+    if (passwordReg.test(password)){
+        document.getElementById('staff-new-password-span').classList.remove('is-visible');
+        return true;
+    }else{
+        document.getElementById('staff-new-password-span').classList.add('is-visible');
+        return false;
+    }
+
+}

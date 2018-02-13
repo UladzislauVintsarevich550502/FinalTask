@@ -31,11 +31,11 @@
                             <div class="wall_form" id="popup_message_form_${product.id}"
                                  style="display:none;">
                                 <c:choose>
-                                    <c:when test="${product.type eq 'weight'}">
-                                        <p>${volume1_word}: ${product.weight} ${ml_word}:</p>
+                                    <c:when test="${!(product.type eq 'weight')}">
+                                        <p>${volume1_word}: ${product.weight} ${ml_word}</p>
                                     </c:when>
                                     <c:otherwise>
-                                        <p>${weight_word}: ${product.weight} ${g_word}:</p>
+                                        <p>${weight_word}: ${product.weight} ${g_word}</p>
                                     </c:otherwise>
                                 </c:choose>
 

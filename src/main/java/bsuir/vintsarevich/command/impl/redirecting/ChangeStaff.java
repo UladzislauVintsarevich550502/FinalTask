@@ -15,35 +15,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class AddStaff implements ICommand {
+public class ChangeStaff implements ICommand {
     private static final Logger LOGGER = Logger.getLogger(SignOut.class);
-    private JspPageName jspPageName = JspPageName.STAFF;
+    private JspPageName jspPageName = JspPageName.INDEX;
     private final ServiceFactory serviceFactory = ServiceFactory.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        LOGGER.log(Level.INFO, "Start add staff");
+        IStaffService staffService = serviceFactory.getStaffService();
+        String password = request.getParameter(AttributeParameterName.NEW_PASSWORD.getValue());
+        Integer staffId = new Integer(request.getParameter(AttributeParameterName.STAFF_ID.getValue()));
+        LOGGER.log(Level.INFO, "Change staff start");
         try {
-            IStaffService staffService = serviceFactory.getStaffService();
-            String staffLogin = request.getParameter(AttributeParameterName.STAFF_LOGIN.getValue());
-            String staffPassword = request.getParameter(AttributeParameterName.STAFF_PASSWORD.getValue());
-            if(!staffService.signUp(staffLogin, staffPassword)){
-                diagnoseError(request);
-            }
+            staffService.changePassword(password, staffId);
             response.sendRedirect(RedirectingCommandName.STAFF_LIST.getCommand());
-        } catch (IOException | ServiceException e) {
+        } catch (ServiceException | IOException e) {
             LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
             jspPageName = JspPageName.ERROR;
         }
-        LOGGER.log(Level.INFO, "Finish add staff");
+        LOGGER.log(Level.INFO, "Change staff finish");
         return jspPageName.getPath();
-    }
-
-    private void diagnoseError(HttpServletRequest request) {
-        if (SessionElements.getLocale(request).equals("ru")) {
-            request.getSession().setAttribute(AttributeParameterName.ADD_STAFF_ERROR.getValue(), "Пользователь с таким логиом уже существует");
-        } else {
-            request.getSession().setAttribute(AttributeParameterName.ADD_STAFF_ERROR.getValue(), "User with this nickname already exist");
-        }
     }
 }

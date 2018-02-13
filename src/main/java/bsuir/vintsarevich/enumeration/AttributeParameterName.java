@@ -46,7 +46,10 @@ public enum AttributeParameterName {
     HEADER_ERROR("header_error"),
     ACCOUNT_PAYMENT_ERROR("account_payment_error"),
     RESET_EMAIL("reset_email"),
-    RESET_NEW_PASSWORD("resetPassword_new");
+    RESET_NEW_PASSWORD("resetPassword_new"),
+    ADMIN_LOGIN("admin_login"),
+    ADMIN_PASSWORD("admin_password"),
+    ADD_ADMIN_ERROR("add_admin_error");
 
 
     private String value;

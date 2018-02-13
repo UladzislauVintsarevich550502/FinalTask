@@ -8,7 +8,8 @@ public enum CommandName {
     PAYMENT("client"), ADD_REVIEW("client"), ORDER_SHOW("staff"), ORDER_DENY("staff"), ORDER_ACCEPT("staff"), ADD_STAFF("admin"),
     CHANGE_PASSWORD_FORWARD("all"), CHANGE_PASSWORD("all"), STAFF_LIST("admin"), DELETE_STAFF("admin"), DELETE_CLIENT("admin"),
     ADMIN_LIST("admin"), DELETE_ADMIN("admin"), ADD_ADMIN("admin"), DELETE_REVIEW("admin"), EDIT_PRODUCT("admin"),
-    RESET_PASSWORD("all"), RESET_PASSWORD_CONFIRM("all"),DELETE_PRODUCT("admin");
+    RESET_PASSWORD("all"), RESET_PASSWORD_CONFIRM("all"),DELETE_PRODUCT("admin"), CHANGE_STAFF("admin"),
+    CHANGE_ADMIN("admin");
 
     private String role;
 

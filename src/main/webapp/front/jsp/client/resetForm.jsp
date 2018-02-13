@@ -47,7 +47,7 @@
                                            for="resetPassword-new">{password_word}</label>
                                     <input class="full-width has-padding has-border" id="resetPassword-new"
                                            name="resetPassword_new"
-                                           type="text" placeholder=${new_password_word}>
+                                           type="password" placeholder=${new_password_word}>
                                     <a href="#0" class="hide-password">""</a>
                                     <span id="span-resetPassword-new"
                                           class="cd-error-message">${mistake_password_word}</span>
@@ -56,7 +56,7 @@
                                     <label class="image-replace cd-password"
                                            for="resetPassword-re-new">{re_password_word}</label>
                                     <input class="full-width has-padding has-border" id="resetPassword-re-new"
-                                           type="text"
+                                           type="password"
                                            placeholder=${re_new_password_word}>
                                     <a href="#0" id="a-resetPassword-re-new" class="hide-password">""</a>
                                     <span id="span-re-resetPassword-new"

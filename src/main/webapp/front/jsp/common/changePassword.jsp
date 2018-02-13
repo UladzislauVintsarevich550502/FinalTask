@@ -41,26 +41,26 @@
                         <label class="image-replace cd-password" for="changePassword-old">{password_word}</label>
                         <input class="full-width has-padding has-border" name="changePassword_old"
                                id="changePassword-old"
-                               type="text"
+                               type="password"
                                placeholder=${old_password_word}>
-                        <a href="#0" id="a-changePassword-old" class="hide-password">""</a>
-                        <span class="cd-error-message">${mistake_password_word}</span>
+                        <a href="#0" class="hide-password">""</a>
+                        <span id="changePassword-old-span" class="cd-error-message">${mistake_password_word}</span>
                     </p>
                     <p class="fieldset">
                         <label class="image-replace cd-password" for="changePassword-new">{password_word}</label>
                         <input class="full-width has-padding has-border" name="changePassword_new"
                                id="changePassword-new"
-                               type="text"
+                               type="password"
                                placeholder=${new_password_word}>
-                        <a href="#0" id="a-changePassword-new" class="hide-password">""</a>
-                        <span class="cd-error-message">${mistake_password_word}</span>
+                        <a href="#0" class="hide-password">""</a>
+                        <span id="changePassword-new-span" class="cd-error-message">${mistake_password_word}</span>
                     </p>
                     <p class="fieldset">
                         <label class="image-replace cd-password" for="changePassword-re-new">{re_password_word}</label>
-                        <input class="full-width has-padding has-border" id="changePassword-re-new" name="changePassword_re_new" type="text"
+                        <input class="full-width has-padding has-border" id="changePassword-re-new" name="changePassword_re_new" type="password"
                                placeholder=${re_new_password_word}>
-                        <a href="#0" id="a-changePassword-re-new" class="hide-password">""</a>
-                        <span class="cd-error-message">${mistake_word}</span>
+                        <a href="#0" class="hide-password">""</a>
+                        <span id="changePassword-re-new-span" class="cd-error-message">${re_password_mistake}</span>
                     </p>
                     <input type="submit" id="add" value=${change_password_word}>
                 </form>

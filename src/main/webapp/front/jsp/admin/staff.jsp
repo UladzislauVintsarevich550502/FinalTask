@@ -45,10 +45,42 @@
                             <c:when test="${allStaff!=null}">
                                 <c:forEach var="staff" items="${allStaff}">
                                     <li id="client_s">${staff.id} ${staff.login} </li>
-                                    <h4>
-                                        <a href="/cafe.by/delete_staff?staffId=${staff.id}"
-                                           class="button">${delete_word}</a>
-                                    </h4>
+                                    <div class="wall_form" id="staff-password-${staff.id}"
+                                         style="display:none;">
+                                        <form type="post" class="cd-form" onclick="checkStaffPassword()"
+                                              action="/cafe.by/change_staff">
+                                            <input style='visibility:hidden' name="staffId" value="${staff.id}">
+                                            <p class="fieldset">
+                                                <label class="image-replace cd-password" for="staff-new-password">{password_word}</label>
+                                                <input class="full-width has-padding has-border"
+                                                       name="changePassword_new"
+                                                       id="staff-new-password" type="password"
+                                                       placeholder=${new_password_word}>
+                                                <a href="#0" class="hide-password">""</a>
+                                                <span id="staff-new-password-span"
+                                                      class="cd-error-message">${mistake_password_word}</span>
+                                            </p>
+                                            <input type="submit" id="change_staff_password" value="${send_word}">
+                                        </form>
+                                    </div>
+                                    <ul class="actions">
+                                        <li>
+                                            <a href="/cafe.by/delete_staff?staffId=${staff.id}"
+                                               class="button">${delete_word}</a>
+                                        </li>
+                                        <li>
+                                            <input type="button" value="${edit_word}"
+                                                   id="staff-password-button-${staff.id}">
+                                        </li>
+                                        <script type="text/javascript">
+                                            $(document).ready(function () {
+                                                $("#staff-password-button-${staff.id}").click(function () {
+                                                    $("#staff-password-${staff.id}").slideToggle("slow");
+                                                    return false;
+                                                });
+                                            });
+                                        </script>
+                                    </ul>
                                 </c:forEach>
                             </c:when>
                             <c:otherwise>
@@ -72,7 +104,7 @@
                                 <label class="image-replace cd-password" for="staff-password">${password_word}</label>
                                 <input class="full-width has-padding has-border" name="staff_password"
                                        id="staff-password"
-                                       type="text" placeholder="${password_word}">
+                                       type="password" placeholder="${password_word}">
                                 <a href="#0" class="hide-password">""</a>
                                 <span id="staff-password-span" class="cd-error-message">${mistake_password_word}</span>
                             </p>
@@ -97,6 +129,7 @@
     <%@include file="/front/js/menu/util.js" %>
     <%@include file="/front/js/form/form.js"%>
     <%@include file="/front/js/validation.js"%>
+    <%@include file="/front/js/functions.js"%>
 </script>
 
 </body>

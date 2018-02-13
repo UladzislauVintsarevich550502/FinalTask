@@ -32,7 +32,7 @@
     <p class="fieldset">
         <input type="text" name="value" class="value" value="${product.weight}" id="value-edit-${product.id}"
                placeholder=${volume_word}>
-        <span class="cd-error-message" id="value-mistake-${product.id}">${value_mistake}</span>
+        <span class="cd-error-message" id="value-mistake-${product.id}">${valume_mistake}</span>
     </p>
     <p class="fieldset">
         <input type="text" name="cost" class="cost" value="${product.cost}" id="cost-edit-${product.id}" placeholder=${cost_word}>
@@ -50,5 +50,5 @@
     </p>
     <input type="file" style="visibility: hidden" id="file-edit-${product.id}" name="file" multiple
            accept="image/*,image/jpeg" onchange="changeImage(${product.id})"/>
-    <input type="submit" id="edit-${product.id}" value=${edit_word}>
+    <input type="submit" id="edit-${product.id}" value="${send_word}">
 </div>

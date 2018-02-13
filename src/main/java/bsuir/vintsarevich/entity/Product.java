@@ -14,6 +14,7 @@ public class Product {
     private Integer number;
     private Integer ordered;
     private Integer orderId;
+    private Double commonCost;
 
     public Product() {
     }
@@ -32,6 +33,14 @@ public class Product {
         this.number = number;
         this.ordered = ordered;
         this.orderId = orderId;
+    }
+
+    public void setCommonCost() {
+        commonCost = Math.rint(100.0 * (cost * number)) / 100.0;
+    }
+
+    public Double getCommonCost(){
+        return commonCost;
     }
 
     public Integer getId() {
@@ -131,6 +140,25 @@ public class Product {
     }
 
     @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", nameRu='" + nameRu + '\'' +
+                ", nameEn='" + nameEn + '\'' +
+                ", weight=" + weight +
+                ", cost=" + cost +
+                ", descriptionRu='" + descriptionRu + '\'' +
+                ", descriptionEn='" + descriptionEn + '\'' +
+                ", imagePath='" + imagePath + '\'' +
+                ", number=" + number +
+                ", ordered=" + ordered +
+                ", orderId=" + orderId +
+                ", commonCost=" + commonCost +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -150,7 +178,8 @@ public class Product {
         if (imagePath != null ? !imagePath.equals(product.imagePath) : product.imagePath != null) return false;
         if (number != null ? !number.equals(product.number) : product.number != null) return false;
         if (ordered != null ? !ordered.equals(product.ordered) : product.ordered != null) return false;
-        return orderId != null ? orderId.equals(product.orderId) : product.orderId == null;
+        if (orderId != null ? !orderId.equals(product.orderId) : product.orderId != null) return false;
+        return commonCost != null ? commonCost.equals(product.commonCost) : product.commonCost == null;
     }
 
     @Override
@@ -167,24 +196,7 @@ public class Product {
         result = 31 * result + (number != null ? number.hashCode() : 0);
         result = 31 * result + (ordered != null ? ordered.hashCode() : 0);
         result = 31 * result + (orderId != null ? orderId.hashCode() : 0);
+        result = 31 * result + (commonCost != null ? commonCost.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                ", nameRu='" + nameRu + '\'' +
-                ", nameEn='" + nameEn + '\'' +
-                ", weight=" + weight +
-                ", cost=" + cost +
-                ", descriptionRu='" + descriptionRu + '\'' +
-                ", descriptionEn='" + descriptionEn + '\'' +
-                ", imagePath='" + imagePath + '\'' +
-                ", number=" + number +
-                ", ordered=" + ordered +
-                ", orderId=" + orderId +
-                '}';
     }
 }

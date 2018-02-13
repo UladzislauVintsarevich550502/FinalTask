@@ -90,7 +90,6 @@ public class AccountDAO implements IAccountDao {
         try {
             connectionPool = ConnectionPool.getInstance();
             connection = connectionPool.getConnection();
-            statement = null;
             statement = connection.prepareStatement(CHECK_ACCOUNT_NUMBER);
             statement.setInt(1, accountNumber);
             resultSet = statement.executeQuery();

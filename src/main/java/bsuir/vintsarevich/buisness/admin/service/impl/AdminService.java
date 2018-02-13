@@ -21,13 +21,14 @@ public class AdminService implements IAdminService {
     @Override
     public boolean signUp(String adminLogin, String adminPassword) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Admin service: start signUp");
-        Admin admin;
         try {
             Validator.isEmptyString(adminLogin, adminPassword);
             Validator.isNull(adminLogin, adminPassword);
+            Validator.matchPassword(adminPassword);
+            Validator.matchLogin(adminLogin);
             adminPassword = Hasher.hashBySha1(adminPassword);
             if (daoFactory.getClientDao().getClientByLogin(adminLogin) == null) {
-                admin = new Admin(adminLogin, adminPassword);
+                Admin admin = new Admin(adminLogin, adminPassword);
                 return (daoFactory.getAdminDao().addAdmin(admin));
             }
         } catch (ValidatorException e) {
@@ -57,6 +58,8 @@ public class AdminService implements IAdminService {
         try {
             Validator.isEmptyString(adminLogin, adminPassword);
             Validator.isNull(adminLogin, adminPassword);
+            Validator.matchLogin(adminLogin);
+            Validator.matchPassword(adminPassword);
             adminPassword = Hasher.hashBySha1(adminPassword);
             LOGGER.log(Level.DEBUG, "Admin service: finish SignIn");
             return daoFactory.getAdminDao().signIn(adminLogin, adminPassword);
@@ -83,6 +86,7 @@ public class AdminService implements IAdminService {
         try {
             Validator.isNull(password);
             Validator.isEmptyString(password);
+            Validator.matchPassword(password);
             password = Hasher.hashBySha1(password);
             LOGGER.log(Level.DEBUG, "Admin Service: finish check password");
             return daoFactory.getAdminDao().checkPassword(password, id);
@@ -97,6 +101,7 @@ public class AdminService implements IAdminService {
         try {
             Validator.isNull(password);
             Validator.isEmptyString(password);
+            Validator.matchPassword(password);
             password = Hasher.hashBySha1(password);
             LOGGER.log(Level.DEBUG, "Admin Service: finish change password");
             return daoFactory.getAdminDao().changePassword(password, id);

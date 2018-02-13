@@ -4,7 +4,9 @@ import bsuir.vintsarevich.buisness.order.service.IOrderService;
 import bsuir.vintsarevich.entity.Order;
 import bsuir.vintsarevich.exception.dao.DaoException;
 import bsuir.vintsarevich.exception.service.ServiceException;
+import bsuir.vintsarevich.exception.validation.ValidatorException;
 import bsuir.vintsarevich.factory.dao.DaoFactory;
+import bsuir.vintsarevich.utils.Validator;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
@@ -18,12 +20,14 @@ public class OrderService implements IOrderService {
     @Override
     public boolean addOrder(String orderType, Double orderCost, Integer clientId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order service: start addOrder");
-        Order order;
         try {
+            Validator.isNull(orderType);
+            Validator.isEmptyString(orderType);
+            Validator.matchOrderType(orderType);
             LOGGER.log(Level.DEBUG, "Order service: finish addOrder");
-            order = new Order(orderType, orderCost, clientId);
+            Order order = new Order(orderType, orderCost, clientId);
             return daoFactory.getOrderDao().addOrder(order);
-        } catch (DaoException e) {
+        } catch (DaoException | ValidatorException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
     }
@@ -54,10 +58,13 @@ public class OrderService implements IOrderService {
     public Integer paymentOrder(String orderType, String orderData, Double orderCost, Integer clientId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order service: start payment order");
         try {
+            Validator.isEmptyString(orderType,orderData);
+            Validator.isNull(orderData,orderType);
+            Validator.matchOrderType(orderType);
             Order order = new Order(orderType, orderData, orderCost, clientId);
             LOGGER.log(Level.DEBUG, "Order service: finish payment order");
             return daoFactory.getOrderDao().paymentOrder(order);
-        } catch (DaoException e) {
+        } catch (DaoException | ValidatorException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
     }

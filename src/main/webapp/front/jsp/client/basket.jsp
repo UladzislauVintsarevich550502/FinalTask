@@ -54,7 +54,7 @@
                                                     <span>${product.nameEn}(x${product.number})</span>
                                                 </c:when>
                                             </c:choose>
-                                            <span>${product.cost*product.number} BYN</span>
+                                            <span>${product.commonCost} BYN</span>
                                             <form method="POST"
                                                   action="/cafe.by/remove_product_from_basket?productId=${product.id}">
                                                 <input type="number" step="1" min="0" max="${product.number}" value="0"
@@ -76,12 +76,12 @@
                     </article>
                     <article>
                         <h2>${account_payment_error}</h2>
-                        <h2>
-                            ${points_word}: ${point}
-                        </h2>
                         <form method="POST" name="payment" action="/cafe.by/payment">
                             <c:choose>
                                 <c:when test="${products!=null}">
+                                    <h2>
+                                            ${points_word}: ${point}
+                                    </h2>
                                     <input type="number" step="0.05" min="0" class="number_delete"
                                            max="${(user.point<orderCost)?user.point:orderCost}" value="0"
                                            id="point-to-payment" name="point_to_payment"

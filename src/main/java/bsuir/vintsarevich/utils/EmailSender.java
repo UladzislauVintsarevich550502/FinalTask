@@ -16,8 +16,6 @@ public class EmailSender {
     static MimeMessage generateMailMessage;
 
     public static Integer generateAndSendEmail(String locale, String email) throws MessagingException, IOException {
-
-        System.out.println(locale);
         mailServerProperties.load(EmailSender.class.getClassLoader().getResourceAsStream("mail.properties"));
 
         getMailSession = Session.getDefaultInstance(mailServerProperties, null);

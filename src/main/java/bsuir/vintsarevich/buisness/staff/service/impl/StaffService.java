@@ -22,8 +22,10 @@ public class StaffService implements IStaffService {
     public boolean signUp(String staffLogin, String staffPassword) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Staff service: start addStaff");
         try {
-            Validator.isEmptyString(staffLogin, staffPassword);
             Validator.isNull(staffLogin, staffPassword);
+            Validator.isEmptyString(staffLogin, staffPassword);
+            Validator.matchPassword(staffPassword);
+            Validator.matchLogin(staffLogin);
             staffPassword = Hasher.hashBySha1(staffPassword);
             if (daoFactory.getClientDao().getClientByLogin(staffLogin) == null &&
                     !daoFactory.getAdminDao().findAdminByLogin(staffLogin)) {
@@ -55,8 +57,10 @@ public class StaffService implements IStaffService {
     public Staff signIn(String staffLogin, String staffPassword) {
         LOGGER.log(Level.DEBUG, "Staff service: start SignIn");
         try {
-            Validator.isEmptyString(staffLogin, staffPassword);
             Validator.isNull(staffLogin, staffPassword);
+            Validator.isEmptyString(staffLogin, staffPassword);
+            Validator.matchPassword(staffPassword);
+            Validator.matchLogin(staffLogin);
             staffPassword = Hasher.hashBySha1(staffPassword);
             LOGGER.log(Level.DEBUG, "Staff service: finish SignIn");
             return daoFactory.getStaffDao().signIn(staffLogin, staffPassword);
@@ -79,12 +83,15 @@ public class StaffService implements IStaffService {
     @Override
     public boolean checkPassword(String password, Integer id) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Staff Service: check password start");
-        password = Hasher.hashBySha1(password);
-        IStaffDao staffDao = daoFactory.getStaffDao();
         try {
+            Validator.isNull(password);
+            Validator.isEmptyString(password);
+            Validator.matchPassword(password);
+            password = Hasher.hashBySha1(password);
+            IStaffDao staffDao = daoFactory.getStaffDao();
             LOGGER.log(Level.DEBUG, "Staff Service: finish check password");
             return staffDao.checkPassword(password, id);
-        } catch (DaoException e) {
+        } catch (DaoException | ValidatorException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
     }
@@ -95,6 +102,7 @@ public class StaffService implements IStaffService {
         try {
             Validator.isNull(password);
             Validator.isEmptyString(password);
+            Validator.matchPassword(password);
             password = Hasher.hashBySha1(password);
             LOGGER.log(Level.DEBUG, "Staff Service: finish change password");
             return daoFactory.getStaffDao().changePassword(password, id);
@@ -107,9 +115,12 @@ public class StaffService implements IStaffService {
     public boolean findStaffByLogin(String login) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Admin Service: find by login start");
         try {
+            Validator.isNull(login);
+            Validator.isEmptyString(login);
+            Validator.matchLogin(login);
             LOGGER.log(Level.DEBUG, "Admin Service: find by login finish");
             return daoFactory.getStaffDao().findStaffByLogin(login);
-        } catch (DaoException e) {
+        } catch (DaoException | ValidatorException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
     }

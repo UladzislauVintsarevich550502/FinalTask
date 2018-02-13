@@ -44,6 +44,7 @@ public class Basket implements ICommand {
             if (tempProducts != null) {
                 for (Product product : tempProducts) {
                     product.setOrdered(0);
+                    product.setCommonCost();
                 }
                 allProducts.addAll(tempProducts);
             }
@@ -54,6 +55,7 @@ public class Basket implements ICommand {
                     for (Product product : tempProducts) {
                         product.setOrdered(1);
                         product.setOrderId(order.getId());
+                        product.setCommonCost();
                     }
                     allProducts.addAll(tempProducts);
                 }

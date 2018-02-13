@@ -51,6 +51,8 @@ public final class CommandProvider {
         repository.put(CommandName.RESET_PASSWORD, new ResetPassword());
         repository.put(CommandName.RESET_PASSWORD_CONFIRM, new ResetPasswordConfirm());
         repository.put(CommandName.DELETE_PRODUCT, new DeleteProduct());
+        repository.put(CommandName.CHANGE_STAFF, new ChangeStaff());
+        repository.put(CommandName.CHANGE_ADMIN, new ChangeAdmin());
     }
 
     public static CommandProvider getInstance() {

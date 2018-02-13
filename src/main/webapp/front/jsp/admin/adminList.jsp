@@ -33,51 +33,88 @@
 
             <%@include file="/front/html/forms.html" %>
 
-
-            <!— Section —>
             <section>
-                <header class="major">
-                    <h2>${list_admin_word}</h2>
-                </header>
-                <c:choose>
-                    <c:when test="${allAdmins!=null}">
-                        <c:forEach var="admin" items="${allAdmins}">
-                            <c:choose>
-                                <c:when test="${admin.isMain == 0}">
-                                    <li id="client_s">${admin.id} ${admin.login} </li>
-                                    <h4>
-                                        <a href="/cafe.by/delete_admin?adminId=${admin.id}" class="button">${delete_word}</a>
-                                    </h4>
-                                </c:when>
-                            </c:choose>
-                        </c:forEach>
-                    </c:when>
-                    <c:otherwise>
-                        <h2>${found_nothing_word}</h2>
-                    </c:otherwise>
-                </c:choose>
-            </section>
-            <section>
-                <h2>${add_administrators_word}</h2>
-                <form id="staff-form" class="cd-form" method="POST" action="/cafe.by/add_admin">
-                    <p class="fieldset">
-                        <label class="image-replace cd-login" for="staff-login">${login_word}</label>
-                        <input class="full-width has-padding has-border" name="staff_login" id="staff-login"
-                               type="text"
-                               placeholder="${login_word}">
-                        <span class="cd-error-message">${mistake_login_word}</span>
-                    </p>
-                    <p class="fieldset">
-                        <label class="image-replace cd-password" for="staff-password">"${password_word}</label>
-                        <input class="full-width has-padding has-border" name="staff_password" id="staff-password"
-                               type="text" placeholder="${password_word}">
-                        <a href="#0" id="a-signin-password" class="hide-password">""</a>
-                        <span class="cd-error-message">${mistake_password_word}</span>
-                    </p>
-                    <p class="fieldset">
-                        <input class="full-width" type="submit" value=${add_word}>
-                    </p>
-                </form>
+                <div class="posts">
+                    <!— Section —>
+                    <article>
+                        <header class="major">
+                            <h2>${list_admin_word}</h2>
+                        </header>
+                        <c:choose>
+                            <c:when test="${allAdmins!=null}">
+                                <c:forEach var="admin" items="${allAdmins}">
+                                    <c:choose>
+                                        <c:when test="${admin.isMain == 0}">
+                                            <li id="client_s">${admin.id} ${admin.login} </li>
+                                            <div class="wall_form" id="admin-password-${admin.id}"
+                                                 style="display:none;">
+                                                <form type="post" class="cd-form" onclick="checkStaffPassword()"
+                                                      action="/cafe.by/change_admin">
+                                                    <input style='visibility:hidden' name="adminId" value="${admin.id}">
+                                                    <p class="fieldset">
+                                                        <label class="image-replace cd-password" for="admin-new-password">{password_word}</label>
+                                                        <input class="full-width has-padding has-border"
+                                                               name="changePassword_new"
+                                                               id="admin-new-password" type="password"
+                                                               placeholder=${new_password_word}>
+                                                        <a href="#0" class="hide-password">""</a>
+                                                        <span id="admin-new-password-span"
+                                                              class="cd-error-message">${mistake_password_word}</span>
+                                                    </p>
+                                                    <input type="submit" id="change_staff_password" value="${send_word}">
+                                                </form>
+                                            </div>
+                                            <ul class="actions">
+                                                <li>
+                                                    <a href="/cafe.by/delete_admin?adminId=${admin.id}"
+                                                       class="button">${delete_word}</a>
+                                                </li>
+                                                <li>
+                                                    <input type="button" value="${edit_word}"
+                                                           id="admin-password-button-${admin.id}">
+                                                </li>
+                                                <script type="text/javascript">
+                                                    $(document).ready(function () {
+                                                        $("#admin-password-button-${admin.id}").click(function () {
+                                                            $("#admin-password-${admin.id}").slideToggle("slow");
+                                                            return false;
+                                                        });
+                                                    });
+                                                </script>
+                                            </ul>
+                                        </c:when>
+                                    </c:choose>
+                                </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                                <h2>${found_nothing_word}</h2>
+                            </c:otherwise>
+                        </c:choose>
+                    </article>
+                    <article>
+                        <h2>${add_administrators_word}</h2>
+                        <form id="admin-form" class="cd-form" method="POST" action="/cafe.by/add_admin">
+                            <p class="fieldset">
+                                <label class="image-replace cd-login" for="admin-login">${login_word}</label>
+                                <input class="full-width has-padding has-border" name="admin_login" id="admin-login"
+                                       type="text"
+                                       placeholder="${login_word}">
+                                <span id="admin-login-span" class="cd-error-message">${mistake_login_word}</span>
+                            </p>
+                            <p class="fieldset">
+                                <label class="image-replace cd-password" for="admin-password">"${password_word}</label>
+                                <input class="full-width has-padding has-border" name="admin_password"
+                                       id="admin-password"
+                                       type="password" placeholder="${password_word}">
+                                <a href="#0" class="hide-password">""</a>
+                                <span id="admin-password-span" class="cd-error-message">${mistake_password_word}</span>
+                            </p>
+                            <p class="fieldset">
+                                <input class="full-width" type="submit" value=${add_word}>
+                            </p>
+                        </form>
+                    </article>
+                </div>
             </section>
         </div>
     </div>

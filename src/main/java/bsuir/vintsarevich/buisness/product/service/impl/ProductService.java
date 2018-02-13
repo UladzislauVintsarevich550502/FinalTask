@@ -43,9 +43,11 @@ public class ProductService implements IProductService {
     public List<Product> getProductByType(String type) throws ServiceException {
         LOGGER.log(Level.DEBUG, "ProductService: start get product by type");
         try {
+            Validator.isNull(type);
+            Validator.isEmptyString(type);
             LOGGER.log(Level.DEBUG, "Product Service: Finish get products by type");
             return daoFactory.getProductDao().getProductByType(type);
-        } catch (DaoException e) {
+        } catch (DaoException | ValidatorException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
     }
@@ -92,6 +94,7 @@ public class ProductService implements IProductService {
         try {
             Validator.isNull(nameEn, nameRu, type);
             Validator.isEmptyString(nameEn, nameRu, type);
+            Validator.matchProductName(nameRu, nameEn);
             product.setType(type);
             product.setNameRu(nameRu);
             product.setNameEn(nameEn);
@@ -124,6 +127,7 @@ public class ProductService implements IProductService {
         try {
             Validator.isNull(nameEn, nameRu, type);
             Validator.isEmptyString(nameEn, nameRu, type);
+            Validator.matchProductName(nameEn,nameRu);
             product.setId(id);
             product.setType(type);
             product.setNameRu(nameRu);
