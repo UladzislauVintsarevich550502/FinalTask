@@ -34,7 +34,7 @@
                         <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=juice">${juice_word}</a></li>
                         <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=water">${water_word}</a></li>
                         <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=hotDrink">${hot_drink_word}</a></li>
-                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=soda">${lemonade_word}</a></li>
+                        <li><a class="podmenu" href="/cafe.by/find_by_type?product_type=soda">${soda_word}</a></li>
                     </ul>
                 </li>
                 <li><a href="/cafe.by/edit_clients">${list_clients_word}</a></li>

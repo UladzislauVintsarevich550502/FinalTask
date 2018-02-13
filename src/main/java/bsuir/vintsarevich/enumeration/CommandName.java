@@ -9,7 +9,7 @@ public enum CommandName {
     CHANGE_PASSWORD_FORWARD("all"), CHANGE_PASSWORD("all"), STAFF_LIST("admin"), DELETE_STAFF("admin"), DELETE_CLIENT("admin"),
     ADMIN_LIST("admin"), DELETE_ADMIN("admin"), ADD_ADMIN("admin"), DELETE_REVIEW("admin"), EDIT_PRODUCT("admin"),
     RESET_PASSWORD("all"), RESET_PASSWORD_CONFIRM("all"),DELETE_PRODUCT("admin"), CHANGE_STAFF("admin"),
-    CHANGE_ADMIN("admin");
+    CHANGE_ADMIN("admin"), RESET_FORM("all");
 
     private String role;
 
@@ -17,6 +17,9 @@ public enum CommandName {
         this.role = role;
     }
 
+    /**
+     * @return String
+     */
     public String getRole() {
         return role;
     }

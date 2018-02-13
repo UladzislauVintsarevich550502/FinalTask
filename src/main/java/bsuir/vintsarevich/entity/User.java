@@ -1,5 +1,8 @@
 package bsuir.vintsarevich.entity;
 
+/**
+ * class User created to work with users
+ */
 public class User {
     private Integer id;
     private String login;

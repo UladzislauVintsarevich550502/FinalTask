@@ -7,8 +7,12 @@ import bsuir.vintsarevich.exception.service.ServiceException;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
+/**
+ * class CloseDBCommand created to close connection with database
+ */
 public class CloseDBCommand implements ICloseDBCommand {
     private static final Logger LOGGER = Logger.getLogger(CloseDBCommand.class);
+
 
     @Override
     public void closeDB() {

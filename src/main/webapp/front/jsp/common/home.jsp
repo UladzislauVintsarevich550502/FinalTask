@@ -43,7 +43,7 @@
                 <c:when test="${user.role eq 'client'}">
                     <section>
                         <header class="major">
-                            <h2>Оставьте ваш отзыв</h2>
+                            <h2>${add_review_word}</h2>
                         </header>
                         <%@include file="/front/html/addReview.html" %>
                     </section>

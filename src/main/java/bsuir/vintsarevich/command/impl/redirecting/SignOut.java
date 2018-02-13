@@ -11,11 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * class SignOut created to sign out from account
+ */
 public class SignOut implements bsuir.vintsarevich.command.ICommand {
 
     private static final Logger LOGGER = Logger.getLogger(SignOut.class);
     private JspPageName jspPageName = JspPageName.ERROR;
 
+    /**
+     * @param request
+     * @param response
+     * @return String
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.INFO, "Sign out start");

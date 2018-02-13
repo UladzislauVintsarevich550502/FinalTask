@@ -6,6 +6,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 
 public class SessionElements {
+    /**
+     * @param request
+     * @return String
+     */
     public static String getLocale(HttpServletRequest request) {
         String locale = (String) request.getSession().getAttribute("locale");
         if (locale == null || locale.isEmpty()) {
@@ -14,6 +18,10 @@ public class SessionElements {
         return locale;
     }
 
+    /**
+     * @param request
+     * @return String
+     */
     public static String getPageCommand(HttpServletRequest request) {
         String pageCommand = (String) request.getSession().getAttribute("pageCommand");
         System.out.println(pageCommand);

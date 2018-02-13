@@ -20,6 +20,9 @@ public enum RedirectingCommandName
         this.command = command;
     }
 
+    /**
+     * @return String
+     */
     public String getCommand() {
         return command;
     }

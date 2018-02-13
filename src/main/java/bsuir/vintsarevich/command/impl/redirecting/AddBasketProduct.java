@@ -26,6 +26,9 @@ import java.io.IOException;
 import java.util.List;
 
 
+/**
+ * class AddBasketProduct created to add basket
+ */
 public class AddBasketProduct implements ICommand {
 
     private static final Logger LOGGER = Logger.getLogger(AddProduct.class);
@@ -39,6 +42,11 @@ public class AddBasketProduct implements ICommand {
     private IProductService productService = serviceFactory.getProducteService();
     private IOrderProductDao orderProductDao = DaoFactory.getInstance().getOrderProductDao();
 
+    /**
+     * @param request
+     * @param response
+     * @return String
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.INFO, "Start add product to basket");
@@ -85,6 +93,9 @@ public class AddBasketProduct implements ICommand {
         return jspPageName.getPath();
     }
 
+    /**
+     * @param request
+     */
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
             request.getSession().setAttribute(AttributeParameterName.HEADER_ERROR.getValue(), "Ничего не выбрано");

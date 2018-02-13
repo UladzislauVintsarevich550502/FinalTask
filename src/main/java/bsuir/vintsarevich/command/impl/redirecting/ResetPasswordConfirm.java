@@ -16,10 +16,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * class ResetPasswordConfirm created to confirm password reset
+ */
 public class ResetPasswordConfirm implements ICommand {
     private static final Logger LOGGER = Logger.getLogger(ResetPasswordConfirm.class);
     private JspPageName jspPageName = JspPageName.INDEX;
 
+    /**
+     * @param request
+     * @param response
+     * @return String
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.INFO, "Reset password confirm start");
@@ -41,7 +49,10 @@ public class ResetPasswordConfirm implements ICommand {
         return jspPageName.getPath();
     }
 
-    private void diagnoseError(HttpServletRequest request) {
+    /**
+     * @param request
+     */
+    protected void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
             request.getSession().setAttribute(AttributeParameterName.HEADER_ERROR.getValue(), "Не удалось изменить пароль");
         } else {

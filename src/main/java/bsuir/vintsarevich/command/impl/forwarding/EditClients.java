@@ -1,4 +1,4 @@
-package bsuir.vintsarevich.command.impl.dispatching;
+package bsuir.vintsarevich.command.impl.forwarding;
 
 import bsuir.vintsarevich.buisness.client.service.IClientService;
 import bsuir.vintsarevich.command.ICommand;
@@ -14,10 +14,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * class EditClients created for editing clients' data
+ */
 public class EditClients implements ICommand {
     private static final Logger LOGGER = Logger.getLogger(EditClients.class);
     private JspPageName jspPageName = JspPageName.CLIENTS;
 
+    /**
+     * @param request
+     * @param response
+     * @return String
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.INFO, "Start edit clients");

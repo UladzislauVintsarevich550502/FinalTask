@@ -5,6 +5,11 @@ import bsuir.vintsarevich.entity.User;
 import javax.servlet.jsp.JspException;
 
 public class ChooseBanner {
+    /**
+     * @param obj
+     * @return String
+     * @throws JspException
+     */
     public static String chooseBanner(Object obj) throws JspException {
         String banner;
         User user = (User) obj;

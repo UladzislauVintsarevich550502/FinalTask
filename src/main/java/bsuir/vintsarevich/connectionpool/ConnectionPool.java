@@ -13,6 +13,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * class ConnectionPool created for working with pool of connections
+ */
 public class ConnectionPool implements ICloseConnectionPool {
     private static final Logger LOGGER = Logger.getLogger(ConnectionPool.class);
 
@@ -38,7 +41,7 @@ public class ConnectionPool implements ICloseConnectionPool {
             String password = dbResourceManager.getValue(DBParametr.DB_PASSWORD);
             int poolSize;
             try {
-                 poolSize = Integer.parseInt(dbResourceManager.getValue((DBParametr.DB_POOL_SIZE)));
+                poolSize = Integer.parseInt(dbResourceManager.getValue((DBParametr.DB_POOL_SIZE)));
             } catch (NumberFormatException e) {
                 LOGGER.log(Level.WARN, "No correct value in database property file");
                 poolSize = 5;
@@ -63,6 +66,10 @@ public class ConnectionPool implements ICloseConnectionPool {
         }
     }
 
+    /**
+     * @return ConnectionPool
+     * @throws ConnectionException
+     */
     public static ConnectionPool getInstance() throws ConnectionException {//Высокая производительность
         if (!instanceCreated.get()) {
             try {
@@ -78,6 +85,9 @@ public class ConnectionPool implements ICloseConnectionPool {
         return instance;
     }
 
+    /**
+     * @return Connection
+     */
     public Connection getConnection() {
         Connection connection;
         try {
@@ -94,6 +104,10 @@ public class ConnectionPool implements ICloseConnectionPool {
         return null;
     }
 
+    /**
+     * @param connection
+     * @throws NullPointerException
+     */
     private void putBack(Connection connection) throws NullPointerException {
         if (connection != null) {
             givenAwayConQueue.remove(connection);
@@ -103,6 +117,11 @@ public class ConnectionPool implements ICloseConnectionPool {
         }
     }
 
+    /**
+     * @param con
+     * @param st
+     * @param resultSet
+     */
     public void putBackConnection(Connection con, Statement st, ResultSet resultSet) {
         try {
             this.putBack(con);

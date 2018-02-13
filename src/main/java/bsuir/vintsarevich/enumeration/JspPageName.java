@@ -17,6 +17,9 @@ public enum JspPageName {
         this.path = path;
     }
 
+    /**
+     * @return String
+     */
     public String getPath() {
         return path;
     }

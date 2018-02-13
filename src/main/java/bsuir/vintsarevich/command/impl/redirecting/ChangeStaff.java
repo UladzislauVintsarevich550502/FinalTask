@@ -15,11 +15,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * class ChangeStaff created to change staff
+ */
 public class ChangeStaff implements ICommand {
     private static final Logger LOGGER = Logger.getLogger(SignOut.class);
     private JspPageName jspPageName = JspPageName.INDEX;
     private final ServiceFactory serviceFactory = ServiceFactory.getInstance();
 
+    /**
+     * @param request
+     * @param response
+     * @return String
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         IStaffService staffService = serviceFactory.getStaffService();

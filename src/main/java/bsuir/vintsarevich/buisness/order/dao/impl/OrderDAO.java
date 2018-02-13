@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * class OrderDAO created for working with clients' orders
+ */
 public class OrderDAO implements IOrderDao {
 
     private static final Logger LOGGER = Logger.getLogger(OrderDAO.class);
@@ -40,6 +43,11 @@ public class OrderDAO implements IOrderDao {
     private ResultSet resultSet;
     private PreparedStatement statement;
 
+    /**
+     * @param order
+     * @return boolean
+     * @throws DaoException
+     */
     @Override
     public boolean addOrder(Order order) throws DaoException {
         LOGGER.log(Level.DEBUG, "Order DAO: Add order start");
@@ -69,6 +77,11 @@ public class OrderDAO implements IOrderDao {
         }
     }
 
+    /**
+     * @param clientId
+     * @return Integer
+     * @throws DaoException
+     */
     @Override
     public Integer getOrderIdByClientId(Integer clientId) throws DaoException {
         LOGGER.log(Level.DEBUG, "Order DAO: start get orderId by clientId");
@@ -95,6 +108,13 @@ public class OrderDAO implements IOrderDao {
         return orderId;
     }
 
+    /**
+     * @param clientId
+     * @param orderCost
+     * @param productCount
+     * @return boolean
+     * @throws DaoException
+     */
     @Override
     public boolean editOrder(Integer clientId, Double orderCost, Integer productCount) throws DaoException {
         LOGGER.log(Level.DEBUG, "Order DAO: edit start");
@@ -124,6 +144,11 @@ public class OrderDAO implements IOrderDao {
         }
     }
 
+    /**
+     * @param clientId
+     * @return Order
+     * @throws DaoException
+     */
     @Override
     public Order getOrderByClientId(Integer clientId) throws DaoException {
         LOGGER.log(Level.DEBUG, "Order DAO: start get order by clientId");
@@ -149,6 +174,11 @@ public class OrderDAO implements IOrderDao {
         return null;
     }
 
+    /**
+     * @param order
+     * @return Integer
+     * @throws DaoException
+     */
     @Override
     public Integer paymentOrder(Order order) throws DaoException {
         LOGGER.log(Level.DEBUG, "Product DAO: Payment order start");
@@ -184,6 +214,11 @@ public class OrderDAO implements IOrderDao {
         return null;
     }
 
+    /**
+     * @param orderId
+     * @return boolean
+     * @throws DaoException
+     */
     @Override
     public boolean clearOrderCost(Integer orderId) throws DaoException {
         LOGGER.log(Level.DEBUG, "Order DAO: clear order start");
@@ -211,6 +246,11 @@ public class OrderDAO implements IOrderDao {
         }
     }
 
+    /**
+     * @param clientId
+     * @return List<Order>
+     * @throws DaoException
+     */
     @Override
     public List<Order> getPaymentOrdersByClientId(Integer clientId) throws DaoException {
         LOGGER.log(Level.DEBUG, "order DAO: Start get orders by clientId");
@@ -239,6 +279,11 @@ public class OrderDAO implements IOrderDao {
         return orders;
     }
 
+    /**
+     * @param clientId
+     * @return List<Order>
+     * @throws DaoException
+     */
     @Override
     public List<Order> getAllOrdersByClientId(Integer clientId) throws DaoException {
         LOGGER.log(Level.DEBUG, "order DAO: Start get all orders by clientId");
@@ -267,6 +312,10 @@ public class OrderDAO implements IOrderDao {
         return orders;
     }
 
+    /**
+     * @return List<Order>
+     * @throws DaoException
+     */
     @Override
     public List<Order> getAllOrderedOrders() throws DaoException {
         LOGGER.log(Level.DEBUG, "order DAO: Start get all ordered orders");
@@ -293,6 +342,11 @@ public class OrderDAO implements IOrderDao {
         return orders;
     }
 
+    /**
+     * @param orderId
+     * @return boolean
+     * @throws DaoException
+     */
     @Override
     public boolean deleteOrder(Integer orderId) throws DaoException {
         LOGGER.log(Level.DEBUG, "order DAO: Start delete order");
@@ -309,7 +363,7 @@ public class OrderDAO implements IOrderDao {
                 return false;
             }
         } catch (SQLException e) {
-           return false;
+            return false;
         } catch (ConnectionException e) {
             throw new DaoException(this.getClass() + ":" + e.getMessage());
         } finally {
@@ -319,6 +373,11 @@ public class OrderDAO implements IOrderDao {
         }
     }
 
+    /**
+     * @param orderId
+     * @return Order
+     * @throws DaoException
+     */
     @Override
     public Order getOrderByOrderId(Integer orderId) throws DaoException {
         LOGGER.log(Level.DEBUG, "order DAO: Start getOrderByOrderId");
@@ -345,6 +404,11 @@ public class OrderDAO implements IOrderDao {
         return null;
     }
 
+    /**
+     * @param resultSet
+     * @return Order
+     * @throws SQLException
+     */
     private Order createOrderByResultSet(ResultSet resultSet) throws SQLException {
         Order order = new Order();
         order.setClientId(resultSet.getInt("clientId"));

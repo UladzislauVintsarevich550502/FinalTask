@@ -49,7 +49,9 @@ public enum AttributeParameterName {
     RESET_NEW_PASSWORD("resetPassword_new"),
     ADMIN_LOGIN("admin_login"),
     ADMIN_PASSWORD("admin_password"),
-    ADD_ADMIN_ERROR("add_admin_error");
+    ADD_ADMIN_ERROR("add_admin_error"),
+    CODE("code"),
+    CLIENT("client");
 
 
     private String value;
@@ -58,6 +60,9 @@ public enum AttributeParameterName {
         this.value = value;
     }
 
+    /**
+     * @return String
+     */
     public String getValue() {
         return value;
     }

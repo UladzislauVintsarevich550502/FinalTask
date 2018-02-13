@@ -15,6 +15,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * class StaffDAO created for working with staff
+ */
 public class StaffDAO implements IStaffDao {
     private static final Logger LOGGER = Logger.getLogger(StaffDAO.class);
     private static String ADD_STAFF = "INSERT INTO epamcafe.staff (staffLogin, staffPassword) VALUES(?,?)";
@@ -29,6 +32,11 @@ public class StaffDAO implements IStaffDao {
     private PreparedStatement statement;
     private ResultSet resultSet;
 
+    /**
+     * @param staff
+     * @return boolean
+     * @throws DaoException
+     */
     @Override
     public boolean addStaff(Staff staff) throws DaoException {
         LOGGER.log(Level.DEBUG, "Staff DAO: Add staff start");
@@ -57,6 +65,11 @@ public class StaffDAO implements IStaffDao {
         }
     }
 
+    /**
+     * @param id
+     * @return boolean
+     * @throws DaoException
+     */
     @Override
     public boolean deleteStaff(Integer id) throws DaoException {
         LOGGER.log(Level.DEBUG, "Staff DAO: Delete staff start");
@@ -84,6 +97,12 @@ public class StaffDAO implements IStaffDao {
         }
     }
 
+    /**
+     * @param login
+     * @param password
+     * @return Staff
+     * @throws DaoException
+     */
     @Override
     public Staff signIn(String login, String password) throws DaoException {
         LOGGER.log(Level.DEBUG, "Staff DAO: start signIn");
@@ -111,6 +130,11 @@ public class StaffDAO implements IStaffDao {
         return staff;
     }
 
+    /**
+     * @param login
+     * @return boolean
+     * @throws DaoException
+     */
     @Override
     public boolean findStaffByLogin(String login) throws DaoException {
         LOGGER.log(Level.DEBUG, "Staff DAO: start Find");
@@ -136,6 +160,10 @@ public class StaffDAO implements IStaffDao {
         return false;
     }
 
+    /**
+     * @return List<Staff>
+     * @throws DaoException
+     */
     @Override
     public List<Staff> getAllStaff() throws DaoException {
         LOGGER.log(Level.DEBUG, "Staff DAO: Start get all staff");
@@ -164,6 +192,12 @@ public class StaffDAO implements IStaffDao {
         return staff;
     }
 
+    /**
+     * @param password
+     * @param id
+     * @return boolean
+     * @throws DaoException
+     */
     @Override
     public boolean checkPassword(String password, Integer id) throws DaoException {
         LOGGER.log(Level.DEBUG, "Staff DAO: Check password start");
@@ -188,6 +222,12 @@ public class StaffDAO implements IStaffDao {
         }
     }
 
+    /**
+     * @param password
+     * @param id
+     * @return boolean
+     * @throws DaoException
+     */
     @Override
     public boolean changePassword(String password, Integer id) throws DaoException {
         LOGGER.log(Level.DEBUG, "Staff DAO: Change password start");
@@ -213,6 +253,11 @@ public class StaffDAO implements IStaffDao {
         return false;
     }
 
+    /**
+     * @param resultSet
+     * @return Staff
+     * @throws DaoException
+     */
     private Staff createStaffByResultSet(ResultSet resultSet) throws DaoException {
         Staff staff = new Staff();
         try {

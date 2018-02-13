@@ -15,6 +15,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * class ProductDAO created for working with products
+ */
 public class ProductDAO implements IProductDao {
     private static final Logger LOGGER = Logger.getLogger(ProductDAO.class);
     public static String GET_ALL_PRODUCTS = "SELECT * FROM epamcafe.product;";
@@ -36,6 +39,11 @@ public class ProductDAO implements IProductDao {
     private ResultSet resultSet;
     private PreparedStatement statement;
 
+    /**
+     * @param product
+     * @return boolean
+     * @throws DaoException
+     */
     @Override
     public boolean addProduct(Product product) throws DaoException {
         LOGGER.log(Level.DEBUG, "Product DAO: Add product start");
@@ -70,6 +78,11 @@ public class ProductDAO implements IProductDao {
         }
     }
 
+    /**
+     * @param id
+     * @return boolean
+     * @throws DaoException
+     */
     @Override
     public boolean deleteProduct(Integer id) throws DaoException {
         LOGGER.log(Level.DEBUG, "Product DAO: Delete product start");
@@ -97,6 +110,11 @@ public class ProductDAO implements IProductDao {
         }
     }
 
+    /**
+     * @param id
+     * @return Product
+     * @throws DaoException
+     */
     @Override
     public Product getProductById(Integer id) throws DaoException {
         LOGGER.log(Level.DEBUG, "product DAO: Start get product by ID");
@@ -122,6 +140,10 @@ public class ProductDAO implements IProductDao {
         return null;
     }
 
+    /**
+     * @return List<Product>
+     * @throws DaoException
+     */
     @Override
     public List<Product> getAllProducts() throws DaoException {
         LOGGER.log(Level.DEBUG, "product DAO: Start get all products");
@@ -148,6 +170,11 @@ public class ProductDAO implements IProductDao {
         return products;
     }
 
+    /**
+     * @param type
+     * @return List<Product>
+     * @throws DaoException
+     */
     @Override
     public List<Product> getProductByType(String type) throws DaoException {
         LOGGER.log(Level.DEBUG, "product DAO: Start get product by type");
@@ -177,6 +204,11 @@ public class ProductDAO implements IProductDao {
         return products;
     }
 
+    /**
+     * @param orderId
+     * @return List<Product>
+     * @throws DaoException
+     */
     @Override
     public List<Product> getProductByOrderId(Integer orderId) throws DaoException {
         LOGGER.log(Level.DEBUG, "product DAO: Start get product by orderId");
@@ -207,6 +239,11 @@ public class ProductDAO implements IProductDao {
         return products;
     }
 
+    /**
+     * @param product
+     * @return boolean
+     * @throws DaoException
+     */
     @Override
     public boolean editProduct(Product product) throws DaoException {
         LOGGER.log(Level.DEBUG, "Product DAO: Add product start");
@@ -243,6 +280,11 @@ public class ProductDAO implements IProductDao {
     }
 
 
+    /**
+     * @param resultSet
+     * @return Product
+     * @throws DaoException
+     */
     private Product createProductByResultSet(ResultSet resultSet) throws DaoException {
         Product product = new Product();
         try {

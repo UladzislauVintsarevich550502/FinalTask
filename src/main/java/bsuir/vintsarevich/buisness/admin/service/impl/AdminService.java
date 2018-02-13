@@ -13,11 +13,19 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import java.util.List;
-
+/**
+ * class AdminService created for preparation data before sending queries to database table "admin"
+ */
 public class AdminService implements IAdminService {
     private static final Logger LOGGER = Logger.getLogger(AdminService.class);
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
+    /**
+     * @param adminLogin
+     * @param adminPassword
+     * @return boolean
+     * @throws ServiceException
+     */
     @Override
     public boolean signUp(String adminLogin, String adminPassword) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Admin service: start signUp");
@@ -41,6 +49,11 @@ public class AdminService implements IAdminService {
 
     }
 
+    /**
+     * @param id
+     * @return boolean
+     * @throws ServiceException
+     */
     @Override
     public boolean deleteAdmin(Integer id) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Product DAO: Delete admin start");
@@ -52,6 +65,11 @@ public class AdminService implements IAdminService {
         }
     }
 
+    /**
+     * @param adminLogin
+     * @param adminPassword
+     * @return Admin
+     */
     @Override
     public Admin signIn(String adminLogin, String adminPassword) {
         LOGGER.log(Level.DEBUG, "Admin service: start SignIn");
@@ -68,6 +86,10 @@ public class AdminService implements IAdminService {
         }
     }
 
+    /**
+     * @return List<Admin>
+     * @throws ServiceException
+     */
     @Override
     public List<Admin> getAllAdmins() throws ServiceException {
         LOGGER.log(Level.DEBUG, "Product Service: Start get all admins");
@@ -80,6 +102,12 @@ public class AdminService implements IAdminService {
         }
     }
 
+    /**
+     * @param password
+     * @param id
+     * @return boolean
+     * @throws ServiceException
+     */
     @Override
     public boolean checkPassword(String password, Integer id) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Admin Service: check password start");
@@ -95,6 +123,12 @@ public class AdminService implements IAdminService {
         }
     }
 
+    /**
+     * @param password
+     * @param id
+     * @return boolean
+     * @throws ServiceException
+     */
     @Override
     public boolean changePassword(String password, Integer id) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Admin Service: change password start");
@@ -110,6 +144,11 @@ public class AdminService implements IAdminService {
         }
     }
 
+    /**
+     * @param login
+     * @return boolean
+     * @throws ServiceException
+     */
     @Override
     public boolean findAdminByLogin(String login) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Admin Service: find by login start");

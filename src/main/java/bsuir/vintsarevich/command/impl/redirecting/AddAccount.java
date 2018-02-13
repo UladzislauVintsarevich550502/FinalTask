@@ -15,11 +15,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class AddAccount implements ICommand {
+/**
+ * class AddAccount created to add accounts
+ */
+public class  AddAccount implements ICommand {
     private static final Logger LOGGER = Logger.getLogger(SignOut.class);
     private JspPageName jspPageName = JspPageName.INDEX;
     private final ServiceFactory serviceFactory = ServiceFactory.getInstance();
 
+    /**
+     * @param request
+     * @param response
+     * @return String
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.INFO, "Start add account");
@@ -41,6 +49,9 @@ public class AddAccount implements ICommand {
         return jspPageName.getPath();
     }
 
+    /**
+     * @param request
+     */
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
             request.getSession().setAttribute(AttributeParameterName.HEADER_ERROR.getValue(), "Ошибка! Аккаунт не добавлен");

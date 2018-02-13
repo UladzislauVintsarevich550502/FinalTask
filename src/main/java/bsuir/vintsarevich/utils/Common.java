@@ -17,6 +17,10 @@ import java.util.List;
 public class Common {
     private static final int NUMBER_OF_PRODUCT_ON_PAGE = 6;
 
+    /**
+     * @param request
+     * @throws ServiceException
+     */
     public static void setReview(HttpServletRequest request) throws ServiceException {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         IReviewService reviewService = serviceFactory.getReviewService();
@@ -35,6 +39,11 @@ public class Common {
         }
     }
 
+    /**
+     * @param request
+     * @param allProducts
+     * @throws ServiceException
+     */
     public static void calculatePageNumber(HttpServletRequest request, List<Product> allProducts) throws ServiceException {
         if (allProducts.size() == 0) {
             if (SessionElements.getLocale(request).equals("ru")) {
@@ -67,6 +76,10 @@ public class Common {
         }
     }
 
+    /**
+     * @param type
+     * @return String
+     */
     public static String typeConverter(String type){
         if(type.equals("soda") || type.equals("water") || type.equals("soup") || type.equals("hotDrink") || type.equals("juice")){
             return "volume";

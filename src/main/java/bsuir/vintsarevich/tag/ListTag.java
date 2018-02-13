@@ -10,6 +10,10 @@ import java.io.IOException;
 
 public class ListTag extends TagSupport {
 
+    /**
+     * @return int
+     * @throws JspException
+     */
     @Override
     public int doStartTag() throws JspException {
         User user = (User) pageContext.getSession().getAttribute(AttributeParameterName.USER.getValue());

@@ -1,5 +1,8 @@
 package bsuir.vintsarevich.entity;
 
+/**
+ * class Order created to work with orders
+ */
 public class Order {
     private Integer id;
     private String date;

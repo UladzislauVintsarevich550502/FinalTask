@@ -1,4 +1,4 @@
-package bsuir.vintsarevich.command.impl.dispatching;
+package bsuir.vintsarevich.command.impl.forwarding;
 
 import bsuir.vintsarevich.buisness.staff.service.IStaffService;
 import bsuir.vintsarevich.command.ICommand;
@@ -15,12 +15,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+/**
+ * class StaffList created to get and display data about staff
+ */
 public class StaffList implements ICommand {
 
     private static final Logger LOGGER = Logger.getLogger(StaffList.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private JspPageName jspPageName = JspPageName.STAFF;
 
+    /**
+     * @param request
+     * @param response
+     * @return String
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.INFO, "Command: Start staff command");
@@ -38,6 +46,9 @@ public class StaffList implements ICommand {
         return jspPageName.getPath();
     }
 
+    /**
+     * @param request
+     */
     private void rewrite(HttpServletRequest request) {
         request.setAttribute(AttributeParameterName.ADD_STAFF_ERROR.getValue(), request.getSession().getAttribute(AttributeParameterName.ADD_STAFF_ERROR.getValue()));
         request.getSession().removeAttribute(AttributeParameterName.ADD_STAFF_ERROR.getValue());

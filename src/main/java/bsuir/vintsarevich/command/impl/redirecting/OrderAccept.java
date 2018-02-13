@@ -15,10 +15,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * class OrderAccept created to accept clients' orders by staff
+ */
 public class OrderAccept implements ICommand {
     private final static Logger LOGGER = Logger.getLogger(OrderDeny.class);
     private JspPageName jspPageName = JspPageName.INDEX;
 
+    /**
+     * @param request
+     * @param response
+     * @return String
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.DEBUG, "start order accept");

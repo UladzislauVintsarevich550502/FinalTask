@@ -17,11 +17,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
 
+/**
+ * class AddProduct created to add products
+ */
 public class AddProduct implements ICommand {
     private static final Logger LOGGER = Logger.getLogger(AddProduct.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
     private JspPageName jspPageName = JspPageName.INDEX;
 
+    /**
+     * @param request
+     * @param response
+     * @return String
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.INFO, "Start add product");
@@ -48,6 +56,9 @@ public class AddProduct implements ICommand {
         return jspPageName.getPath();
     }
 
+    /**
+     * @param request
+     */
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
             request.getSession().setAttribute(AttributeParameterName.HEADER_ERROR.getValue(), "Ошибка! Продукт не добавлен");

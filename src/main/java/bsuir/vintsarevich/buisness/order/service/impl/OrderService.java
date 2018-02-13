@@ -12,11 +12,21 @@ import org.apache.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * class OrderService created for preparation data before sending queries to database table "order"
+ */
 public class OrderService implements IOrderService {
 
     private static final Logger LOGGER = Logger.getLogger(OrderService.class);
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
+    /**
+     * @param orderType
+     * @param orderCost
+     * @param clientId
+     * @return boolean
+     * @throws ServiceException
+     */
     @Override
     public boolean addOrder(String orderType, Double orderCost, Integer clientId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order service: start addOrder");
@@ -32,6 +42,13 @@ public class OrderService implements IOrderService {
         }
     }
 
+    /**
+     * @param clientId
+     * @param orderCost
+     * @param productCount
+     * @return boolean
+     * @throws ServiceException
+     */
     @Override
     public boolean editOrder(Integer clientId, Double orderCost, Integer productCount) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order service: start edit order");
@@ -43,6 +60,11 @@ public class OrderService implements IOrderService {
         }
     }
 
+    /**
+     * @param clientId
+     * @return Double
+     * @throws ServiceException
+     */
     @Override
     public Double getOrderCost(Integer clientId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order service: get Order cost start");
@@ -54,6 +76,14 @@ public class OrderService implements IOrderService {
         }
     }
 
+    /**
+     * @param orderType
+     * @param orderData
+     * @param orderCost
+     * @param clientId
+     * @return Integer
+     * @throws ServiceException
+     */
     @Override
     public Integer paymentOrder(String orderType, String orderData, Double orderCost, Integer clientId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order service: start payment order");
@@ -69,6 +99,11 @@ public class OrderService implements IOrderService {
         }
     }
 
+    /**
+     * @param orderId
+     * @return boolean
+     * @throws ServiceException
+     */
     @Override
     public boolean clearOrderCost(Integer orderId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order service: start clear order");
@@ -80,6 +115,11 @@ public class OrderService implements IOrderService {
         }
     }
 
+    /**
+     * @param clientId
+     * @return List<Order>
+     * @throws ServiceException
+     */
     @Override
     public List<Order> getPaymentOrdersByClientId(Integer clientId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order Service: start get orders by clientId");
@@ -91,6 +131,11 @@ public class OrderService implements IOrderService {
         }
     }
 
+    /**
+     * @param clientId
+     * @return Integer
+     * @throws ServiceException
+     */
     @Override
     public Integer getOrderIdByClientId(Integer clientId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order Service: start get order id");
@@ -102,6 +147,11 @@ public class OrderService implements IOrderService {
         }
     }
 
+    /**
+     * @param clientId
+     * @return List<Order>
+     * @throws ServiceException
+     */
     @Override
     public List<Order> getAllOrdersByClientId(Integer clientId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order Service: start get all orders by clientId");
@@ -113,6 +163,10 @@ public class OrderService implements IOrderService {
         }
     }
 
+    /**
+     * @return List<Order>
+     * @throws ServiceException
+     */
     @Override
     public List<Order> getAllOrderedOrders() throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order Service: start get all ordered orders");
@@ -124,6 +178,11 @@ public class OrderService implements IOrderService {
         }
     }
 
+    /**
+     * @param orderId
+     * @return boolean
+     * @throws ServiceException
+     */
     @Override
     public boolean deleteOrder(Integer orderId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order Service: start delete order");
@@ -135,6 +194,11 @@ public class OrderService implements IOrderService {
         }
     }
 
+    /**
+     * @param orderId
+     * @return Order
+     * @throws ServiceException
+     */
     @Override
     public Order getOrderByOrderId(Integer orderId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Order Service: start getOrderByOrderId");

@@ -15,11 +15,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * class AddStaff created to add staff
+ */
 public class AddStaff implements ICommand {
     private static final Logger LOGGER = Logger.getLogger(SignOut.class);
     private JspPageName jspPageName = JspPageName.STAFF;
     private final ServiceFactory serviceFactory = ServiceFactory.getInstance();
 
+    /**
+     * @param request
+     * @param response
+     * @return String
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.INFO, "Start add staff");
@@ -39,6 +47,9 @@ public class AddStaff implements ICommand {
         return jspPageName.getPath();
     }
 
+    /**
+     * @param request
+     */
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
             request.getSession().setAttribute(AttributeParameterName.ADD_STAFF_ERROR.getValue(), "Пользователь с таким логиом уже существует");

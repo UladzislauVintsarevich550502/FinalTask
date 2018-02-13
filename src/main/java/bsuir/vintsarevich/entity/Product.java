@@ -1,5 +1,8 @@
 package bsuir.vintsarevich.entity;
 
+/**
+ * class Product created to work with products
+ */
 public class Product {
 
     private Integer id;

@@ -15,6 +15,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * class ClientDAO created for working with clients
+ */
 public class ClientDAO implements IClientDao {
     private final static String SET_POINTS = "UPDATE epamcafe.client SET clientPoint=? WHERE clientId=?";
     private final static String GET_POINTS = "SELECT * FROM epamcafe.client WHERE clientId=?";
@@ -37,6 +40,12 @@ public class ClientDAO implements IClientDao {
     private ResultSet resultSet;
     private PreparedStatement statement;
 
+    /**
+     * @param points
+     * @param clientId
+     * @return boolean
+     * @throws DaoException
+     */
     @Override
     public boolean addPoints(Double points, Integer clientId) throws DaoException {
         LOGGER.log(Level.DEBUG, "ClientDao: start addPoints");
@@ -72,6 +81,11 @@ public class ClientDAO implements IClientDao {
         return false;
     }
 
+    /**
+     * @param clientId
+     * @return boolean
+     * @throws DaoException
+     */
     @Override
     public boolean clearPoints(Integer clientId) throws DaoException {
         LOGGER.log(Level.DEBUG, "ClientDao: start clearPoints");
@@ -97,6 +111,11 @@ public class ClientDAO implements IClientDao {
         return false;
     }
 
+    /**
+     * @param email
+     * @return Client
+     * @throws DaoException
+     */
     @Override
     public Client getClientByEmail(String email) throws DaoException {
         LOGGER.log(Level.DEBUG, "Client DAO: start Find");
@@ -124,6 +143,11 @@ public class ClientDAO implements IClientDao {
         return null;
     }
 
+    /**
+     * @param client
+     * @return Client
+     * @throws DaoException
+     */
     @Override
     public Client addClient(Client client) throws DaoException {
         LOGGER.log(Level.DEBUG, "Client DAO: start add");
@@ -154,6 +178,11 @@ public class ClientDAO implements IClientDao {
         return null;
     }
 
+    /**
+     * @param id
+     * @return boolean
+     * @throws DaoException
+     */
     @Override
     public boolean deleteClient(Integer id) throws DaoException {
         LOGGER.log(Level.DEBUG, "Client DAO: Delete client start");
@@ -181,6 +210,12 @@ public class ClientDAO implements IClientDao {
         }
     }
 
+    /**
+     * @param login
+     * @param password
+     * @return Client
+     * @throws DaoException
+     */
     @Override
     public Client signIn(String login, String password) throws DaoException {
         LOGGER.log(Level.DEBUG, "Client DAO: start SignIn");
@@ -208,6 +243,11 @@ public class ClientDAO implements IClientDao {
         return clientEntity;
     }
 
+    /**
+     * @param clientLogin
+     * @return Client
+     * @throws DaoException
+     */
     @Override
     public Client getClientByLogin(String clientLogin) throws DaoException {
         LOGGER.log(Level.DEBUG, "Client DAO: start get Client by login");
@@ -234,6 +274,11 @@ public class ClientDAO implements IClientDao {
         return clientEntity;
     }
 
+    /**
+     * @param clientId
+     * @return Client
+     * @throws DaoException
+     */
     @Override
     public Client getClientById(Integer clientId) throws DaoException {
         LOGGER.log(Level.DEBUG, "Client DAO: start get Client by id");
@@ -260,6 +305,10 @@ public class ClientDAO implements IClientDao {
         return clientEntity;
     }
 
+    /**
+     * @return List<Client>
+     * @throws DaoException
+     */
     @Override
     public List<Client> getAllClients() throws DaoException {
         LOGGER.log(Level.DEBUG, "Client DAO: Start get all clients");
@@ -292,6 +341,11 @@ public class ClientDAO implements IClientDao {
         return clients;
     }
 
+    /**
+     * @param clientId
+     * @return boolean
+     * @throws DaoException
+     */
     @Override
     public boolean changeClientStatus(Integer clientId) throws DaoException {
         LOGGER.log(Level.DEBUG, "Client DAO: Change status start");
@@ -328,6 +382,12 @@ public class ClientDAO implements IClientDao {
         }
     }
 
+    /**
+     * @param password
+     * @param id
+     * @return boolean
+     * @throws DaoException
+     */
     @Override
     public boolean checkPassword(String password, Integer id) throws DaoException {
         LOGGER.log(Level.DEBUG, "Client DAO: Check password start");
@@ -354,6 +414,12 @@ public class ClientDAO implements IClientDao {
         return false;
     }
 
+    /**
+     * @param password
+     * @param id
+     * @return boolean
+     * @throws DaoException
+     */
     @Override
     public boolean changePassword(String password, Integer id) throws DaoException {
         LOGGER.log(Level.DEBUG, "Client DAO: Change password start");
@@ -379,6 +445,12 @@ public class ClientDAO implements IClientDao {
         return false;
     }
 
+    /**
+     * @param clientId
+     * @param clientPoint
+     * @return boolean
+     * @throws DaoException
+     */
     @Override
     public boolean editPoint(Integer clientId, Double clientPoint) throws DaoException {
         LOGGER.log(Level.DEBUG, "Client DAO: edit points start");
@@ -404,6 +476,11 @@ public class ClientDAO implements IClientDao {
         return false;
     }
 
+    /**
+     * @param resultSet
+     * @return Client
+     * @throws DaoException
+     */
     private Client createClientByResultSet(ResultSet resultSet) throws DaoException {
         Client client = new Client();
         try {

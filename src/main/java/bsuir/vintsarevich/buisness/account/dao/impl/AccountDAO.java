@@ -12,7 +12,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+/**
+ * class AccountDAO created for working with clients' accounts
+ */
 public class AccountDAO implements IAccountDao {
 
     private static final Logger LOGGER = Logger.getLogger(AccountDAO.class);
@@ -27,6 +29,11 @@ public class AccountDAO implements IAccountDao {
     private ResultSet resultSet;
     private PreparedStatement statement;
 
+    /**
+     * @param clientId
+     * @return Double
+     * @throws DaoException
+     */
     @Override
     public Double getCashById(Integer clientId) throws DaoException {
         LOGGER.log(Level.DEBUG, "Account DAO: get Cash start");
@@ -55,6 +62,11 @@ public class AccountDAO implements IAccountDao {
     }
 
 
+    /**
+     * @param account
+     * @return boolean
+     * @throws DaoException
+     */
     @Override
     public boolean addAccount(Account account) throws DaoException {
         LOGGER.log(Level.DEBUG, "Account DAO: Add account start");
@@ -84,6 +96,11 @@ public class AccountDAO implements IAccountDao {
         }
     }
 
+    /**
+     * @param accountNumber
+     * @return boolean
+     * @throws DaoException
+     */
     @Override
     public boolean checkAccountNumber(Integer accountNumber) throws DaoException {
         LOGGER.log(Level.DEBUG, "Account DAO: check account number start");
@@ -113,6 +130,12 @@ public class AccountDAO implements IAccountDao {
         }
     }
 
+    /**
+     * @param clientId
+     * @param orderCostNew
+     * @return boolean
+     * @throws DaoException
+     */
     @Override
     public boolean editAccount(Integer clientId, Double orderCostNew) throws DaoException {
         LOGGER.log(Level.DEBUG, "Account DAO: edit start");
@@ -141,6 +164,11 @@ public class AccountDAO implements IAccountDao {
         }
     }
 
+    /**
+     * @param clientId
+     * @return boolean
+     * @throws DaoException
+     */
     @Override
     public boolean findAccountByClientId(Integer clientId) throws DaoException {
         LOGGER.log(Level.DEBUG, "Account DAO: find start");

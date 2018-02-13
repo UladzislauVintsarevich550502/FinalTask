@@ -16,6 +16,10 @@ public class Validator {
     private static Pattern pattern;
     private static Matcher matcher;
 
+    /**
+     * @param objects
+     * @throws ValidatorException
+     */
     public final static void isNull(Object... objects) throws ValidatorException {
         for (Object ob : objects) {
             if (ob == null) {
@@ -24,6 +28,10 @@ public class Validator {
         }
     }
 
+    /**
+     * @param strings
+     * @throws ValidatorException
+     */
     public final static void isEmptyString(String... strings) throws ValidatorException {
         for (String s : strings) {
             if (s.isEmpty()) {
@@ -32,6 +40,10 @@ public class Validator {
         }
     }
 
+    /**
+     * @param strings
+     * @throws ValidatorException
+     */
     public final static void matchProperName(String... strings) throws ValidatorException {
         pattern = Pattern.compile(REGEX_FOR_NAME);
         for (String s : strings) {
@@ -42,6 +54,10 @@ public class Validator {
         }
     }
 
+    /**
+     * @param strings
+     * @throws ValidatorException
+     */
     public final static void matchEmail(String... strings) throws ValidatorException {
         pattern = Pattern.compile(REGEX_FOR_EMAIL);
         for (String s : strings) {
@@ -52,6 +68,10 @@ public class Validator {
         }
     }
 
+    /**
+     * @param strings
+     * @throws ValidatorException
+     */
     public final static void matchLogin(String... strings) throws ValidatorException {
         pattern = Pattern.compile(REGEX_FOR_LOGIN);
         for (String s : strings) {
@@ -62,6 +82,10 @@ public class Validator {
         }
     }
 
+    /**
+     * @param strings
+     * @throws ValidatorException
+     */
     public final static void matchPassword(String... strings) throws ValidatorException {
         pattern = Pattern.compile(REGEX_FOR_PASSWORD);
         for (String s : strings) {
@@ -72,6 +96,10 @@ public class Validator {
         }
     }
 
+    /**
+     * @param strings
+     * @throws ValidatorException
+     */
     public final static void matchProductName(String... strings) throws ValidatorException {
         pattern = Pattern.compile(REGEX_FOR_PRODUCT_NAME);
         for (String s : strings) {
@@ -79,12 +107,6 @@ public class Validator {
             if (!matcher.matches()) {
                 throw new ValidatorException("product name format error");
             }
-        }
-    }
-
-    public static void matchOrderType(String orderType) throws ValidatorException {
-        if(!orderType.equals("ordered") || !orderType.equals("Not order") || !orderType.equals("payment")){
-            throw new ValidatorException("product type error");
         }
     }
 }

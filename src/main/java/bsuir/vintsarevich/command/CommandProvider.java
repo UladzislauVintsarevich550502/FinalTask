@@ -1,7 +1,7 @@
 package bsuir.vintsarevich.command;
 
 
-import bsuir.vintsarevich.command.impl.dispatching.*;
+import bsuir.vintsarevich.command.impl.forwarding.*;
 import bsuir.vintsarevich.command.impl.redirecting.*;
 import bsuir.vintsarevich.enumeration.CommandName;
 import org.apache.log4j.Level;
@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *
+ */
 public final class CommandProvider {
     private final static CommandProvider instance = new CommandProvider();
     private static final Logger LOGGER = Logger.getLogger(CommandProvider.class);
@@ -53,12 +56,20 @@ public final class CommandProvider {
         repository.put(CommandName.DELETE_PRODUCT, new DeleteProduct());
         repository.put(CommandName.CHANGE_STAFF, new ChangeStaff());
         repository.put(CommandName.CHANGE_ADMIN, new ChangeAdmin());
+        repository.put(CommandName.RESET, new Re());
     }
 
+    /**
+     * @return CommandProvider
+     */
     public static CommandProvider getInstance() {
         return instance;
     }
 
+    /**
+     * @param request
+     * @return ICommand
+     */
     public ICommand getCommand(HttpServletRequest request) {
         ICommand iCommand = repository.get(CommandName.WRONG_REQUEST);
         String command = request.getRequestURI();

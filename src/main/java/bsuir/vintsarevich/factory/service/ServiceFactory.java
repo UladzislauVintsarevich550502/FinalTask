@@ -31,38 +31,65 @@ public class ServiceFactory {
     private ServiceFactory() {
     }
 
+    /**
+     * @return ServiceFactory
+     */
     public static ServiceFactory getInstance() {
         return instance;
     }
 
+    /**
+     * @return IAdminService
+     */
     public IAdminService getAdminService() {
         return adminService;
     }
 
+    /**
+     * @return IOrderProductService
+     */
     public IOrderProductService getOrderProductService() {
         return orderProductService;
     }
 
+    /**
+     * @return IProductService
+     */
     public IProductService getProducteService() {
         return producteService;
     }
 
+    /**
+     * @return IClientService
+     */
     public IClientService getClientService() {
         return clientService;
     }
 
+    /**
+     * @return IAccountService
+     */
     public IAccountService getAccountService() {
         return accountService;
     }
 
+    /**
+     * @return IOrderService
+     */
     public IOrderService getOrderService() {
         return orderService;
     }
 
+    /**
+     * @return IReviewService
+     */
     public IReviewService getReviewService() {
         return reviewService;
     }
 
+    /**
+     * @return IStaffService
+     */
     public IStaffService getStaffService() {
         return staffService;
     }

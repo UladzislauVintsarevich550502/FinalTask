@@ -22,12 +22,19 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+/**
+ * class ProductService created for preparation data before sending queries to database table "product"
+ */
 public class ProductService implements IProductService {
 
     private static Logger LOGGER = Logger.getLogger(ProductService.class);
     private DaoFactory daoFactory = DaoFactory.getInstance();
     private static final int BUFFER_LENGTH = 1024;
 
+    /**
+     * @return List<Product>
+     * @throws ServiceException
+     */
     @Override
     public List<Product> getAllProducts() throws ServiceException {
         LOGGER.log(Level.DEBUG, "Product Service: Start get all products");
@@ -39,6 +46,11 @@ public class ProductService implements IProductService {
         }
     }
 
+    /**
+     * @param type
+     * @return List<Product>
+     * @throws ServiceException
+     */
     @Override
     public List<Product> getProductByType(String type) throws ServiceException {
         LOGGER.log(Level.DEBUG, "ProductService: start get product by type");
@@ -52,6 +64,11 @@ public class ProductService implements IProductService {
         }
     }
 
+    /**
+     * @param id
+     * @return boolean
+     * @throws ServiceException
+     */
     @Override
     public boolean deleteProduct(Integer id) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Product DAO: Delete product start");
@@ -63,6 +80,11 @@ public class ProductService implements IProductService {
         }
     }
 
+    /**
+     * @param orderId
+     * @return List<Product>
+     * @throws ServiceException
+     */
     @Override
     public List<Product> getProductByOrderId(Integer orderId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "ProductService: start get product by clientId");
@@ -74,6 +96,11 @@ public class ProductService implements IProductService {
         }
     }
 
+    /**
+     * @param id
+     * @return Product
+     * @throws ServiceException
+     */
     @Override
     public Product getProductById(Integer id) throws ServiceException {
         LOGGER.log(Level.DEBUG, "ProductService: start get product by ID");
@@ -85,6 +112,19 @@ public class ProductService implements IProductService {
         }
     }
 
+    /**
+     * @param type
+     * @param nameRu
+     * @param nameEn
+     * @param weight
+     * @param cost
+     * @param descriptionRu
+     * @param descriptionEn
+     * @param image
+     * @param webPath
+     * @return boolean
+     * @throws ServiceException
+     */
     @Override
     public boolean addProduct(String type, String nameRu, String nameEn, Integer weight, Double cost,
                               String descriptionRu, String descriptionEn, Part image, String webPath) throws ServiceException {
@@ -118,6 +158,20 @@ public class ProductService implements IProductService {
         }
     }
 
+    /**
+     * @param id
+     * @param type
+     * @param nameRu
+     * @param nameEn
+     * @param weight
+     * @param cost
+     * @param descriptionRu
+     * @param descriptionEn
+     * @param image
+     * @param webPath
+     * @return boolean
+     * @throws ServiceException
+     */
     @Override
     public boolean editProduct(Integer id, String type, String nameRu, String nameEn, Integer weight, Double cost,
                                String descriptionRu, String descriptionEn, Part image, String webPath) throws ServiceException {
@@ -152,6 +206,12 @@ public class ProductService implements IProductService {
         }
     }
 
+    /**
+     * @param filePart
+     * @param fileName
+     * @param webInfPath
+     * @throws ServiceLogicException
+     */
     private void uploadImage(Part filePart, String fileName, String webInfPath) throws ServiceLogicException {
         try {
             LOGGER.log(Level.DEBUG, "ProductServer: upload start");
@@ -178,6 +238,10 @@ public class ProductService implements IProductService {
         LOGGER.log(Level.DEBUG, "ProductServer: upload finish");
     }
 
+    /**
+     * @param filePart
+     * @return String
+     */
     private String getImageName(Part filePart) {
         return Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
     }

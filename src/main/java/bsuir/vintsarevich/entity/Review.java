@@ -1,5 +1,8 @@
 package bsuir.vintsarevich.entity;
 
+/**
+ * class Review created to work with reviews
+ */
 public class Review {
     private String text;
     private Double mark;
