@@ -236,8 +236,8 @@ jQuery(document).ready(function ($) {
     $('form#add-product').on('click', function (e) {
         var t = event.target || event.srcElement;
 
-        var name_ruReg = new RegExp('^([\u{0410}-\u{042F}]{1}[\u{0430}-\u{044F}]+)$');
-        var name_enReg = new RegExp('^([A-Z]{1}[a-z]+)$');
+        var name_ruReg = new RegExp('^([\u{0410}-\u{042F}]{1}[\u{0430}-\u{044F}\u{0410}-\u{042F}\\-\\s\\`]+)$');
+        var name_enReg = new RegExp('^([A-Z]{1}[a-zA-Z-\\s\\-\\`]+)$');
         var costvalueReg = new RegExp('^(([0-9]+)(\\.){0,1}([0-9]+))$');
 
         var product_type = $('select#product-type').val();

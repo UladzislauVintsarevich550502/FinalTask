@@ -27,10 +27,18 @@
                                     <h3>${product.nameEn}</h3>
                                 </c:when>
                             </c:choose>
-                            <p>${product.cost}</p>
+                            <p>${cost_word}: ${product.cost} BYN</p>
                             <div class="wall_form" id="popup_message_form_${product.id}"
                                  style="display:none;">
-                                <p>${product.weight}</p>
+                                <c:choose>
+                                    <c:when test="${product.type eq 'weight'}">
+                                        <p>${volume1_word}: ${product.weight} ${ml_word}:</p>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <p>${weight_word}: ${product.weight} ${g_word}:</p>
+                                    </c:otherwise>
+                                </c:choose>
+
                                 <c:choose>
                                     <c:when test="${locale eq 'en'}">
                                         <p>${product.descriptionEn}</p>

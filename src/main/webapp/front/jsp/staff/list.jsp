@@ -22,7 +22,7 @@
                         <label id="cost_data" for="COST">${date_of_receiving_word}: ${order.date}</label>
                     </div>
                     <li>
-                        <a class="button" href="/cafe.by/order_accept?order_id=${order.id}">${submit_word}</a>
+                        <a class="button" href="/cafe.by/order_accept?order_id=${order.id}">${accept_word}</a>
                         <a class="button" href="/cafe.by/order_deny?order_id=${order.id}">${deny_word}</a>
                     </li>
                 </c:forEach>

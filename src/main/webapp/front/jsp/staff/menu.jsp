@@ -11,8 +11,6 @@
 <div id="sidebar">
     <div class="inner">
 
-        <%@include file="/front/html/search.html" %>
-
         <!— Menu —>
         <nav id="menu">
             <header class="major">

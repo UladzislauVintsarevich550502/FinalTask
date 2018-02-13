@@ -159,6 +159,24 @@ input#lang_ru, input#lang_en {
     font-size: 0px;
 }
 
+input.number_delete {
+    box-shadow: inset 0px 0px 5px 2px #f56a6a;
+    height: 34px;
+    padding-left: 10px;
+    border: 0;
+    -ms-appearance: none;
+    appearance: none;
+    -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    border-radius: 0.375em;
+    border: 0;
+    color: #f56a6a !important;
+    font-family: "Roboto Slab", serif;
+    font-size: 0.8em;
+    font-weight: 700;
+    height: 3.5em;
+}
+
 input#dateTime {
     border-radius: 0.375em;
     border: 0;

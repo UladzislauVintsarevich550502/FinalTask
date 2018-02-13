@@ -14,7 +14,7 @@
                 <option value="juice">${juice_word}</option>
                 <option value="water">${water_word}</option>
                 <option value="hotDrink">${hot_drink_word}</option>
-                <option value="lemonade">${lemonade_word}</option>
+                <option value="soda">${soda_word}</option>
             </select>
             <span id="product-type-span" class="cd-error-message">${make_choose}</span>
         </p>
@@ -40,7 +40,7 @@
 
         <p class="fieldset">
             <input name="image_name" class="image_name" id="image-name" type="text" value=${choose_file_word}>
-            <a href="#0" class="image-load">""</a>
+            <a href="#0" id="a-image-name" class="image-load">""</a>
             <span id="image-name-span" class="cd-error-message">${choose_not_choosen_word}</span>
         </p>
     <input type="file" style="display:none;" id="file" name="file" multiple

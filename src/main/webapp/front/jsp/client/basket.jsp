@@ -58,8 +58,9 @@
                                             <form method="POST"
                                                   action="/cafe.by/remove_product_from_basket?productId=${product.id}">
                                                 <input type="number" step="1" min="0" max="${product.number}" value="0"
-                                                       id="number-for-delete" name="number_for_delete"
-                                                       onkeypress="return false">
+                                                       id="number-for-delete-${product.id}" name="number_for_delete"
+                                                       onkeypress="return false" class="number_delete"
+                                                       onclick="incrementProductDelete(${product.id},${product.number})">
                                                 <input type="submit" id="delete-button-from-basket"
                                                        value="${delete_from_basket_word}">
                                             </form>
@@ -74,41 +75,42 @@
                         </c:choose>
                     </article>
                     <article>
+                        <h2>${account_payment_error}</h2>
                         <h2>
                             ${points_word}: ${point}
                         </h2>
                         <form method="POST" name="payment" action="/cafe.by/payment">
-                            <input type="number" step="0.05" min="0"
-                                   max="${(user.point<orderCost)?user.point:orderCost}" value="0"
-                                   id="point-to-payment" name="point_to_payment"
-                                   onkeypress="return false">
                             <c:choose>
-                            <c:when test="${products!=null}">
-                            <h2>
-                                <p>${choose_the_form_payment_word}</p>
-                                <p>${account_payment_error}</p>
-                                <div>
-                                    <input type="radio" class="radio_payment" id="by-card"
-                                           name="choise_of_payment"
-                                           value="card" checked>
-                                    <label for="by-card">${card_word}</label>
-                                    <input type="radio" class="radio_payment" id="by-cash"
-                                           name="choise_of_payment"
-                                           value="cash">
-                                    <label for="by-cash">${cash_word}</label>
-                                </div>
-                                <h3>
-                                    <p>${desired_acquisition_time_word}</p>
-                                    <input id="dateTime" type="datetime-local" name="dateTime" required>
-                                    <span class="validity"></span>
-                                </h3>
-                                <div>
-                                    <input type="submit" id="payment_button" value="${pay_word}">
-                                </div>
-                            </h2>
+                                <c:when test="${products!=null}">
+                                    <input type="number" step="0.05" min="0" class="number_delete"
+                                           max="${(user.point<orderCost)?user.point:orderCost}" value="0"
+                                           id="point-to-payment" name="point_to_payment"
+                                           onkeypress="return false"
+                                           onclick="incrementBonus(${(user.point<orderCost)?user.point:orderCost})">
+                                    <h2>
+                                        <p>${choose_the_form_payment_word}</p>
+                                        <div>
+                                            <input type="radio" class="radio_payment" id="by-card"
+                                                   name="choise_of_payment"
+                                                   value="card" checked>
+                                            <label for="by-card">${card_word}</label>
+                                            <input type="radio" class="radio_payment" id="by-cash"
+                                                   name="choise_of_payment"
+                                                   value="cash">
+                                            <label for="by-cash">${cash_word}</label>
+                                        </div>
+                                        <h3>
+                                            <p>${desired_acquisition_time_word}</p>
+                                            <input id="dateTime" type="datetime-local" name="dateTime" required>
+                                            <span class="validity"></span>
+                                        </h3>
+                                        <div>
+                                            <input type="submit" id="payment_button" value="${pay_word}">
+                                        </div>
+                                    </h2>
+                                </c:when>
+                            </c:choose>
                         </form>
-                        </c:when>
-                        </c:choose>
                     </article>
                 </div>
             </section>
@@ -164,6 +166,7 @@
     <%@include file="/front/js/menu/util.js" %>
     <%@include file="/front/js/form/form.js"%>
     <%@include file="/front/js/elementcontroller.js"%>
+    <%@include file="/front/js/functions.js"%>
 </script>
 
 </body>

@@ -38,7 +38,6 @@ public class Basket implements ICommand {
             IClientService clientService = serviceFactory.getClientService();
             Integer orderId = orderService.getOrderIdByClientId(clientId);
             List<Product> allProducts = new ArrayList<>();
-
             List<Product> tempProducts = productService.getProductByOrderId(orderId);
             List<Order> orders = orderService.getPaymentOrdersByClientId(clientId);
 

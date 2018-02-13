@@ -5,6 +5,7 @@ import bsuir.vintsarevich.buisness.review.service.IReviewService;
 import bsuir.vintsarevich.entity.Client;
 import bsuir.vintsarevich.entity.Product;
 import bsuir.vintsarevich.entity.Review;
+import bsuir.vintsarevich.enumeration.AttributeParameterName;
 import bsuir.vintsarevich.exception.service.ServiceException;
 import bsuir.vintsarevich.factory.service.ServiceFactory;
 
@@ -27,30 +28,49 @@ public class Common {
             review.setClientName(client.getName());
             review.setClientSurname(client.getSurname());
         }
-        if(reviews.size()==0){
-            request.setAttribute("reviews",null);
-        }else {
+        if (reviews.size() == 0) {
+            request.setAttribute("reviews", null);
+        } else {
             request.setAttribute("reviews", reviews);
         }
     }
+
     public static void calculatePageNumber(HttpServletRequest request, List<Product> allProducts) throws ServiceException {
-        int pageCount;
-        if (allProducts.size() % NUMBER_OF_PRODUCT_ON_PAGE == 0) {
-            pageCount = allProducts.size() / NUMBER_OF_PRODUCT_ON_PAGE;
+        if (allProducts.size() == 0) {
+            if (SessionElements.getLocale(request).equals("ru")) {
+                request.setAttribute(AttributeParameterName.PRODUCT_NOT_FIND.getValue(), "Ничего не найдено");
+            } else {
+                request.setAttribute(AttributeParameterName.PRODUCT_NOT_FIND.getValue(), "Nothing found");
+            }
+            request.getSession().setAttribute("pageCount", 0);
         } else {
-            pageCount = allProducts.size() / NUMBER_OF_PRODUCT_ON_PAGE + 1;
+            Collections.reverse(allProducts);
+            int pageCount;
+            if (allProducts.size() % NUMBER_OF_PRODUCT_ON_PAGE == 0) {
+                pageCount = allProducts.size() / NUMBER_OF_PRODUCT_ON_PAGE;
+            } else {
+                pageCount = allProducts.size() / NUMBER_OF_PRODUCT_ON_PAGE + 1;
+            }
+            if (request.getSession().getAttribute("currentPage") == null ||
+                    (Integer) request.getSession().getAttribute("currentPage") == 0) {
+                request.getSession().setAttribute("currentPage", 1);
+            }
+            int currentPage = (Integer) request.getSession().getAttribute("currentPage");
+            List<Product> pageProducts = new ArrayList<>();
+            for (int i = (currentPage - 1) * NUMBER_OF_PRODUCT_ON_PAGE; i < currentPage * NUMBER_OF_PRODUCT_ON_PAGE
+                    && i < allProducts.size(); i++) {
+                allProducts.get(i).setType(typeConverter(allProducts.get(i).getType()));
+                pageProducts.add(allProducts.get(i));
+            }
+            request.setAttribute("products", pageProducts);
+            request.getSession().setAttribute("pageCount", pageCount);
         }
-        if (request.getSession().getAttribute("currentPage") == null ||
-                (Integer) request.getSession().getAttribute("currentPage") == 0) {
-            request.getSession().setAttribute("currentPage", 1);
+    }
+
+    public static String typeConverter(String type){
+        if(type.equals("soda") || type.equals("water") || type.equals("soup") || type.equals("hotDrink") || type.equals("juice")){
+            return "volume";
         }
-        int currentPage = (Integer) request.getSession().getAttribute("currentPage");
-        List<Product> pageProducts = new ArrayList<>();
-        for (int i = (currentPage - 1) * NUMBER_OF_PRODUCT_ON_PAGE; i < currentPage * NUMBER_OF_PRODUCT_ON_PAGE
-                && i < allProducts.size(); i++) {
-            pageProducts.add(allProducts.get(i));
-        }
-        request.setAttribute("products", pageProducts);
-        request.getSession().setAttribute("pageCount", pageCount);
+        return "weight";
     }
 }

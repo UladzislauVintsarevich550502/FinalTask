@@ -100,13 +100,11 @@ public class ProductService implements IProductService {
             product.setDescriptionRu(descriptionRu);
             product.setDescriptionEn(descriptionEn);
             String imageName = getImageName(image);
-            System.out.println(imageName);
             if (!imageName.isEmpty()) {
                 product.setImagePath(imageName);
             }
             String fileName = Paths.get(image.getSubmittedFileName()).getFileName().toString();
             if (!fileName.isEmpty()) {
-                System.out.println(webPath);
                 uploadImage(image, fileName, webPath);
             }
             LOGGER.log(Level.DEBUG, "ProductService: addProduct finish");
@@ -140,7 +138,6 @@ public class ProductService implements IProductService {
             }
             String fileName = Paths.get(image.getSubmittedFileName()).getFileName().toString();
             if (!fileName.isEmpty()) {
-                System.out.println(webPath);
                 uploadImage(image, fileName, webPath);
             }
             LOGGER.log(Level.DEBUG, "ProductService: addProduct finish");
@@ -169,11 +166,7 @@ public class ProductService implements IProductService {
                 len = fileContent.read(buffer);
             }
             if (fileOutputStream != null) {
-                try {
-                    fileOutputStream.close();
-                } catch (IOException e) {
-                    System.out.println("error with closing file" + e);
-                }
+                fileOutputStream.close();
             }
         } catch (IOException e) {
             throw new ServiceLogicException("error with upload of image", e);

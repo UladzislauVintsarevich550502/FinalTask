@@ -15,7 +15,6 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collections;
 import java.util.List;
 
 public class Index implements ICommand {
@@ -48,24 +47,11 @@ public class Index implements ICommand {
     private void setPageProduct(HttpServletRequest request) throws ServiceException {
         IProductService productService = serviceFactory.getProducteService();
         List<Product> allProducts = productService.getAllProducts();
-        for(Product product: allProducts){
-            if(product.getType().equals("false")){
+        for (Product product : allProducts) {
+            if (product.getType().equals("false")) {
                 allProducts.remove(product);
             }
         }
-        if (allProducts.size() == 0) {
-            diagnoseError(request);
-            request.getSession().setAttribute("pageCount", 0);
-        } else {
-            Common.calculatePageNumber(request, allProducts);
-        }
-    }
-
-    private void diagnoseError(HttpServletRequest request) {
-        if (SessionElements.getLocale(request).equals("ru")) {
-            request.setAttribute(AttributeParameterName.PRODUCT_NOT_FIND.getValue(), "Ничего не найдено");
-        } else {
-            request.setAttribute(AttributeParameterName.PRODUCT_NOT_FIND.getValue(), "Nothing found");
-        }
+        Common.calculatePageNumber(request, allProducts);
     }
 }

@@ -58,19 +58,6 @@ public class SearchProduct implements ICommand {
                 allProducts.add(product);
             }
         }
-        if (allProducts.size() == 0) {
-            diagnoseError(request);
-            request.getSession().setAttribute("pageCount", 0);
-        } else {
-            Common.calculatePageNumber(request,allProducts);
-        }
-    }
-
-    private void diagnoseError(HttpServletRequest request) {
-        if (SessionElements.getLocale(request).equals("ru")) {
-            request.setAttribute(AttributeParameterName.PRODUCT_NOT_FIND.getValue(), "Ничего не найдено");
-        } else {
-            request.setAttribute(AttributeParameterName.PRODUCT_NOT_FIND.getValue(), "Nothing found");
-        }
+        Common.calculatePageNumber(request, allProducts);
     }
 }

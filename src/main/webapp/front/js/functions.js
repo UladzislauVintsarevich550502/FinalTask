@@ -13,6 +13,36 @@ function incrementProduct(id) {
     return false;
 }
 
+function incrementProductDelete(id, max) {
+    width = screen.width;
+    if (width < 500) {
+        var name = "number-for-delete-" + id;
+        var i = document.getElementById(name).value;
+        if (i == max) {
+            document.getElementById(name).value = 0;
+        } else {
+            i = +i + 1;
+            document.getElementById(name).value = i;
+        }
+    }
+    return false;
+}
+
+function incrementBonus(max) {
+    width = screen.width;
+    if (width < 500) {
+        var name = "point-to-payment";
+        var i = document.getElementById(name).value;
+        if (i == max) {
+            document.getElementById(name).value = 0;
+        } else {
+            i = +i + 0.05;
+            document.getElementById(name).value = i;
+        }
+    }
+    return false;
+}
+
 function fileclick(id) {
     document.getElementById('file-edit-' + id).click();
 }
@@ -30,8 +60,8 @@ function checkEditInformation(id) {
     var cost = document.getElementById('cost-edit-' + id).value;
     var image_name = document.getElementById('image-name-edit-' + id).value;
 
-    var name_ruReg = new RegExp('^([\u{0410}-\u{042F}]{1}[\u{0430}-\u{044F}\u{0410}-\u{042F}\-]+)$');
-    var name_enReg = new RegExp('^([A-Z]{1}[a-zA-Z\-\s]+)$');
+    var name_ruReg = new RegExp('^([\u{0410}-\u{042F}]{1}[\u{0430}-\u{044F}\u{0410}-\u{042F}\\-\\s\\`]+)$');
+    var name_enReg = new RegExp('^([A-Z]{1}[a-zA-Z-\\s\\-\\`]+)$');
     var cost_valueReg = new RegExp('^(([0-9]+)(\\.){0,1}([0-9]+))$');
 
     if (product_type != '') {
@@ -97,8 +127,8 @@ function checkEdit(id) {
     var cost = document.getElementById('cost-edit-' + id).value;
     var image_name = document.getElementById('image-name-edit-' + id).value;
 
-    var name_ruReg = new RegExp('^([\u{0410}-\u{042F}]{1}[\u{0430}-\u{044F}\u{0410}-\u{042F}\-]+)$');
-    var name_enReg = new RegExp('^([A-Z]{1}[a-zA-Z\-\s]+)$');
+    var name_ruReg = new RegExp('^([\u{0410}-\u{042F}]{1}[\u{0430}-\u{044F}\u{0410}-\u{042F}\\-\\s\\`]+)$');
+    var name_enReg = new RegExp('^([A-Z]{1}[a-zA-Z-\\s\\-\\`]+)$');
     var cost_valueReg = new RegExp('^(([0-9]+)(\\.){0,1}([0-9]+))$');
 
     if (product_type != '' && name_ru.length >= 2 && name_ru != '' && name_ruReg.test(name_ru) &&

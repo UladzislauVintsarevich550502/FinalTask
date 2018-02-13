@@ -43,22 +43,9 @@ public class FindByType implements ICommand {
         return jspPageName.getPath();
     }
 
-    private void diagnoseError(HttpServletRequest request) {
-        if (SessionElements.getLocale(request).equals("ru")) {
-            request.setAttribute(AttributeParameterName.PRODUCT_NOT_FIND.getValue(), "Ничего не найдено");
-        } else {
-            request.setAttribute(AttributeParameterName.PRODUCT_NOT_FIND.getValue(), "Nothing found");
-        }
-    }
-
     private void setPageProduct(HttpServletRequest request) throws ServiceException {
         IProductService productService = serviceFactory.getProducteService();
         List<Product> allProducts = productService.getProductByType(productType);
-        if (allProducts.size() == 0) {
-            diagnoseError(request);
-            request.getSession().setAttribute("pageCount", 0);
-        } else {
-          Common.calculatePageNumber(request,allProducts);
-        }
+        Common.calculatePageNumber(request, allProducts);
     }
 }

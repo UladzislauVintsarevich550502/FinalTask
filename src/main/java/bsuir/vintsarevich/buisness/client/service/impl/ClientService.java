@@ -17,7 +17,7 @@ import java.util.List;
 public class ClientService implements IClientService {
     private static final Logger LOGGER = Logger.getLogger(ClientService.class);
     private DaoFactory daoFactory = DaoFactory.getInstance();
-    private final static Double DISCOUNT = 0.05;
+    private static final Double DISCOUNT = 0.05;
 
     @Override
     public boolean countPoints(Order order) throws ServiceException {

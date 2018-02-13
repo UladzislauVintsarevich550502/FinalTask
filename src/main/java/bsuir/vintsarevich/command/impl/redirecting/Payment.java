@@ -44,25 +44,30 @@ public class Payment implements ICommand {
             Double orderCost = orderService.getOrderCost(clientId);
             Integer orderId = orderDao.getOrderIdByClientId(clientId);
 
-            if (radio.equals("cash")) {
-                if (accountService.getCashById(clientId) != null && accountService.getCashById(clientId) < 0) {
+            if (orderCost != 0 && orderCost != null) {
+                if (radio.equals("cash")) {
                     Integer orderIdNew = orderService.paymentOrder("ordered", dateTime, (orderCost - pointToPayment), clientId);
                     orderService.clearOrderCost(orderId);
                     orderProductService.editOrderProductPayment(orderIdNew, orderId);
                     clientService.editPoint(clientId, pointToPayment);
                 } else {
-                    diagnoseCashError(request);
+                    System.out.println(accountService.getCashById(clientId));
+                    if (accountService.getCashById(clientId) != null && accountService.getCashById(clientId) >= 0) {
+                        if (accountService.findAccountByClientId(clientId)) {
+                            Integer orderIdNew = orderService.paymentOrder("payment", dateTime, (orderCost - pointToPayment), clientId);
+                            orderService.clearOrderCost(orderId);
+                            orderProductService.editOrderProductPayment(orderIdNew, orderId);
+                            accountService.editAccount(clientId, orderCost);
+                            clientService.editPoint(clientId, pointToPayment);
+                        } else {
+                            diagnoseError(request);
+                        }
+                    } else {
+                        diagnoseCashError(request);
+                    }
                 }
-            } else {
-                if (accountService.findAccountByClientId(clientId)) {
-                    Integer orderIdNew = orderService.paymentOrder("payment", dateTime, (orderCost - pointToPayment), clientId);
-                    orderService.clearOrderCost(orderId);
-                    orderProductService.editOrderProductPayment(orderIdNew, orderId);
-                    accountService.editAccount(clientId, orderCost);
-                    clientService.editPoint(clientId, pointToPayment);
-                } else {
-                    diagnoseError(request);
-                }
+            }else{
+                diagnoseOrderEmptyError(request);
             }
             response.sendRedirect(RedirectingCommandName.BASKET.getCommand());
         } catch (IOException | ServiceException | DaoException e) {
@@ -78,6 +83,14 @@ public class Payment implements ICommand {
             request.getSession().setAttribute(AttributeParameterName.ACCOUNT_PAYMENT_ERROR.getValue(), "Счет не добавлен");
         } else {
             request.getSession().setAttribute(AttributeParameterName.ACCOUNT_PAYMENT_ERROR.getValue(), "Account don't added");
+        }
+    }
+
+    private void diagnoseOrderEmptyError(HttpServletRequest request) {
+        if (SessionElements.getLocale(request).equals("ru")) {
+            request.getSession().setAttribute(AttributeParameterName.ACCOUNT_PAYMENT_ERROR.getValue(), "Заказ пуст");
+        } else {
+            request.getSession().setAttribute(AttributeParameterName.ACCOUNT_PAYMENT_ERROR.getValue(), "Order is empty");
         }
     }
 
