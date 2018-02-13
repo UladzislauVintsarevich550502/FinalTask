@@ -5,6 +5,8 @@ import bsuir.vintsarevich.exception.dao.DaoException;
 
 public interface IAccountDao {
 
+    Double getCashById(Integer clientId) throws DaoException;
+
     boolean addAccount(Account account) throws DaoException;
 
     boolean checkAccountNumber(Integer accountNumber) throws DaoException;

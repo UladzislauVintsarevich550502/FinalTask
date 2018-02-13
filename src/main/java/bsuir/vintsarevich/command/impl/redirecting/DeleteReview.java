@@ -2,7 +2,7 @@ package bsuir.vintsarevich.command.impl.redirecting;
 
 import bsuir.vintsarevich.buisness.review.service.IReviewService;
 import bsuir.vintsarevich.command.ICommand;
-import bsuir.vintsarevich.enumeration.AttributeName;
+import bsuir.vintsarevich.enumeration.AttributeParameterName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.enumeration.RedirectingCommandName;
 import bsuir.vintsarevich.exception.service.ServiceException;
@@ -23,7 +23,7 @@ public class DeleteReview implements ICommand{
         LOGGER.log(Level.INFO, "Start delete client");
         try {
             IReviewService reviewService = ServiceFactory.getInstance().getReviewService();
-            Integer reviewId = Integer.valueOf(request.getParameter(AttributeName.REVIEW_ID.getValue()));
+            Integer reviewId = Integer.valueOf(request.getParameter(AttributeParameterName.REVIEW_ID.getValue()));
             reviewService.deleteReview(reviewId);
             response.sendRedirect(RedirectingCommandName.INDEX.getCommand());
         } catch (ServiceException | IOException e) {

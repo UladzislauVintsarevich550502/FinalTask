@@ -2,7 +2,7 @@ package bsuir.vintsarevich.command.impl.redirecting;
 
 import bsuir.vintsarevich.buisness.admin.service.IAdminService;
 import bsuir.vintsarevich.command.ICommand;
-import bsuir.vintsarevich.enumeration.AttributeName;
+import bsuir.vintsarevich.enumeration.AttributeParameterName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.enumeration.RedirectingCommandName;
 import bsuir.vintsarevich.exception.service.ServiceException;
@@ -24,8 +24,8 @@ public class AddAdmin implements ICommand {
         LOGGER.log(Level.INFO, "Start add admin");
         try {
             IAdminService adminService = ServiceFactory.getInstance().getAdminService();
-            String staffLogin = request.getParameter(AttributeName.STAFF_LOGIN.getValue());
-            String staffPassword = request.getParameter(AttributeName.STAFF_PASSWORD.getValue());
+            String staffLogin = request.getParameter(AttributeParameterName.STAFF_LOGIN.getValue());
+            String staffPassword = request.getParameter(AttributeParameterName.STAFF_PASSWORD.getValue());
             adminService.signUp(staffLogin, staffPassword);
             response.sendRedirect(RedirectingCommandName.ADMIN_LIST.getCommand());
         } catch (IOException | ServiceException e) {

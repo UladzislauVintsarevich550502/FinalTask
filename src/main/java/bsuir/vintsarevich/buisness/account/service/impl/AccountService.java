@@ -15,6 +15,17 @@ public class AccountService implements IAccountService {
 
 
     @Override
+    public Double getCashById(Integer clientId) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "Account service: start get cash");
+        try {
+            LOGGER.log(Level.DEBUG, "Account service: finish get cash");
+            return daoFactory.getAccountDao().getCashById(clientId);
+        } catch (DaoException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+    }
+
+    @Override
     public boolean addAccount(Integer clientId) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Account service: start add account");
         Account account;

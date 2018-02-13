@@ -114,11 +114,13 @@ public class ClientService implements IClientService {
     @Override
     public boolean checkPassword(String password, Integer id) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Client Service: check password start");
-        password = Hasher.hashBySha1(password);
         try {
+            Validator.isEmptyString(password);
+            Validator.matchPassword(password);
+            password = Hasher.hashBySha1(password);
             LOGGER.log(Level.DEBUG, "Client Service: finish check password");
             return daoFactory.getClientDao().checkPassword(password, id);
-        } catch (DaoException e) {
+        } catch (DaoException | ValidatorException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
     }
@@ -127,8 +129,21 @@ public class ClientService implements IClientService {
     public boolean findClientByLogin(String login) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Client Service:  find by login start");
         try {
+            Validator.isEmptyString(login);
+            Validator.matchLogin(login);
             LOGGER.log(Level.DEBUG, "Client Service:  find by login finish");
             return (daoFactory.getClientDao().getClientByLogin(login) != null);
+        } catch (DaoException | ValidatorException e) {
+            throw new ServiceException(this.getClass() + ":" + e.getMessage());
+        }
+    }
+
+    @Override
+    public Client findClientByEmail(String email) throws ServiceException {
+        LOGGER.log(Level.DEBUG, "Client Service:  find by login start");
+        try {
+            LOGGER.log(Level.DEBUG, "Client Service:  find by login finish");
+            return daoFactory.getClientDao().getClientByEmail(email);
         } catch (DaoException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
@@ -137,11 +152,13 @@ public class ClientService implements IClientService {
     @Override
     public boolean changePassword(String password, Integer id) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Client Service: change password start");
-        password = Hasher.hashBySha1(password);
         try {
+            Validator.isNull(password);
+            Validator.isEmptyString(password);
+            password = Hasher.hashBySha1(password);
             LOGGER.log(Level.DEBUG, "Client Service: finish change password");
             return daoFactory.getClientDao().changePassword(password, id);
-        } catch (DaoException e) {
+        } catch (DaoException | ValidatorException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
     }

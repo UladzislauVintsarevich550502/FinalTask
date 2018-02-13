@@ -2,7 +2,7 @@ package bsuir.vintsarevich.command.impl.redirecting;
 
 import bsuir.vintsarevich.buisness.staff.service.IStaffService;
 import bsuir.vintsarevich.command.ICommand;
-import bsuir.vintsarevich.enumeration.AttributeName;
+import bsuir.vintsarevich.enumeration.AttributeParameterName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.enumeration.RedirectingCommandName;
 import bsuir.vintsarevich.exception.service.ServiceException;
@@ -25,8 +25,8 @@ public class AddStaff implements ICommand {
         LOGGER.log(Level.INFO, "Start add staff");
         try {
             IStaffService staffService = serviceFactory.getStaffService();
-            String staffLogin = request.getParameter(AttributeName.STAFF_LOGIN.getValue());
-            String staffPassword = request.getParameter(AttributeName.STAFF_PASSWORD.getValue());
+            String staffLogin = request.getParameter(AttributeParameterName.STAFF_LOGIN.getValue());
+            String staffPassword = request.getParameter(AttributeParameterName.STAFF_PASSWORD.getValue());
             if(!staffService.signUp(staffLogin, staffPassword)){
                 diagnoseError(request);
             }
@@ -41,9 +41,9 @@ public class AddStaff implements ICommand {
 
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.getSession().setAttribute(AttributeName.ADD_STAFF_ERROR.getValue(), "Работник с таким логиом уже существует");
+            request.getSession().setAttribute(AttributeParameterName.ADD_STAFF_ERROR.getValue(), "Работник с таким логиом уже существует");
         } else {
-            request.getSession().setAttribute(AttributeName.ADD_STAFF_ERROR.getValue(), "User with this nickname already exist");
+            request.getSession().setAttribute(AttributeParameterName.ADD_STAFF_ERROR.getValue(), "User with this nickname already exist");
         }
     }
 }

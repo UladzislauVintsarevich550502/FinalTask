@@ -16,8 +16,6 @@ import bsuir.vintsarevich.buisness.review.dao.IReviewDao;
 import bsuir.vintsarevich.buisness.review.dao.impl.ReviewDao;
 import bsuir.vintsarevich.buisness.staff.dao.IStaffDao;
 import bsuir.vintsarevich.buisness.staff.dao.impl.StaffDAO;
-import bsuir.vintsarevich.buisness.stock.dao.IStockDao;
-import bsuir.vintsarevich.buisness.stock.dao.impl.StockDAO;
 
 public class DaoFactory {
     private static final DaoFactory instance = new DaoFactory();
@@ -29,7 +27,6 @@ public class DaoFactory {
     private final IAccountDao accountDao = new AccountDAO();
     private final IStaffDao staffDao = new StaffDAO();
     private final IReviewDao reviewDao = new ReviewDao();
-    private final IStockDao stockDao = new StockDAO();
 
 
     private DaoFactory() {
@@ -71,7 +68,4 @@ public class DaoFactory {
         return reviewDao;
     }
 
-    public IStockDao getStockDao() {
-        return stockDao;
-    }
 }

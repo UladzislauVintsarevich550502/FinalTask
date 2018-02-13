@@ -2,7 +2,7 @@ package bsuir.vintsarevich.command.impl.redirecting;
 
 import bsuir.vintsarevich.buisness.staff.service.IStaffService;
 import bsuir.vintsarevich.command.ICommand;
-import bsuir.vintsarevich.enumeration.AttributeName;
+import bsuir.vintsarevich.enumeration.AttributeParameterName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.enumeration.RedirectingCommandName;
 import bsuir.vintsarevich.exception.service.ServiceException;
@@ -23,7 +23,7 @@ public class DeleteStaff implements ICommand {
         LOGGER.log(Level.INFO, "Start delete staff");
         try {
             IStaffService staffService = ServiceFactory.getInstance().getStaffService();
-            Integer staffId = Integer.valueOf(request.getParameter(AttributeName.STAFF_ID.getValue()));
+            Integer staffId = Integer.valueOf(request.getParameter(AttributeParameterName.STAFF_ID.getValue()));
             staffService.deleteStaff(staffId);
             response.sendRedirect(RedirectingCommandName.STAFF_LIST.getCommand());
         } catch (ServiceException | IOException e) {

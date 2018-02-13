@@ -9,7 +9,7 @@ import bsuir.vintsarevich.entity.Admin;
 import bsuir.vintsarevich.entity.Client;
 import bsuir.vintsarevich.entity.Staff;
 import bsuir.vintsarevich.entity.User;
-import bsuir.vintsarevich.enumeration.AttributeName;
+import bsuir.vintsarevich.enumeration.AttributeParameterName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.enumeration.RedirectingCommandName;
 import bsuir.vintsarevich.exception.service.ServiceException;
@@ -26,15 +26,15 @@ import java.io.IOException;
 public class SignIn implements ICommand {
     private static final Logger LOGGER = Logger.getLogger(SignIn.class);
     private ServiceFactory serviceFactory = ServiceFactory.getInstance();
-    private JspPageName jspPageName = JspPageName.TEST;
+    private JspPageName jspPageName = JspPageName.INDEX;
     private User user;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.INFO, "Sign in command start");
         user = null;
-        String login = request.getParameter(AttributeName.SIGNIN_LOGIN.getValue());
-        String password = request.getParameter(AttributeName.SIGNIN_PASSWORD.getValue());
+        String login = request.getParameter(AttributeParameterName.SIGNIN_LOGIN.getValue());
+        String password = request.getParameter(AttributeParameterName.SIGNIN_PASSWORD.getValue());
 
         if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
             request.setAttribute("errorData", "введите логин или пароль");
@@ -58,7 +58,7 @@ public class SignIn implements ICommand {
                 if (!client.getStatus().equals("banned")) {
                     user = new User(client.getId(), client.getLogin(), "client", client.getName(), client.getSurname(), client.getStatus(), accountService.findAccountByClientId(client.getId()), client.getPoint());
                     HttpSession session = request.getSession();
-                    session.setAttribute(AttributeName.USER.getValue(), user);
+                    session.setAttribute(AttributeParameterName.USER.getValue(), user);
                     LOGGER.log(Level.INFO, "Successful sign in account as " + login);
                     response.sendRedirect(RedirectingCommandName.INDEX.getCommand());
                 } else {
@@ -69,13 +69,13 @@ public class SignIn implements ICommand {
                 if (admin != null) {
                     user = new User(admin.getId(), admin.getLogin(), "admin", admin.getIsMain());
                     HttpSession session = request.getSession();
-                    session.setAttribute(AttributeName.USER.getValue(), user);
+                    session.setAttribute(AttributeParameterName.USER.getValue(), user);
                     LOGGER.log(Level.INFO, "Successful sign in account as " + login);
                     response.sendRedirect(RedirectingCommandName.INDEX.getCommand());
                 } else {
                     if (staff != null) {
                         user = new User(staff.getId(), staff.getLogin(), "staff");
-                        request.getSession().setAttribute(AttributeName.USER.getValue(), user);
+                        request.getSession().setAttribute(AttributeParameterName.USER.getValue(), user);
                         LOGGER.log(Level.INFO, "Successful sign in account as " + login);
                         response.sendRedirect(RedirectingCommandName.ORDER_SHOW.getCommand());
                     } else {
@@ -99,25 +99,25 @@ public class SignIn implements ICommand {
 
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "Пользователя с таким логином не существует");
+            request.getSession().setAttribute(AttributeParameterName.HEADER_ERROR.getValue(), "Пользователя с таким логином не существует");
         } else {
-            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "User with such login not exists");
+            request.getSession().setAttribute(AttributeParameterName.HEADER_ERROR.getValue(), "User with such login not exists");
         }
     }
 
     private void diagnoseIncorrectPassword(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "Неверный пароль");
+            request.getSession().setAttribute(AttributeParameterName.HEADER_ERROR.getValue(), "Неверный пароль");
         } else {
-            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "Incorrect password");
+            request.getSession().setAttribute(AttributeParameterName.HEADER_ERROR.getValue(), "Incorrect password");
         }
     }
 
     private void diagnoseBan(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "Вы заблокированы. Пожалуйста, обратитесь к администратору");
+            request.getSession().setAttribute(AttributeParameterName.HEADER_ERROR.getValue(), "Вы заблокированы. Пожалуйста, обратитесь к администратору");
         } else {
-            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "You're was blocked. Please, get in touch with administrator");
+            request.getSession().setAttribute(AttributeParameterName.HEADER_ERROR.getValue(), "You're was blocked. Please, get in touch with administrator");
         }
     }
 }

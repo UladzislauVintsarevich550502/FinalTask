@@ -2,7 +2,7 @@ jQuery(document).ready(function ($) {
     var $form_modal = $('.cd-user-modal'),
         $form_login = $form_modal.find('#login'),
         $form_signup = $form_modal.find('#cd-signup'),
-        $form_forgot_password = $form_modal.find('#cd-reset-password'),
+        $form_forgot_password = $form_modal.find('#reset-password'),
         $form_modal_tab = $('.cd-switcher'),
         $tab_login = $form_modal_tab.children('li').eq(0).children('a'),
         $tab_signup = $form_modal_tab.children('li').eq(1).children('a'),

@@ -3,7 +3,7 @@ package bsuir.vintsarevich.command.impl.redirecting;
 import bsuir.vintsarevich.buisness.client.service.IClientService;
 import bsuir.vintsarevich.buisness.order.service.IOrderService;
 import bsuir.vintsarevich.command.ICommand;
-import bsuir.vintsarevich.enumeration.AttributeName;
+import bsuir.vintsarevich.enumeration.AttributeParameterName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.enumeration.RedirectingCommandName;
 import bsuir.vintsarevich.exception.service.ServiceException;
@@ -22,7 +22,7 @@ public class OrderAccept implements ICommand {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.DEBUG, "start order accept");
-        Integer orderId = Integer.valueOf(request.getParameter(AttributeName.ORDER_ID.getValue()));
+        Integer orderId = Integer.valueOf(request.getParameter(AttributeParameterName.ORDER_ID.getValue()));
         IOrderService orderService = ServiceFactory.getInstance().getOrderService();
         IClientService clientService = ServiceFactory.getInstance().getClientService();
         try {

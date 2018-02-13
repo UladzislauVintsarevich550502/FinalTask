@@ -32,7 +32,6 @@ public class ServletController extends HttpServlet {
 
     private CommandProvider commandProvider = CommandProvider.getInstance();
 
-
     @Override
     public void init() {
         try {
@@ -60,6 +59,7 @@ public class ServletController extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        LOGGER.log(Level.INFO, request.getRequestURI());
         ICommand command = commandProvider.getCommand(request);
         String page = command.execute(request, response);
         LOGGER.log(Level.INFO, page);

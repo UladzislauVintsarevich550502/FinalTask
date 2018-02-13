@@ -27,6 +27,33 @@ public class AccountDAO implements IAccountDao {
     private ResultSet resultSet;
     private PreparedStatement statement;
 
+    @Override
+    public Double getCashById(Integer clientId) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Account DAO: get Cash start");
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+
+            statement = connection.prepareStatement(FIND_ACCOUNT);
+            statement.setInt(1, clientId);
+
+            resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getDouble("accountCredit");
+            }
+        } catch (SQLException e) {
+            return null;
+        } catch (ConnectionException e) {
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
+        } finally {
+            if (connectionPool != null) {
+                connectionPool.putBackConnection(connection, statement, resultSet);
+            }
+            LOGGER.log(Level.DEBUG, "Account DAO: get Cash finish");
+        }
+        return null;
+    }
+
 
     @Override
     public boolean addAccount(Account account) throws DaoException {

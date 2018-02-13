@@ -7,7 +7,7 @@ import bsuir.vintsarevich.buisness.order.service.IOrderService;
 import bsuir.vintsarevich.buisness.orderproduct.service.IOrderProductService;
 import bsuir.vintsarevich.command.ICommand;
 import bsuir.vintsarevich.entity.User;
-import bsuir.vintsarevich.enumeration.AttributeName;
+import bsuir.vintsarevich.enumeration.AttributeParameterName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.enumeration.RedirectingCommandName;
 import bsuir.vintsarevich.exception.dao.DaoException;
@@ -45,10 +45,14 @@ public class Payment implements ICommand {
             Integer orderId = orderDao.getOrderIdByClientId(clientId);
 
             if (radio.equals("cash")) {
-                Integer orderIdNew = orderService.paymentOrder("ordered", dateTime, (orderCost - pointToPayment), clientId);
-                orderService.clearOrderCost(orderId);
-                orderProductService.editOrderProductPayment(orderIdNew, orderId);
-                clientService.editPoint(clientId, pointToPayment);
+                if (accountService.getCashById(clientId) != null && accountService.getCashById(clientId) < 0) {
+                    Integer orderIdNew = orderService.paymentOrder("ordered", dateTime, (orderCost - pointToPayment), clientId);
+                    orderService.clearOrderCost(orderId);
+                    orderProductService.editOrderProductPayment(orderIdNew, orderId);
+                    clientService.editPoint(clientId, pointToPayment);
+                } else {
+                    diagnoseCashError(request);
+                }
             } else {
                 if (accountService.findAccountByClientId(clientId)) {
                     Integer orderIdNew = orderService.paymentOrder("payment", dateTime, (orderCost - pointToPayment), clientId);
@@ -71,9 +75,17 @@ public class Payment implements ICommand {
 
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.getSession().setAttribute(AttributeName.ACCOUNT_PAYMENT_ERROR.getValue(), "Счет не добавлен");
+            request.getSession().setAttribute(AttributeParameterName.ACCOUNT_PAYMENT_ERROR.getValue(), "Счет не добавлен");
         } else {
-            request.getSession().setAttribute(AttributeName.ACCOUNT_PAYMENT_ERROR.getValue(), "Account don't added");
+            request.getSession().setAttribute(AttributeParameterName.ACCOUNT_PAYMENT_ERROR.getValue(), "Account don't added");
+        }
+    }
+
+    private void diagnoseCashError(HttpServletRequest request) {
+        if (SessionElements.getLocale(request).equals("ru")) {
+            request.getSession().setAttribute(AttributeParameterName.ACCOUNT_PAYMENT_ERROR.getValue(), "У вас уже есть задолжность");
+        } else {
+            request.getSession().setAttribute(AttributeParameterName.ACCOUNT_PAYMENT_ERROR.getValue(), "You already have a debt");
         }
     }
 

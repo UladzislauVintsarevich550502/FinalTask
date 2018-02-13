@@ -1,7 +1,7 @@
 package bsuir.vintsarevich.command.impl.dispatching;
 
 import bsuir.vintsarevich.command.ICommand;
-import bsuir.vintsarevich.enumeration.AttributeName;
+import bsuir.vintsarevich.enumeration.AttributeParameterName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.enumeration.RedirectingCommandName;
 
@@ -20,7 +20,7 @@ public class ChangePassword implements ICommand {
     }
 
     private void rewrite(HttpServletRequest request) {
-        request.setAttribute(AttributeName.CHANGE_PASSWORD_ERROR.getValue(), request.getSession().getAttribute(AttributeName.CHANGE_PASSWORD_ERROR.getValue()));
-        request.getSession().removeAttribute(AttributeName.CHANGE_PASSWORD_ERROR.getValue());
+        request.setAttribute(AttributeParameterName.CHANGE_PASSWORD_ERROR.getValue(), request.getSession().getAttribute(AttributeParameterName.CHANGE_PASSWORD_ERROR.getValue()));
+        request.getSession().removeAttribute(AttributeParameterName.CHANGE_PASSWORD_ERROR.getValue());
     }
 }

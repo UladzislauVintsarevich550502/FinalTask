@@ -57,12 +57,10 @@
                         </article>
                     </c:forEach>
                 </c:when>
-                <c:otherwise>
-                    <article>
-                        <h2>${found_nothing_word}</h2>
-                    </article>
-                </c:otherwise>
             </c:choose>
+            <article>
+                <h2>${not_find}</h2>
+            </article>
         </div>
     </form>
 </section>

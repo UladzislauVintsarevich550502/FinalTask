@@ -3,7 +3,7 @@ package bsuir.vintsarevich.command.impl.dispatching;
 import bsuir.vintsarevich.buisness.product.service.IProductService;
 import bsuir.vintsarevich.command.ICommand;
 import bsuir.vintsarevich.entity.Product;
-import bsuir.vintsarevich.enumeration.AttributeName;
+import bsuir.vintsarevich.enumeration.AttributeParameterName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.enumeration.RedirectingCommandName;
 import bsuir.vintsarevich.exception.service.ServiceException;
@@ -27,14 +27,13 @@ public class FindByType implements ICommand {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.INFO, "Find command start");
         try {
-            String type = request.getParameter(AttributeName.PRODUCT_TYPE.getValue());
+            String type = request.getParameter(AttributeParameterName.PRODUCT_TYPE.getValue());
             if (type != null) {
                 productType = type;
                 request.getSession().setAttribute("currentPage", 1);
             }
             setPageProduct(request);
             Common.setReview(request);
-            rewrite(request);
             request.getSession().setAttribute("pageCommand", RedirectingCommandName.FIND_BY_TYPE.getCommand());
         } catch (ServiceException e) {
             LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
@@ -46,15 +45,10 @@ public class FindByType implements ICommand {
 
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.setAttribute(AttributeName.FIND_BY_TYPE_ERROR.getValue(), "Ничего не найдено");
+            request.setAttribute(AttributeParameterName.PRODUCT_NOT_FIND.getValue(), "Ничего не найдено");
         } else {
-            request.setAttribute(AttributeName.FIND_BY_TYPE_ERROR.getValue(), "Nothing found");
+            request.setAttribute(AttributeParameterName.PRODUCT_NOT_FIND.getValue(), "Nothing found");
         }
-    }
-
-    private void rewrite(HttpServletRequest request) {
-        request.setAttribute(AttributeName.FIND_BY_TYPE_ERROR.getValue(), request.getSession().getAttribute(AttributeName.FIND_BY_TYPE_ERROR.getValue()));
-        request.getSession().removeAttribute(AttributeName.FIND_BY_TYPE_ERROR.getValue());
     }
 
     private void setPageProduct(HttpServletRequest request) throws ServiceException {

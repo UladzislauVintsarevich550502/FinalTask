@@ -47,8 +47,6 @@ jQuery(document).ready(function ($) {
         });
         var loginReg = new RegExp('^([a-zA-Z][a-zA-Z-_0-9]+)$');
         var passwordReg = new RegExp('[a-zA-Z-_0-9]{6,}');
-        var $form_modal = $('.cd-user-modal');
-        var $form_login = $form_modal.find('#login');
         var $numberCorrectField = 0;
 
         var password = $('input#staff-password').val();
@@ -56,26 +54,90 @@ jQuery(document).ready(function ($) {
 
         if (password.length >= 4 && password != '' && passwordReg.test(password)) {
             $('input#staff-password').css('border-color', 'green');
-            $form_login.find('a#a-staff-password').removeClass('has-error').next('span').removeClass('is-visible');
+            $('#staff-password-span').removeClass('is-visible');
             $numberCorrectField++;
         }
         else {
             if (password.length != 0) {
                 $('input#staff-password').css('border-color', 'red');
-                $form_login.find('a#a-staff-password').addClass('has-error').next('span').addClass('is-visible');
+                $('#staff-password-span').addClass('is-visible');
             }
         }
         if (login.length > 3 && login != '' && loginReg.test(login)) {
             $('input#staff-login').css('border-color', 'green');
-            $form_login.find('input#staff-login').removeClass('has-error').next('span').removeClass('is-visible');
+            $('#staff-login-span').removeClass('is-visible');
             $numberCorrectField++;
         } else {
             if (login.length != 0) {
                 $('input#staff-login').css('border-color', 'red');
-                $form_login.find('input#staff-login').addClass('has-error').next('span').addClass('is-visible');
+                $('#staff-login-span').addClass('is-visible');
             }
         }
         if ($numberCorrectField != 2) {
+            e.preventDefault();
+        }
+    });
+
+    $('form#reset-form').on('click', function (e) {
+
+        var emailReg = new RegExp("^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$");
+        var $numberCorrectField = 0;
+        var email = $('input#reset-email').val();
+
+        if (email.length > 7 && email != '' && emailReg.test(email)) {
+            $('input#reset-email').css('border-color', 'green');
+            $("#reset-email-span").removeClass('is-visible');
+            $numberCorrectField++;
+        } else {
+            if (email.length != 0) {
+                $('input#reset-email').css('border-color', 'red');
+                $("#reset-email-span").addClass('is-visible');
+            }
+        }
+        if ($numberCorrectField != 1) {
+            e.preventDefault();
+        }
+    });
+
+    $('form#reset-password-form').on('click', function (e) {
+        var passwordReg = new RegExp('[a-zA-Z-_0-9]{6,}');
+        var $numberCorrectField = 0;
+        var main_code = $('input#main_code').val();
+        var code = $('input#code').val();
+        var new_password = $('input#resetPassword-new').val();
+        var re_new_password = $('input#resetPassword-re-new').val();
+
+        if (code == main_code) {
+            $('input#code').css('border-color', 'green');
+            $("#code-span").removeClass('is-visible');
+            $numberCorrectField++;
+        } else {
+            if (code.length != 0) {
+                $('input#code').css('border-color', 'red');
+                $("#code-span").addClass('is-visible');
+            }
+        }
+        if (new_password.length >= 4 && passwordReg.test(new_password)) {
+            $('input#resetPassword-new').css('border-color', 'green');
+            $("#span-resetPassword-new").removeClass('is-visible');
+            $numberCorrectField++;
+        } else {
+            if (new_password.length != 0) {
+                $('input#resetPassword-new').css('border-color', 'red');
+                $("#span-resetPassword-new").addClass('is-visible');
+            }
+        }
+        if (re_new_password == new_password && re_new_password.length >= 4) {
+            $('input#resetPassword-re-new').css('border-color', 'green');
+            $("#span-re-resetPassword-new").removeClass('is-visible');
+            $numberCorrectField++;
+        } else {
+            if (re_new_password.length != 0) {
+                $('input#resetPassword-re-new').css('border-color', 'red');
+                $("#span-re-resetPassword-new").addClass('is-visible');
+            }
+        }
+        if ($numberCorrectField != 3) {
             e.preventDefault();
         }
     });
@@ -178,90 +240,77 @@ jQuery(document).ready(function ($) {
         var name_enReg = new RegExp('^([A-Z]{1}[a-z]+)$');
         var costvalueReg = new RegExp('^(([0-9]+)(\\.){0,1}([0-9]+))$');
 
-        var $form_modal = $('#add-form');
-        var $form_add = $form_modal.find('#add-product');
-
         var product_type = $('select#product-type').val();
         var name_ru = $('input#name-ru').val();
         var name_en = $('input#name-en').val();
         var value = $('input#value').val();
         var cost = $('input#cost').val();
-        var status = $('select#status').val();
         var image_name = $('input#image-name').val();
         var $numberCorrectField = 0;
 
         if (product_type != null) {
             $('select#product-type').css('border-color', 'green');
-            $form_add.find('select#product-type').removeClass('has-error').next('span').removeClass('is-visible');
+            $('#product-type-span').removeClass('is-visible');
             $numberCorrectField++;
         } else {
             $('select#product-type').css('border-color', 'red');
-            $form_add.find('select#product-type').addClass('has-error').next('span').addClass('is-visible');
+            $('#product-type-span').addClass('is-visible');
         }
 
         if (name_ru.length >= 2 && name_ru != '' && name_ruReg.test(name_ru)) {
             $('input#name-ru').css('border-color', 'green');
-            $form_add.find('input#name-ru').removeClass('has-error').next('span').removeClass('is-visible');
+            $('#name-ru-span').removeClass('is-visible');
             $numberCorrectField++;
         } else {
             if (name_ru.length != 0) {
                 $('input#name-ru').css('border-color', 'red');
-                $form_add.find('input#name-ru').addClass('has-error').next('span').addClass('is-visible');
+                $('#name-ru-span').addClass('is-visible');
             }
         }
 
         if (name_en.length >= 2 && name_en != '' && name_enReg.test(name_en)) {
             $('input#name-en').css('border-color', 'green');
-            $form_add.find('input#name-en').removeClass('has-error').next('span').removeClass('is-visible');
+            $('#name-en-span').removeClass('is-visible');
             $numberCorrectField++;
         } else {
             if (name_ru.length != 0) {
                 $('input#name-en').css('border-color', 'red');
-                $form_add.find('input#name-en').addClass('has-error').next('span').addClass('is-visible');
+                $('#name-en-span').addClass('is-visible');
             }
         }
 
         if (cost != '' && costvalueReg.test(cost)) {
             $('input#cost').css('border-color', 'green');
-            $form_add.find('input#cost').removeClass('has-error').next('span').removeClass('is-visible');
+            $('#cost-span').removeClass('is-visible');
             $numberCorrectField++;
         } else {
             if (cost.length != 0) {
                 $('input#cost').css('border-color', 'red');
-                $form_add.find('input#cost').addClass('has-error').next('span').addClass('is-visible');
+                $('#cost-span').addClass('is-visible');
             }
         }
 
         if (value != '' && costvalueReg.test(value)) {
             $('input#value').css('border-color', 'green');
-            $form_add.find('input#value').removeClass('has-error').next('span').removeClass('is-visible');
+            $('#value-span').removeClass('is-visible');
             $numberCorrectField++;
         } else {
             if (value.length != 0) {
                 $('input#value').css('border-color', 'red');
-                $form_add.find('input#value').addClass('has-error').next('span').addClass('is-visible');
+                $('#value-span').addClass('is-visible');
             }
-        }
-
-        if (status != null) {
-            $('select#status').css('border-color', 'green');
-            $form_add.find('select#status').removeClass('has-error').next('span').removeClass('is-visible');
-            $numberCorrectField++;
-        } else {
-            $('select#status').css('border-color', 'red');
-            $form_add.find('select#status').addClass('has-error').next('span').addClass('is-visible');
         }
 
         if (image_name != "Choose file" && image_name != "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0444\u0430\u0439\u043B") {
             $('input#image-name').css('border-color', 'green');
-            $form_add.find('a#a-image-name').removeClass('has-error').next('span').removeClass('is-visible');
+            $('#image-name-span').removeClass('is-visible');
             $numberCorrectField++;
         } else {
             $('input#image-name').css('border-color', 'red');
-            $form_add.find('a#a-image-name').addClass('has-error').next('span').addClass('is-visible');
+            $('#image-name-span').addClass('is-visible');
         }
 
-        if ($numberCorrectField != 7 && t.id == "add") {
+        if ($numberCorrectField != 6 && t.id == "add") {
             e.preventDefault();
         }
     });

@@ -17,8 +17,8 @@ public interface IProductService {
 
     Product getProductById(Integer id) throws ServiceException;
 
-    boolean addProduct(String type, String nameRu, String nameEn, Integer weight, Double cost, String status,
+    boolean addProduct(String type, String nameRu, String nameEn, Integer weight, Double cost,
                        String descriptionRu, String descriptionEn, Part image, String webPath) throws ServiceException;
 
-    boolean editProduct(Integer productId, String productType, String nameRu, String nameEn, Integer weight, Double cost, String status, String descriptionRu, String descriptionEn, Part part, String webPath) throws ServiceException;
+    boolean editProduct(Integer productId, String productType, String nameRu, String nameEn, Integer weight, Double cost, String descriptionRu, String descriptionEn, Part part, String webPath) throws ServiceException;
 }

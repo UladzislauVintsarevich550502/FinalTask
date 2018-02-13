@@ -29,4 +29,6 @@ public interface IClientDao {
     boolean addPoints(Double points, Integer clientId) throws DaoException;
 
     boolean clearPoints(Integer clientId) throws DaoException;
+
+    Client getClientByEmail(String email) throws DaoException;
 }

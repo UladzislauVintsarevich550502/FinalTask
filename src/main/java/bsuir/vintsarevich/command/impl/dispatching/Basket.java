@@ -8,7 +8,7 @@ import bsuir.vintsarevich.command.impl.redirecting.SignOut;
 import bsuir.vintsarevich.entity.Order;
 import bsuir.vintsarevich.entity.Product;
 import bsuir.vintsarevich.entity.User;
-import bsuir.vintsarevich.enumeration.AttributeName;
+import bsuir.vintsarevich.enumeration.AttributeParameterName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.enumeration.RedirectingCommandName;
 import bsuir.vintsarevich.exception.service.ServiceException;
@@ -32,7 +32,7 @@ public class Basket implements ICommand {
         LOGGER.log(Level.INFO, "Index command start");
         request.getSession().setAttribute("pageCommand", RedirectingCommandName.BASKET.getCommand());
         try {
-            Integer clientId = ((User) request.getSession().getAttribute(AttributeName.USER.getValue())).getId();
+            Integer clientId = ((User) request.getSession().getAttribute(AttributeParameterName.USER.getValue())).getId();
             IProductService productService = serviceFactory.getProducteService();
             IOrderService orderService = serviceFactory.getOrderService();
             IClientService clientService = serviceFactory.getClientService();
@@ -78,17 +78,17 @@ public class Basket implements ICommand {
 
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.getSession().setAttribute(AttributeName.BASKET_ERROR.getValue(), "Ничего не найдено");
+            request.getSession().setAttribute(AttributeParameterName.BASKET_ERROR.getValue(), "Ничего не найдено");
         } else {
-            request.getSession().setAttribute(AttributeName.BASKET_ERROR.getValue(), "Nothing found");
+            request.getSession().setAttribute(AttributeParameterName.BASKET_ERROR.getValue(), "Nothing found");
         }
     }
 
     private void rewrite(HttpServletRequest request) {
-        request.setAttribute(AttributeName.BASKET_ERROR.getValue(), request.getSession().getAttribute(AttributeName.BASKET_ERROR.getValue()));
-        request.getSession().removeAttribute(AttributeName.BASKET_ERROR.getValue());
-        request.setAttribute(AttributeName.ACCOUNT_PAYMENT_ERROR.getValue(), request.getSession().getAttribute(AttributeName.ACCOUNT_PAYMENT_ERROR.getValue()));
-        request.getSession().removeAttribute(AttributeName.ACCOUNT_PAYMENT_ERROR.getValue());
+        request.setAttribute(AttributeParameterName.BASKET_ERROR.getValue(), request.getSession().getAttribute(AttributeParameterName.BASKET_ERROR.getValue()));
+        request.getSession().removeAttribute(AttributeParameterName.BASKET_ERROR.getValue());
+        request.setAttribute(AttributeParameterName.ACCOUNT_PAYMENT_ERROR.getValue(), request.getSession().getAttribute(AttributeParameterName.ACCOUNT_PAYMENT_ERROR.getValue()));
+        request.getSession().removeAttribute(AttributeParameterName.ACCOUNT_PAYMENT_ERROR.getValue());
     }
 
     private String convertDataToString(String data) {

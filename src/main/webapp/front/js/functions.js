@@ -28,7 +28,6 @@ function checkEditInformation(id) {
     var name_ru = document.getElementById('name-ru-edit-' + id).value;
     var value = document.getElementById('value-edit-' + id).value;
     var cost = document.getElementById('cost-edit-' + id).value;
-    var status = document.getElementById('status-edit-' + id).value;
     var image_name = document.getElementById('image-name-edit-' + id).value;
 
     var name_ruReg = new RegExp('^([\u{0410}-\u{042F}]{1}[\u{0430}-\u{044F}\u{0410}-\u{042F}\-]+)$');
@@ -40,7 +39,7 @@ function checkEditInformation(id) {
         document.getElementById('type-mistake-' + id).classList.remove('is-visible');
     } else {
         document.getElementById('product-type-edit-' + id).style.borderColor = 'red';
-        document.getElementById('type-mistake-' + id).classList.remove('is-visible');
+        document.getElementById('type-mistake-' + id).classList.add('is-visible');
     }
     if (name_ru.length >= 2 && name_ru != '' && name_ruReg.test(name_ru)) {
         document.getElementById('name-ru-edit-' + id).style.borderColor = 'green';
@@ -81,14 +80,6 @@ function checkEditInformation(id) {
         }
     }
 
-    if (status != "") {
-        document.getElementById('status-edit-' + id).style.borderColor = 'green';
-        document.getElementById('status-mistake-' + id).classList.remove('is-visible');
-    } else {
-        document.getElementById('status-edit-' + id).style.borderColor = 'red';
-        document.getElementById('status-mistake-' + id).classList.add('is-visible');
-    }
-
     if (image_name != "Choose file" && image_name != "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0444\u0430\u0439\u043B") {
         document.getElementById('image-name-edit-' + id).style.borderColor = 'green';
         document.getElementById('file-mistake-' + id).classList.remove('is-visible');
@@ -104,7 +95,6 @@ function checkEdit(id) {
     var name_ru = document.getElementById('name-ru-edit-' + id).value;
     var value = document.getElementById('value-edit-' + id).value;
     var cost = document.getElementById('cost-edit-' + id).value;
-    var status = document.getElementById('status-edit-' + id).value;
     var image_name = document.getElementById('image-name-edit-' + id).value;
 
     var name_ruReg = new RegExp('^([\u{0410}-\u{042F}]{1}[\u{0430}-\u{044F}\u{0410}-\u{042F}\-]+)$');
@@ -113,12 +103,9 @@ function checkEdit(id) {
 
     if (product_type != '' && name_ru.length >= 2 && name_ru != '' && name_ruReg.test(name_ru) &&
         name_en.length >= 2 && name_en != '' && name_enReg.test(name_en) && cost != '' && cost_valueReg.test(cost) &&
-        value != '' && cost_valueReg.test(value) && status != "" &&
-        image_name != "Choose file" &&
+        value != '' && cost_valueReg.test(value) && image_name != "Choose file" &&
         image_name != "\u0412\u044B\u0431\u0435\u0440\u0438\u0442\u0435 \u0444\u0430\u0439\u043B") {
-        alert("true");
         return true;
     }
-    alert("false");
     return false;
 }

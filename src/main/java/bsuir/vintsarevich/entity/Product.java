@@ -8,7 +8,6 @@ public class Product {
     private String nameEn;
     private Integer weight;
     private Double cost;
-    private String status;
     private String descriptionRu;
     private String descriptionEn;
     private String imagePath;
@@ -19,7 +18,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(Integer id, String type, String nameRu, String nameEn, Integer weight, Double cost, String status, String descriptionRu, String descriptionEn, String imagePath, Integer number, Integer ordered, Integer orderId) {
+    public Product(Integer id, String type, String nameRu, String nameEn, Integer weight, Double cost, String descriptionRu, String descriptionEn, String imagePath, Integer number, Integer ordered, Integer orderId) {
 
         this.id = id;
         this.type = type;
@@ -27,7 +26,6 @@ public class Product {
         this.nameEn = nameEn;
         this.weight = weight;
         this.cost = cost;
-        this.status = status;
         this.descriptionRu = descriptionRu;
         this.descriptionEn = descriptionEn;
         this.imagePath = imagePath;
@@ -82,14 +80,6 @@ public class Product {
 
     public void setCost(Double cost) {
         this.cost = cost;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getDescriptionRu() {
@@ -153,7 +143,6 @@ public class Product {
         if (nameEn != null ? !nameEn.equals(product.nameEn) : product.nameEn != null) return false;
         if (weight != null ? !weight.equals(product.weight) : product.weight != null) return false;
         if (cost != null ? !cost.equals(product.cost) : product.cost != null) return false;
-        if (status != null ? !status.equals(product.status) : product.status != null) return false;
         if (descriptionRu != null ? !descriptionRu.equals(product.descriptionRu) : product.descriptionRu != null)
             return false;
         if (descriptionEn != null ? !descriptionEn.equals(product.descriptionEn) : product.descriptionEn != null)
@@ -172,7 +161,6 @@ public class Product {
         result = 31 * result + (nameEn != null ? nameEn.hashCode() : 0);
         result = 31 * result + (weight != null ? weight.hashCode() : 0);
         result = 31 * result + (cost != null ? cost.hashCode() : 0);
-        result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (descriptionRu != null ? descriptionRu.hashCode() : 0);
         result = 31 * result + (descriptionEn != null ? descriptionEn.hashCode() : 0);
         result = 31 * result + (imagePath != null ? imagePath.hashCode() : 0);
@@ -191,7 +179,6 @@ public class Product {
                 ", nameEn='" + nameEn + '\'' +
                 ", weight=" + weight +
                 ", cost=" + cost +
-                ", status='" + status + '\'' +
                 ", descriptionRu='" + descriptionRu + '\'' +
                 ", descriptionEn='" + descriptionEn + '\'' +
                 ", imagePath='" + imagePath + '\'' +

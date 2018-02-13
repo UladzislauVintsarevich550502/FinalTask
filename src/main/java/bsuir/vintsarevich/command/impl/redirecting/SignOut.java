@@ -1,6 +1,6 @@
 package bsuir.vintsarevich.command.impl.redirecting;
 
-import bsuir.vintsarevich.enumeration.AttributeName;
+import bsuir.vintsarevich.enumeration.AttributeParameterName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.enumeration.RedirectingCommandName;
 import bsuir.vintsarevich.utils.SessionElements;
@@ -21,7 +21,7 @@ public class SignOut implements bsuir.vintsarevich.command.ICommand {
         LOGGER.log(Level.INFO, "Sign out start");
         try {
             String locale = SessionElements.getLocale(request);
-            request.getSession().removeAttribute(AttributeName.USER.toString());
+            request.getSession().removeAttribute(AttributeParameterName.USER.toString());
             request.getSession().invalidate();
             request.getSession().setAttribute("locale",locale);
             response.sendRedirect(RedirectingCommandName.INDEX.getCommand());

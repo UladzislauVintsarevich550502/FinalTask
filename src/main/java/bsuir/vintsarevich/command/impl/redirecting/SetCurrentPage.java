@@ -2,7 +2,7 @@ package bsuir.vintsarevich.command.impl.redirecting;
 
 import bsuir.vintsarevich.command.ICommand;
 import bsuir.vintsarevich.command.impl.dispatching.Index;
-import bsuir.vintsarevich.enumeration.AttributeName;
+import bsuir.vintsarevich.enumeration.AttributeParameterName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.utils.SessionElements;
 import org.apache.log4j.Level;
@@ -20,7 +20,7 @@ public class SetCurrentPage implements ICommand {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         try {
             LOGGER.log(Level.INFO, "Set current page command start");
-            Integer currentPage = Integer.valueOf(request.getParameter(AttributeName.CURRENT_PAGE.getValue()));
+            Integer currentPage = Integer.valueOf(request.getParameter(AttributeParameterName.CURRENT_PAGE.getValue()));
             request.getSession().setAttribute("currentPage", currentPage);
             response.sendRedirect(SessionElements.getPageCommand(request));
         } catch (IOException e) {

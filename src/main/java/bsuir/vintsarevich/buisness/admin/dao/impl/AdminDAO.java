@@ -224,6 +224,7 @@ public class AdminDAO implements IAdminDao {
             admin.setId(resultSet.getInt("adminId"));
             admin.setLogin(resultSet.getString("adminLogin"));
             admin.setPassword(resultSet.getString("adminPassword"));
+            admin.setIsMain(resultSet.getInt("isMain"));
         } catch (SQLException e) {
             throw new DaoException(this.getClass() + ":" + e.getMessage());
         }

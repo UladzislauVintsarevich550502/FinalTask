@@ -15,7 +15,7 @@
             <c:when test="${products!=null}">
                 <c:forEach var="product" items="${products}">
                     <article>
-                        <a href="#" class="image"><img src="/images/products/${product.imagePath}"
+                        <a href="#0" class="image"><img src="/images/products/${product.imagePath}"
                                                        alt="lorem"/></a>
                         <c:choose>
                             <c:when test="${locale eq 'ru'}">
@@ -46,12 +46,17 @@
                         </div>
                         <ul class="actions">
                             <li>
-                                <input type="button" id="click_mes_form_${product.id}"
+                                <input class="admin_action" type="button" id="click_mes_form_${product.id}"
                                        value="${view_word}">
                             </li>
                             <li>
-                                <input type="button" id="click_edit_form_${product.id}"
-                                       value="${view_word}">
+                                <input class="admin_action" type="button" id="click_edit_form_${product.id}"
+                                       value="${edit_word}">
+                            </li>
+                            <li>
+                                <form method="post" action="/cafe.by/delete_product?productId=${product.id}">
+                                    <input class="admin_action" type="submit" value="${delete_button}">
+                                </form>
                             </li>
                             <script type="text/javascript">
                                 $(document).ready(function () {
@@ -73,12 +78,13 @@
                             </script>
                         </ul>
                     </article>
+
                 </c:forEach>
             </c:when>
-            <c:otherwise>
-                <h2>${found_nothing_word}</h2>
-            </c:otherwise>
         </c:choose>
+        <article>
+            <h2>${not_find}</h2>
+        </article>
     </div>
     <c:choose>
         <c:when test="${user.role eq 'client'}">

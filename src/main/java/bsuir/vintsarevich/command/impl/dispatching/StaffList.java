@@ -3,7 +3,7 @@ package bsuir.vintsarevich.command.impl.dispatching;
 import bsuir.vintsarevich.buisness.staff.service.IStaffService;
 import bsuir.vintsarevich.command.ICommand;
 import bsuir.vintsarevich.entity.Staff;
-import bsuir.vintsarevich.enumeration.AttributeName;
+import bsuir.vintsarevich.enumeration.AttributeParameterName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.enumeration.RedirectingCommandName;
 import bsuir.vintsarevich.exception.service.ServiceException;
@@ -39,7 +39,7 @@ public class StaffList implements ICommand {
     }
 
     private void rewrite(HttpServletRequest request) {
-        request.setAttribute(AttributeName.ADD_STAFF_ERROR.getValue(), request.getSession().getAttribute(AttributeName.ADD_STAFF_ERROR.getValue()));
-        request.getSession().removeAttribute(AttributeName.ADD_STAFF_ERROR.getValue());
+        request.setAttribute(AttributeParameterName.ADD_STAFF_ERROR.getValue(), request.getSession().getAttribute(AttributeParameterName.ADD_STAFF_ERROR.getValue()));
+        request.getSession().removeAttribute(AttributeParameterName.ADD_STAFF_ERROR.getValue());
     }
 }

@@ -80,11 +80,13 @@ public class AdminService implements IAdminService {
     @Override
     public boolean checkPassword(String password, Integer id) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Admin Service: check password start");
-        password = Hasher.hashBySha1(password);
         try {
+            Validator.isNull(password);
+            Validator.isEmptyString(password);
+            password = Hasher.hashBySha1(password);
             LOGGER.log(Level.DEBUG, "Admin Service: finish check password");
             return daoFactory.getAdminDao().checkPassword(password, id);
-        } catch (DaoException e) {
+        } catch (DaoException | ValidatorException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
     }
@@ -92,11 +94,13 @@ public class AdminService implements IAdminService {
     @Override
     public boolean changePassword(String password, Integer id) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Admin Service: change password start");
-        password = Hasher.hashBySha1(password);
         try {
+            Validator.isNull(password);
+            Validator.isEmptyString(password);
+            password = Hasher.hashBySha1(password);
             LOGGER.log(Level.DEBUG, "Admin Service: finish change password");
             return daoFactory.getAdminDao().changePassword(password, id);
-        } catch (DaoException e) {
+        } catch (DaoException | ValidatorException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
     }
@@ -105,9 +109,12 @@ public class AdminService implements IAdminService {
     public boolean findAdminByLogin(String login) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Admin Service: find by login start");
         try {
+            Validator.isNull(login);
+            Validator.isEmptyString(login);
+            Validator.matchLogin(login);
             LOGGER.log(Level.DEBUG, "Admin Service: find by login finish");
             return daoFactory.getAdminDao().findAdminByLogin(login);
-        } catch (DaoException e) {
+        } catch (DaoException | ValidatorException e) {
             throw new ServiceException(this.getClass() + ":" + e.getMessage());
         }
     }

@@ -3,7 +3,7 @@ package bsuir.vintsarevich.command.impl.redirecting;
 import bsuir.vintsarevich.buisness.account.service.IAccountService;
 import bsuir.vintsarevich.command.ICommand;
 import bsuir.vintsarevich.entity.User;
-import bsuir.vintsarevich.enumeration.AttributeName;
+import bsuir.vintsarevich.enumeration.AttributeParameterName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.exception.service.ServiceException;
 import bsuir.vintsarevich.factory.service.ServiceFactory;
@@ -25,12 +25,12 @@ public class AddAccount implements ICommand {
         LOGGER.log(Level.INFO, "Start add account");
         try {
             IAccountService accountService = serviceFactory.getAccountService();
-            User user = ((User) request.getSession().getAttribute(AttributeName.USER.getValue()));
+            User user = ((User) request.getSession().getAttribute(AttributeParameterName.USER.getValue()));
             if(!accountService.addAccount(user.getId())) {
                 diagnoseError(request);
             }else {
                 user.setAccount(true);
-                request.getSession().setAttribute(AttributeName.USER.getValue(), user);
+                request.getSession().setAttribute(AttributeParameterName.USER.getValue(), user);
             }
             response.sendRedirect(SessionElements.getPageCommand(request));
         } catch (IOException |ServiceException e) {
@@ -43,9 +43,9 @@ public class AddAccount implements ICommand {
 
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "Ошибка! Аккаунт не добавлен");
+            request.getSession().setAttribute(AttributeParameterName.HEADER_ERROR.getValue(), "Ошибка! Аккаунт не добавлен");
         } else {
-            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "Error! Account wasn't added");
+            request.getSession().setAttribute(AttributeParameterName.HEADER_ERROR.getValue(), "Error! Account wasn't added");
         }
     }
 }

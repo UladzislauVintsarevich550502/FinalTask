@@ -2,7 +2,7 @@ package bsuir.vintsarevich.command.impl.redirecting;
 
 import bsuir.vintsarevich.buisness.client.service.IClientService;
 import bsuir.vintsarevich.command.ICommand;
-import bsuir.vintsarevich.enumeration.AttributeName;
+import bsuir.vintsarevich.enumeration.AttributeParameterName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.enumeration.RedirectingCommandName;
 import bsuir.vintsarevich.exception.service.ServiceException;
@@ -23,9 +23,9 @@ public class DeleteClient implements ICommand {
         LOGGER.log(Level.INFO, "Start delete client");
         try {
             IClientService clientService = ServiceFactory.getInstance().getClientService();
-            Integer clientId = Integer.valueOf(request.getParameter(AttributeName.CLIENT_ID.getValue()));
+            Integer clientId = Integer.valueOf(request.getParameter(AttributeParameterName.CLIENT_ID.getValue()));
             clientService.deleteClient(clientId);
-            response.sendRedirect(RedirectingCommandName.ORDER_SHOW.getCommand());
+            response.sendRedirect(RedirectingCommandName.EDIT_CLIENTS.getCommand());
         } catch (ServiceException | IOException e) {
             LOGGER.log(Level.DEBUG, this.getClass() + ":" + e.getMessage());
             jspPageName = JspPageName.ERROR;

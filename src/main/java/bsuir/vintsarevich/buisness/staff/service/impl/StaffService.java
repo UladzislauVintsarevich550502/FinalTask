@@ -92,11 +92,13 @@ public class StaffService implements IStaffService {
     @Override
     public boolean changePassword(String password, Integer id) throws ServiceException {
         LOGGER.log(Level.DEBUG, "Staff Service: change password start");
-        password = Hasher.hashBySha1(password);
         try {
+            Validator.isNull(password);
+            Validator.isEmptyString(password);
+            password = Hasher.hashBySha1(password);
             LOGGER.log(Level.DEBUG, "Staff Service: finish change password");
             return daoFactory.getStaffDao().changePassword(password, id);
-        } catch (DaoException e) {
+        } catch (DaoException | ValidatorException e) {
             throw new ServiceException(e);
         }
     }

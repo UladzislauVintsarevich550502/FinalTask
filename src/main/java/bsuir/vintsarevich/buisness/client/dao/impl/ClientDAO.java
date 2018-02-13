@@ -30,6 +30,7 @@ public class ClientDAO implements IClientDao {
     private static String CHECK_PASSWORD = "SELECT * FROM epamcafe.client WHERE epamcafe.client.clientId=? AND epamcafe.client.clientPassword=?";
     private static String CHANGE_PASSWORD = "UPDATE epamcafe.client SET epamcafe.client.clientPassword=? WHERE epamcafe.client.clientId=?";
     private static String EDIT_POINT = "UPDATE epamcafe.client SET epamcafe.client.clientPoint=(epamcafe.client.clientPoint-?) WHERE epamcafe.client.clientId=?";
+    private static String GET_CLIENT_BY_EMAIL = "SELECT * FROM epamcafe.client WHERE client.clientEmail=?";
     private static final Logger LOGGER = Logger.getLogger(ClientDAO.class);
     private ConnectionPool connectionPool;
     private Connection connection;
@@ -94,6 +95,33 @@ public class ClientDAO implements IClientDao {
         }
         LOGGER.log(Level.DEBUG, "ClientDao: finish clearPoints");
         return false;
+    }
+
+    @Override
+    public Client getClientByEmail(String email) throws DaoException {
+        LOGGER.log(Level.DEBUG, "Client DAO: start Find");
+        try {
+            connectionPool = ConnectionPool.getInstance();
+            connection = connectionPool.getConnection();
+
+            statement = connection.prepareStatement(GET_CLIENT_BY_EMAIL);
+            statement.setString(1, email);
+
+            resultSet = statement.executeQuery();
+            if (resultSet.first()) {
+                return createClientByResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            return null;
+        } catch (ConnectionException e) {
+            throw new DaoException(this.getClass() + ":" + e.getMessage());
+        } finally {
+            if (connectionPool != null) {
+                connectionPool.putBackConnection(connection, statement, resultSet);
+            }
+            LOGGER.log(Level.DEBUG, "Client DAO: finish Find");
+        }
+        return null;
     }
 
     @Override

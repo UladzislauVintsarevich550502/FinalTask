@@ -3,7 +3,7 @@ package bsuir.vintsarevich.command.impl.dispatching;
 import bsuir.vintsarevich.buisness.product.service.IProductService;
 import bsuir.vintsarevich.command.ICommand;
 import bsuir.vintsarevich.entity.Product;
-import bsuir.vintsarevich.enumeration.AttributeName;
+import bsuir.vintsarevich.enumeration.AttributeParameterName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.enumeration.RedirectingCommandName;
 import bsuir.vintsarevich.exception.service.ServiceException;
@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Collections;
 import java.util.List;
 
 public class Index implements ICommand {
@@ -40,13 +41,18 @@ public class Index implements ICommand {
     }
 
     private void rewrite(HttpServletRequest request) {
-        request.setAttribute(AttributeName.HEADER_ERROR.getValue(), request.getSession().getAttribute(AttributeName.HEADER_ERROR.getValue()));
-        request.getSession().removeAttribute(AttributeName.HEADER_ERROR.getValue());
+        request.setAttribute(AttributeParameterName.HEADER_ERROR.getValue(), request.getSession().getAttribute(AttributeParameterName.HEADER_ERROR.getValue()));
+        request.getSession().removeAttribute(AttributeParameterName.HEADER_ERROR.getValue());
     }
 
     private void setPageProduct(HttpServletRequest request) throws ServiceException {
         IProductService productService = serviceFactory.getProducteService();
         List<Product> allProducts = productService.getAllProducts();
+        for(Product product: allProducts){
+            if(product.getType().equals("false")){
+                allProducts.remove(product);
+            }
+        }
         if (allProducts.size() == 0) {
             diagnoseError(request);
             request.getSession().setAttribute("pageCount", 0);
@@ -57,9 +63,9 @@ public class Index implements ICommand {
 
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.setAttribute(AttributeName.FIND_BY_TYPE_ERROR.getValue(), "Ничего не найдено");
+            request.setAttribute(AttributeParameterName.PRODUCT_NOT_FIND.getValue(), "Ничего не найдено");
         } else {
-            request.setAttribute(AttributeName.FIND_BY_TYPE_ERROR.getValue(), "Nothing found");
+            request.setAttribute(AttributeParameterName.PRODUCT_NOT_FIND.getValue(), "Nothing found");
         }
     }
 }

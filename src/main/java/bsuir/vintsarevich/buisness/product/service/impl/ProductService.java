@@ -84,20 +84,19 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public boolean addProduct(String type, String nameRu, String nameEn, Integer weight, Double cost, String status,
+    public boolean addProduct(String type, String nameRu, String nameEn, Integer weight, Double cost,
                               String descriptionRu, String descriptionEn, Part image, String webPath) throws ServiceException {
         LOGGER.log(Level.DEBUG, "ProductService: addProduct start");
         Product product = new Product();
         IProductDao productDao = daoFactory.getProductDao();
         try {
-            Validator.isNull(nameEn, nameRu, type, status);
-            Validator.isEmptyString(nameEn, nameRu, type, status);
+            Validator.isNull(nameEn, nameRu, type);
+            Validator.isEmptyString(nameEn, nameRu, type);
             product.setType(type);
             product.setNameRu(nameRu);
             product.setNameEn(nameEn);
             product.setWeight(weight);
             product.setCost(cost);
-            product.setStatus(status);
             product.setDescriptionRu(descriptionRu);
             product.setDescriptionEn(descriptionEn);
             String imageName = getImageName(image);
@@ -119,21 +118,20 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public boolean editProduct(Integer id, String type, String nameRu, String nameEn, Integer weight, Double cost, String status,
+    public boolean editProduct(Integer id, String type, String nameRu, String nameEn, Integer weight, Double cost,
                                String descriptionRu, String descriptionEn, Part image, String webPath) throws ServiceException {
         LOGGER.log(Level.DEBUG, "ProductService: addProduct start");
         Product product = new Product();
         IProductDao productDao = daoFactory.getProductDao();
         try {
-            Validator.isNull(nameEn, nameRu, type, status);
-            Validator.isEmptyString(nameEn, nameRu, type, status);
+            Validator.isNull(nameEn, nameRu, type);
+            Validator.isEmptyString(nameEn, nameRu, type);
             product.setId(id);
             product.setType(type);
             product.setNameRu(nameRu);
             product.setNameEn(nameEn);
             product.setWeight(weight);
             product.setCost(cost);
-            product.setStatus(status);
             product.setDescriptionRu(descriptionRu);
             product.setDescriptionEn(descriptionEn);
             String imageName = getImageName(image);

@@ -24,8 +24,8 @@ public final class CommandProvider {
         repository.put(CommandName.CHANGE_LOCALE, new ChangeLocale());
         repository.put(CommandName.ADD_PRODUCT, new AddProduct());
         repository.put(CommandName.BASKET, new Basket());
-        repository.put(CommandName.ADD_PRODUCT_TO_BASKET, new AddProductToBasket());
-        repository.put(CommandName.REMOVE_PRODUCT_FROM_BASKET, new RemoveProductFromBasket());
+        repository.put(CommandName.ADD_PRODUCT_TO_BASKET, new AddBasketProduct());
+        repository.put(CommandName.REMOVE_PRODUCT_FROM_BASKET, new RemoveBasketProduct());
         repository.put(CommandName.ADD_ACCOUNT, new AddAccount());
         repository.put(CommandName.EDIT_CLIENTS, new EditClients());
         repository.put(CommandName.CHANGE_CLIENT_STATUS, new ChangeClientStatus());
@@ -48,6 +48,9 @@ public final class CommandProvider {
         repository.put(CommandName.ADD_ADMIN, new AddAdmin());
         repository.put(CommandName.DELETE_REVIEW, new DeleteReview());
         repository.put(CommandName.EDIT_PRODUCT, new EditProduct());
+        repository.put(CommandName.RESET_PASSWORD, new ResetPassword());
+        repository.put(CommandName.RESET_PASSWORD_CONFIRM, new ResetPasswordConfirm());
+        repository.put(CommandName.EDIT_PRODUCT, new DeleteProduct());
     }
 
     public static CommandProvider getInstance() {

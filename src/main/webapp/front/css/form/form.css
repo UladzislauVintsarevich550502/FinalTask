@@ -370,11 +370,11 @@ ul.list li {
     }
 }
 
-#login, #cd-signup, #cd-reset-password {
+#login, #cd-signup, #reset-password {
     display: none;
 }
 
-#login.is-selected, #cd-signup.is-selected, #cd-reset-password.is-selected {
+#login.is-selected, #cd-signup.is-selected, #reset-password.is-selected {
     display: block;
 }
 

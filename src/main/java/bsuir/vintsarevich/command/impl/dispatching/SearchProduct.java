@@ -3,7 +3,7 @@ package bsuir.vintsarevich.command.impl.dispatching;
 import bsuir.vintsarevich.buisness.product.service.IProductService;
 import bsuir.vintsarevich.command.ICommand;
 import bsuir.vintsarevich.entity.Product;
-import bsuir.vintsarevich.enumeration.AttributeName;
+import bsuir.vintsarevich.enumeration.AttributeParameterName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.enumeration.RedirectingCommandName;
 import bsuir.vintsarevich.exception.service.ServiceException;
@@ -28,13 +28,12 @@ public class SearchProduct implements ICommand {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         LOGGER.log(Level.INFO, "Search command start");
         try {
-            String name = request.getParameter(AttributeName.SEARCH_NAME.getValue());
+            String name = request.getParameter(AttributeParameterName.SEARCH_NAME.getValue());
             if (name != null) {
                 productName = name;
                 request.getSession().setAttribute("currentPage", 1);
             }
             setPageProduct(request);
-            rewrite(request);
             Common.setReview(request);
             request.getSession().setAttribute("pageCommand", RedirectingCommandName.SEARCH_PRODUCT.getCommand());
         } catch (ServiceException e) {
@@ -45,6 +44,10 @@ public class SearchProduct implements ICommand {
         return jspPageName.getPath();
     }
 
+    /**
+     * @param request
+     * @throws ServiceException
+     */
     private void setPageProduct(HttpServletRequest request) throws ServiceException {
         IProductService productService = serviceFactory.getProducteService();
         List<Product> products = productService.getAllProducts();
@@ -63,16 +66,11 @@ public class SearchProduct implements ICommand {
         }
     }
 
-    private void rewrite(HttpServletRequest request) {
-        request.setAttribute(AttributeName.SEARCH_PRODUCT.getValue(), request.getSession().getAttribute(AttributeName.SEARCH_PRODUCT.getValue()));
-        request.getSession().removeAttribute(AttributeName.SEARCH_PRODUCT.getValue());
-    }
-
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.setAttribute(AttributeName.SEARCH_PRODUCT.getValue(), "Ничего не найдено");
+            request.setAttribute(AttributeParameterName.PRODUCT_NOT_FIND.getValue(), "Ничего не найдено");
         } else {
-            request.setAttribute(AttributeName.SEARCH_PRODUCT.getValue(), "Nothing found");
+            request.setAttribute(AttributeParameterName.PRODUCT_NOT_FIND.getValue(), "Nothing found");
         }
     }
 }

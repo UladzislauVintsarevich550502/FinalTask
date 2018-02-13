@@ -27,6 +27,8 @@ public interface IClientService {
 
     boolean findClientByLogin(String login) throws ServiceException;
 
+    Client findClientByEmail(String email) throws ServiceException;
+
     boolean changePassword(String password, Integer id) throws ServiceException;
 
     boolean editPoint(Integer clientId, Double clientPoint) throws ServiceException;

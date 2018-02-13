@@ -2,7 +2,7 @@ package bsuir.vintsarevich.command.impl.redirecting;
 
 import bsuir.vintsarevich.buisness.client.service.IClientService;
 import bsuir.vintsarevich.command.ICommand;
-import bsuir.vintsarevich.enumeration.AttributeName;
+import bsuir.vintsarevich.enumeration.AttributeParameterName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.enumeration.RedirectingCommandName;
 import bsuir.vintsarevich.exception.service.ServiceException;
@@ -24,7 +24,7 @@ public class ChangeClientStatus implements ICommand {
         IClientService clientService = ServiceFactory.getInstance().getClientService();
         LOGGER.log(Level.DEBUG, "Change client status start");
         try {
-            Integer clientId = Integer.valueOf(request.getParameter(AttributeName.CLIENT_ID.getValue()));
+            Integer clientId = Integer.valueOf(request.getParameter(AttributeParameterName.CLIENT_ID.getValue()));
             clientService.changeClientStatus(clientId);
             response.sendRedirect(RedirectingCommandName.CLIENT.getCommand());
         } catch (IOException | ServiceException e) {

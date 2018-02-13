@@ -38,14 +38,6 @@
         <input type="text" name="cost" class="cost" value="${product.cost}" id="cost-edit-${product.id}" placeholder=${cost_word}>
         <span class="cd-error-message" id="cost-mistake-${product.id}">${cost_mistake}</span>
     </p>
-    <p class="fieldset">
-        <select id="status-edit-${product.id}" name="status" class="status">
-            <option value="" disabled selected>${existence_word}</option>
-            <option value="false">${existense_no_word}</option>
-            <option value="true">${existanse_yes_word}</option>
-        </select>
-        <span class="cd-error-message" id="status-mistake-${product.id}">${make_choose}</span>
-    </p>
     <textarea name="description_ru" class="description_ru" value="${product.descriptionRu}" id="descrirtion-ru-edit-${product.id}"
               placeholder=${desc_ru_word}></textarea>
     <textarea name="description_en" class="description_en" value="${product.descriptionEn}" id="descrirtion-en-edit-${product.id}"

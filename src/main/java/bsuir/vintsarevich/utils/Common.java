@@ -27,7 +27,11 @@ public class Common {
             review.setClientName(client.getName());
             review.setClientSurname(client.getSurname());
         }
-        request.setAttribute("reviews", reviews);
+        if(reviews.size()==0){
+            request.setAttribute("reviews",null);
+        }else {
+            request.setAttribute("reviews", reviews);
+        }
     }
     public static void calculatePageNumber(HttpServletRequest request, List<Product> allProducts) throws ServiceException {
         int pageCount;

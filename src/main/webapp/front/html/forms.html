@@ -23,17 +23,12 @@
                 </p>
 
                 <p class="fieldset">
-                    <input type="checkbox" id="remember-me" checked>
-                    <label for="remember-me">${remember_word}</label>
-                </p>
-
-                <p class="fieldset">
                     <input class="full-width" type="submit" value=${comein_button}>
                 </p>
             </form>
 
             <p class="cd-form-bottom-message"><a href="#0">${forgot_pass_word}</a></p>
-             <a href="#0" class="cd-close-form">Close</a>
+            <a href="#0" class="cd-close-form">Close</a>
         </div> <!-- login -->
 
         <div id="cd-signup"> <!-- форма регистрации -->
@@ -91,23 +86,22 @@
 
         </div> <!-- cd-signup -->
 
-        <div id="cd-reset-password"> <!-- форма восстановления пароля -->
-            <p class="cd-form-message">${re_message_word}</p>
-
-            <form class="cd-form">
+        <div id="reset-password"> <!-- форма восстановления пароля -->
+            <form id="reset-form" class="cd-form" method="POST" action="/cafe.by/reset_password">
+                <p class="cd-form-message">${re_message_word}</p>
                 <p class="fieldset">
                     <label class="image-replace cd-email" for="reset-email">${email_word}</label>
-                    <input class="full-width has-padding has-border" id="reset-email" type="email"
+                    <input class="full-width has-padding has-border" name="reset_email" id="reset-email" type="email"
                            placeholder=${email_word}>
-                    <span class="cd-error-message">${mistake_email_word}</span>
+                    <span class="cd-error-message" id="reset-email-span">${mistake_email_word}</span>
                 </p>
 
                 <p class="fieldset">
-                    <input class="full-width" type="button" value=${re_pass_word}>
+                    <input class="full-width" type="submit" value=${re_pass_word}>
                 </p>
-            </form>
 
-            <p class="cd-form-bottom-message"><a href="#0">${back_word}</a></p>
+                <p class="cd-form-bottom-message"><a href="#0">${back_word}</a></p>
+            </form>
         </div> <!-- cd-reset-password -->
         <a href="#0" class="cd-close-form">${close_word}</a>
     </div> <!-- cd-user-modal-container -->

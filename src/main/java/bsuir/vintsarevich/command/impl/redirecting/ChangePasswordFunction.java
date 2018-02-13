@@ -5,7 +5,7 @@ import bsuir.vintsarevich.buisness.client.service.IClientService;
 import bsuir.vintsarevich.buisness.staff.service.IStaffService;
 import bsuir.vintsarevich.command.ICommand;
 import bsuir.vintsarevich.entity.User;
-import bsuir.vintsarevich.enumeration.AttributeName;
+import bsuir.vintsarevich.enumeration.AttributeParameterName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.enumeration.RedirectingCommandName;
 import bsuir.vintsarevich.exception.service.ServiceException;
@@ -32,9 +32,9 @@ public class ChangePasswordFunction implements ICommand {
 
         User user = (User) request.getSession().getAttribute("user");
 
-        String oldPassword = request.getParameter(AttributeName.OLD_PASSWORD.getValue());
-        String newPassword = request.getParameter(AttributeName.NEW_PASSWORD.getValue());
-        String newPasswordRepeat = request.getParameter(AttributeName.NEW_PASSWORD_REPEAT.getValue());
+        String oldPassword = request.getParameter(AttributeParameterName.OLD_PASSWORD.getValue());
+        String newPassword = request.getParameter(AttributeParameterName.NEW_PASSWORD.getValue());
+        String newPasswordRepeat = request.getParameter(AttributeParameterName.NEW_PASSWORD_REPEAT.getValue());
         try {
             if (user.getRole().equals("admin")) {
                 if (adminService.checkPassword(oldPassword, user.getId()) && newPassword.equals(newPasswordRepeat)) {
@@ -69,9 +69,9 @@ public class ChangePasswordFunction implements ICommand {
 
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.getSession().setAttribute(AttributeName.CHANGE_PASSWORD_ERROR.getValue(), "Старый пароль введен не верно!");
+            request.getSession().setAttribute(AttributeParameterName.CHANGE_PASSWORD_ERROR.getValue(), "Старый пароль введен не верно!");
         } else {
-            request.getSession().setAttribute(AttributeName.CHANGE_PASSWORD_ERROR.getValue(), "Users status wasn't changed!");
+            request.getSession().setAttribute(AttributeParameterName.CHANGE_PASSWORD_ERROR.getValue(), "Users status wasn't changed!");
         }
     }
 

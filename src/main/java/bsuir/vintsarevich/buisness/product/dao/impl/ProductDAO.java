@@ -18,9 +18,9 @@ import java.util.List;
 public class ProductDAO implements IProductDao {
     private static final Logger LOGGER = Logger.getLogger(ProductDAO.class);
     public static String GET_ALL_PRODUCTS = "SELECT * FROM epamcafe.product;";
-    public static String ADD_PRODUCT = "INSERT INTO product (productType,productNameRu,productNameEn,productWeight,productCost,productStatus," +
+    public static String ADD_PRODUCT = "INSERT INTO product (productType,productNameRu,productNameEn,productWeight,productCost," +
             "productDescriptionRu,productDescriptionEn,productImage) VALUES(?,?,?,?,?,?,?,?,?);";
-    public static String EDIT_PRODUCT = "UPDATE product SET productType=?,productNameRu=?,productNameEn=?,productWeight=?,productCost=?,productStatus=?," +
+    public static String EDIT_PRODUCT = "UPDATE product SET productType=?,productNameRu=?,productNameEn=?,productWeight=?,productCost=?," +
             "productDescriptionRu=?,productDescriptionEn=?,productImage=? WHERE productId=?;";
     public static String GET_PRODUCT_BY_ID = "SELECT * FROM epamcafe.product WHERE productId=?";
     public static String GET_PRODUCT_BY_TYPE = "SELECT * FROM epamcafe.product WHERE productType=?";
@@ -48,10 +48,9 @@ public class ProductDAO implements IProductDao {
             statement.setString(3, product.getNameEn());
             statement.setInt(4, product.getWeight());
             statement.setDouble(5, product.getCost());
-            statement.setString(6, product.getStatus());
-            statement.setString(7, product.getDescriptionRu());
-            statement.setString(8, product.getDescriptionEn());
-            statement.setString(9, product.getImagePath());
+            statement.setString(6, product.getDescriptionRu());
+            statement.setString(7, product.getDescriptionEn());
+            statement.setString(8, product.getImagePath());
             if (statement.executeUpdate() != 0) {
                 LOGGER.log(Level.DEBUG, "Add product success");
                 return true;
@@ -222,11 +221,10 @@ public class ProductDAO implements IProductDao {
             statement.setString(3, product.getNameEn());
             statement.setInt(4, product.getWeight());
             statement.setDouble(5, product.getCost());
-            statement.setString(6, product.getStatus());
-            statement.setString(7, product.getDescriptionRu());
-            statement.setString(8, product.getDescriptionEn());
-            statement.setString(9, product.getImagePath());
-            statement.setInt(10, product.getId());
+            statement.setString(6, product.getDescriptionRu());
+            statement.setString(7, product.getDescriptionEn());
+            statement.setString(8, product.getImagePath());
+            statement.setInt(9, product.getId());
             if (statement.executeUpdate() != 0) {
                 LOGGER.log(Level.DEBUG, "Edit Product success");
                 return true;
@@ -256,7 +254,6 @@ public class ProductDAO implements IProductDao {
             product.setNameEn(resultSet.getString("productNameEn"));
             product.setWeight(resultSet.getInt("productWeight"));
             product.setCost(resultSet.getDouble("productCost"));
-            product.setStatus(resultSet.getString("productStatus"));
             product.setDescriptionRu(resultSet.getString("productDescriptionRu"));
             product.setDescriptionEn(resultSet.getString("productDescriptionEn"));
             product.setImagePath(resultSet.getString("productImage"));

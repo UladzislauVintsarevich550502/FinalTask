@@ -32,24 +32,39 @@
             <%@include file="/front/html/header.html" %>
 
             <%@include file="/front/html/forms.html" %>
-            <div id="add-form"> <!— форма входа —>
-                <form method="post" class="cd-form" id="change-password" action="/cafe.by/change_password" enctype="multipart/form-date">
-                    <h2>Смена пароля</h2>
+            
+            <div id="cd-changePassword">
+                <form method="POST" class="cd-form" id="changePassword-form" action="/cafe.by/change_password">
+                    <h2>${change_password_word}</h2>
+                    <h3>${change_password_error}</h3>
                     <p class="fieldset">
-                        <input type="text" name="old_password" id="old-password" placeholder="Введите текущий пароль">
-                        <span class="cd-error-message">Неверный пароль</span>
+                        <label class="image-replace cd-password" for="changePassword-old">{password_word}</label>
+                        <input class="full-width has-padding has-border" name="changePassword_old"
+                               id="changePassword-old"
+                               type="text"
+                               placeholder=${old_password_word}>
+                        <a href="#0" id="a-changePassword-old" class="hide-password">""</a>
+                        <span class="cd-error-message">${mistake_password_word}</span>
                     </p>
                     <p class="fieldset">
-                        <input type="text" name="new_password" id="new-password" placeholder="Введите новый пароль">
-                        <span class="cd-error-message">Некорректный пароль</span>
+                        <label class="image-replace cd-password" for="changePassword-new">{password_word}</label>
+                        <input class="full-width has-padding has-border" name="changePassword_new"
+                               id="changePassword-new"
+                               type="text"
+                               placeholder=${new_password_word}>
+                        <a href="#0" id="a-changePassword-new" class="hide-password">""</a>
+                        <span class="cd-error-message">${mistake_password_word}</span>
                     </p>
                     <p class="fieldset">
-                        <input type="text" name="new_password_repeat" id="new-password-repeat" placeholder="Повторите новый пароль">
-                        <span class="cd-error-message">Пароль не совпадают</span>
+                        <label class="image-replace cd-password" for="changePassword-re-new">{re_password_word}</label>
+                        <input class="full-width has-padding has-border" id="changePassword-re-new" name="changePassword_re_new" type="text"
+                               placeholder=${re_new_password_word}>
+                        <a href="#0" id="a-changePassword-re-new" class="hide-password">""</a>
+                        <span class="cd-error-message">${mistake_word}</span>
                     </p>
-                    <input type="submit" id="add" value=${add_button_word}>
+                    <input type="submit" id="add" value=${change_password_word}>
                 </form>
-            </div> <!— login —>
+            </div>
 
         </div>
     </div>
@@ -61,12 +76,9 @@
 <!— Scripts —>
 <script>
     <%@include file="/front/js/menu/main.js" %>
-</script>
-<script>
     <%@include file="/front/js/menu/util.js" %>
-</script>
-<script>
     <%@include file="/front/js/form/form.js"%>
+    <%@include file="/front/js/validation.js"%>
 </script>
 
 </body>

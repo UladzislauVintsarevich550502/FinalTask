@@ -3,7 +3,7 @@ package bsuir.vintsarevich.command.impl.redirecting;
 import bsuir.vintsarevich.buisness.review.service.IReviewService;
 import bsuir.vintsarevich.command.ICommand;
 import bsuir.vintsarevich.entity.User;
-import bsuir.vintsarevich.enumeration.AttributeName;
+import bsuir.vintsarevich.enumeration.AttributeParameterName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.enumeration.RedirectingCommandName;
 import bsuir.vintsarevich.exception.service.ServiceException;
@@ -28,9 +28,9 @@ public class AddReview implements ICommand {
         try {
             IReviewService reviewService = serviceFactory.getReviewService();
             Integer clientId = ((User)request.getSession().
-                    getAttribute(AttributeName.USER.getValue())).getId();
-            String text = request.getParameter(AttributeName.REVIEW_TEXT.getValue());
-            String mark = request.getParameter(AttributeName.MARK_VALUE.getValue());
+                    getAttribute(AttributeParameterName.USER.getValue())).getId();
+            String text = request.getParameter(AttributeParameterName.REVIEW_TEXT.getValue());
+            String mark = request.getParameter(AttributeParameterName.MARK_VALUE.getValue());
             if (mark != null) {
                 reviewService.addReview(text, Double.parseDouble(mark), clientId);
             } else {
@@ -47,9 +47,9 @@ public class AddReview implements ICommand {
 
     private void diagnoseError(HttpServletRequest request) {
         if (SessionElements.getLocale(request).equals("ru")) {
-            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "Пожалуйста, поставьте оценку!");
+            request.getSession().setAttribute(AttributeParameterName.HEADER_ERROR.getValue(), "Пожалуйста, поставьте оценку!");
         } else {
-            request.getSession().setAttribute(AttributeName.HEADER_ERROR.getValue(), "You hadn't choose anything to add");
+            request.getSession().setAttribute(AttributeParameterName.HEADER_ERROR.getValue(), "You hadn't choose anything to add");
         }
     }
 }

@@ -2,7 +2,7 @@ package bsuir.vintsarevich.command.impl.redirecting;
 
 import bsuir.vintsarevich.buisness.admin.service.IAdminService;
 import bsuir.vintsarevich.command.ICommand;
-import bsuir.vintsarevich.enumeration.AttributeName;
+import bsuir.vintsarevich.enumeration.AttributeParameterName;
 import bsuir.vintsarevich.enumeration.JspPageName;
 import bsuir.vintsarevich.enumeration.RedirectingCommandName;
 import bsuir.vintsarevich.exception.service.ServiceException;
@@ -23,7 +23,7 @@ public class DeleteAdmin implements ICommand {
         LOGGER.log(Level.INFO, "Start delete admin");
         try {
             IAdminService adminService = ServiceFactory.getInstance().getAdminService();
-            Integer adminId = Integer.valueOf(request.getParameter(AttributeName.ADMIN_ID.getValue()));
+            Integer adminId = Integer.valueOf(request.getParameter(AttributeParameterName.ADMIN_ID.getValue()));
             adminService.deleteAdmin(adminId);
             response.sendRedirect(RedirectingCommandName.ADMIN_LIST.getCommand());
         } catch (ServiceException | IOException e) {
