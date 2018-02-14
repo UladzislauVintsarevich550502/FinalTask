@@ -5,6 +5,9 @@ import bsuir.vintsarevich.enumeration.RedirectingCommandName;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 
+/**
+ * class SessionElements created get most popular session elements
+ */
 public class SessionElements {
     /**
      * @param request

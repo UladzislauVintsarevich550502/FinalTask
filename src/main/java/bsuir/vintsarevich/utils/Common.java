@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * class Common created to executing common function for command Index, FindByType and SearchProduct
+ */
 public class Common {
     private static final int NUMBER_OF_PRODUCT_ON_PAGE = 6;
 

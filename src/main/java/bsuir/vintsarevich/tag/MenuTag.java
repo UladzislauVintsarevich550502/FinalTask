@@ -8,6 +8,9 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 
+/**
+ * class ListTag is a Tag which can choose certain menu for including
+ * */
 public class MenuTag extends TagSupport {
 
     /**

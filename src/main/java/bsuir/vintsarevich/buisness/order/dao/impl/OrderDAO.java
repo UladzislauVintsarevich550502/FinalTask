@@ -325,10 +325,8 @@ public class OrderDAO implements IOrderDao {
             connection = connectionPool.getConnection();
             statement = connection.prepareStatement(GET_ALL_ORDERED_ORDERS);
             resultSet = statement.executeQuery();
-            if (resultSet.first()) {
-                do {
-                    orders.add(createOrderByResultSet(resultSet));
-                } while (resultSet.next());
+            while (resultSet.next()) {
+                orders.add(createOrderByResultSet(resultSet));
             }
         } catch (SQLException e) {
             return null;
@@ -387,7 +385,7 @@ public class OrderDAO implements IOrderDao {
             statement = connection.prepareStatement(GET_ORDER_BY_ORDERID);
             statement.setInt(1, orderId);
             resultSet = statement.executeQuery();
-            if (resultSet.first()) {
+            if (resultSet.next()) {
                 LOGGER.log(Level.DEBUG, "order DAO: success getOrderByOrderId");
                 return createOrderByResultSet(resultSet);
             }

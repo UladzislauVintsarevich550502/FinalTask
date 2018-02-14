@@ -59,22 +59,21 @@ public class Payment implements ICommand {
                     orderProductService.editOrderProductPayment(orderIdNew, orderId);
                     clientService.editPoint(clientId, pointToPayment);
                 } else {
-                    System.out.println(accountService.getCashById(clientId));
-                    if (accountService.getCashById(clientId) != null && accountService.getCashById(clientId) >= 0) {
-                        if (accountService.findAccountByClientId(clientId)) {
+                    if (accountService.findAccountByClientId(clientId)) {
+                        if (accountService.getCashById(clientId) != null && accountService.getCashById(clientId) >= 0) {
                             Integer orderIdNew = orderService.paymentOrder("payment", dateTime, (orderCost - pointToPayment), clientId);
                             orderService.clearOrderCost(orderId);
                             orderProductService.editOrderProductPayment(orderIdNew, orderId);
                             accountService.editAccount(clientId, orderCost);
                             clientService.editPoint(clientId, pointToPayment);
                         } else {
-                            diagnoseError(request);
+                            diagnoseCashError(request);
                         }
                     } else {
-                        diagnoseCashError(request);
+                        diagnoseError(request);
                     }
                 }
-            }else{
+            } else {
                 diagnoseOrderEmptyError(request);
             }
             response.sendRedirect(RedirectingCommandName.BASKET.getCommand());

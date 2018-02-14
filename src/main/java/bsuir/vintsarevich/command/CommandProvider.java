@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * class CommandProvider created to choose command by command name
  */
 public final class CommandProvider {
     private final static CommandProvider instance = new CommandProvider();
@@ -30,7 +30,7 @@ public final class CommandProvider {
         repository.put(CommandName.ADD_PRODUCT_TO_BASKET, new AddBasketProduct());
         repository.put(CommandName.REMOVE_PRODUCT_FROM_BASKET, new RemoveBasketProduct());
         repository.put(CommandName.ADD_ACCOUNT, new AddAccount());
-        repository.put(CommandName.EDIT_CLIENTS, new EditClients());
+        repository.put(CommandName.EDIT_CLIENTS, new ClientList());
         repository.put(CommandName.CHANGE_CLIENT_STATUS, new ChangeClientStatus());
         repository.put(CommandName.SET_CURRENT_PAGE, new SetCurrentPage());
         repository.put(CommandName.SEARCH_PRODUCT, new SearchProduct());
@@ -56,7 +56,7 @@ public final class CommandProvider {
         repository.put(CommandName.DELETE_PRODUCT, new DeleteProduct());
         repository.put(CommandName.CHANGE_STAFF, new ChangeStaff());
         repository.put(CommandName.CHANGE_ADMIN, new ChangeAdmin());
-        repository.put(CommandName.RESET, new Re());
+        repository.put(CommandName.RESET_FORM, new ResetForm());
     }
 
     /**

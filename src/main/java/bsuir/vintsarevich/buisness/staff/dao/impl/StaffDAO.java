@@ -26,7 +26,7 @@ public class StaffDAO implements IStaffDao {
     private static String GET_STAFF_BY_LOGIN = "SELECT * FROM epamcafe.staff WHERE staffLogin=?";
     private static String GET_ALL_STAFF = "SELECT * FROM epamcafe.staff";
     private static String CHECK_PASSWORD = "SELECT * FROM epamcafe.staff WHERE epamcafe.staff.staffId=? AND epamcafe.staff.staffPassword=?";
-    private static String CHANGE_PASSWORD = "UPDATE epamcafe.admin SET epamcafe.staff.staffPassword=? WHERE epamcafe.staff.staffId=?";
+    private static String CHANGE_PASSWORD = "UPDATE epamcafe.staff SET epamcafe.staff.staffPassword=? WHERE epamcafe.staff.staffId=?";
     private ConnectionPool connectionPool;
     private Connection connection;
     private PreparedStatement statement;
@@ -114,7 +114,7 @@ public class StaffDAO implements IStaffDao {
             statement.setString(1, login);
             statement.setString(2, password);
             resultSet = statement.executeQuery();
-            if (resultSet.first()) {
+            if (resultSet.next()) {
                 staff = createStaffByResultSet(resultSet);
             }
         } catch (SQLException e) {
@@ -144,7 +144,7 @@ public class StaffDAO implements IStaffDao {
             statement = connection.prepareStatement(GET_STAFF_BY_LOGIN);
             statement.setString(1, login);
             resultSet = statement.executeQuery();
-            if (resultSet.first()) {
+            if (resultSet.next()) {
                 return true;
             }
         } catch (SQLException e) {
@@ -173,10 +173,8 @@ public class StaffDAO implements IStaffDao {
             connection = connectionPool.getConnection();
             statement = connection.prepareStatement(GET_ALL_STAFF);
             resultSet = statement.executeQuery();
-            if (resultSet.first()) {
-                do {
-                    staff.add(createStaffByResultSet(resultSet));
-                } while (resultSet.next());
+            while (resultSet.next()) {
+                staff.add(createStaffByResultSet(resultSet));
             }
             LOGGER.log(Level.INFO, staff);
         } catch (SQLException e) {

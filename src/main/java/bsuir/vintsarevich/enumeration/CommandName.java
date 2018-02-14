@@ -1,5 +1,8 @@
 package bsuir.vintsarevich.enumeration;
 
+/**
+ * enum CommandName created for choosing command and searching such role which can execute it
+ */
 public enum CommandName {
     SIGN_IN("all"), SIGN_UP("all"), SIGN_OUT("all"), INDEX("all"), WRONG_REQUEST("all"),
     BASKET("client"), CHANGE_LOCALE("all"), ADD_PRODUCT("admin"), ADD_PRODUCT_TO_BASKET("client"),

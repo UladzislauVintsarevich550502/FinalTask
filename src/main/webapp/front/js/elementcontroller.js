@@ -75,6 +75,7 @@ jQuery(document).ready(function ($) {
         var name_enReg = new RegExp('^[0-9]{4}-[0-9]{2}-[0-9]{2}T1[0-9]:[0-9]{2}$');
         if (name_enReg.test(hourse) == false) {
             document.payment.elements['payment_button'].disabled = true;
+
         } else {
             document.payment.elements['payment_button'].disabled = false;
         }

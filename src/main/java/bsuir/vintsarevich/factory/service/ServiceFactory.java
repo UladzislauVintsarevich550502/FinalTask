@@ -17,6 +17,9 @@ import bsuir.vintsarevich.buisness.review.service.impl.ReviewService;
 import bsuir.vintsarevich.buisness.staff.service.IStaffService;
 import bsuir.vintsarevich.buisness.staff.service.impl.StaffService;
 
+/**
+ * class ServiceFactory created to choose service for working
+ */
 public class ServiceFactory {
     private static final ServiceFactory instance = new ServiceFactory();
     private final IAdminService adminService = new AdminService();

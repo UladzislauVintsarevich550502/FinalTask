@@ -35,7 +35,7 @@ public class AdminService implements IAdminService {
             Validator.matchPassword(adminPassword);
             Validator.matchLogin(adminLogin);
             adminPassword = Hasher.hashBySha1(adminPassword);
-            if (daoFactory.getClientDao().getClientByLogin(adminLogin) == null) {
+            if (daoFactory.getClientDao().getClientByLogin(adminLogin) == null && !daoFactory.getStaffDao().findStaffByLogin(adminLogin)) {
                 Admin admin = new Admin(adminLogin, adminPassword);
                 return (daoFactory.getAdminDao().addAdmin(admin));
             }

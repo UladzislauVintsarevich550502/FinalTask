@@ -56,7 +56,7 @@ public class ClientDAO implements IClientDao {
             statement.setInt(1, clientId);
             resultSet = statement.executeQuery();
             Double existingPoints;
-            if (resultSet.first()) {
+            if (resultSet.next()) {
                 existingPoints = resultSet.getDouble("clientPoint");
             } else {
                 return false;
@@ -127,7 +127,7 @@ public class ClientDAO implements IClientDao {
             statement.setString(1, email);
 
             resultSet = statement.executeQuery();
-            if (resultSet.first()) {
+            if (resultSet.next()) {
                 return createClientByResultSet(resultSet);
             }
         } catch (SQLException e) {
@@ -227,7 +227,7 @@ public class ClientDAO implements IClientDao {
             statement.setString(1, login);
             statement.setString(2, password);
             resultSet = statement.executeQuery();
-            if (resultSet.first()) {
+            if (resultSet.next()) {
                 clientEntity = createClientByResultSet(resultSet);
             }
         } catch (SQLException e) {
@@ -258,7 +258,7 @@ public class ClientDAO implements IClientDao {
             statement = connection.prepareStatement(GET_CLIENT_BY_LOGIN);
             statement.setString(1, clientLogin);
             resultSet = statement.executeQuery();
-            if (resultSet.first()) {
+            if (resultSet.next()) {
                 clientEntity = createClientByResultSet(resultSet);
             }
         } catch (SQLException e) {
@@ -289,7 +289,7 @@ public class ClientDAO implements IClientDao {
             statement = connection.prepareStatement(GET_CLIENT_BY_ID);
             statement.setInt(1, clientId);
             resultSet = statement.executeQuery();
-            if (resultSet.first()) {
+            if (resultSet.next()) {
                 clientEntity = createClientByResultSet(resultSet);
             }
         } catch (SQLException e) {

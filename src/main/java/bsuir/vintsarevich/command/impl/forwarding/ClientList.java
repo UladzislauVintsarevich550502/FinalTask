@@ -15,10 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * class EditClients created for editing clients' data
+ * class ClientList created for editing clients' data
  */
-public class EditClients implements ICommand {
-    private static final Logger LOGGER = Logger.getLogger(EditClients.class);
+public class ClientList implements ICommand {
+    private static final Logger LOGGER = Logger.getLogger(ClientList.class);
     private JspPageName jspPageName = JspPageName.CLIENTS;
 
     /**

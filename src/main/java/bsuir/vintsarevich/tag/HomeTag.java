@@ -8,6 +8,9 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 
+/**
+ * class HomeTag is a Tag which can choose certain header for including
+ */
 public class HomeTag extends TagSupport {
 
     /**

@@ -43,7 +43,7 @@
                 <c:when test="${user.role eq 'client'}">
                     <section>
                         <header class="major">
-                            <h2>${add_review_word}</h2>
+                            <h2>${review_header}</h2>
                         </header>
                         <%@include file="/front/html/addReview.html" %>
                     </section>
@@ -52,7 +52,7 @@
 
             <section>
                 <header class="major">
-                    <h2>${reviews_word}</h2>
+                    <h2>${review_header}</h2>
                 </header>
                 <c:choose>
                     <c:when test="${reviews!=null}">

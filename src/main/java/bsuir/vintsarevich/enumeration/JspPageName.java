@@ -1,5 +1,8 @@
 package bsuir.vintsarevich.enumeration;
 
+/**
+ * enum JspPageName created to choose jsp pages
+ */
 public enum JspPageName {
     INDEX("/front/jsp/index.jsp"),
     ERROR("/front/jsp/error.jsp"),

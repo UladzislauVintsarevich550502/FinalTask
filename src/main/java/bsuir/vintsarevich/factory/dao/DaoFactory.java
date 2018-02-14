@@ -17,6 +17,9 @@ import bsuir.vintsarevich.buisness.review.dao.impl.ReviewDao;
 import bsuir.vintsarevich.buisness.staff.dao.IStaffDao;
 import bsuir.vintsarevich.buisness.staff.dao.impl.StaffDAO;
 
+/**
+ * class DaoFactory created to choose factory for working
+ */
 public class DaoFactory {
     private static final DaoFactory instance = new DaoFactory();
     private final IClientDao clientDao = new ClientDAO();

@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="EpamCafe:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="EpamCafe.war">
-      <element id="artifact" artifact-name="EpamCafe:war exploded" />
-    </root>
-  </artifact>
-</component>

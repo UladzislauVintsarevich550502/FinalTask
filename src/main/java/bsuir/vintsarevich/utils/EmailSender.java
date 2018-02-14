@@ -9,6 +9,9 @@ import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * class EmailSender created for Send Email by SMTP client
+ */
 public class EmailSender {
 
     static Properties mailServerProperties = new Properties();

@@ -25,7 +25,7 @@ public class AdminDAO implements IAdminDao {
     private static String ADD_ADMIN = "INSERT INTO admin (adminLogin, adminPassword) VALUES(?,?)";
     private static String DELETE_ADMIN = "DELETE FROM epamcafe.admin WHERE adminId=?";
     private static String GET_ALL_ADMINS = "SELECT *FROM epamcafe.admin";
-    private static String GET_ADMIN_BY_LOGIN = "SELECT * FROM epamcafe.admin WHERE adminLogin=?";
+    private static String GET_ADMIN_BY_LOGIN = "SELECT * FROM epamcafe.admin WHERE admin.adminLogin=?";
     private static String CHECK_ADMIN_PASSWORD = "SELECT * FROM epamcafe.admin WHERE epamcafe.admin.adminId=? AND epamcafe.admin.adminPassword=?";
     private static String CHANGE_PASSWORD = "UPDATE epamcafe.admin SET epamcafe.admin.adminPassword=? WHERE epamcafe.admin.adminId=?";
     private ConnectionPool connectionPool;
@@ -117,7 +117,7 @@ public class AdminDAO implements IAdminDao {
             statement.setString(2, password);
 
             resultSet = statement.executeQuery();
-            if (resultSet.first()) {
+            if (resultSet.next()) {
                 adminEntity = createAdminByResultSet(resultSet);
             }
         } catch (SQLException e) {
@@ -147,9 +147,8 @@ public class AdminDAO implements IAdminDao {
 
             statement = connection.prepareStatement(GET_ADMIN_BY_LOGIN);
             statement.setString(1, login);
-
             resultSet = statement.executeQuery();
-            if (resultSet.first()) {
+            if (resultSet.next()) {
                 return true;
             }
         } catch (SQLException e) {

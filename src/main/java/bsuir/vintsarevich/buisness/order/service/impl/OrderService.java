@@ -33,7 +33,6 @@ public class OrderService implements IOrderService {
         try {
             Validator.isNull(orderType);
             Validator.isEmptyString(orderType);
-            Validator.matchOrderType(orderType);
             LOGGER.log(Level.DEBUG, "Order service: finish addOrder");
             Order order = new Order(orderType, orderCost, clientId);
             return daoFactory.getOrderDao().addOrder(order);
@@ -90,7 +89,6 @@ public class OrderService implements IOrderService {
         try {
             Validator.isEmptyString(orderType,orderData);
             Validator.isNull(orderData,orderType);
-            Validator.matchOrderType(orderType);
             Order order = new Order(orderType, orderData, orderCost, clientId);
             LOGGER.log(Level.DEBUG, "Order service: finish payment order");
             return daoFactory.getOrderDao().paymentOrder(order);

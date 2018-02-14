@@ -5,6 +5,9 @@ import bsuir.vintsarevich.exception.validation.ValidatorException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * class Validator created to validations input params
+ */
 public class Validator {
 
     private static final String REGEX_FOR_NAME = "([A-Z][a-z]+)|([А-Я][а-я]+)";

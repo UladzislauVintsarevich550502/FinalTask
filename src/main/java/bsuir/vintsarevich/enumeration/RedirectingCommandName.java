@@ -1,5 +1,8 @@
 package bsuir.vintsarevich.enumeration;
 
+/**
+ * enum JspPageName created to choose command for redirecting
+ */
 public enum RedirectingCommandName
 {
     INDEX("/cafe.by/index"),

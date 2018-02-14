@@ -1,5 +1,8 @@
 package bsuir.vintsarevich.enumeration;
 
+/**
+ * enum AttributeParameterName created to choose Page or Session attributes and parametrs
+ */
 public enum AttributeParameterName {
     SIGNIN_LOGIN("signin_login"),
     SIGNIN_PASSWORD("signin_password"),

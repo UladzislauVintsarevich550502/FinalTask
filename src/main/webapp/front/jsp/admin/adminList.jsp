@@ -52,7 +52,8 @@
                                                       action="/cafe.by/change_admin">
                                                     <input style='visibility:hidden' name="adminId" value="${admin.id}">
                                                     <p class="fieldset">
-                                                        <label class="image-replace cd-password" for="admin-new-password">{password_word}</label>
+                                                        <label class="image-replace cd-password"
+                                                               for="admin-new-password">{password_word}</label>
                                                         <input class="full-width has-padding has-border"
                                                                name="changePassword_new"
                                                                id="admin-new-password" type="password"
@@ -61,7 +62,8 @@
                                                         <span id="admin-new-password-span"
                                                               class="cd-error-message">${mistake_password_word}</span>
                                                     </p>
-                                                    <input type="submit" id="change_staff_password" value="${send_word}">
+                                                    <input type="submit" id="change_staff_password"
+                                                           value="${send_word}">
                                                 </form>
                                             </div>
                                             <ul class="actions">
@@ -92,7 +94,10 @@
                         </c:choose>
                     </article>
                     <article>
-                        <h2>${add_administrators_word}</h2>
+                        <h3>${add_admin_error}</h3>
+                        <header class="major">
+                            <h2>${add_admin_word}</h2>
+                        </header>
                         <form id="admin-form" class="cd-form" method="POST" action="/cafe.by/add_admin">
                             <p class="fieldset">
                                 <label class="image-replace cd-login" for="admin-login">${login_word}</label>

@@ -30,6 +30,9 @@ public class ConnectionPool implements ICloseConnectionPool {
     private int waitingTime;
 
 
+    /**
+     * @throws ConnectionException
+     */
     private ConnectionPool() throws ConnectionException {
         String driverName = null;
         try {
